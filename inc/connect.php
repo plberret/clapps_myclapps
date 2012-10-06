@@ -4,7 +4,7 @@ echo "connect";
 
 $host="localhost";
 $user="root";
-$pass="";
+$pass="root";
 $base="appliMyClapps";
 
 function connect($host,$user,$pass, $base) {
