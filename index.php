@@ -70,6 +70,19 @@
                 </div>
             </div><!-- fin more -->
         </article>
+        
+        <?php
+            
+            getProjects(); 
+            //$getProjects=getProjects();
+            $getProjects=array("un", "deux", "trois");
+            foreach ($getProjects as $project) {
+                echo '<pre>'; 
+                print_r($project); 
+                echo '</pre>'; 
+            }
+            
+         ?>
         <article>
             <div class="preview">
                 <h2>Nom du projet</h2>
@@ -115,8 +128,6 @@
             </div><!-- fin more -->
         </article>
     </section>
-    
-   <?php  getProjects(); ?>
-    
+        
 </body>
 </html>
