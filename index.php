@@ -1,5 +1,5 @@
 
-<?php require_once('./inc/connect.inc.php'); ?>
+<?php require_once('./inc/connect.php'); ?>
 
 <!doctype html>
 <html lang="fr">
