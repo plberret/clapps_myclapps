@@ -1,19 +1,20 @@
-<?php 
+<?php
 
-$host="localhost";
-$user="root";
-$pass="";
-$base="appliMyClapps";
-
-$baseDD = connect($host, $user, $pass, $base);
-
-function connect($host,$user,$pass, $base) {
-  try{
-    $bd=new PDO('mysql:host='.$host.';dbname='.$base ,$user,$pass);
-  }catch (Exception $e){
-    die('BDD CONNEXION ERROR!');
-  }
-  return $bd;
-}
-		
-?>
+    require_once('connect.php');
+     
+     function getProjects(){
+         
+         global $baseDD; 
+         
+         $R1=$baseDD->prepare("SELECT * FROM `mc_project`");
+         if($R1->execute()){
+             while($line=$R1->fetch()){
+                 echo '<pre>'; 
+                 print_r($line); 
+                 echo '</pre>'; 
+             } 
+         }
+    
+     }
+     
+   ?>

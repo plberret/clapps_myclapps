@@ -1,11 +1,11 @@
 <?php 
 
+echo "connect"; 
+
 $host="localhost";
 $user="root";
 $pass="";
 $base="appliMyClapps";
-
-$baseDD = connect($host, $user, $pass, $base);
 
 function connect($host,$user,$pass, $base) {
   try{
@@ -15,5 +15,7 @@ function connect($host,$user,$pass, $base) {
   }
   return $bd;
 }
+
+$baseDD = connect($host, $user, $pass, $base);
 		
 ?>

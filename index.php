@@ -1,5 +1,5 @@
 
-<?php require_once('./inc/connect.php'); ?>
+<?php require_once('./inc/functions.php'); ?>
 
 <!doctype html>
 <html lang="fr">
@@ -116,25 +116,7 @@
         </article>
     </section>
     
-    <?php
-    
-    $R1=$baseDD->prepare("SELECT * FROM `mc_project`");
-    if($R1->execute()){
-        while($line=$R1->fetch()){
-            print ($line["Description"]); 
-        } 
-    }
-    
-    //$R1=$baseDD->prepare("INSERT INTO contacts(Email, Valide_email) VALUES(:email, 2)");
-  /*  $R1->bindParam(':email',$email);
-    if($R1->execute()){
-        $id=$baseDD->LastInsertId();
-    }else{
-        echo  json_encode(  array( 'error' => 'Une erreur est survenue, veuillez nous en excusez.' ) );
-        exit(0);
-    }*/
-    
-    ?>
+   <?php  getProjects(); ?>
     
 </body>
 </html>
