@@ -1,7 +1,5 @@
 <?php 
 
-echo "connect"; 
-
 $host="localhost";
 $user="root";
 $pass="root";
