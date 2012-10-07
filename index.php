@@ -7,7 +7,6 @@
 	<meta charset="utf-8">
 	<title>My clapps</title>
 	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
-	<script src="./js/main.js"></script>
 </head>
 <body>
 	
@@ -89,7 +88,7 @@
 							<img src="#" alt="photo profil" />
 							<p><?php echo $project['Description']; ?></p>
 						</div>
-						<a href="#">Voir plus</a>
+						<a href="#" class="see-more">Voir plus</a>
 					</div><!-- fin preview -->
 					<div class="more">
 						<div class="moreDesc">
@@ -117,6 +116,7 @@
 				
 		<?php } ?>
 	</section>
-		
+	<script src="js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/main.js"></script>
 </body>
 </html>
