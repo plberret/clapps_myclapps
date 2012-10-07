@@ -70,7 +70,7 @@
 			foreach ($getProjects as $project) {
 				
 		?>
-		
+		 
 				<article style="margin: 30px 0; background: #CCC;">
 					<div class="preview">
 						<h2><?php echo $project['Title']; ?></h2>
