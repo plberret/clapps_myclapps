@@ -6,8 +6,8 @@
 <head>
 	<meta charset="utf-8">
 	<title>My clapps</title>
-	<link rel="stylesheet" href="style.css">
-	<script src="script.js"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
+	<script src="./js/main.js"></script>
 </head>
 <body>
 	
@@ -24,8 +24,8 @@
 			</ul>
 		</nav>
 	</header>
+	
 	<section>
-		
 		<form id="newProject" style="margin: 30px 0; background: #DDD;">
 			<p>
 				<label for="">Nom du projet </label>
@@ -116,7 +116,6 @@
 				</article>
 				
 		<?php } ?>
-		
 	</section>
 		
 </body>
