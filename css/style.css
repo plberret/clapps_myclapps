@@ -1,3 +1,4 @@
+
 /* -------------------------------- Reset -----------------------------------*/
 
 html, body, div, span, applet, object, iframe,
@@ -47,6 +48,8 @@ blockquote, q {
 quotes: "" "";
 }
 
+/* clearfix */
+
 .clearfix {height:1%}
 
 .clearfix:after {
@@ -69,15 +72,382 @@ header, footer, section, article, nav {
 	display: block; 
 }
 
+/* ---------------------------------- STYLES -----------------------------------*/
+
+.more {
+	display:none;
+}
 
 
 /* -------------------------------- MISE EN PAGE -----------------------------------*/
 
 body {
+	background: no-repeat url(../images/bg_main.jpg) center 0 #0b0b0b;
+}
+
+#page {
 	width: 810px;
+	margin: 0 auto;
+	font-family: "Verdana";
+	font-size: 12px;
+	color: #ffffff;
+	line-height: 15px;
+}
+
+/* ////// HEADER ////// */
+
+header {
+	height: 317px;
+	padding-top: 24px;
+}
+
+header h1 {
+	background: no-repeat url(../images/logo.png);
+	width: 157px;
+	height: 85px;
+	margin-left: 30px;
+	text-indent: -9999px;
+}
+
+header p {
+	margin: 18px 0 52px 70px;
+	width: 320px;
+	text-shadow: 0px 0px 3px black;
+}
+
+/* menu */
+
+header nav {
+	float: right;
+	margin-right: 62px;
+}
+
+header nav ul li {
+	float: left;
+	margin-left: 12px;
+	-moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+header nav ul li.addProject {
+	height: 31px;
+	line-height: 31px;
+	background: #be8b01;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f3b40b), to(#bc8900));
+ 	background: -moz-linear-gradient(top,#f3b40b,#bc8900);
+	-moz-box-shadow: inset 0 1px #efcd72;
+	-webkit-box-shadow: inset 0 1px #efcd72;
+	box-shadow: inset 0 1px #efcd72;
+	padding: 0 12px 0 9px;
+}
+
+header nav ul li.myProject {
+	margin-top: 4px;
+	height: 27px;
+	line-height: 27px;
+	background: #dcdcdc;
+	background: -webkit-gradient(linear, left top, left bottom, from(#c1c1c1), to(#dcdcdc));
+ 	background: -moz-linear-gradient(top,#c1c1c1,#dcdcdc);
+	-moz-box-shadow: inset 0 1px #ffffff;
+	-webkit-box-shadow: inset 0 1px #ffffff;
+	box-shadow: inset 0 1px #ffffff;
+	padding: 0 12px 0 7px;
+}
+
+header nav ul li a {
+	text-decoration: none;
+	color: #1a1919;
+	font-weight: bold;
+	display: block;
+}
+
+header nav ul li.addProject a:before {
+	position: absolute;
+	left: 21px;
+	content:"";
+	width: 1px;
+	height: 31px;
+	background: #f5ba1f;
+	border-right: 1px solid #7e5b00;
+}
+
+header nav ul li.addProject a {
+	position: relative;
+	background: no-repeat url(../images/logo_ajouter_annonce.png) 0 center;
+	text-shadow: 0px 1px 1px #e9cb7b;
+	padding-left: 30px;
+}
+
+header nav ul li.myProject a {
+	background: no-repeat url(../images/logo_bt_annonces.png) 0 center;
+	text-shadow: 0px 1px 1px #FFF;
+	padding-left: 22px;
+}
+
+
+/* /// CONTENT /// */
+
+section #newProject {
+	display: none;
+}
+
+section article {
+	margin: 0 0 21px 65px;
+	width: 682px;
+}
+
+/* preview */
+
+section article .preview {
+	position: relative;
+	z-index: 2;
+	background: repeat url(../images/noisyBlack.jpg);
+	border: 1px solid #21272c;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 0 0 6px 0 #121417;
+	-webkit-box-shadow: 0 0 6px 0 #121417;
+	box-shadow: 0 0 6px 0 #121417;
+	padding-bottom: 15px;
+}
+
+section article .preview .block_top {
+	position: relative;
+	bottom: 1px;
+	width: 649px;
+	margin: 0 auto 5px;
+	background: repeat-x url(../images/border_top_block.png) -8px 0;
+	padding: 28px 10px 0 9px;
+}
+
+section article .preview .block_top img {
+	float: left;
+	width: 50px;
+	height: 50px;
+	padding: 2px;
+	background: #0b0b0b;
+	border: solid 1px #21272e;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	margin-right: 15px;
+}
+
+section article .preview .block_top .title_block {
+	float: left;
+	width: 577px;
+	background: repeat-x url(../images/border_bottom_title_block.jpg) 0 bottom;
+}
+
+section article .preview .block_top .title_block .title {
+	float: left;
+}
+
+section article .preview .block_top .title_block .title h2 {
+	font-size: 15px;
+	color: #dddddd;
+	padding-top: 6px;
+	line-height: 19px;
+}
+
+section article .preview .block_top .title_block .title div {
+	color: #888888;
+	line-height: 15px;
+	padding-bottom: 12px;
+}
+
+section article .preview .block_top .title_block .title div span {
+	color: #e7e7e7;
+}
+
+section article .preview .block_top .title_block .available {
+	float: right;
+}
+
+section article .preview .block_top .title_block .available a {
+	float: left;
+	display: block;
+	text-decoration: none;
+	color: #101010;
+	margin-right: 21px;
+	width: 30px;
+	height: 29px;
+}
+
+section article .preview .block_top .title_block .available a.actors {
+	background: no-repeat url(../images/logo_actor_available.png);
+}
+
+section article .preview .block_top .title_block .available a.technicians {
+	background: no-repeat url(../images/logo_technician_available.png);
+}
+
+section article .preview .block_top .title_block .available a div {
+	position: relative;
+	top: 11px;
+	left: 25px;
+	background: #f3b91e;
+	width: 17px;
+	height: 17px;
+	line-height: 17px;
+	text-align: center;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+section article .preview .share {
+	margin: 0 auto;
+	width: 644px;
+}
+
+section article .preview .share a {
+	display: block;
+	float: right;
+	color: #959595;
+	text-decoration: none;
+	margin-left: 14px;
+	padding-left: 22px;
+	line-height: 17px;
+}
+
+section article .preview .share a:hover {
+	color: #FFF;
+}
+
+section article .preview .share a.share_link {
+	background: no-repeat url(../images/logo_share_project.png);
+}
+
+section article .preview .share a.favorite_link {
+	background: no-repeat url(../images/logo_add_favorites.png);
+}
+
+section article .preview .desc {
+	margin: 0 24px 10px;
+}
+
+section article .preview .desc h3 {
+	font-size: 12px;
+	color: #FFF;
+	font-weight: bold;
+	padding-bottom: 13px;
+}
+
+section article .preview .desc p {
+	color: #d0d0d0;
+}
+
+section article .preview .see-more,
+section article .preview .see-less {
+	float: left;
+	margin-left: 24px;
+	color: #f3b91e;
+}
+
+section article .preview .see-more:hover,
+section article .preview .see-less:hover {
+	text-decoration: none;
+}
+
+section article .preview .project_id {
+	float: right;
+	margin-right: 20px;
+	color: #55595c;
+}
+
+
+/* more */
+
+section article .more {
+	position: relative;
+	bottom: 2px;
+	z-index: 1;
+	background: repeat url(../images/noisyGrey.jpg);
+	border: 1px solid #21272c;
+	border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	padding: 24px 0 15px 0;
+}
+
+section article .profiles ul {
+	width: 662px;
 	margin: 0 auto;
 }
 
-.more {
-	display:none;
+section article .profiles ul li {
+	background: repeat url(../images/noisyBlack.jpg);
+	-moz-box-shadow: inset 0 0 6px 0 #070708;
+	-webkit-box-shadow: inset 0 0 6px 0 #070708;
+	box-shadow: inset 0 0 6px 0 #070708;
+	border: 1px solid #252f37;
+	margin-bottom: 6px;
+}
+
+section article .profiles ul li .icon {
+	display: block;
+	float: left;
+	background: no-repeat url(../images/logo_actor_profile.png) #0b0d0f center center;
+	width: 52px;
+	min-height: 49px;
+}
+
+section article .profiles ul li .icon span {
+	display: block;
+	position: relative;
+	top: -1px;
+	left: -2px;
+	color: #101010;
+	background: #f3b91e;
+	width: 17px;
+	height: 17px;
+	line-height: 17px;
+	text-align: center;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+section article .profiles ul li p {
+	float: left;
+	width: 445px;
+	margin: 17px 0 17px 20px;
+}
+
+section article .profiles ul li .apply {
+	float: right;
+	margin-top: 13px;
+	margin-right: 13px;
+	background: #d09804;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f3b40b), to(#bc8900));
+ 	background: -moz-linear-gradient(top,#f3b40b,#bc8900);
+	-moz-box-shadow: 0 3px 7px -3px #0c0e0f;
+	-webkit-box-shadow: 0 3px 7px -3px #0c0e0f;
+	box-shadow: 0 3px 7px -3px #0c0e0f;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+section article .profiles ul li .apply a {
+	display: block;
+	-moz-box-shadow: inset 0 1px #efcd72;
+	-webkit-box-shadow: inset 0 1px #efcd72;
+	box-shadow: inset 0 1px #efcd72;
+	height: 23px;
+	line-height: 23px;
+	font-weight: bold;
+	color: #1a1919;
+	text-decoration: none;
+	padding: 0 23px;
+	text-shadow: 0px 1px 1px #eacd81;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
