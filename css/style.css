@@ -373,9 +373,15 @@ section article .more {
 	border-bottom-right-radius: 3px;
 	-moz-border-radius-bottomright: 3px;
 	-webkit-border-bottom-right-radius: 3px;
-	padding: 24px 0 15px 0;
 }
 
+section article .profiles {
+	padding-top: 24px;
+}
+
+section article .manage {
+	padding-bottom: 15px;
+}
 section article .profiles ul {
 	width: 662px;
 	margin: 0 auto;

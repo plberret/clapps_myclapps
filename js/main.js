@@ -15,6 +15,10 @@ zf.seeMore = function($this) {
 
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
+	zf.$newProject.find('#add-post').click(function(event) {
+		
+	});
+	
 	zf.$newProject.on('submit', function(event) {
 		event.preventDefault();
 		$.ajax({

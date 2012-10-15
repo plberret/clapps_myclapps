@@ -23,6 +23,7 @@
 				$R2->bindParam(':id',$ID);
 				$R2->bindParam(':person',$data['profile'][$dat]);
 				$R2->bindParam(':domain',$data['domain'][$dat]);
+				if($R2->execute()){}
 			}
 		}
 	 }
