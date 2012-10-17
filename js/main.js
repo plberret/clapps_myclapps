@@ -16,7 +16,10 @@ zf.seeMore = function($this) {
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	zf.$newProject.find('#add-post').click(function(event) {
-		
+		if (zf.$newProject.find('#profileList p:last .name').val!='') { // if last post isn't empty
+			// add another one
+			var newPost = $('<div>')
+		};
 	});
 	
 	zf.$newProject.on('submit', function(event) {

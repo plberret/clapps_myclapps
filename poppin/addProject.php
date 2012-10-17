@@ -10,7 +10,7 @@
 	<div id="profileList">
 		<p>
 			<label for="">Poste recherché : </label>
-			<input type="text" name="profile[]" />
+			<input type="text" name="profile[]" class="name" />
 			<select name="domain[]">
 				<option value="actor">Acteur</option>
 				<option value="technicien">Technicien</option>
@@ -18,7 +18,7 @@
 		</p>
 		<p>
 			<label for="">Poste recherché : </label>
-			<input type="text" name="profile[]" />
+			<input type="text" name="profile[]" class="name" />
 			<select name="domain[]">
 				<option value="actor">Acteur</option>
 				<option value="technicien">Technicien</option>
