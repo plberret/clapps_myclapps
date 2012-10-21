@@ -15,14 +15,27 @@ zf.seeMore = function($this) {
 
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
-	zf.$newProject.find('#add-post').click(function(event) {
-		if (zf.$newProject.find('#profileList p:last .name').val!='') { // if last post isn't empty
-			// add another one
-			var newPost = $('#profileList p').eq(0).clone().find('.name').val('').end();
-			zf.$newProject.find('#profileList a').before(newPost);
-		};
+	
+	// ADD POST
+	zf.$newProject.on('click','#add-post',function(event) {
+		// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
+			var newPost = zf.$newProject.find('.profiles p:last').clone();
+			$(this).attr('id','').removeClass('add-post').addClass('delete').html('-')
+			zf.$newProject.find('.profiles').append(newPost);
+		// };
 	});
 	
+	// DELETE POST
+	zf.$newProject.on('click','.delete',function(event) {
+		var $this=$(this);
+		if ($this.parent('p').find('.entitled').val()!='') { // if last post isn't empty
+			var oldPost = $this.parent('p').clone().end().remove();
+		} else {
+			$this.parent('p').remove();
+		}
+	});
+	
+	// SEND PROJECT
 	zf.$newProject.on('submit', function(event) {
 		event.preventDefault();
 		$.ajax({

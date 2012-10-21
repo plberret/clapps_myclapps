@@ -16,7 +16,7 @@
 	<div class="profiles">
 		<h3>Ajouter un(des) poste(s)</h3>
 		<p class="clearfix">
-			<input type="text" name="profile[]" class="entitled" value="Intitulé du poste recherché" />
+			<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
 			<select name="domain[]">
 				<option value="1">Acteur</option>
 				<option value="2">Technicien</option>
@@ -27,7 +27,7 @@
 			<a href="#" class="delete">-</a>
 		</p>
 		<p class="clearfix">
-			<input type="text" name="profile[]" class="entitled" value="Intitulé du poste recherché" />
+			<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
 			<select name="domain[]">
 				<option value="1">Acteur</option>
 				<option value="2">Technicien</option>
