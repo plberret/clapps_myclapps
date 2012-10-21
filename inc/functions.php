@@ -64,7 +64,7 @@
 		
 		global $baseDD;
 		
-		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` WHERE id_project=:project ");
+		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` WHERE id_project=:project AND current_state=1");
 		 $R1->bindParam(':project',$project);
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 		
