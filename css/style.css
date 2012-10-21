@@ -457,3 +457,160 @@ section article .profiles ul li .apply a {
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
+
+/* -------------------------------- POPIN AJOUTER PROJET -----------------------------------*/
+
+.fancybox-overlay form {
+	width: 684px;
+/*	height: 537px;*/
+	padding-bottom: 30px;
+}
+
+.fancybox-overlay form h2 {
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 14px;
+	background: repeat-x url('../images/border_bottom_title_block.jpg') 0 bottom;
+	padding: 0 0 15px 2px;
+	margin: 3px 5px 0 5px;
+}
+
+.fancybox-overlay form h3 {
+	margin: 26px 0 22px 3px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #828282;
+}
+
+.fancybox-overlay form input {
+	background: #0c0e11;
+	border: 1px solid #1a2026;
+	color: #d1d1d1;
+	font-size: 13px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.fancybox-overlay form select {
+	background: #0c0e11;
+	border: 1px solid #1a2026;
+	color: #d1d1d1;
+	font-size: 13px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.fancybox-overlay form textarea {
+	resize: none;
+	background: #0c0e11;
+	border: 1px solid #1a2026;
+	color: #d1d1d1;
+	font-size: 13px;
+	line-height: 17px;
+	padding: 12px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.fancybox-overlay form div {
+	margin: 0 23px 0 17px;
+}
+
+.fancybox-overlay form .desc p {
+	margin: 10px 0;
+}
+
+.fancybox-overlay form .desc p input {
+	width: 451px;
+	height: 12px;
+	padding: 11px 13px;
+}
+
+.fancybox-overlay form .desc p em {
+	font-size: 11px;
+	color: #a9a9a9;
+	padding-left: 6px;
+}
+
+.fancybox-overlay form .desc p textarea {
+	width: 453px;
+	height: 104px;
+}
+
+.fancybox-overlay form .profiles p {
+	position: relative;
+	margin: 4px 0;
+}
+
+.fancybox-overlay form .profiles p a {
+	display: block;
+	text-decoration: none;
+}
+
+.fancybox-overlay form .profiles p input.entitled {
+	width: 314px;
+	height: 15px;
+	padding: 6px 10px;
+}
+
+.fancybox-overlay form .profiles p select {
+	width: 168px;
+	height: 27px;
+}
+
+.fancybox-overlay form .profiles p input.number {
+	width: 61px;
+	height: 15px;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: center;
+	padding: 6px 0;
+}
+
+.fancybox-overlay form .profiles p .number_control  {
+	position: absolute;
+	width: 17px;
+	height: 25px;
+	text-align: center;
+	background: #cacaca;
+	color: #5d5d5d;
+	line-height: 25px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.fancybox-overlay form .profiles p .less {
+	top: 2px ;
+	left: 506px;
+}
+
+.fancybox-overlay form .profiles p .more {
+	top: 2px;
+	left: 548px;
+}
+
+.fancybox-overlay form .profiles p .delete {
+
+}
+
+.fancybox-overlay form .profiles p .add-post {
+
+}
+
+.fancybox-overlay form .profiles input,
+.fancybox-overlay form .profiles select, 
+.fancybox-overlay form .profiles a {
+	float: left;
+}
+
+.fancybox-overlay form #add-project {
+	float: right;
+	background: #bd8a00;
+	color: #1a1919;
+	margin-top: 23px;
+	margin-right: 20px;
+	cursor: pointer;
+}

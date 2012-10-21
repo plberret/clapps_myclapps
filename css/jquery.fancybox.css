@@ -17,6 +17,10 @@
 	vertical-align: top;
 }
 
+.fancybox-overlay {
+	font-family: verdana;
+}
+
 .fancybox-wrap {
 	position: absolute;
 	top: 0;
@@ -26,12 +30,13 @@
 
 .fancybox-skin {
 	position: relative;
-	background: #f9f9f9;
+	background: repeat url("../images/noisyBlack.jpg");
+	border: 1px solid #21272c;
 	color: #444;
 	text-shadow: none;
-	-webkit-border-radius: 4px;
-	   -moz-border-radius: 4px;
-	        border-radius: 4px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .fancybox-opened {
@@ -58,7 +63,7 @@
 
 .fancybox-error {
 	color: #444;
-	font: 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font: 14px/20px verdana;
 	margin: 0;
 	padding: 15px;
 	white-space: nowrap;
@@ -75,7 +80,7 @@
 	max-height: 100%;
 }
 
-#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span {
+#fancybox-loading, .fancybox-prev span, .fancybox-next span {
 	background-image: url('../images/fancybox_sprite.png');
 }
 
@@ -99,12 +104,13 @@
 
 .fancybox-close {
 	position: absolute;
-	top: -18px;
-	right: -18px;
-	width: 36px;
-	height: 36px;
+	top: 18px;
+	right: 17px;
+	width: 13px;
+	height: 13px;
 	cursor: pointer;
 	z-index: 8040;
+	background-image: url('../images/fancybox_close.png');
 }
 
 .fancybox-nav {
@@ -190,7 +196,7 @@
 
 .fancybox-title {
 	visibility: hidden;
-	font: normal 13px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font: 14px/20px verdana;
 	position: relative;
 	text-shadow: none;
 	z-index: 8050;
