@@ -12,16 +12,16 @@
 			<label for="">Poste recherché : </label>
 			<input type="text" name="profile[]" class="name" />
 			<select name="domain[]">
-				<option value="actor">Acteur</option>
-				<option value="technicien">Technicien</option>
+				<option value="1">Acteur</option>
+				<option value="2">Technicien</option>
 			</select>
 		</p>
 		<p>
 			<label for="">Poste recherché : </label>
 			<input type="text" name="profile[]" class="name" />
 			<select name="domain[]">
-				<option value="actor">Acteur</option>
-				<option value="technicien">Technicien</option>
+				<option value="1">Acteur</option>
+				<option value="2">Technicien</option>
 			</select>
 		</p>
 		<a href="#" id="add-post">Ajouter un poste</a>
