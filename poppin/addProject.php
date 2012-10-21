@@ -1,4 +1,3 @@
-
 <form id="newProject" action="requests/addProject.php" method="post">
 	
 	<h2>Ajouter une annonce</h2>
@@ -43,5 +42,4 @@
 	<p class="clearfix">
 		<input type="submit" id="add-project" value="Publier l'annonce" />
 	</p>
-
 </form>
