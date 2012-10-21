@@ -18,7 +18,8 @@ zf.initAddProject = function() {
 	zf.$newProject.find('#add-post').click(function(event) {
 		if (zf.$newProject.find('#profileList p:last .name').val!='') { // if last post isn't empty
 			// add another one
-			var newPost = $('<div>')
+			var newPost = $('#profileList p').eq(0).clone().find('.name').val('').end();
+			zf.$newProject.find('#profileList a').before(newPost);
 		};
 	});
 	
