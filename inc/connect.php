@@ -2,7 +2,7 @@
 
 $host="localhost";
 $user="root";
-$pass="";
+$pass="";  
 $base="appliMyClapps";
 
 function connect($host,$user,$pass, $base) {
