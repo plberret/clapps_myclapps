@@ -5,11 +5,11 @@
 	<div class="desc">
 		<h3>Informations générales</h3>
 		<p>
-			<input type="text" name="title" id="title" value="Titre de votre annonce" />
+			<input type="text" name="title" id="title" placeholder="Titre de votre annonce" />
 			<em>80 caractères restants</em>
 		</p>
 		<p>
-			<textarea id="desc" name="desc" >Description de votre annonce...</textarea>
+			<textarea id="desc" name="desc" placeholder="Description de votre annonce..."></textarea>
 		</p>
 	</div>
 	
@@ -22,7 +22,7 @@
 				<option value="2">Technicien</option>
 			</select>
 			<a href="#" class="less number_control">-</a>
-			<input type="text" value="7" class="number" />
+			<input type="text" value="1" class="number" />
 			<a href="#" class="more number_control">+</a>
 			<a href="#" class="delete">-</a>
 		</p>
@@ -33,7 +33,7 @@
 				<option value="2">Technicien</option>
 			</select>
 			<a href="#" class="less number_control">-</a>
-			<input type="text" value="7" class="number" />
+			<input type="text" value="1" class="number" />
 			<a href="#" class="more number_control">+</a>
 			<a href="#" id="add-post">+</a>
 		</p>

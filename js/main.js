@@ -43,7 +43,9 @@ zf.initAddProject = function() {
 			type: $(this).attr('method'),
 			data: $(this).serialize(),
 			success: function(html) {
-				console.log(html);
+				// console.log(html);
+				$.fancybox.close();
+				location.reload();
 			}
 		});
 	})
@@ -69,12 +71,16 @@ zf.init = function(){
 	zf.$projects = zf.$page.find('.project');
 	
 	zf.$page.find(".addProject a").fancybox({
-		afterShow: zf.initAddProject
+		afterShow: zf.initAddProject,
+		closeClick  : false,
+		helpers   : { 
+			overlay : {closeClick: false}
+		}
 	});
 	
 	
-	zf.$page.find('.myProject').click(function() {
-		
+	zf.$page.find('.myProject').click(function(event) {
+		event.preventDefault();
 	});
 	
 	zf.$projects.find('.see-more').click(function(event) {
