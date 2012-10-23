@@ -49,10 +49,10 @@
 										<?php $activeActors=getActiveActors($project['id_project']); ?>
 										<?php $activeTechnicians=getActiveTechnicians($project['id_project']); ?>
 										<a href="#" class="actors">
-											<div><?php echo count($activeActors); ?></div>
+											<div><?php echo getOccurences($activeActors); ?></div>
 										</a> 
 										<a href="#" class="technicians">
-											<div><?php echo count($activeTechnicians); ?></div>
+											<div><?php echo getOccurences($activeTechnicians); ?></div>
 										</a>
 									</div>
 								</div>
@@ -77,7 +77,7 @@
 									<?php $getProfiles=getProfiles($project['id_project']); ?>
 									<?php foreach ($getProfiles as $profile) { ?>
 										<li class="clearfix">
-											<div class="icon"><span>1</span></div>
+											<div class="icon"><span><?php echo $profile['occurence']; ?></span></div>
 											<p><?php echo $profile['person']; ?></p>
 											<div class="apply"><a href="#">Postuler</a></div>
 										</li>

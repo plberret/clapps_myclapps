@@ -5,12 +5,12 @@
 	function addProject($data){
 		 
 		global $baseDD;
-		//print_r($data);
+		print_r($data);
 		$data['id_creator'] = '1';
 		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date) VALUES ( :title, :description, :id_creator, NOW())");
 		$R1->bindParam(':title',$data['title']);
 		$R1->bindParam(':description',$data['desc']);
-		$R1->bindParam(':id',$data['id_creator']);
+		$R1->bindParam(':id_creator',$data['id_creator']);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 
 		if($R1->execute()){
@@ -19,9 +19,10 @@
 		
 		foreach ($data['profile'] as $dat => $key) {
 			if (!empty($data['profile'][$dat]) && !empty($data['domain'][$dat])) {
-				$R2=$baseDD->prepare("INSERT INTO `mc_profile` (id_project, person, domain) VALUES ( :id, :person, :domain)");
+				$R2=$baseDD->prepare("INSERT INTO `mc_profile` (id_project, person, occurence, domain) VALUES ( :id, :person, :occurence, :domain)");
 				$R2->bindParam(':id',$ID);
 				$R2->bindParam(':person',$data['profile'][$dat]);
+				$R2->bindParam(':occurence',$data['occurence'][$dat]);
 				$R2->bindParam(':domain',$data['domain'][$dat]);
 				if($R2->execute()){}
 			}
@@ -74,13 +75,21 @@
 		
 		 return $profiles;
 		
-	 }
+	}
+	
+	function getOccurences($ppl){
+		$occurence=0;
+		foreach ($ppl as $occ) {
+			$occurence+=$occ['occurence'];
+		}
+		return $occurence;
+	}
 	
 	function getActiveActors($project){
 
 		global $baseDD;
 
-		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` WHERE id_project=:project AND domain=1 AND current_state=1 ");
+		 $R1=$baseDD->prepare("SELECT person, occurence FROM `mc_profile` WHERE id_project=:project AND domain=1 AND current_state=1 ");
 		 $R1->bindParam(':project',$project);
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 
