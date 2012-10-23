@@ -6,11 +6,11 @@
 		 
 		global $baseDD;
 		//print_r($data);
-		$data['id'] = '1';
-		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date) VALUES ( :title, :description, :id, NOW())");
+		$data['id_creator'] = '1';
+		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date) VALUES ( :title, :description, :id_creator, NOW())");
 		$R1->bindParam(':title',$data['title']);
 		$R1->bindParam(':description',$data['desc']);
-		$R1->bindParam(':id',$data['id']);
+		$R1->bindParam(':id',$data['id_creator']);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 
 		if($R1->execute()){
@@ -32,7 +32,7 @@
 		 
 		global $baseDD;
 		 
-		 $R1=$baseDD->prepare("SELECT * FROM `mc_project`");
+		 $R1=$baseDD->prepare("SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`");
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 		
 		 if($R1->execute()){
