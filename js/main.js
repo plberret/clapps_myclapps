@@ -16,8 +16,24 @@ zf.seeMore = function($this) {
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	
+	// UP NUMBER VALUES FOR POST
+	zf.$newProject.on('click','.profiles p .number_control',function(event) {
+		event.preventDefault();
+		var $this=$(this);
+		zf.$number = $this.siblings('.number')
+		if($this.hasClass('more')){
+			zf.$number.val(parseInt(zf.$number.val())+1)
+		}
+		if($this.hasClass('less')){
+			if (zf.$number.val()!="0") {
+				zf.$number.val(parseInt(zf.$number.val())-1)
+			}
+		}
+	});
+	
 	// ADD POST
 	zf.$newProject.on('click','#add-post',function(event) {
+		event.preventDefault();
 		// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
 			var newPost = zf.$newProject.find('.profiles p:last').clone();
 			$(this).attr('id','').removeClass('add-post').addClass('delete').html('-')
@@ -27,6 +43,7 @@ zf.initAddProject = function() {
 	
 	// DELETE POST
 	zf.$newProject.on('click','.delete',function(event) {
+		event.preventDefault();
 		var $this=$(this);
 		if ($this.parent('p').find('.entitled').val()!='') { // if last post isn't empty
 			var oldPost = $this.parent('p').clone().end().remove();
@@ -43,7 +60,7 @@ zf.initAddProject = function() {
 			type: $(this).attr('method'),
 			data: $(this).serialize(),
 			success: function(html) {
-				// console.log(html);
+				console.log(html);
 				$.fancybox.close();
 				location.reload();
 			}

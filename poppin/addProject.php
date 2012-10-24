@@ -22,7 +22,7 @@
 				<option value="2">Technicien</option>
 			</select>
 			<a href="#" class="less number_control">-</a>
-			<input type="text" value="1" class="number" />
+			<input type="text" value="1" class="number" name="occurence[]"/>
 			<a href="#" class="more number_control">+</a>
 			<a href="#" class="delete">-</a>
 		</p>
@@ -33,7 +33,7 @@
 				<option value="2">Technicien</option>
 			</select>
 			<a href="#" class="less number_control">-</a>
-			<input type="text" value="1" class="number" />
+			<input type="text" value="1" class="number" name="occurence[]"/>
 			<a href="#" class="more number_control">+</a>
 			<a href="#" id="add-post">+</a>
 		</p>

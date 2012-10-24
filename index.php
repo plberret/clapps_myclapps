@@ -34,26 +34,25 @@
 			//	print_r($getProjects);
 				echo '</pre>';
 			
-				foreach ($getProjects as $project) {
-				
+				foreach ($getProjects as $project) :
 			?>
 					<article class="project">
 						<div class="preview">
 							<div class="block_top clearfix">
-								<img src="./images/img_test.jpg" alt="photo profil" />
+								<img src="<?php echo $project['img_creator'] ?>" alt="photo profil" />
 								<div class="title_block">
 									<div class="title">
 										<h2><?php echo $project['title']; ?></h2>
-										<div>Ajouté par <span>Admin</span> le 07.10.12</div>
+										<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le 07.10.12</div>
 									</div>
 									<div class="available clearfix">
 										<?php $activeActors=getActiveActors($project['id_project']); ?>
 										<?php $activeTechnicians=getActiveTechnicians($project['id_project']); ?>
 										<a href="#" class="actors">
-											<div><?php echo count($activeActors); ?></div>
+											<div><?php echo getOccurences($activeActors); ?></div>
 										</a> 
 										<a href="#" class="technicians">
-											<div><?php echo count($activeTechnicians); ?></div>
+											<div><?php echo getOccurences($activeTechnicians); ?></div>
 										</a>
 									</div>
 								</div>
@@ -65,7 +64,7 @@
 							</div>
 							<div class="desc">
 								<h3>Détails de l'annonce :</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non metus mauris. Nullam rutrum laoreet adipiscing. Vivamus sed sem magna, eu laoreet massa. Quisque congue porttitor dui, nec malesuada mi semper porttitor. Praesent ac nisl mollis nulla eleifend consequat eu at lorem. Vestibulum a nunc diam...<?php //echo $project['Description']; ?></p>
+								<p><?php echo $project['description']; ?></p>
 							</div>
 							<div class="clearfix">
 								<a href="#" class="see-more">Voir plus</a>
@@ -78,7 +77,7 @@
 									<?php $getProfiles=getProfiles($project['id_project']); ?>
 									<?php foreach ($getProfiles as $profile) { ?>
 										<li class="clearfix">
-											<div class="icon"><span>1</span></div>
+											<div class="icon"><span><?php echo $profile['occurence']; ?></span></div>
 											<p><?php echo $profile['person']; ?></p>
 											<div class="apply"><a href="#">Postuler</a></div>
 										</li>
@@ -91,7 +90,7 @@
 							</div>
 						</div><!-- fin more -->
 					</article>
-			<?php } ?>
+			<?php endforeach; ?>
 		</section>
 	</div> <!-- fin page-->
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
