@@ -25,7 +25,7 @@ zf.initAddProject = function() {
 			zf.$number.val(parseInt(zf.$number.val())+1)
 		}
 		if($this.hasClass('less')){
-			if (zf.$number.val()!="0") {
+			if (zf.$number.val()!="1") {
 				zf.$number.val(parseInt(zf.$number.val())-1)
 			}
 		}
@@ -35,7 +35,7 @@ zf.initAddProject = function() {
 	zf.$newProject.on('click','#add-post',function(event) {
 		event.preventDefault();
 		// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
-			var newPost = zf.$newProject.find('.profiles p:last').clone();
+			var newPost = zf.$newProject.find('.profiles p:last').clone().find('.entitled').val('').siblings('.number').val('1').end().end();
 			$(this).attr('id','').removeClass('add-post').addClass('delete').html('-')
 			zf.$newProject.find('.profiles').append(newPost);
 		// };
