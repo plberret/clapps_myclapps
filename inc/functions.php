@@ -33,7 +33,7 @@
 		 
 		global $baseDD;
 		 
-		 $R1=$baseDD->prepare("SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`");
+		 $R1=$baseDD->prepare("SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` ORDER BY id_project DESC");
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 		
 		 if($R1->execute()){
