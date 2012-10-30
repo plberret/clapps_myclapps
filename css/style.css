@@ -264,9 +264,10 @@ section article .preview .block_top .title_block .title div span {
 
 section article .preview .block_top .title_block .available {
 	float: right;
+	position: relative;
 }
 
-section article .preview .block_top .title_block .available a {
+section article .preview .block_top .title_block .available .profile {
 	float: left;
 	display: block;
 	text-decoration: none;
@@ -274,17 +275,19 @@ section article .preview .block_top .title_block .available a {
 	margin-right: 21px;
 	width: 30px;
 	height: 29px;
+	cursor: pointer;
 }
 
-section article .preview .block_top .title_block .available a.actors {
+section article .preview .block_top .title_block .available .profile.actors {
 	background: no-repeat url(../images/logo_actor_available.png);
 }
 
-section article .preview .block_top .title_block .available a.technicians {
+section article .preview .block_top .title_block .available .profile.technicians {
 	background: no-repeat url(../images/logo_technician_available.png);
 }
 
-section article .preview .block_top .title_block .available a div {
+section article .preview .block_top .title_block .available .profile span {
+	display: block;
 	position: relative;
 	top: 11px;
 	left: 25px;
@@ -296,6 +299,44 @@ section article .preview .block_top .title_block .available a div {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+}
+
+section article .preview .block_top .title_block .available .profile p {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 45px;
+	width: 350px;
+	height: 30px;
+	line-height: 30px;
+	color: #ffffff;
+	font-size: 12px;
+	text-align: center;
+	background: #040404;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+section article .preview .block_top .title_block .available .profile:hover p {
+	display: block;
+}
+
+section article .preview .block_top .title_block .available .profile p:before {
+	position: absolute;
+	top: -6px;
+	content:"";
+	width: 10px;
+	height: 6px;
+	background: no-repeat url(../images/arrow_number_profile_available.png);
+}
+
+section article .preview .block_top .title_block .available .profile.actors p:before {
+	left: 260px;
+}
+
+section article .preview .block_top .title_block .available .profile.technicians p:before {
+	left: 310px;
 }
 
 section article .preview .share {
@@ -399,9 +440,17 @@ section article .profiles ul li {
 section article .profiles ul li .icon {
 	display: block;
 	float: left;
-	background: no-repeat url(../images/logo_actor_profile.png) #0b0d0f center center;
 	width: 52px;
 	min-height: 49px;
+}
+
+
+section article .profiles ul li .iconActor {
+	background: no-repeat url(../images/logo_actor_profile.png) #0b0d0f center center;
+}
+
+section article .profiles ul li .iconTechnician {
+	background: no-repeat url(../images/logo_technician_profile.png) #0b0d0f center center;
 }
 
 section article .profiles ul li .icon span {
