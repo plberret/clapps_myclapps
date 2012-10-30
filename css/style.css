@@ -305,7 +305,7 @@ section article .preview .block_top .title_block .available .profile p {
 	display: none;
 	position: absolute;
 	right: 0;
-	top: 45px;
+	top: 39px;
 	width: 350px;
 	height: 30px;
 	line-height: 30px;
@@ -400,7 +400,7 @@ section article .preview .project_id {
 }
 
 
-/* more */
+/* ----- more ----- */
 
 section article .more {
 	position: relative;
@@ -481,7 +481,7 @@ section article .profiles ul li .apply {
 	margin-right: 13px;
 	background: #d09804;
 	background: -webkit-gradient(linear, left top, left bottom, from(#f3b40b), to(#bc8900));
- 	background: -moz-linear-gradient(top,#f3b40b,#bc8900);
+	background: -moz-linear-gradient(top,#f3b40b,#bc8900);
 	-moz-box-shadow: 0 3px 7px -3px #0c0e0f;
 	-webkit-box-shadow: 0 3px 7px -3px #0c0e0f;
 	box-shadow: 0 3px 7px -3px #0c0e0f;
@@ -506,6 +506,29 @@ section article .profiles ul li .apply a {
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
+
+/*profile found */
+
+section article .profiles ul li.profileFound .icon span {
+	display: none;
+}
+
+section article .profiles ul li.profileFound p {
+	width: 425px;
+}
+
+section article .profiles ul li.profileFound .applyFound {
+	float: right;
+	color: #cbcbcb;
+	font-size: 12px;
+	height: 49px;
+	line-height: 49px;
+	background: no-repeat url('../images/check_profile_founded.png') right center;
+	padding-right: 36px;
+	margin-right: 15px;
+}
+
+
 
 /* -------------------------------- POPIN AJOUTER PROJET -----------------------------------*/
 

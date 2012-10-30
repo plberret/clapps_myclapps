@@ -32,6 +32,8 @@
 			
 				foreach ($getProjects as $project) :
 			?>
+			<pre><?php //print_r($getProjects); ?></pre>
+			
 					<article class="project">
 						<div class="preview">
 							<div class="block_top clearfix">
@@ -66,7 +68,7 @@
 							</div>
 							<div class="clearfix">
 								<a href="#" class="see-more">Voir plus</a>
-								<div class="project_id">#1</div>
+								<div class="project_id">#<?php echo $project['id_project']; ?></div>
 							</div>
 						</div><!-- fin preview -->
 						<div class="more">
@@ -89,12 +91,12 @@
 											<div class="apply"><a href="#">Postuler</a></div>
 										</li>
 									<?php } ?>
-									<li class="clearfix profileFounded">
-										<div class="icon <?php echo $profileDomain; ?>">
+									<li class="clearfix profileFound">
+										<div class="icon iconTechnician">
 											<span><?php echo $profile['occurence']; ?></span>
 										</div>
-										<p><?php echo $profile['person']; ?></p>
-										<div class="apply"><a href="#">Postuler</a></div>
+										<p>Exemple de profil trouvé</p>
+										<div class="applyFound">Candidat trouvé</div>
 									</li>
 								</ul>
 							</div><!-- fin profile -->
