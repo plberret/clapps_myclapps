@@ -29,12 +29,10 @@
 			
 				$getProjects=getProjects();
 			
-				echo '<pre>';
-			//	print_r($getProjects);
-				echo '</pre>';
-			
 				foreach ($getProjects as $project) :
 			?>
+			<pre><?php //print_r($getProjects); ?></pre>
+			
 					<article class="project">
 						<div class="preview">
 							<div class="block_top clearfix">
@@ -47,12 +45,14 @@
 									<div class="available clearfix">
 										<?php $activeActors=getActiveActors($project['id_project']); ?>
 										<?php $activeTechnicians=getActiveTechnicians($project['id_project']); ?>
-										<a href="#" class="actors">
-											<div><?php echo getOccurences($activeActors); ?></div>
-										</a> 
-										<a href="#" class="technicians">
-											<div><?php echo getOccurences($activeTechnicians); ?></div>
-										</a>
+										<div class="actors profile">
+											<span><?php echo getOccurences($activeActors); ?></span>
+											<p>Il reste <?php echo getOccurences($activeActors); ?> poste(s) de comédien(nes) disponible(s)</p>
+										</div> 
+										<div class="technicians profile">
+											<span><?php echo getOccurences($activeTechnicians); ?></span>
+											<p>Il reste <?php echo getOccurences($activeTechnicians); ?> poste(s) de technicien(nes) disponible(s)</p>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -67,7 +67,7 @@
 							</div>
 							<div class="clearfix">
 								<a href="#" class="see-more">Voir plus</a>
-								<div class="project_id">#1</div>
+								<div class="project_id">#<?php echo $project['id_project']; ?></div>
 							</div>
 						</div><!-- fin preview -->
 						<div class="more">
@@ -76,17 +76,33 @@
 									<?php $getProfiles=getProfiles($project['id_project']); ?>
 									<?php foreach ($getProfiles as $profile) { ?>
 										<li class="clearfix">
-											<div class="icon"><span><?php echo $profile['occurence']; ?></span></div>
+											<?php 
+												if($profile['domain']==1){
+													$profileDomain="iconActor"; 
+												}elseif($profile['domain']==2){
+													$profileDomain="iconTechnician"; 
+												} 
+											?>
+											<div class="icon <?php echo $profileDomain; ?>">
+												<span><?php echo $profile['occurence']; ?></span>
+											</div>
 											<p><?php echo $profile['person']; ?></p>
 											<div class="apply"><a href="#">Postuler</a></div>
 										</li>
 									<?php } ?>
+									<li class="clearfix profileFound">
+										<div class="icon iconTechnician">
+											<span><?php echo $profile['occurence']; ?></span>
+										</div>
+										<p>Exemple de profil trouvé</p>
+										<div class="applyFound">Candidat trouvé</div>
+									</li>
 								</ul>
 							</div><!-- fin profile -->
-							<div class="manage">
+							<!--<div class="manage">
 								<a href="#">Cloturer l'annonce</a>
 								<a href="#">Supprimer l'annonce</a>
-							</div>
+							</div>-->
 						</div><!-- fin more -->
 					</article>
 			<?php endforeach; ?>
