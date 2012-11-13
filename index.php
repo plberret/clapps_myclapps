@@ -1,4 +1,3 @@
-
 <?php require_once('./inc/functions.php'); ?>
 
 <!doctype html>
