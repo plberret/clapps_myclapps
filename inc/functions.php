@@ -28,6 +28,8 @@
 				if($R2->execute()){}
 			}
 		}
+
+		echo json_encode(array('id' => $ID));
 	 }
 
 	 function getNbProject($user_fb)
@@ -85,6 +87,20 @@
 		return $projects;
 	 }
 	
+	 function getProject($id_project){
+
+		global $baseDD;
+		$sql = "SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project";
+		$array = array('id_project' => $id_project);
+		$R1=$baseDD->prepare($sql);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+		
+		if($R1->execute($array)){
+			$projects=$R1->fetchAll();
+		}
+		 
+		return $projects;
+	 }
 /*	function getUserProjects(){ Depreciated by getProjects($id_creator)
 
 		global $baseDD;

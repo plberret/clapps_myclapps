@@ -26,6 +26,18 @@ zf.getMoreProjects = function($this) {
 	});
 }
 
+zf.getOneProject = function(id) {
+	var $newProject = $('<div/>');
+	$newProject.load('index.php?id_project='+id+' #projects',function(resp) {
+		$newProject.find('.project').each(function() {
+			var $this=$(this);
+			setTimeout(function() {
+				zf.$projectsList.find('.project').eq(0).before($this.hide().fadeIn(500));
+			},$this.index*1000);
+		})
+	});
+}
+
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	
@@ -72,10 +84,11 @@ zf.initAddProject = function() {
 			url: $(this).attr('action'),
 			type: $(this).attr('method'),
 			data: $(this).serialize(),
-			success: function(html) {
-				console.log(html);
+			success: function(resp) {
+				resp = JSON.parse(resp);
 				$.fancybox.close();
-				location.reload();
+				zf.getOneProject(resp.id)
+				// location.reload();
 			}
 		});
 	})

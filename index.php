@@ -31,7 +31,11 @@
 		</header>
 		<section id="projects">
 			<?php
-				$getProjects=getProjects($page,$_GET['user_fb']);
+				if (isset($_GET['id_project'])) :
+					$getProjects=getProject($_GET['id_project']);
+				else:
+					$getProjects=getProjects($page,$_GET['user_fb']);
+				endif;
 				foreach ($getProjects as $project): ?>
 					<article class="project">
 						<div class="preview">
@@ -105,7 +109,7 @@
 							</div>-->
 						</div><!-- fin more -->
 					</article>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
 			<?php if ($nbProject>POST_PER_PAGE): ?>
 				<div class="btn-more-projects">
 					<a href="?page=<?php echo $page+1; ?>" data-nav="<?php echo $page ?>">charger plus de projets</a>
