@@ -13,6 +13,19 @@ zf.seeMore = function($this) {
 	});
 }
 
+zf.getMoreProjects = function($this) {
+	zf.projectCurrentPage++;
+	var $newProject = $('<div/>');
+	$newProject.load('index.php?page='+zf.projectCurrentPage+' #projects',function(resp) {
+		$newProject.find('.project').each(function() {
+			var $this=$(this);
+			setTimeout(function() {
+				zf.$projectsList.find('.btn-more-projects').before($this.hide().fadeIn(500));
+			},$this.index*300);
+		})
+	});
+}
+
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	
@@ -72,20 +85,15 @@ zf.init = function(){
 	$('body').addClass('has-js');
 	// console.log('ok');
 	
-	// Reset form focus
-	$('.reset-focus').focus(function(){
-		if($(this).attr('value') == this.defaultValue) $(this).attr('value', '');
-	}).blur(function(){
-		if($.trim(this.value) == '') this.value = (this.defaultValue ? this.defaultValue : '');
-	});
-	
 	// Blank links
 	$('a[rel=external]').click(function(){
 		window.open($(this).attr('href'));
 		return false;
 	});
+
 	zf.$page = $('#page');
 	zf.$projects = zf.$page.find('.project');
+	zf.$projectsList = zf.$page.find('#projects');
 	
 	zf.$page.find(".addProject a").fancybox({
 		afterShow: zf.initAddProject,
@@ -103,6 +111,13 @@ zf.init = function(){
 	zf.$projects.find('.see-more').click(function(event) {
 		event.preventDefault();
 		zf.seeMore($(this));
+	});
+
+	// More projects
+	zf.projectCurrentPage = parseInt(zf.$projectsList.find('.btn-more-projects a').data('nav'),10);
+	zf.$projectsList.find('.btn-more-projects a').click(function(event) {
+		event.preventDefault();
+		zf.getMoreProjects($(this));
 	});
 };
 

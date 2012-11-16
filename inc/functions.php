@@ -6,7 +6,7 @@
 	function addProject($data){
 		 
 		global $baseDD;
-		print_r($data);
+		// print_r($data);
 		$data['id_creator'] = '1';
 		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date) VALUES ( :title, :description, :id_creator, NOW())");
 		$R1->bindParam(':title',$data['title']);
@@ -29,23 +29,63 @@
 			}
 		}
 	 }
-	
-	 function getProjects(){
-		 
+
+	 function getNbProject($user_fb)
+	{
+
 		global $baseDD;
-		 
-		 $R1=$baseDD->prepare("SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` ORDER BY id_project DESC");
-		 $R1->setFetchMode(PDO::FETCH_ASSOC);
+		$sql = 'SELECT count(*) AS nb FROM `mc_project`';
 		
-		 if($R1->execute()){
+		if (!empty($user_fb)) {
+			$sql .= ' WHERE user_fb = :user_fb';
+			$array = array('user_fb' => $user_fb);
+		}
+		$q = $baseDD->prepare($sql);
+		$q->setFetchMode(PDO::FETCH_ASSOC);
+		$q->execute($array);
+		return $q->fetchColumn();
+	}
+
+
+	 function getMaxPages($user_fb){
+
+	 	global $baseDD;
+	 	$sql = 'SELECT count(*) AS nb FROM `mc_project`';
+		
+		if (!empty($user_fb)) {
+			$sql .= ' WHERE user_fb = :user_fb';
+			$array = array('user_fb' => $user_fb);
+		}
+		$q = $baseDD->prepare($sql);
+		$q->setFetchMode(PDO::FETCH_ASSOC);
+		$q->execute($array);
+		$result = $q->fetchAll();
+		return ceil($result[0]['nb']/POST_PER_PAGE);
+	 }
+
+	 function getProjects($page,$id_creator){
+
+		global $baseDD;
+		$sql = "SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+		
+		if (!empty($id_creator)) {
+			$sql .= ' WHERE user_fb = :user_fb';
+			$array = array('user_fb' => $user_fb);
+		}
+		
+		$sql .= "ORDER BY id_project DESC";
+		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
+		$R1=$baseDD->prepare($sql);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+		
+		if($R1->execute($array)){
 			$projects=$R1->fetchAll();
-		 }
+		}
 		 
-		 return $projects;
-	
+		return $projects;
 	 }
 	
-	function getUserProjects(){
+/*	function getUserProjects(){ Depreciated by getProjects($id_creator)
 
 		global $baseDD;
 		
@@ -59,8 +99,7 @@
 		 }
 
 		 return $projects;
-
-	 }
+	 }*/
 	
 	function getProfiles($project){
 		
@@ -75,7 +114,6 @@
 		 }
 		
 		 return $profiles;
-		
 	}
 	
 	function getOccurences($ppl){

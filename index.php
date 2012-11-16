@@ -1,4 +1,9 @@
-<?php require_once('./inc/functions.php'); ?>
+<?php 
+	require_once('./inc/functions.php');
+	$page=$_GET['page'];
+	if(!isset($page)){$page=1;}
+	$nbProject = getNbProject($_GET['user_fb']);
+?>
 
 <!doctype html>
 <html lang="fr">
@@ -24,15 +29,10 @@
 				</ul>
 			</nav>
 		</header>
-		<section>
+		<section id="projects">
 			<?php
-			
-				$getProjects=getProjects();
-			
-				foreach ($getProjects as $project) :
-			?>
-			<pre><?php //print_r($getProjects); ?></pre>
-			
+				$getProjects=getProjects($page,$_GET['user_fb']);
+				foreach ($getProjects as $project): ?>
 					<article class="project">
 						<div class="preview">
 							<div class="block_top clearfix">
@@ -106,10 +106,20 @@
 						</div><!-- fin more -->
 					</article>
 			<?php endforeach; ?>
+			<?php if ($nbProject>POST_PER_PAGE): ?>
+				<div class="btn-more-projects">
+					<a href="?page=<?php echo $page+1; ?>" data-nav="<?php echo $page ?>">charger plus de projets</a>
+				</div>
+			<?php endif; ?>
 		</section>
 	</div> <!-- fin page-->
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>
+	<script type="text/javascript">
+		window.fbAsyncInit = function() {
+			FB.Canvas.setSize();
+		}
+		</script>
 </body>
 </html>
