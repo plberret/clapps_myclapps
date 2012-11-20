@@ -509,12 +509,17 @@ section article .profiles ul li .apply a {
 
 /*profile found */
 
+section article .profiles ul li.profileFound .icon {
+	opacity: 0.3;
+}
+
 section article .profiles ul li.profileFound .icon span {
 	display: none;
 }
 
 section article .profiles ul li.profileFound p {
 	width: 425px;
+	color: #2d3236;
 }
 
 section article .profiles ul li.profileFound .applyFound {

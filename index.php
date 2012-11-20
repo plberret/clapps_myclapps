@@ -122,8 +122,11 @@
 	<script src="./js/main.js"></script>
 	<script type="text/javascript">
 		window.fbAsyncInit = function() {
-			FB.Canvas.setSize();
+		  FB.init({
+		    appId      : '112197008935023', // App ID
+		  });
+		  FB.Canvas.setAutoGrow();
 		}
-		</script>
+	</script>
 </body>
 </html>
