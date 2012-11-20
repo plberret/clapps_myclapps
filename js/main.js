@@ -13,27 +13,55 @@ zf.seeMore = function($this) {
 	});
 }
 
+zf.seeAll = function() {
+	zf.$projectsList.find('.project').fadeOut(300,function() {
+		$(this).remove();
+
+		var $newProject = $('<div/>');
+		$newProject.load('index.php #projects',function(resp) {
+			var $this=$(this);
+			$this.find('.project').each(function(i) {
+				var $this=$(this);
+				setTimeout(function() {
+					zf.$projectsList.append($this.hide().fadeIn(500));
+				},i*300);
+			});
+			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
+			setTimeout(function() {
+				zf.$projectsList.append($this.find('.btn-more-projects'));
+			},$this.find('.project').length*300)
+		});
+	});
+};
+
 zf.getMoreProjects = function($this) {
+	console.log($this[0])
 	zf.projectCurrentPage++;
 	var $newProject = $('<div/>');
 	$newProject.load('index.php?page='+zf.projectCurrentPage+' #projects',function(resp) {
-		$newProject.find('.project').each(function() {
+		var $this=$(this);
+		$this.find('.project').each(function(i) {
 			var $this=$(this);
 			setTimeout(function() {
 				zf.$projectsList.find('.btn-more-projects').before($this.hide().fadeIn(500));
-			},$this.index*300);
+			},i*300);
 		})
+		if (zf.projectCurrentPage >= zf.maxPages) {
+			zf.$projectsList.find('.btn-more-projects').delay(($this.find('.project').length)*300).animate({opacity:0},300,function() {
+				$(this).remove()
+			});
+		};
 	});
 }
 
 zf.getOneProject = function(id) {
 	var $newProject = $('<div/>');
 	$newProject.load('index.php?id_project='+id+' #projects',function(resp) {
-		$newProject.find('.project').each(function() {
+		$newProject.find('.project').each(function(i) {
 			var $this=$(this);
 			setTimeout(function() {
-				zf.$projectsList.find('.project').eq(0).before($this.hide().fadeIn(500));
-			},$this.index*1000);
+				zf.$projectsList.find('.project').eq(0).before($this.hide().fadeIn(1000));
+			},1000);
 		})
 	});
 }
@@ -41,6 +69,16 @@ zf.getOneProject = function(id) {
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	
+	// UP NUMBER CHAR LEFT FOR TITLE
+	zf.$newProject.on('keyup','#title',function(event) {
+		event.preventDefault();
+		var $this = $(this);
+		var charLength = $this.val().length;
+		var $lengthLeft = $this.siblings('em').find('span');
+		var lengthLeft = $this.siblings('em').find('span').data('length');
+		$lengthLeft.html(lengthLeft - charLength);
+	});
+
 	// UP NUMBER VALUES FOR POST
 	zf.$newProject.on('click','.profiles p .number_control',function(event) {
 		event.preventDefault();
@@ -105,7 +143,6 @@ zf.init = function(){
 	});
 
 	zf.$page = $('#page');
-	zf.$projects = zf.$page.find('.project');
 	zf.$projectsList = zf.$page.find('#projects');
 	
 	zf.$page.find(".addProject a").fancybox({
@@ -116,19 +153,22 @@ zf.init = function(){
 		}
 	});
 	
-	
-	zf.$page.find('.myProject').click(function(event) {
+	zf.$page.on('click','.myProject',function(event) {
 		event.preventDefault();
 	});
 	
-	zf.$projects.find('.see-more').click(function(event) {
+	zf.$projectsList.on('click','.see-more',function(event) {
 		event.preventDefault();
 		zf.seeMore($(this));
 	});
 
+	zf.$page.on('click','#see-all',function() {
+		zf.seeAll();
+	});
+
 	// More projects
-	zf.projectCurrentPage = parseInt(zf.$projectsList.find('.btn-more-projects a').data('nav'),10);
-	zf.$projectsList.find('.btn-more-projects a').click(function(event) {
+	zf.projectCurrentPage = parseInt(zf.$projectsList.find('.btn-more-projects a').data('nav'),10) || 0;
+	zf.$projectsList.on('click','.btn-more-projects a',function(event) {
 		event.preventDefault();
 		zf.getMoreProjects($(this));
 	});

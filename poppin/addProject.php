@@ -5,8 +5,8 @@
 	<div class="desc">
 		<h3>Informations générales</h3>
 		<p>
-			<input type="text" name="title" id="title" placeholder="Titre de votre annonce" />
-			<em>80 caractères restants</em>
+			<input type="text" name="title" id="title" maxlength="80" placeholder="Titre de votre annonce" />
+			<em><span data-length="80">80</span> caractères restants</em>
 		</p>
 		<p>
 			<textarea id="desc" name="desc" placeholder="Description de votre annonce..."></textarea>

@@ -24,7 +24,11 @@
 						<a class="fancybox.ajax" href="poppin/addProject.php">Ajouter une annonce</a>
 					</li>
 					<li class="myProject">
-						<a href="#">Mes annonces</a>
+						<?php if ($_GET['id_project']): ?>
+							<a href="#" id="see-all">Voir toutes les annonces</a>
+						<?php else: ?>
+							<a href="#" id="see-mine">Mes annonces</a>
+						<?php endif; ?>
 					</li>
 				</ul>
 			</nav>
@@ -110,7 +114,7 @@
 						</div><!-- fin more -->
 					</article>
 				<?php endforeach; ?>
-			<?php if ($nbProject>POST_PER_PAGE): ?>
+			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
 					<a href="?page=<?php echo $page+1; ?>" data-nav="<?php echo $page ?>">charger plus de projets</a>
 				</div>
@@ -120,6 +124,9 @@
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>
+	<script type="text/javascript">
+		zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?>
+	</script>
 	<script type="text/javascript">
 		window.fbAsyncInit = function() {
 			FB.Canvas.setSize();

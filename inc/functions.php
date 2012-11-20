@@ -39,9 +39,10 @@
 		$sql = 'SELECT count(*) AS nb FROM `mc_project`';
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE user_fb = :user_fb';
+			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array('user_fb' => $user_fb);
 		}
+		
 		$q = $baseDD->prepare($sql);
 		$q->setFetchMode(PDO::FETCH_ASSOC);
 		$q->execute($array);
@@ -55,7 +56,7 @@
 	 	$sql = 'SELECT count(*) AS nb FROM `mc_project`';
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE user_fb = :user_fb';
+			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array('user_fb' => $user_fb);
 		}
 		$q = $baseDD->prepare($sql);
@@ -65,17 +66,17 @@
 		return ceil($result[0]['nb']/POST_PER_PAGE);
 	 }
 
-	 function getProjects($page,$id_creator){
+	 function getProjects($page,$user_fb){
 
 		global $baseDD;
 		$sql = "SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
-		if (!empty($id_creator)) {
-			$sql .= ' WHERE user_fb = :user_fb';
+		if (!empty($user_fb)) {
+			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array('user_fb' => $user_fb);
 		}
 		
-		$sql .= "ORDER BY id_project DESC";
+		$sql .= " ORDER BY id_project DESC";
 		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
