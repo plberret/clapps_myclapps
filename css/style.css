@@ -50,7 +50,8 @@ quotes: "" "";
 
 /* clearfix */
 
-.clearfix {height:1%}
+/* the fuck height 1% ? ça fait bug le li en seemore*/
+/*.clearfix {height:1%} */
 
 .clearfix:after {
 

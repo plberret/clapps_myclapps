@@ -1,10 +1,14 @@
 <?php 
-	require_once('./inc/functions.php');
+	require_once './inc/init.php';
+	require_once './inc/settings.php';
+	require_once './inc/functions.php';
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
 	$nbProject = getNbProject($_GET['user_fb']);
 ?>
-
+<pre>
+	<?php array_slice($_GET, 0) ?>// I NEED URL AS ARRAY
+</pre>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -27,7 +31,7 @@
 						<?php if ($_GET['id_project']): ?>
 							<a href="#" id="see-all">Voir toutes les annonces</a>
 						<?php else: ?>
-							<a href="#" id="see-mine">Mes annonces</a>
+							<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine">Mes annonces</a>
 						<?php endif; ?>
 					</li>
 				</ul>
@@ -37,11 +41,13 @@
 			<?php
 				if (isset($_GET['id_project'])) :
 					$getProjects=getProject($_GET['id_project']);
+				elseif ($_GET['domain']):
+					$getProjects=getProjectsByFilters($page,$_GET);
 				else:
 					$getProjects=getProjects($page,$_GET['user_fb']);
 				endif;
 				foreach ($getProjects as $project): ?>
-					<article class="project">
+					<article class="project<?php if (isFavorite($project,$user_fb)): ?> favorite<?php endif ?>">
 						<div class="preview">
 							<div class="block_top clearfix">
 								<img src="<?php echo $project['img_creator'] ?>" alt="photo profil" />
@@ -67,7 +73,11 @@
 							
 							<div class="share clearfix">
 								<a href="#" class="share_link">Partager l'annonce</a>
-								<a href="#" class="favorite_link">Ajouter aux favoris</a>
+								<?php if (isFavorite($project,$user_fb)): ?>
+									<a href="#" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
+								<?php else: ?>
+									<a href="#" data-id="<?php echo $project['id_project'] ?>" class="favorite_link">Ajouter aux favoris</a>
+								<?php endif ?>
 							</div>
 							<div class="desc">
 								<h3>Détails de l'annonce :</h3>
@@ -82,6 +92,7 @@
 							<div class="profiles">
 								<ul>
 									<?php $getProfiles=getProfiles($project['id_project']); ?>
+									<?php $getProfilesFound=getProfilesFound($project['id_project']); ?>
 									<?php foreach ($getProfiles as $profile) { ?>
 										<li class="clearfix">
 											<?php 
@@ -95,45 +106,58 @@
 												<span><?php echo $profile['occurence']; ?></span>
 											</div>
 											<p><?php echo $profile['person']; ?></p>
-											<div class="apply"><a href="#">Postuler</a></div>
+											<div class="apply"><a href="#">Postuler</a></div> 
 										</li>
 									<?php } ?>
-									<li class="clearfix profileFound">
-										<div class="icon iconTechnician">
-											<span><?php echo $profile['occurence']; ?></span>
-										</div>
-										<p>Exemple de profil trouvé</p>
+									<?php foreach ($getProfilesFound as $profile) { ?>
+										<?php 
+											if($profile['domain']==1){
+												$profileDomain="iconActor"; 
+											}elseif($profile['domain']==2){
+												$profileDomain="iconTechnician"; 
+											} 
+										?>
+										<li class="clearfix profileFound">
+											<div class="icon <?php echo $profileDomain; ?>">
+											</div>
+											<p><?php echo $profile['person']; ?></p>
 										<div class="applyFound">Candidat trouvé</div>
-									</li>
+										</li>
+									<?php } ?>
 								</ul>
 							</div><!-- fin profile -->
-							<!--<div class="manage">
+						</div><!-- fin more -->
+						<?php if (isAdmin($project,$user_fb)): ?>
+							<div class="manage">
 								<a href="#">Cloturer l'annonce</a>
 								<a href="#">Supprimer l'annonce</a>
-							</div>-->
-						</div><!-- fin more -->
+							</div>
+						<?php endif ?>
 					</article>
 				<?php endforeach; ?>
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?>" data-nav="<?php echo $page ?>">charger plus de projets</a>
+					<a href="?page=<?php echo $page+1; ?>&<?php echo implode($_GET, '=') ?>" data-nav="<?php echo $page ?>">charger plus de projets</a>
 				</div>
 			<?php endif; ?>
 		</section>
 	</div> <!-- fin page-->
+	<div id="fb-root"></div>
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>
 	<script type="text/javascript">
 		zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?>
 	</script>
-	<script type="text/javascript">
-		window.fbAsyncInit = function() {
-		  FB.init({
-		    appId      : '112197008935023', // App ID
-		  });
-		  FB.Canvas.setAutoGrow();
-		}
+	<?php
+		echo '<script type="text/javascript">
+		FB.init({
+			appId : '.APP_ID.',
+			status : true, // check login status
+			cookie : true, // enable cookies to allow the server to access the session
+			xfbml : true // parse XFBML
+		});
 	</script>
+';?>
 </body>
 </html>

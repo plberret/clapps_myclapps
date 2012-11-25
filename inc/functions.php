@@ -1,18 +1,21 @@
 <?php
 
-	require_once('connect.php');
-	require_once('settings.php');
-	
+	require_once 'connect.php';
+	require_once 'init.php';
+
 	function addProject($data){
 		 
 		global $baseDD;
+		
 		// print_r($data);
-		$data['id_creator'] = '1';
+		$user = getIdFromFb();
+		$data['id_creator'] = $user['id_user'];
 		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date) VALUES ( :title, :description, :id_creator, NOW())");
 		$R1->bindParam(':title',$data['title']);
 		$R1->bindParam(':description',$data['desc']);
 		$R1->bindParam(':id_creator',$data['id_creator']);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
+
 
 		if($R1->execute()){
 			$ID=$baseDD->lastInsertId('mc_project');
@@ -30,10 +33,35 @@
 		}
 
 		echo json_encode(array('id' => $ID));
-	 }
+	}
 
-	 function getNbProject($user_fb)
-	{
+	function addFavorite($project){
+
+		global $baseDD;
+
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('INSERT INTO mc_favorite (id_project, id_user) VALUES (:id_project, :id_user)');
+		$R1->bindParam(':id_project',$project['id']);
+		$R1->bindParam(':id_user',$user['id_user']);
+		if ($R1->execute()) {
+			echo json_encode(array('success' => true ));
+		}
+	}
+
+	function deleteFavorite($project){
+
+		global $baseDD;
+
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('DELETE FROM mc_favorite WHERE id_project = :id_project AND id_user = :id_user');
+		$R1->bindParam(':id_project',$project['id']);
+		$R1->bindParam(':id_user',$user['id_user']);
+		if ($R1->execute()) {
+			echo json_encode(array(success => true ));
+		}
+	}
+
+	function getNbProject($user_fb){
 
 		global $baseDD;
 		$sql = 'SELECT count(*) AS nb FROM `mc_project`';
@@ -75,7 +103,7 @@
 			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array('user_fb' => $user_fb);
 		}
-		
+
 		$sql .= " ORDER BY id_project DESC";
 		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		$R1=$baseDD->prepare($sql);
@@ -102,27 +130,58 @@
 		 
 		return $projects;
 	 }
-/*	function getUserProjects(){ Depreciated by getProjects($id_creator)
 
-		global $baseDD;
+	 function getProjectsByFilters($page,$filters)
+	 {
+	 	global $baseDD;
+
+		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project";
+
+		if ($filters['domain']) {
+			$sql .= " AND domain = :domain AND pf.current_state = 1";
+		}
+
+		if ($filters['region']) {
+			$sql .= " AND getDistance((SELECT lat FROM villes WHERE id_ville = :ville),(SELECT lng FROM villes WHERE id_ville = :ville),lat,lng) < 100000";
+		}
+
+		$sql .= " GROUP BY pj.id_project";
+		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		
-		// recuperer les projets favoris + les prochains que l'utilisateur à créé
+		$R1=$baseDD->prepare($sql);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
 
-		 $R1=$baseDD->prepare("SELECT * FROM `mc_project`");
-		 $R1->setFetchMode(PDO::FETCH_ASSOC);
-
-		 if($R1->execute()){
+		if ($filters['domain']) {
+			$R1->bindParam('domain',$filters['domain']);
+		}
+		
+		if($R1->execute($array)){
 			$projects=$R1->fetchAll();
-		 }
-
-		 return $projects;
-	 }*/
+		}
+		 
+		return $projects;
+	 }
 	
 	function getProfiles($project){
 		
 		global $baseDD;
 		
 		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` WHERE id_project=:project AND current_state=1");
+		 $R1->bindParam(':project',$project);
+		 $R1->setFetchMode(PDO::FETCH_ASSOC);
+		
+		 if($R1->execute()){
+			$profiles=$R1->fetchAll();
+		 }
+		
+		 return $profiles;
+	}
+
+	function getProfilesFound($project){
+		
+		global $baseDD;
+		
+		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` WHERE id_project=:project AND current_state=2");
 		 $R1->bindParam(':project',$project);
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 		
@@ -141,6 +200,49 @@
 		return $occurence;
 	}
 	
+	function isFavorite($project){
+		global $baseDD, $user_fb;
+		
+		$R1=$baseDD->prepare('SELECT id_project FROM `mc_favorite` WHERE id_project=:project AND id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb)');
+		$R1->bindParam(':project',$project['id_project']);
+		$R1->bindParam(':user_fb',$user_fb);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+		
+		if($R1->execute()){
+			$profiles=$R1->fetchAll();
+		}
+		
+		return $profiles;
+	}
+
+	function isAdmin($project){
+		global $baseDD, $user_fb;
+		
+		$R1=$baseDD->prepare('SELECT id_project FROM `mc_project` WHERE id_project=:project AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb)');
+		$R1->bindParam(':project',$project['id_project']);
+		$R1->bindParam(':user_fb',$user_fb);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+		
+		if($R1->execute()){
+			$profiles=$R1->fetchAll();
+		}
+		
+		return $profiles;
+	}
+
+	function getIdFromFb(){
+		global $baseDD, $user_fb;
+		
+		$R1=$baseDD->prepare('SELECT id_user FROM `mc_users` WHERE user_fb = :user_fb');
+		$R1->bindParam(':user_fb',$user_fb);
+		
+		 if($R1->execute()){
+			$id=$R1->fetch();
+		}
+		
+		return $id;
+	}
+
 	function getActiveActors($project){
 
 		global $baseDD;

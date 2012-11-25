@@ -1,9 +1,5 @@
-<?php 
-
-$host="localhost";
-$user="root";
-$pass="";
-$base="appliMyClapps";
+<?php
+require_once 'settings.php';
 
 function connect($host,$user,$pass, $base) {
   try{
@@ -14,6 +10,6 @@ function connect($host,$user,$pass, $base) {
   return $bd;
 }
 
-$baseDD = connect($host, $user, $pass, $base);
+$baseDD = connect(HOST, USER, PASS, BASE);
 		
 ?>     
