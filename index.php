@@ -6,9 +6,7 @@
 	if(!isset($page)){$page=1;}
 	$nbProject = getNbProject($_GET['user_fb']);
 ?>
-<pre>
-	<?php array_slice($_GET, 0) ?>// I NEED URL AS ARRAY
-</pre>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -16,27 +14,100 @@
 	<title>My clapps</title>
 	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
 	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<div id="page">
 		<header>
-			<h1>My clapps</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque rhoncus tortor non lorem viverra tincidunt euismod nisi adipiscing. Nunc imperdiet aliquam est quis sollicitudin. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut massa magna, lobortis feugiat hendrerit nec, tincidunt eget urna.</p>
-			<nav>
-				<ul class="clearfix">
-					<li class="addProject">
-						<a class="fancybox.ajax" href="poppin/addProject.php">Ajouter une annonce</a>
-					</li>
-					<li class="myProject">
-						<?php if ($_GET['id_project']): ?>
-							<a href="#" id="see-all">Voir toutes les annonces</a>
-						<?php else: ?>
-							<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine">Mes annonces</a>
-						<?php endif; ?>
-					</li>
-				</ul>
-			</nav>
+			<div id="bar_top" class="clearfix">
+				<div id="logo">
+					<h1>My clapps</h1>
+				</div>
+				<div id="searchButton">
+					<a href="javascript:void(0)" >Recherche</a>
+				</div>
+				<nav>
+					<ul class="clearfix">
+						<li class="addProject">
+							<a class="fancybox.ajax" href="poppin/addProject.php">Ajouter une annonce</a>
+						</li>
+						<li class="myProject">
+							<?php if ($_GET['id_project']): ?>
+								<a href="#" id="see-all">Voir toutes les annonces</a>
+							<?php else: ?>
+								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine">
+									<span class="text">Mes annonces</span>
+									<span class="number">4</span>
+								</a>
+							<?php endif; ?>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<form id="bloc_filters" action="">
+				<div id="filter" class="clearfix">
+					<div id="col1" class="col">
+						<h2>Filtrer la recherche</h2>
+						<p>Utiliser les différents filtres ci-contre
+						pour affiner votre recherche.</p>
+					</div>
+					<div id="col2" class="col">
+						<div class="field">
+							<label for="">Métier</label>
+							<input type="text" value="Entrez le métier recherché ..." />
+						</div>
+						<div class="field">
+							<label for="">Date</label>
+							<select name="" id="">
+								<option value="">Dés que possible</option>
+							</select>
+						</div>
+					</div>
+					<div id="col3" class="col">
+						<div class="field">
+							<label for="">Lieux</label>
+							<input type="text" value="Ville, département ou code postal" />
+						</div>
+						<div>Distance</div>
+					</div>
+				</div>
+				<div id="filter_advanced" class="clearfix">
+					<ul>
+						<li><a href="#tab1">Sauvegarder les filtres</a></li>
+						<li><a href="#tab2">Charger mes filtres</a></li>
+						<li><a href="#tab3">Réinitialiser les filtres</a></li>
+					</ul>
+					<div id="tabs">
+						<div id="tab1">
+							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
+							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
+							<input type="text" value="Oui" />
+							<a href="#">Annuler</a>
+							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
+							<input type="text" value="votreadresse@email.com" />
+						</div>
+						<div id="tab2">
+							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
+							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
+							<input type="text" value="Oui" />
+							<a href="#">Annuler</a>
+							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
+							<input type="text" value="votreadresse@email.com" />
+						</div>
+						<div id="tab3">
+							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
+							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
+							<input type="text" value="Oui" />
+							<a href="#">Annuler</a>
+							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
+							<input type="text" value="votreadresse@email.com" />
+						</div>
+					</div>
+				</div>
+			</form>
 		</header>
+		
+		<div id="tuto"></div>
 		<section id="projects">
 			<?php
 				if (isset($_GET['id_project'])) :
@@ -137,7 +208,7 @@
 				<?php endforeach; ?>
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?>&<?php echo implode($_GET, '=') ?>" data-nav="<?php echo $page ?>">charger plus de projets</a>
+					<a href="?page=<?php echo $page+1; ?>&<?php echo implode($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
 		</section>

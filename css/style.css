@@ -83,13 +83,14 @@ header, footer, section, article, nav {
 /* -------------------------------- MISE EN PAGE -----------------------------------*/
 
 body {
-	background: no-repeat url(../images/bg_main.jpg) center 0 #0b0b0b;
+	/*background: no-repeat url(../images/bg_main.jpg) center 0 #0b0b0b;*/
+	background: #0c0c0c;
+	font-family: 'Droid Sans', sans-serif;
 }
 
 #page {
 	width: 810px;
 	margin: 0 auto;
-	font-family: "Verdana";
 	font-size: 12px;
 	color: #ffffff;
 	line-height: 15px;
@@ -97,97 +98,193 @@ body {
 
 /* ////// HEADER ////// */
 
-header {
-	height: 317px;
-	padding-top: 24px;
+header #bar_top {
+	height: 58px;
+	background: red;
+	border-bottom: 1px solid #212121;
 }
 
-header h1 {
+header #bar_top #logo {
+	padding-top: 10px;
+	float: left;
+}
+
+header #bar_top #logo h1 {
+	width: 126px;
+	height: 37px;
 	background: no-repeat url(../images/logo.png);
-	width: 157px;
-	height: 85px;
-	margin-left: 30px;
+	margin-left: 65px;
 	text-indent: -9999px;
 }
 
-header p {
-	margin: 18px 0 52px 70px;
-	width: 320px;
-	text-shadow: 0px 0px 3px black;
-}
-
-/* menu */
-
-header nav {
+header #bar_top nav {
 	float: right;
-	margin-right: 62px;
+	height: 42px;
+	padding-right: 13px;
+	padding-top: 16px;
+	border-right: 1px solid #0d0d0d;
 }
 
-header nav ul li {
+header #bar_top nav ul li {
 	float: left;
-	margin-left: 12px;
+	height: 27px;
+	line-height: 27px;
 	-moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	margin-right: 6px;
 }
 
-header nav ul li.addProject {
-	height: 31px;
-	line-height: 31px;
+header #bar_top nav ul li.addProject {
 	background: #be8b01;
 	background: -webkit-gradient(linear, left top, left bottom, from(#f3b40b), to(#bc8900));
- 	background: -moz-linear-gradient(top,#f3b40b,#bc8900);
+	background: -moz-linear-gradient(top,#f3b40b,#bc8900);
 	-moz-box-shadow: inset 0 1px #efcd72;
 	-webkit-box-shadow: inset 0 1px #efcd72;
 	box-shadow: inset 0 1px #efcd72;
 	padding: 0 12px 0 9px;
 }
 
-header nav ul li.myProject {
-	margin-top: 4px;
-	height: 27px;
-	line-height: 27px;
+header #bar_top nav ul li.myProject {
 	background: #dcdcdc;
 	background: -webkit-gradient(linear, left top, left bottom, from(#c1c1c1), to(#dcdcdc));
- 	background: -moz-linear-gradient(top,#c1c1c1,#dcdcdc);
+	background: -moz-linear-gradient(top,#c1c1c1,#dcdcdc);
 	-moz-box-shadow: inset 0 1px #ffffff;
 	-webkit-box-shadow: inset 0 1px #ffffff;
 	box-shadow: inset 0 1px #ffffff;
-	padding: 0 12px 0 7px;
 }
 
-header nav ul li a {
+header #bar_top nav ul li a {
 	text-decoration: none;
 	color: #1a1919;
 	font-weight: bold;
 	display: block;
 }
 
-header nav ul li.addProject a:before {
-	position: absolute;
-	left: 21px;
-	content:"";
-	width: 1px;
-	height: 31px;
-	background: #f5ba1f;
-	border-right: 1px solid #7e5b00;
-}
-
-header nav ul li.addProject a {
+header #bar_top nav ul li.addProject a {
 	position: relative;
-	background: no-repeat url(../images/logo_ajouter_annonce.png) 0 center;
 	text-shadow: 0px 1px 1px #e9cb7b;
-	padding-left: 30px;
 }
 
-header nav ul li.myProject a {
-	background: no-repeat url(../images/logo_bt_annonces.png) 0 center;
+header #bar_top nav ul li.myProject a {
 	text-shadow: 0px 1px 1px #FFF;
-	padding-left: 22px;
+	padding: 0 18px;
+}
+
+header #bar_top #searchButton {
+	float: right;
+	width: 48px;
+	height: 58px;
+	border-left: 1px solid #282828;
+}
+
+header #bar_top #searchButton a {
+	display: block;
+	width: 50px;
+	height: 58px;
+	text-indent: -9999px;
+	background: no-repeat url(../images/icon_search_button.png) 14px 23px;
+}
+
+
+/* ////// FILTER ////// */
+
+/*#bloc_filters {
+	height: 190px;
+	border-bottom: 1px solid #1b1b1b;
+}*/
+
+header {
+	position: fixed;
+	top: 0;
+	z-index: 5;
+}
+
+header #filter {
+	height: 147px;
+	border-bottom: 1px solid #1b1b1b;
+	background: yellow;
+	padding: 26px 0 17px 0;
+}
+
+header #filter .col {
+	background: red;
+	float: left;
+	height: 135px;
+	padding: 5px 0;
+}
+
+header #filter #col1 {
+	width: 146px;
+	padding-left: 75px;
+	border-right: 1px solid #050505;
+}
+
+header #filter #col1 h2 {
+	color: #f3b91e;
+	font-size: 14px;
+}
+
+header #filter #col1 p {
+	padding-top: 10px;
+	line-height: 13px;
+	font-size: 11px;
+	color: #c0c0c0;
+	width: 125px;
+}
+
+header #filter #col2 {
+	width: 236px;
+	padding: 5px 16px;
+	border-left: 1px solid #151515;
+	border-right: 1px solid #050505;
+}
+
+header #filter #col3 {
+	width: 301px;
+	padding: 5px 0 5px 16px ;
+	border-left: 1px solid #151515;
+}
+
+header #filter_advanced {
+	position: relative;
+	left: 220px;
+	width: 590px;
+	height: 190px;
+	border-bottom: 1px solid #1b1b1b;
+	background: #0a0a0a;
+}
+
+header #filter_advanced ul {
+	float: left;
+	width: 219px;
+	height: 190px;
+	border-right: 1px solid #000000;
+}
+
+header #filter_advanced ul li a {
+	color: #c0c0c0;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+header #filter_advanced #tabs {
+	float: right;
+	width: 369px;
+	height: 190px;
+	border-left: 1px solid #111111;
+}
+
+header #filter_advanced #tabs #tab2, #filter_advanced #tabs #tab3  {
+	display: none;
 }
 
 
 /* /// CONTENT /// */
+
+section {
+	margin-top: 300px;
+}
 
 section #newProject {
 	display: none;
@@ -534,6 +631,24 @@ section article .profiles ul li.profileFound .applyFound {
 	margin-right: 15px;
 }
 
+.btn-more-projects {
+	margin: 0 auto;
+	background: #1d1d1d;
+	height: 34px;
+	width: 681px;
+	margin-bottom: 30px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.btn-more-projects a {
+	display: block;
+	text-align: center;
+	color: #ffffff;
+	text-decoration: none;
+	line-height: 34px;
+}
 
 
 /* -------------------------------- POPIN AJOUTER PROJET -----------------------------------*/
