@@ -35,6 +35,22 @@ zf.deleteFavorite = function($this) {
 	});
 };
 
+zf.deleteProject = function($this) {
+	$.ajax({
+		url: 'requests/deleteProject.php',
+		type: 'post',
+		data: {id : $this.data('id')},
+		success: function(resp) {
+			resp = JSON.parse(resp);
+			if (resp.success) {
+				$this.parents('article.project').fadeOut();
+			} else {
+
+			}
+		}
+	});
+};
+
 zf.seeMore = function($this) {
 	$this.parents('.preview').siblings('.more').stop(true,true).slideToggle(function() {
 		if ($(this).css('display')=='none') {
@@ -54,7 +70,8 @@ zf.seeAll = function() {
 			$this.find('.project').each(function(i) {
 				var $this=$(this);
 				setTimeout(function() {
-					zf.$projectsList.append($this.hide().fadeIn(500));
+					// zf.$projectsList.append($this.hide().fadeIn(500));
+					zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
 				},i*300);
 			});
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
@@ -75,7 +92,8 @@ zf.seeMine = function($_this) {
 			$this.find('.project').each(function(i) {
 				var $this=$(this);
 				setTimeout(function() {
-					zf.$projectsList.append($this.hide().fadeIn(500));
+					// zf.$projectsList.append($this.hide().fadeIn(500));
+					zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
 				},i*300);
 			});
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
@@ -95,7 +113,8 @@ zf.getMoreProjects = function($this) {
 		$this.find('.project').each(function(i) {
 			var $this=$(this);
 			setTimeout(function() {
-				zf.$projectsList.find('.btn-more-projects').before($this.hide().fadeIn(500));
+				// zf.$projectsList.find('.btn-more-projects').before($this.hide().fadeIn(500));
+				zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
 			},i*300);
 		})
 		if (zf.projectCurrentPage >= zf.maxPages) {
@@ -215,6 +234,11 @@ zf.init = function(){
 	zf.$page.on('click','.favorite_link',function(event) {
 		event.preventDefault();
 		zf.addFavorite($(this));
+	});
+
+	zf.$page.on('click','.deleteProject',function(event) {
+		event.preventDefault();
+		zf.deleteProject($(this));
 	});
 
 	zf.$page.on('click','.unfavorite_link',function(event) {
