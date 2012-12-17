@@ -3,6 +3,14 @@
 	require_once 'connect.php';
 	require_once 'init.php';
 
+	function arrayToUrl($array){
+		$url ="";
+		foreach ($array as $key => $value) {
+			$url.='&'.urlencode($key).'='.urlencode($value);
+		}
+		return $url;
+	}
+
 	function addProject($data){
 		 
 		global $baseDD;
@@ -61,6 +69,22 @@
 		}
 	}
 
+	function deleteProject($project){
+
+		global $baseDD;
+
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('DELETE FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user');
+		$R1->bindParam(':id_project',$project['id']);
+		$R1->bindParam(':id_user',$user['id_user']);
+
+		if ($R1->execute()) {
+			echo json_encode(array(success => true )); // triggered meme si retour vide
+		} else {
+			echo json_encode(array(success => false ));
+		}
+	}
+
 	function getNbProject($user_fb){
 
 		global $baseDD;
@@ -68,7 +92,7 @@
 		
 		if (!empty($user_fb)) {
 			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
-			$array = array('user_fb' => $user_fb);
+			$array = array(':user_fb' => $user_fb);
 		}
 		
 		$q = $baseDD->prepare($sql);
@@ -85,7 +109,7 @@
 		
 		if (!empty($user_fb)) {
 			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
-			$array = array('user_fb' => $user_fb);
+			$array = array(':user_fb' => $user_fb);
 		}
 		$q = $baseDD->prepare($sql);
 		$q->setFetchMode(PDO::FETCH_ASSOC);
@@ -100,19 +124,18 @@
 		$sql = "SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
-			$array = array('user_fb' => $user_fb);
+			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb2))';
+			$array = array(':user_fb' => $user_fb,'user_fb2' => $user_fb);
 		}
 
 		$sql .= " ORDER BY id_project DESC";
 		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
+
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
-		
 		if($R1->execute($array)){
 			$projects=$R1->fetchAll();
 		}
-		 
 		return $projects;
 	 }
 	
@@ -141,11 +164,12 @@
 			$sql .= " AND domain = :domain AND pf.current_state = 1";
 		}
 
-		if ($filters['region']) {
-			$sql .= " AND getDistance((SELECT lat FROM villes WHERE id_ville = :ville),(SELECT lng FROM villes WHERE id_ville = :ville),lat,lng) < 100000";
-		}
+		// if ($filters['region']) {
+			// $sql .= " AND getDistance((SELECT lat FROM villes WHERE id_ville = :ville),(SELECT lng FROM villes WHERE id_ville = :ville),lat,lng) < 100000";
+		// }
 
 		$sql .= " GROUP BY pj.id_project";
+		$sql .= " ORDER BY id_project DESC";
 		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		
 		$R1=$baseDD->prepare($sql);

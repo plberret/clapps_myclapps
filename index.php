@@ -144,10 +144,12 @@
 							
 							<div class="share clearfix">
 								<a href="#" class="share_link">Partager l'annonce</a>
-								<?php if (isFavorite($project,$user_fb)): ?>
-									<a href="#" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
-								<?php else: ?>
-									<a href="#" data-id="<?php echo $project['id_project'] ?>" class="favorite_link">Ajouter aux favoris</a>
+								<?php if (!isAdmin($project)): ?>
+									<?php if (isFavorite($project,$user_fb)): ?>
+										<a href="#" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
+									<?php else: ?>
+										<a href="#" data-id="<?php echo $project['id_project'] ?>" class="favorite_link">Ajouter aux favoris</a>
+									<?php endif ?>
 								<?php endif ?>
 							</div>
 							<div class="desc">
@@ -200,15 +202,15 @@
 						</div><!-- fin more -->
 						<?php if (isAdmin($project,$user_fb)): ?>
 							<div class="manage">
-								<a href="#">Cloturer l'annonce</a>
-								<a href="#">Supprimer l'annonce</a>
+								<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>">Editer l'annonce</a>
+								<a href="#" class='deleteProject' data-id="<?php echo $project['id_project'] ?>">Supprimer l'annonce</a>
 							</div>
 						<?php endif ?>
 					</article>
 				<?php endforeach; ?>
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?>&<?php echo implode($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
+					<a href="?page=<?php echo $page+1; ?><?php echo implode($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
 		</section>
@@ -221,21 +223,24 @@
 		zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?>
 	</script>
 	<?php
-		echo '<script type="text/javascript">
-		FB.init({
-			appId : '.APP_ID.',
-			status : true, // check login status
-			cookie : true, // enable cookies to allow the server to access the session
-			xfbml : true // parse XFBML
-		});
-		FB.Canvas.setAutoGrow();
-		(function() {
-		    var e = document.createElement("script");
-		    e.src = document.location.protocol + "//connect.facebook.net/en_US/all.js";
-		    e.async = true;
-		    document.getElementById("fb-root").appendChild(e);
-		  }());
+		echo '<script>
+			  window.fbAsyncInit = function() {
+			    FB.init({
+			      appId  : '.APP_ID.',
+			      status : true, // check login status
+			      cookie : true, // enable cookies to allow the server to access the session
+			      xfbml  : true  // parse XFBML
+			    });
+				FB.Canvas.setAutoGrow();
+			  };
+
+			  (function() {
+			    var e = document.createElement("script");
+			    e.src = document.location.protocol + "//connect.facebook.net/en_US/all.js";
+			    e.async = true;
+			    document.getElementById("fb-root").appendChild(e);
+			  }());
 	</script>
-';?>
+'; ?>
 </body>
 </html>
