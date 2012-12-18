@@ -7,13 +7,21 @@ zf.isBlank = function(str) {
 	return (!str || /^\s*$/.test(str));
 };
 
+zf.isOkKey = function(event) {
+	if (event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40) {
+		return false
+	} else {
+		return true
+	}
+}
+
 zf.addFavorite = function($this) {
 	$.ajax({
 		url: 'requests/addFavorite.php',
 		type: 'post',
 		data: {id : $this.data('id')},
 		success: function(resp) {
-			resp = JSON.parse(resp);
+			// resp = JSON.parse(resp);
 			if (resp.success) {
 				$this.html('Retirer des favoris').removeClass('favorite_link').addClass('unfavorite_link');
 			} else {
@@ -29,7 +37,7 @@ zf.deleteFavorite = function($this) {
 		type: 'post',
 		data: {id : $this.data('id')},
 		success: function(resp) {
-			resp = JSON.parse(resp);
+			// resp = JSON.parse(resp);
 			if (resp.success) {
 				$this.html('Ajouter aux favoris').removeClass('unfavorite_link').addClass('favorite_link');
 			} else {
@@ -45,7 +53,7 @@ zf.deleteProject = function($this) {
 		type: 'post',
 		data: {id : $this.data('id')},
 		success: function(resp) {
-			resp = JSON.parse(resp);
+			// resp = JSON.parse(resp);
 			if (resp.success) {
 				$this.parents('article.project').fadeOut();
 			} else {
@@ -198,7 +206,7 @@ zf.initAddProject = function() {
 			type: $(this).attr('method'),
 			data: $(this).serialize(),
 			success: function(resp) {
-				resp = JSON.parse(resp);
+				// resp = JSON.parse(resp);
 				$.fancybox.close();
 				zf.getOneProject(resp.id)
 				// location.reload();
@@ -210,10 +218,9 @@ zf.initAddProject = function() {
 
 zf.jsonCitiesA = function($this){
 	var value = $this.val();
-	console.log(value.length)
 	if(!zf.isBlank(value) && value.length>2){
-		$.getJSON('requests/citiesJson.php',{ville:value},function(resp){
-			console.log(resp)
+		$.getJSON('requests/citiesJson.php',{ville:value.trim()},function(resp){
+		//	console.log(resp)
 			if (resp) {
 				var $ul = $('<ul/>');
 				var $li;
@@ -226,10 +233,9 @@ zf.jsonCitiesA = function($this){
 						});
 						$ul.append($li)
 					};
-					
 				}
 				$('#col3').find('ul').remove();
-				console.log($('#col3').find('ul'))
+			//	console.log($('#col3').find('ul'))
 				if (respL>0) {
 					$('#col3').append($ul); // hide autoc if no result
 				}
@@ -237,6 +243,54 @@ zf.jsonCitiesA = function($this){
 		});
 	}
 }
+
+zf.jsonCitiesDown = function($this) {
+	$ul = zf.$filtre.find('#col3 ul')
+	if ($ul.length) { // if ul contains li
+		$curr = $ul.find('.current') // define current
+		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
+			$next = $curr.next() // define next()
+			if ($next.length) { // if next() exist
+				$curr.next().addClass('current'); // add class to next()
+			} else { // else
+				$next = $ul.children().eq(0)
+				$next.addClass('current'); // add class to first one
+			}
+			$this.val($next.find('span').text());
+		} else { // if current doesn't exist or if there is 1 result
+			$first = $ul.find('li:first-child') // define first
+			if ($this.val().trim()!=$first.find('span').text()) { // if current doesn't exist
+				$first.addClass('current'); // define first child as current
+				$this.val($first.find('span').text());
+				console.log('kk')
+			};
+		}
+	}; // /if ul contains li
+};
+
+zf.jsonCitiesUp = function($this) {
+	$ul = zf.$filtre.find('#col3 ul')
+	if ($ul.length) { // if ul contains li
+		$curr = $ul.find('.current') // define current
+		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
+			$prev = $curr.prev() // define prev()
+			if ($prev.length) { // if prev() exist
+				$curr.prev().addClass('current'); // add class to prev()
+			} else { // else
+				$prev = $ul.children().last();
+				$prev.addClass('current'); // add class to first one
+			}
+			$this.val($prev.find('span').text());
+		} else { // if current doesn't exist or if there is 1 result
+			$last = $ul.find('li:last-child') // define last
+			if ($this.val().trim()!=$last.find('span').text()) { // if current doesn't exist
+				$last.addClass('current'); // define last child as current
+				$this.val($last.find('span').text());
+				console.log('kk')
+			};
+		}
+	}; // /if ul contains li
+};
 
 zf.init = function(){
 	$('body').addClass('has-js');
@@ -249,6 +303,7 @@ zf.init = function(){
 	});
 
 	zf.$page = $('#page');
+	zf.$filtre = zf.$page.find('#bloc_filters');
 	zf.$projectsList = zf.$page.find('#projects');
 	
 	zf.$page.find(".addProject a").fancybox({
@@ -259,9 +314,19 @@ zf.init = function(){
 		}
 	});
 	
-	zf.$page.on('keyup', '.field input[type="text"]', function(event){
+	zf.$filtre.find('.field input[type="text"]').keyup(function(event){
 		event.preventDefault();
-		zf.jsonCitiesA($(this));
+		var $this=$(this);
+		if (event.keyCode == 13 && !zf.isBlank($this.val())){
+			// TRIGGER CLICK ON CURRENT DISTANCE MOTHER FUCKER
+		} else if (zf.isOkKey(event)) {
+			zf.jsonCitiesA($this);
+		};
+	}).keydown(function(event){
+		switch (event.keyCode) {
+			case 38: zf.jsonCitiesUp($(this)); break;
+			case 40: zf.jsonCitiesDown($(this)); break;
+		}
 	});
 
 	zf.$page.on('click','#see-mine',function(event) { // a protéger avec un .queue() (spamclick)

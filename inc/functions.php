@@ -171,7 +171,7 @@
 
 	 	} else {
 
-	 		$sql = 'SELECT cp, nom, id_ville, "ville" AS `type` FROM villes WHERE nom LIKE :ville OR nom LIKE :ville2 GROUP BY nom ORDER BY nom ASC';
+	 		$sql = 'SELECT cp, nom, id_ville, "ville" AS `type` FROM villes WHERE nom LIKE :ville OR nom LIKE :ville2 ORDER BY nom ASC';
 		 	//$sql = 'SELECT v.cp, v.nom, v.id_ville, d.nom_departement, r.nom_region FROM villes AS v, departements AS d, regions AS r WHERE v.nom LIKE :ville OR v.nom LIKE :ville2 OR d.nom_departement LIKE :dpt OR r.nom_region LIKE :region GROUP BY nom ORDER BY nom ASC';
 			// $array = array('ville' => $ville.'%','ville2' => str_replace(' ','-',$ville).'%', 'dpt' => $ville.'%', 'region' => $ville.'%');
 			$array = array(':ville' => $ville.'%',':ville2' => str_replace(' ','-',$ville).'%');
@@ -181,7 +181,7 @@
 				$result=$R1->fetchAll();
 			}
 
-			$sql2 = 'SELECT nom_departement AS nom, code AS cp, id_departement AS id_ville FROM departements WHERE nom_departement LIKE :dpt OR code LIKE :dpt OR nom_departement LIKE :dpt2 GROUP BY nom_departement ORDER BY nom_departement ASC';
+			$sql2 = 'SELECT nom_departement AS nom, code AS cp, id_departement AS id_ville FROM departements WHERE nom_departement LIKE :dpt OR code LIKE :dpt OR nom_departement LIKE :dpt2 ORDER BY nom_departement ASC';
 			$array2 = array(':dpt' => '%'.$ville.'%',':dpt2' => '%'.str_replace('-',' ',$ville).'%');
 			$R2 = $baseDD->prepare($sql2);
 			$R2->setFetchMode(PDO::FETCH_ASSOC);
@@ -193,7 +193,7 @@
 				}
 			}
 
-			$sql3 = 'SELECT nom_region AS nom, id_region AS id_ville FROM regions WHERE nom_region LIKE :region GROUP BY nom_region ORDER BY nom_region ASC';
+			$sql3 = 'SELECT nom_region AS nom, id_region AS id_ville FROM regions WHERE nom_region LIKE :region ORDER BY nom_region ASC';
 			$array3 = array(':region' => '%'.$ville.'%');
 			$R3 = $baseDD->prepare($sql3);
 			$R3->setFetchMode(PDO::FETCH_ASSOC);
