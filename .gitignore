@@ -1,4 +1,3 @@
-inc/connect.php
 
 # OS generated files #
 ######################
@@ -10,3 +9,4 @@ inc/connect.php
 Icon?
 ehthumbs.db
 Thumbs.db
+inc/settings.php

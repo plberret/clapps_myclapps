@@ -44,7 +44,7 @@
 					</ul>
 				</nav>
 			</div>
-			<form id="bloc_filters" action="">
+			<form id="block_filters" action="">
 				<div id="filter" class="clearfix">
 					<div id="col1" class="col">
 						<h2>Filtrer la recherche</h2>
@@ -54,9 +54,9 @@
 					<div id="col2" class="col">
 						<div class="field">
 							<label for="">Métier</label>
-							<input type="text" value="Entrez le métier recherché ..." />
+							<input type="text" placeholder="Entrez le métier recherché ..." />
 						</div>
-						<div class="field">
+						<div class="field date">
 							<label for="">Date</label>
 							<select name="" id="">
 								<option value="">Dés que possible</option>
@@ -66,19 +66,60 @@
 					<div id="col3" class="col">
 						<div class="field">
 							<label for="">Lieux</label>
-							<input type="text" value="Ville, département ou code postal" />
+							<input type="text" placeholder="Ville, département ou code postal" />
 						</div>
-						<div>Distance</div>
+						<ul id="distance" class="clearfix">
+							<li><a href="#">
+								<span class="number">50 </span>
+								<span class="unite">KM</span>
+							</a></li>
+							<li><a href="#" class="current">
+								<span class="number">100 </span>
+								<span class="unite">KM</span>
+							</a></li>
+							<li><a href="#">
+								<span class="number">200 </span>
+								<span class="unite">KM</span>
+							</a></li>
+							<li><a href="#">
+								<span class="number">500 </span>
+								<span class="unite">KM</span>
+							</a></li>
+							<li><a href="#">
+								<span class="number">1000 </span>
+								<span class="unite">KM</span>
+							</a></li>
+						</ul>
 					</div>
 				</div>
 				<div id="filter_advanced" class="clearfix">
-					<ul>
-						<li><a href="#tab1">Sauvegarder les filtres</a></li>
-						<li><a href="#tab2">Charger mes filtres</a></li>
-						<li><a href="#tab3">Réinitialiser les filtres</a></li>
+					<ul class="nav">
+						<li class="save current"><a href="#tab1">Sauvegarder les filtres</a></li>
+						<li class="load"><a href="#tab2">Charger mes filtres</a></li>
+						<li class="init"><a href="#tab3">Réinitialiser les filtres</a></li>
 					</ul>
 					<div id="tabs">
-						<div id="tab1">
+						<div id="tab1" class="tab">
+							<p><strong>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</strong></p>
+							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
+							<div class="choice clearfix">
+								<input type="submit" value="Oui" />
+								<a href="#">Annuler</a>
+							</div>
+							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
+							<div class="clearfix">
+								<input type="text" class="email" placeholder="votreadresse@email.com" />
+								<ul class="switch">
+									<li class="current">
+										<a href="#">ON</a>
+									</li>
+									<li>
+										<a href="#">OFF</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div id="tab2" class="tab">
 							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
 							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
 							<input type="text" value="Oui" />
@@ -86,15 +127,7 @@
 							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
 							<input type="text" value="votreadresse@email.com" />
 						</div>
-						<div id="tab2">
-							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
-							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
-							<input type="text" value="Oui" />
-							<a href="#">Annuler</a>
-							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
-							<input type="text" value="votreadresse@email.com" />
-						</div>
-						<div id="tab3">
+						<div id="tab3" class="tab">
 							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
 							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
 							<input type="text" value="Oui" />
