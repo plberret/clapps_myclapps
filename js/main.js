@@ -3,6 +3,10 @@
 
 var zf = zf || {};
 
+zf.isBlank = function(str) {
+	return (!str || /^\s*$/.test(str));
+};
+
 zf.addFavorite = function($this) {
 	$.ajax({
 		url: 'requests/addFavorite.php',
@@ -203,6 +207,37 @@ zf.initAddProject = function() {
 	})
 };
 
+
+zf.jsonCitiesA = function($this){
+	var value = $this.val();
+	console.log(value.length)
+	if(!zf.isBlank(value) && value.length>2){
+		$.getJSON('requests/citiesJson.php',{ville:value},function(resp){
+			console.log(resp)
+			if (resp) {
+				var $ul = $('<ul/>');
+				var $li;
+				var respL = resp.length;
+				for(i=0;i<respL;i++){
+					if (resp[i]) {
+						if (!resp[i]['cp']){resp[i]['cp']=""}
+						$li = $('<li/>',{
+						html :'<a href="#" data-id="'+resp[i]['id_ville']+'" data-type="'+resp[i]["type"]+'">'+resp[i]['cp']+' <span>'+resp[i]['nom']+'</span></a>'
+						});
+						$ul.append($li)
+					};
+					
+				}
+				$('#col3').find('ul').remove();
+				console.log($('#col3').find('ul'))
+				if (respL>0) {
+					$('#col3').append($ul); // hide autoc if no result
+				}
+			};
+		});
+	}
+}
+
 zf.init = function(){
 	$('body').addClass('has-js');
 	// console.log('ok');
@@ -224,6 +259,11 @@ zf.init = function(){
 		}
 	});
 	
+	zf.$page.on('keyup', '.field input[type="text"]', function(event){
+		event.preventDefault();
+		zf.jsonCitiesA($(this));
+	});
+
 	zf.$page.on('click','#see-mine',function(event) { // a protéger avec un .queue() (spamclick)
 		event.preventDefault();
 		var $this=$(this);
