@@ -63,20 +63,18 @@
 						</div>
 						<div class="field select">
 							<label for="">Date</label>
-							<div class="selector" id="">
-								<div id="date_selected">
-									<span class="value">Dés que possible</span>
+							<div class="selector">
+								<div>
+									<span class="value" id="date_filter_selected">Dés que possible</span>
 									<span class="button">Modifier</span>
 								</div>
 								<ul>
-									<li>Dés que possible</li>
-									<li>Cette semaine</li>
-									<li>Ce mois-ci</li>
+									<li class="now">Dés que possible</li>
+									<li class="week">Cette semaine</li>
+									<li class="month">Ce mois-ci</li>
 								</ul>
+								<input type="hidden" name="date_filter" value="">
 							</div>
-							<select name="" id="">
-								<option value="">Dés que possible</option>
-							</select>
 						</div>
 					</div>
 					<div id="col3" class="col">
@@ -113,7 +111,7 @@
 					<ul class="nav">
 						<li class="save current"><a href="#tab1"><span>Sauvegarder les filtres</span></a></li>
 						<li class="load"><a href="#tab2"><span>Charger mes filtres</span></a></li>
-						<li class="init"><a href="#tab3"><span>Réinitialiser les filtres</span></a></li>
+						<li class="delete"><a href="#tab3"><span>Supprimer mes filtres</span></a></li>
 					</ul>
 					<div id="tabs">
 						<div id="tab1" class="tab">
