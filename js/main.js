@@ -292,12 +292,30 @@ zf.jsonCitiesUp = function($this) {
 	}; // /if ul contains li
 };
 
-// Filter
 zf.filter = function(){
 	
-	// ajouter une variable zf pour filtre advanced open/close
 	//var
+	zf.$filterOpen= true;
+	zf.$advancedFilterOpen= false;
+	$filter = zf.$page.find('#block_filters');
 	$advancedFilter = zf.$page.find('#filter_advanced');
+	
+	zf.$page.find('#searchButton').click(function(){
+		if(zf.$filterOpen==true){
+			$height= "-300";
+			zf.$filterOpen=false;
+		}else{
+			$height= "0";
+			zf.$filterOpen=true;
+		}
+		$filter.animate({
+			top: $height,
+		}, 300, function() {
+			// Animation complete.
+			//alert('oui'); 
+		});
+		return false;
+	});
 	
 	$advancedFilter.find('.nav a').click(function(){
 		$advancedFilter.find('.nav a').parent().removeClass('current');
@@ -335,6 +353,25 @@ zf.filter = function(){
 	
 };
 
+zf.customFields = function(){
+	
+	// custom select
+	zf.$page.find(".selector .button").click(function(){
+		var $this = $(this);
+		$(this).parent().siblings('ul').show();
+	});
+	
+/*	$(this).parent().siblings('ul').find('li').click(function(){
+		//var contente = this.text();
+		$(this).parent().siblings('div').find('.value').html('contente' );
+		console.log($(this).text());
+		$(this).parent().hide();
+	}); */
+	
+	// custom autocompletion
+	
+};
+
 zf.init = function(){
 	$('body').addClass('has-js');
 	// console.log('ok');
@@ -351,6 +388,8 @@ zf.init = function(){
 	
 	// init filters
 	zf.filter();
+	// init custom fields
+	zf.customFields();
 	
 	zf.$page.find(".addProject a").fancybox({
 		afterShow: zf.initAddProject,

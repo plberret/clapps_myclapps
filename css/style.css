@@ -106,7 +106,7 @@ header {
 
 header #bar_top {
 	position: relative;
-	z-index: 15;
+	z-index: 100;
 	height: 58px;
 	background: repeat url('../images/noisyGrey.jpg');
 	border-bottom: 1px solid #212121;
@@ -336,16 +336,16 @@ header #filter .col .select .selector span.button {
 	position: absolute;
 	top: 1px;
 	right: 1px;
-	background: #232323;
+	background: #232323 no-repeat url('../images/arrow_selector.png') 7px 14px;
 	width: 24px;
 	height: 31px;
 	text-indent: -9999px;
-	-moz-border-radius-topright:  3px; 
-	-webkit-border-top-right-radius: 3px;
-	border-top-right-radius: 3px;
-	-moz-border-radius-bottomright:  3px; 
-	-webkit-border-bottom-right-radius: 3px;
-	border-bottom-right-radius: 3px;
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
 }
 
 header #filter .col .select .selector ul {
@@ -353,7 +353,7 @@ header #filter .col .select .selector ul {
 	position: absolute;
 	z-index:50;
 	background: #131313;
-	width: 232px;
+	width: 156px;
 	margin-top: 1px;
 }
 
@@ -521,7 +521,7 @@ header #filter_advanced .nav li.load {
 	background: no-repeat url('../images/icon_load.png') 14px center;
 }
 
-header #filter_advanced .nav li.init {
+header #filter_advanced .nav li.delete {
 	background: no-repeat url('../images/icon_refresh.png') 14px center;
 }
 
