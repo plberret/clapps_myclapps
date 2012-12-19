@@ -106,6 +106,7 @@ header {
 
 header #bar_top {
 	position: relative;
+	z-index: 15;
 	height: 58px;
 	background: repeat url('../images/noisyGrey.jpg');
 	border-bottom: 1px solid #212121;
@@ -229,8 +230,9 @@ header #bar_top #searchButton a {
 
 header #block_filters {
 	position: relative;
-	overflow: hidden;
-	height: 196px;
+	/*overflow-x: hidden;
+	overflow-y: visible;*/
+	width: 810px;
 }
 
 header #filter {
@@ -247,6 +249,10 @@ header #filter .col {
 	float: left;
 	height: 135px;
 	padding: 5px 0;
+}
+
+header #filter .col .field {
+	position: relative;
 }
 
 header #filter .col .field label {
@@ -273,6 +279,95 @@ header #filter .col .field input {
 	box-shadow: inset 0 0 3px #000;
 }
 
+header #filter .col .field #autocompletion {
+	display: none;
+	position: absolute;
+	z-index:50;
+	background: #131313;
+	width: 232px;
+	margin-top: 1px;
+}
+
+header #filter .col .field #autocompletion li {
+	padding: 11px;
+	cursor: pointer;
+	color: #c0c0c0;
+	font-size: 12px;
+}
+
+header #filter .col .field #autocompletion li:hover {
+	background: #cc9503;
+	color: #010101;
+}
+
+header #filter .col .select {
+	margin-top: 18px;
+}
+
+header #filter .col .select select {
+	display: none;
+}
+
+header #filter .col .select .selector {
+	position: relative;
+}
+
+header #filter .col .select .selector div {
+	position: relative;
+	width: 110px;
+	height: 15px;
+	line-height: 15px;
+	padding: 9px 35px 9px 10px;
+	font-size: 12px;
+	color: #c0c0c0;
+	border: solid 1px #1a1a1a;
+	background-color: #0b0b0b;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 0 3px #000;
+	-moz-box-shadow: inset 0 0 3px #000;
+	box-shadow: inset 0 0 3px #000;
+}
+
+header #filter .col .select .selector span.button {
+	display: block;
+	cursor: pointer;
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	background: #232323;
+	width: 24px;
+	height: 31px;
+	text-indent: -9999px;
+	-moz-border-radius-topright:  3px; 
+	-webkit-border-top-right-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-bottomright:  3px; 
+	-webkit-border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+header #filter .col .select .selector ul {
+	display: none;
+	position: absolute;
+	z-index:50;
+	background: #131313;
+	width: 232px;
+	margin-top: 1px;
+}
+
+header #filter .col .select .selector ul li {
+	padding: 11px;
+	cursor: pointer;
+	color: #c0c0c0;
+	font-size: 12px;
+}
+
+header #filter .col .select .selector ul li:hover {
+	background: #cc9503;
+	color: #010101;
+}
 
 /* col 1 */
 
@@ -304,11 +399,6 @@ header #filter #col2 {
 	border-right: 1px solid #050505;
 }
 
-header #filter #col2 .date {
-	margin-top: 18px;
-}
-
-
 /* col 3 */
 
 header #filter #col3 {
@@ -317,7 +407,7 @@ header #filter #col3 {
 	border-left: 1px solid #151515;
 }
 
-header #filter #col3 #distance {
+header #filter #col3 #distances {
 	position: relative;
 	margin-top: 25px;
 	width: 213px;
@@ -328,7 +418,7 @@ header #filter #col3 #distance {
 	border: 1px solid #0a0a0a;
 }
 
-header #filter #col3 #distance li {
+header #filter #col3 #distances li {
 	float: left;
 	position: relative;
 	width: 41px;
@@ -337,22 +427,23 @@ header #filter #col3 #distance li {
 	border-left: 1px solid #212121;
 }
 
-header #filter #col3 #distance li:first-child {
+header #filter #col3 #distances li:first-child {
 	border-left: 0;
 }
 
-header #filter #col3 #distance li:last-child {
+header #filter #col3 #distances li:last-child {
 	border-right: 0;
 }
 
-header #filter #col3 #distance li a {
+header #filter #col3 #distances li a {
 	text-decoration: none;
 	text-align: center;
 	display: block;
 	padding-top: 5px;
 }
 
-header #filter #col3 #distance li:hover a, header #filter #col3 #distance li a.current {
+header #filter #col3 #distances li:hover a,
+header #filter #col3 #distances li a.current {
 	position: absolute;
 	left: -2px;
 	top: -4px;
@@ -370,12 +461,13 @@ header #filter #col3 #distance li:hover a, header #filter #col3 #distance li a.c
 	box-shadow: inset 0 0 3px #2f2f2f;
 }
 
-header #filter #col3 #distance li:hover a span.number, header #filter #col3 #distance li a.current span.number {
+header #filter #col3 #distances li:hover a span.number,
+header #filter #col3 #distances li a.current span.number {
 	color: #d19904;
 	font-size: 13px;
 }
 
-header #filter #col3 #distance li a span.number {
+header #filter #col3 #distances li a span.number {
 	text-align: center;
 	text-decoration: none;
 	color: #c0c0c0;
@@ -384,7 +476,7 @@ header #filter #col3 #distance li a span.number {
 	padding-top: 5px;
 }
 
-header #filter #col3 #distance li a span.unite{
+header #filter #col3 #distances li a span.unite{
 	color: #5d5d5d;
 	font-style: 10px;
 	display: block;
@@ -397,8 +489,8 @@ header #filter #col3 #distance li a span.unite{
 
 header #filter_advanced {
 	position: absolute;
+	z-index: 30;
 	top: 0px;
-	/*left: 220px;*/
 	left: 760px;
 	width: 590px;
 	height: 190px;
@@ -435,16 +527,20 @@ header #filter_advanced .nav li.init {
 
 header #filter_advanced .nav li a {
 	display: block;
-	width: 145px;
-	margin-left: 50px;
 	color: #c0c0c0;
 	text-decoration: none;
 	font-weight: bold;
 	font-size: 12px;
+}
+
+header #filter_advanced .nav li a span {
+	display: block;
+	margin-left: 50px;
+	width: 145px;
 	border-bottom: 1px solid #1a1a1a;
 }
 
-header #filter_advanced .nav li:last-child a {
+header #filter_advanced .nav li:last-child a span {
 	border-bottom: 0;
 }
 

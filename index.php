@@ -44,7 +44,7 @@
 					</ul>
 				</nav>
 			</div>
-			<form id="block_filters" action="">
+			<form id="block_filters">
 				<div id="filter" class="clearfix">
 					<div id="col1" class="col">
 						<h2>Filtrer la recherche</h2>
@@ -53,23 +53,39 @@
 					</div>
 					<div id="col2" class="col">
 						<div class="field">
-							<label for="">Métier</label>
-							<input type="text" name="profile" placeholder="Entrez le métier recherché ..." />
+							<label for="profile">Métier</label>
+							<input type="text" name="profile" id="profile" placeholder="Entrez le métier recherché ..." />
+							<ul id="autocompletion">
+								<li>Paris</li>
+								<li>Marseille</li>
+								<li>Lyon</li>
+							</ul>
 						</div>
-						<div class="field date">
+						<div class="field select">
 							<label for="">Date</label>
-							<select name="date" id="">
-								<option value="asap">Dés que possible</option>
+							<div class="selector" id="">
+								<div id="date_selected">
+									<span class="value">Dés que possible</span>
+									<span class="button">Modifier</span>
+								</div>
+								<ul>
+									<li>Dés que possible</li>
+									<li>Cette semaine</li>
+									<li>Ce mois-ci</li>
+								</ul>
+							</div>
+							<select name="" id="">
+								<option value="">Dés que possible</option>
 							</select>
 						</div>
 					</div>
 					<div id="col3" class="col">
 						<div class="field">
-							<label for="">Lieux</label>
-							<input type="text" name="location" placeholder="Ville, département ou code postal" />
+							<label for="location">Lieux</label>
+							<input type="text" name="location" id="location" autocomplete="off" placeholder="Ville, département ou code postal" />
 							<input type="hidden" name="distance" value="100" id="distance" />
 						</div>
-						<ul id="distance" class="clearfix">
+						<ul id="distances" class="clearfix">
 							<li><a href="#">
 								<span class="number">50 </span>
 								<span class="unite">KM</span>
@@ -95,17 +111,17 @@
 				</div>
 				<div id="filter_advanced" class="clearfix">
 					<ul class="nav">
-						<li class="save current"><a href="#tab1">Sauvegarder les filtres</a></li>
-						<li class="load"><a href="#tab2">Charger mes filtres</a></li>
-						<li class="init"><a href="#tab3">Réinitialiser les filtres</a></li>
+						<li class="save current"><a href="#tab1"><span>Sauvegarder les filtres</span></a></li>
+						<li class="load"><a href="#tab2"><span>Charger mes filtres</span></a></li>
+						<li class="init"><a href="#tab3"><span>Réinitialiser les filtres</span></a></li>
 					</ul>
 					<div id="tabs">
 						<div id="tab1" class="tab">
 							<p><strong>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</strong></p>
 							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
 							<div class="choice clearfix">
-								<input type="submit" value="Oui" />
-								<a href="#">Annuler</a>
+								<input type="submit" value="Oui" class="valid_button" />
+								<a href="#" class="close">Annuler</a>
 							</div>
 							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
 							<div class="clearfix">

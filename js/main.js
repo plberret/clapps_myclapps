@@ -232,7 +232,7 @@ zf.jsonCitiesA = function($this){
 		$.getJSON('requests/citiesJson.php',{ville:value.trim()},function(resp){
 		//	console.log(resp)
 			if (resp) {
-				var $ul = $('<ul/>',{id:'autocompletion'});
+				var $ul = $('<ul/>',{id:'autocCities'});
 				var $li;
 				var respL = resp.length;
 				for(i=0;i<respL;i++){
@@ -244,7 +244,7 @@ zf.jsonCitiesA = function($this){
 						$ul.append($li)
 					};
 				}
-				$('#col3').find('ul#autocompletion').remove();
+				$('#col3').find('ul#autocCities').remove();
 			//	console.log($('#col3').find('ul'))
 				if (respL>0) {
 					$('#col3').append($ul); // hide autoc if no result
@@ -255,7 +255,7 @@ zf.jsonCitiesA = function($this){
 }
 
 zf.jsonCitiesDown = function($this) {
-	$ul = zf.$filtre.find('#col3 ul')
+	$ul = zf.$filtre.find('#col3 ul#autocCities')
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
@@ -279,7 +279,7 @@ zf.jsonCitiesDown = function($this) {
 };
 
 zf.jsonCitiesUp = function($this) {
-	$ul = zf.$filtre.find('#col3 ul')
+	$ul = zf.$filtre.find('#col3 ul#autocCities')
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
@@ -305,11 +305,53 @@ zf.jsonCitiesUp = function($this) {
 zf.updateFilter = function($this){
 	if (!$this.hasClass('current')) {
 		zf.$filtre.find('#distance').val($this.find('.number').text().trim())
-		console.log(zf.$filtre.find('#distance').val())
-		zf.$filtre.find('#distance .current').removeClass('current');
+		zf.$filtre.find('#distances .current').removeClass('current');
 		$this.addClass('current');
 	};
 }
+
+// Filter
+zf.filter = function(){
+	
+	// ajouter une variable zf pour filtre advanced open/close
+	//var
+	$advancedFilter = zf.$page.find('#filter_advanced');
+	
+	$advancedFilter.find('.nav a').click(function(){
+		$advancedFilter.find('.nav a').parent().removeClass('current');
+		$(this).parent().addClass('current');
+		$advancedFilter.animate({
+			left: '220',
+		}, 300, function() {
+			// Animation complete.
+			//alert('oui'); 
+		});
+		return false;
+	});
+	
+	$advancedFilter.find('a.close').click(function(){
+		$advancedFilter.find('.nav a').parent().removeClass('current');
+		$advancedFilter.animate({
+			left: '760',
+		}, 300, function() {
+			// Animation complete.
+			//alert('oui'); 
+		});
+		return false;
+	});
+	
+	$advancedFilter.find('input.valid_button').click(function(){
+		$advancedFilter.find('.nav a').parent().removeClass('current');
+		$advancedFilter.animate({
+			left: '760',
+		}, 300, function() {
+			// Animation complete.
+			//alert('oui'); 
+		});
+		return false;
+	});
+	
+};
 
 zf.init = function(){
 	$('body').addClass('has-js');
@@ -325,6 +367,9 @@ zf.init = function(){
 	zf.$filtre = zf.$page.find('#block_filters');
 	zf.$projectsList = zf.$page.find('#projects');
 	
+	// init filters
+	zf.filter();
+	
 	zf.$page.find(".addProject a").fancybox({
 		afterShow: zf.initAddProject,
 		closeClick  : false,
@@ -332,13 +377,14 @@ zf.init = function(){
 			overlay : {closeClick: false}
 		}
 	});
-	
+
 	zf.$filtre.on('submit', function(event){
-		event.preventDefault();
+		console.log('kk');
+		// event.preventDefault();
 		zf.getFilteredProjects($(this));
 	});
 
-	zf.$filtre.find('#distance li a').click(function(event) {
+	zf.$filtre.find('#distances li a').click(function(event) {
 		event.preventDefault();
 		zf.updateFilter($(this));
 	})
@@ -348,6 +394,7 @@ zf.init = function(){
 		var $this=$(this);
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
 			// TRIGGER CLICK ON CURRENT DISTANCE MOTHER FUCKER
+
 		} else if (zf.isOkKey(event)) {
 			zf.jsonCitiesA($this);
 		};
@@ -397,6 +444,7 @@ zf.init = function(){
 		event.preventDefault();
 		zf.getMoreProjects($(this));
 	});
+	
 };
 
 /* DOM READY
