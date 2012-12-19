@@ -149,6 +149,16 @@ zf.getOneProject = function(id) {
 	});
 }
 
+zf.getFilteredProjects = function($this){
+	$.ajax({
+		url: 'index.php',
+		data: $this.serialize(),
+		success: function(resp) { 
+			console.log($this.serialize());
+		}
+	});
+}
+
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	
@@ -222,7 +232,7 @@ zf.jsonCitiesA = function($this){
 		$.getJSON('requests/citiesJson.php',{ville:value.trim()},function(resp){
 		//	console.log(resp)
 			if (resp) {
-				var $ul = $('<ul/>');
+				var $ul = $('<ul/>',{id:'autocompletion'});
 				var $li;
 				var respL = resp.length;
 				for(i=0;i<respL;i++){
@@ -234,7 +244,7 @@ zf.jsonCitiesA = function($this){
 						$ul.append($li)
 					};
 				}
-				$('#col3').find('ul').remove();
+				$('#col3').find('ul#autocompletion').remove();
 			//	console.log($('#col3').find('ul'))
 				if (respL>0) {
 					$('#col3').append($ul); // hide autoc if no result
@@ -292,6 +302,15 @@ zf.jsonCitiesUp = function($this) {
 	}; // /if ul contains li
 };
 
+zf.updateFilter = function($this){
+	if (!$this.hasClass('current')) {
+		zf.$filtre.find('#distance').val($this.find('.number').text().trim())
+		console.log(zf.$filtre.find('#distance').val())
+		zf.$filtre.find('#distance .current').removeClass('current');
+		$this.addClass('current');
+	};
+}
+
 zf.init = function(){
 	$('body').addClass('has-js');
 	// console.log('ok');
@@ -303,7 +322,7 @@ zf.init = function(){
 	});
 
 	zf.$page = $('#page');
-	zf.$filtre = zf.$page.find('#bloc_filters');
+	zf.$filtre = zf.$page.find('#block_filters');
 	zf.$projectsList = zf.$page.find('#projects');
 	
 	zf.$page.find(".addProject a").fancybox({
@@ -314,6 +333,16 @@ zf.init = function(){
 		}
 	});
 	
+	zf.$filtre.on('submit', function(event){
+		event.preventDefault();
+		zf.getFilteredProjects($(this));
+	});
+
+	zf.$filtre.find('#distance li a').click(function(event) {
+		event.preventDefault();
+		zf.updateFilter($(this));
+	})
+
 	zf.$filtre.find('.field input[type="text"]').keyup(function(event){
 		event.preventDefault();
 		var $this=$(this);

@@ -54,19 +54,20 @@
 					<div id="col2" class="col">
 						<div class="field">
 							<label for="">Métier</label>
-							<input type="text" placeholder="Entrez le métier recherché ..." />
+							<input type="text" name="profile" placeholder="Entrez le métier recherché ..." />
 						</div>
 						<div class="field date">
 							<label for="">Date</label>
-							<select name="" id="">
-								<option value="">Dés que possible</option>
+							<select name="date" id="">
+								<option value="asap">Dés que possible</option>
 							</select>
 						</div>
 					</div>
 					<div id="col3" class="col">
 						<div class="field">
 							<label for="">Lieux</label>
-							<input type="text" placeholder="Ville, département ou code postal" />
+							<input type="text" name="location" placeholder="Ville, département ou code postal" />
+							<input type="hidden" name="distance" value="100" id="distance" />
 						</div>
 						<ul id="distance" class="clearfix">
 							<li><a href="#">
@@ -145,7 +146,7 @@
 			<?php
 				if (isset($_GET['id_project'])) :
 					$getProjects=getProject($_GET['id_project']);
-				elseif ($_GET['domain']):
+				elseif ($_GET['filter']):
 					$getProjects=getProjectsByFilters($page,$_GET);
 				else:
 					$getProjects=getProjects($page,$_GET['user_fb']);
