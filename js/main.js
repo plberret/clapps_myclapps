@@ -292,6 +292,49 @@ zf.jsonCitiesUp = function($this) {
 	}; // /if ul contains li
 };
 
+// Filter
+zf.filter = function(){
+	
+	// ajouter une variable zf pour filtre advanced open/close
+	//var
+	$advancedFilter = zf.$page.find('#filter_advanced');
+	
+	$advancedFilter.find('.nav a').click(function(){
+		$advancedFilter.find('.nav a').parent().removeClass('current');
+		$(this).parent().addClass('current');
+		$advancedFilter.animate({
+			left: '220',
+		}, 300, function() {
+			// Animation complete.
+			//alert('oui'); 
+		});
+		return false;
+	});
+	
+	$advancedFilter.find('a.close').click(function(){
+		$advancedFilter.find('.nav a').parent().removeClass('current');
+		$advancedFilter.animate({
+			left: '760',
+		}, 300, function() {
+			// Animation complete.
+			//alert('oui'); 
+		});
+		return false;
+	});
+	
+	$advancedFilter.find('input.valid_button').click(function(){
+		$advancedFilter.find('.nav a').parent().removeClass('current');
+		$advancedFilter.animate({
+			left: '760',
+		}, 300, function() {
+			// Animation complete.
+			//alert('oui'); 
+		});
+		return false;
+	});
+	
+};
+
 zf.init = function(){
 	$('body').addClass('has-js');
 	// console.log('ok');
@@ -305,6 +348,9 @@ zf.init = function(){
 	zf.$page = $('#page');
 	zf.$filtre = zf.$page.find('#bloc_filters');
 	zf.$projectsList = zf.$page.find('#projects');
+	
+	// init filters
+	zf.filter();
 	
 	zf.$page.find(".addProject a").fancybox({
 		afterShow: zf.initAddProject,
@@ -368,6 +414,7 @@ zf.init = function(){
 		event.preventDefault();
 		zf.getMoreProjects($(this));
 	});
+	
 };
 
 /* DOM READY
