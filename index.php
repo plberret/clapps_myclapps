@@ -23,8 +23,11 @@
 				<div id="logo">
 					<h1>My clapps</h1>
 				</div>
-				<div id="searchButton">
+				<div id="searchButton" class="bar_top_button">
 					<a href="javascript:void(0)" >Recherche</a>
+				</div>
+				<div id="infoButton" class="bar_top_button">
+					<a href="javascript:void(0)" >Tutoriel</a>
 				</div>
 				<nav>
 					<ul class="clearfix">
@@ -44,12 +47,28 @@
 					</ul>
 				</nav>
 			</div>
+			<div id="block_current_filter" class="clearfix">
+				<div id="current_filter">
+					<p>Vous recherchez <span>dès que possible</span> un poste <span>d'un ingénieur du son</span> dans la commune de <span>Paris</span> et <span>100km</span> aux alentours.</p>
+				</div>
+				<div id="notif_email">
+					<p>M'avertir des nouvelles annonces par email</p>
+					<form action="" class="clearfix">
+						<input type="text" placeholder="votreadresse@email.com" />
+						<ul class="switch">
+							<li><a href="#">ON</a></li>
+						</ul>
+						<input type="hidden" name="notif" value="" />
+					</form>
+				</div>
+			</div>
 			<form id="block_filters" action="">
 				<div id="filter" class="clearfix">
 					<div id="col1" class="col">
 						<h2>Filtrer la recherche</h2>
 						<p>Utiliser les différents filtres ci-contre
 						pour affiner votre recherche.</p>
+						<a href="javascript:void(0);" id="refresh_button">Réinitialiser la recherche</a>
 					</div>
 					<div id="col2" class="col">
 						<div class="field">
@@ -69,9 +88,10 @@
 									<span class="button">Modifier</span>
 								</div>
 								<ul>
-									<li class="now">Dés que possible</li>
+									<li class="now">Dès que possible</li>
 									<li class="week">Cette semaine</li>
 									<li class="month">Ce mois-ci</li>
+									<li class="trimestre">Ce trimestre</li>
 								</ul>
 								<input type="hidden" name="date_filter" value="">
 							</div>
@@ -108,9 +128,18 @@
 				</div>
 				<div id="filter_advanced" class="clearfix">
 					<ul class="nav">
-						<li class="save current"><a href="#tab1"><span>Sauvegarder les filtres</span></a></li>
-						<li class="load"><a href="#tab2"><span>Charger mes filtres</span></a></li>
-						<li class="delete"><a href="#tab3"><span>Supprimer mes filtres</span></a></li>
+						<li class="save current">
+							<a href="#tab1"><span>Sauvegarder les filtres</span></a>
+						<!--	<span class="bubble">Sauvegarder les filtres</span> -->
+						</li>
+						<li class="load">
+							<a href="#tab2"><span>Charger mes filtres</span></a>
+						<!--	<span class="bubble">Charger mes filtres</span> -->
+						</li>
+						<li class="delete">
+							<a href="#tab3"><span>Supprimer mes filtres</span></a>
+						<!--	<span class="bubble">Supprimer mes filtres</span> -->
+						</li>
 					</ul>
 					<div id="tabs">
 						<div id="tab1" class="tab">
@@ -204,7 +233,9 @@
 								<p><?php echo $project['description']; ?></p>
 							</div>
 							<div class="clearfix">
-								<a href="#" class="see-more">Voir plus</a>
+								<div id="see_button">
+									<a href="#" class="see-more"><span>Voir</span> plus</a>
+								</div>
 								<div class="project_id">#<?php echo $project['id_project']; ?></div>
 							</div>
 						</div><!-- fin preview -->
@@ -246,13 +277,12 @@
 									<?php } ?>
 								</ul>
 							</div><!-- fin profile -->
+							<?php if (isAdmin($project,$user_fb)): ?>
+								<div class="manage clearfix">
+									<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
+								</div>
+							<?php endif ?>
 						</div><!-- fin more -->
-						<?php if (isAdmin($project,$user_fb)): ?>
-							<div class="manage">
-								<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>">Editer l'annonce</a>
-								<a href="#" class='deleteProject' data-id="<?php echo $project['id_project'] ?>">Supprimer l'annonce</a>
-							</div>
-						<?php endif ?>
 					</article>
 				<?php endforeach; ?>
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
@@ -265,6 +295,7 @@
 	<div id="fb-root"></div>
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>
 	<script type="text/javascript">
 		zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?>
