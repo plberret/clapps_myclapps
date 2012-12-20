@@ -72,8 +72,8 @@
 					</div>
 					<div id="col2" class="col">
 						<div class="field">
-							<label for="">Métier</label>
-							<input type="text" placeholder="Entrez le métier recherché ..." />
+							<label for="profile">Métier</label>
+							<input type="text" name="profile" id="profile" placeholder="Entrez le métier recherché ..." />
 							<ul id="autocompletion">
 								<li>Paris</li>
 								<li>Marseille</li>
@@ -99,10 +99,11 @@
 					</div>
 					<div id="col3" class="col">
 						<div class="field">
-							<label for="">Lieux</label>
-							<input type="text" placeholder="Ville, département ou code postal" />
+							<label for="location">Lieux</label>
+							<input type="text" name="location" id="location" autocomplete="off" placeholder="Ville, département ou code postal" />
+							<input type="hidden" name="distance" value="100" id="distance" />
 						</div>
-						<ul id="distance" class="clearfix">
+						<ul id="distances" class="clearfix">
 							<li><a href="#">
 								<span class="number">50 </span>
 								<span class="unite">KM</span>
@@ -188,7 +189,7 @@
 			<?php
 				if (isset($_GET['id_project'])) :
 					$getProjects=getProject($_GET['id_project']);
-				elseif ($_GET['domain']):
+				elseif ($_GET['filter']):
 					$getProjects=getProjectsByFilters($page,$_GET);
 				else:
 					$getProjects=getProjects($page,$_GET['user_fb']);

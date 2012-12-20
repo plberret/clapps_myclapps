@@ -149,6 +149,16 @@ zf.getOneProject = function(id) {
 	});
 }
 
+zf.getFilteredProjects = function($this){
+	$.ajax({
+		url: 'index.php',
+		data: $this.serialize(),
+		success: function(resp) { 
+			console.log($this.serialize());
+		}
+	});
+}
+
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	
@@ -222,7 +232,7 @@ zf.jsonCitiesA = function($this){
 		$.getJSON('requests/citiesJson.php',{ville:value.trim()},function(resp){
 		//	console.log(resp)
 			if (resp) {
-				var $ul = $('<ul/>');
+				var $ul = $('<ul/>',{id:'autocCities'});
 				var $li;
 				var respL = resp.length;
 				for(i=0;i<respL;i++){
@@ -234,7 +244,7 @@ zf.jsonCitiesA = function($this){
 						$ul.append($li)
 					};
 				}
-				$('#col3').find('ul').remove();
+				$('#col3').find('ul#autocCities').remove();
 			//	console.log($('#col3').find('ul'))
 				if (respL>0) {
 					$('#col3').append($ul); // hide autoc if no result
@@ -245,7 +255,7 @@ zf.jsonCitiesA = function($this){
 }
 
 zf.jsonCitiesDown = function($this) {
-	$ul = zf.$filtre.find('#col3 ul')
+	$ul = zf.$filtre.find('#col3 ul#autocCities')
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
@@ -269,7 +279,7 @@ zf.jsonCitiesDown = function($this) {
 };
 
 zf.jsonCitiesUp = function($this) {
-	$ul = zf.$filtre.find('#col3 ul')
+	$ul = zf.$filtre.find('#col3 ul#autocCities')
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
@@ -292,6 +302,15 @@ zf.jsonCitiesUp = function($this) {
 	}; // /if ul contains li
 };
 
+zf.updateFilter = function($this){
+	if (!$this.hasClass('current')) {
+		zf.$filtre.find('#distance').val($this.find('.number').text().trim())
+		zf.$filtre.find('#distances .current').removeClass('current');
+		$this.addClass('current');
+	};
+}
+
+// Filter
 zf.filter = function(){
 	
 	//var
@@ -390,7 +409,7 @@ zf.init = function(){
 	});
 
 	zf.$page = $('#page');
-	zf.$filtre = zf.$page.find('#bloc_filters');
+	zf.$filtre = zf.$page.find('#block_filters');
 	zf.$projectsList = zf.$page.find('#projects');
 	
 	// init filters
@@ -405,12 +424,24 @@ zf.init = function(){
 			overlay : {closeClick: false}
 		}
 	});
-	
+
+	zf.$filtre.on('submit', function(event){
+		console.log('kk');
+		// event.preventDefault();
+		zf.getFilteredProjects($(this));
+	});
+
+	zf.$filtre.find('#distances li a').click(function(event) {
+		event.preventDefault();
+		zf.updateFilter($(this));
+	})
+
 	zf.$filtre.find('.field input[type="text"]').keyup(function(event){
 		event.preventDefault();
 		var $this=$(this);
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
 			// TRIGGER CLICK ON CURRENT DISTANCE MOTHER FUCKER
+
 		} else if (zf.isOkKey(event)) {
 			zf.jsonCitiesA($this);
 		};
