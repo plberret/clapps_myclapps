@@ -77,7 +77,7 @@ zf.seeAll = function($_this) {
 	zf.$projectsList.fadeOut(300,function() {
 		$(this).children().remove().end().show();
 		var $newProject = $('<div/>');
-		$newProject.load('index.php #projects',function(resp) {
+		$newProject.load('index.php #page',function(resp) {
 			var $this=$(this);
 			$_this.attr('id','see-mine').html($this.find('#see-mine').html());
 			$this.find('.project').each(function(i) {
@@ -101,7 +101,7 @@ zf.seeMine = function($_this) {
 	zf.$projectsList.fadeOut(300,function() {
 		$(this).children().remove().end().show();
 		var $newProject = $('<div/>');
-		$newProject.load(url,function(resp) {
+		$newProject.load(url+' #page',function(resp) {
 			var $this=$(this);
 			$this.find('.project').each(function(i) {
 				var $this=$(this);
