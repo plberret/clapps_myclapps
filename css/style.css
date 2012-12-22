@@ -862,6 +862,7 @@ section article {
 
 section article .preview {
 	position: relative;
+	height: 240px;
 	z-index: 2;
 	background: repeat url(../images/pattern-annonce-replie.png);
 	border: 1px solid #2c2c2c;
@@ -1041,10 +1042,29 @@ section article .preview .desc p {
 	color: #8c8c8c;
 }
 
-section article .preview .project_id {
+section article .preview .bloc_see_more {
+	height: 29px;
+	padding-top: 11px;
+	border-top: 1px solid #2a2a2a;
+	margin: 0 16px;
+}
+
+section article .preview .bloc_see_more div  {
 	float: left;
+	color: #8c8c8c;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+section article .preview .bloc_see_more .project_id {
+	float: left;
+	font-weight: bold;
+	margin-right: 15px;
 	margin-left: 24px;
-	color: #55595c;
+}
+
+section article .preview .bloc_see_more .date {
+	margin-right: 20px;
 }
 
 section article .preview #see_button {
@@ -1052,7 +1072,8 @@ section article .preview #see_button {
 	height: 26px;
 	width: 99px;
 	line-height: 16px;
-	margin-right: 23px;
+	font-size: 12px;
+	margin-right: 7px;
 	-webkit-border-radius: 3px 3px 0 0;
 	-moz-border-radius: 3px 3px 0 0;
 	border-radius: 3px 3px 0 0;
@@ -1088,6 +1109,7 @@ section article .preview #see_button:hover a {
 
 section article .more {
 	position: relative;
+	width: 680px;
 	bottom: 2px;
 	z-index: 1;
 	background: repeat url(../images/pattern-annonce-deplie.png);
@@ -1222,6 +1244,21 @@ section article .profiles ul li.profileFound .applyFound {
 
 section article .manage {
 	margin-top: 15px;
+}
+
+section article .manage p {
+	float: left;
+	padding: 7px 0;
+	line-height: 17px;
+	margin-left: 20px;
+	font-size: 12px;
+	color: #a6a6a6;
+}
+
+section article .manage p span {
+	color: #f4b200;
+	font-weight: bold;
+	margin-left: 3px;
 }
 
 section article .manage .editProject {
@@ -1588,4 +1625,16 @@ section article .manage .editProject span {
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
 	background-image: -ms-linear-gradient(top, #f4b50b, #b80);
 	background-image: linear-gradient(to bottom, #f4b50b, #b80);
+}
+
+/* -------------------------------- TUTORIEL -----------------------------------*/
+
+#tuto {
+	display: none;
+	width: 810px;
+	height: 100%;
+	position: absolute;
+	z-index: 100;
+	top: 0;
+	background: yellow;
 }

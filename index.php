@@ -183,9 +183,66 @@
 				</div>
 			</form>
 		</header>
-		
-		<div id="tuto"></div>
+	
 		<section id="projects">
+			<!--
+			<article class="project">
+				<form action="">
+					<div class="preview">
+						<div class="block_top clearfix">
+							<img src="" alt="photo profil" />
+							<div class="title_block">
+								<div class="title">
+									<h2><input type="text" value="Projet en mode édition" /></h2>
+									<div>Ajouté par <span>Pierre-loic</span> le 07.10.12</div>
+								</div>
+								<div class="available clearfix">
+									<div class="actors profile">
+										<span>22</span>
+										<p>Il reste 22 poste(s) de comédien(nes) disponible(s)</p>
+									</div> 
+									<div class="technicians profile">
+										<span>18</span>
+										<p>Il reste 18 poste(s) de technicien(nes) disponible(s)</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="share clearfix">
+							<a href="#" class="share_link">Partager l'annonce</a>
+							<a href="#" class="favorite_link">Ajouter aux favoris</a>
+						</div>
+						<div class="desc">
+							<h3>Détails de l'annonce :</h3>
+							<textarea name="" id="" cols="30" rows="10">description</textarea>
+						</div>
+						<div class="clearfix">
+							<div id="see_button">
+								<a href="#" class="see-more"><span>Voir</span> plus</a>
+							</div>
+							<div class="date">
+								<input type="text" value="28 décembre 2012" />
+							</div>
+							<div class="place">
+								<input type="text" value="Paris 11e (75011)" />
+							</div>
+							<div class="project_id">#3000</div>
+						</div>
+					</div><!-- fin preview -->
+				<!--	<div class="more">
+						<div class="profiles">
+							<ul>
+								<li class="clearfix profileFound">
+									<div class="icon"></div>
+									<input type="text" value="Desc du profil" />
+									<div class="applyFound">Candidat trouvé</div>
+								</li>
+							</ul>
+						</div><!-- fin profile -->
+			<!--		</div><!-- fin more -->
+			<!--	</form>
+			</article> -->
+			
 			<?php
 				if (isset($_GET['id_project'])) :
 					$getProjects=getProject($_GET['id_project']);
@@ -233,11 +290,13 @@
 								<h3>Détails de l'annonce :</h3>
 								<p><?php echo $project['description']; ?></p>
 							</div>
-							<div class="clearfix">
+							<div class="bloc_see_more clearfix">
+								<div class="project_id">#<?php echo $project['id_project']; ?></div>
+								<div class="date">28 décembre 2012</div>
+								<div class="place">Paris 11e (75011)</div>
 								<div id="see_button">
 									<a href="#" class="see-more"><span>Voir</span> plus</a>
 								</div>
-								<div class="project_id">#<?php echo $project['id_project']; ?></div>
 							</div>
 						</div><!-- fin preview -->
 						<div class="more">
@@ -280,27 +339,55 @@
 							</div><!-- fin profile -->
 							<?php if (isAdmin($project,$user_fb)): ?>
 								<div class="manage clearfix">
+									<p>Validité de l'annonce : <span>14 jours restants</span></p>
 									<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 								</div>
 							<?php endif ?>
 						</div><!-- fin more -->
 					</article>
 				<?php endforeach; ?>
+				
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
 					<a href="?page=<?php echo $page+1; ?><?php echo implode($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
+			
 		</section>
+		
+		<div id="tuto">
+			<div id="block_logo_tuto"></div>
+			<div id="block_button_tuto">
+				<h2>Trouver un tournage n’aura jamais été aussi simple !</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque rhoncus tortor non ...</p>
+				<a href="#">J'accède à l'application</a>
+			</div>
+			<div id="block_display_tuto">
+				<div class="title">
+					<h3>Myclapps en 4 étapes</h3>
+				</div>
+				<div class="display"></div>
+			</div>
+			<div id="block_nav_tuto">
+				<ul>
+					<li><a href="#">Rechercher/Filtrer</a></li>
+					<li><a href="#">Gestion des filtres</a></li>
+					<li><a href="#">Mise en favoris <br/>Partager une annonce</a></li>
+					<li><a href="#">Création d'une annonce <br/> Édition d'une annonce</a></li>
+				</ul>
+			</div>
+		</div>
+		
 	</div> <!-- fin page-->
+	
 	<div id="fb-root"></div>
+	
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>
-	<script type="text/javascript">
-		zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?>
-	</script>
+	<script type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
+	
 	<?php
 		echo '<script>
 			  window.fbAsyncInit = function() {
@@ -319,7 +406,8 @@
 			    e.async = true;
 			    document.getElementById("fb-root").appendChild(e);
 			  }());
-	</script>
-'; ?>
+		</script>';
+ 	?>
+
 </body>
 </html>
