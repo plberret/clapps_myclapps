@@ -17,10 +17,6 @@
 	vertical-align: top;
 }
 
-.fancybox-overlay {
-	font-family: verdana;
-}
-
 .fancybox-wrap {
 	position: absolute;
 	top: 0;
@@ -30,7 +26,7 @@
 
 .fancybox-skin {
 	position: relative;
-	background: repeat url("../images/noisyBlack.jpg");
+	background: repeat url("../images/pattern-top-bar.png");
 	border: 1px solid #21272c;
 	color: #444;
 	text-shadow: none;
