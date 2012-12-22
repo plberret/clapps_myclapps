@@ -73,13 +73,15 @@ zf.seeMore = function($this) {
 	});
 }
 
-zf.seeAll = function() {
+zf.seeAll = function($_this) {
 	zf.$projectsList.fadeOut(300,function() {
 		$(this).children().remove().end().show();
 		var $newProject = $('<div/>');
 		$newProject.load('index.php #projects',function(resp) {
 			var $this=$(this);
+			$_this.attr('id','see-mine').html($this.find('#see-mine').html());
 			$this.find('.project').each(function(i) {
+				// console.log('i',i)
 				var $this=$(this);
 				setTimeout(function() {
 					// zf.$projectsList.append($this.hide().fadeIn(500));
@@ -99,7 +101,7 @@ zf.seeMine = function($_this) {
 	zf.$projectsList.fadeOut(300,function() {
 		$(this).children().remove().end().show();
 		var $newProject = $('<div/>');
-		$newProject.load(url+' #projects',function(resp) {
+		$newProject.load(url,function(resp) {
 			var $this=$(this);
 			$this.find('.project').each(function(i) {
 				var $this=$(this);
@@ -319,7 +321,8 @@ zf.filter = function(){
 	$filter = zf.$page.find('#block_filters');
 	$advancedFilter = zf.$page.find('#filter_advanced');
 	
-	zf.$page.find('#searchButton').click(function(){
+	zf.$page.find('#searchButton').click(function(event){
+		event.preventDefault();
 		if(zf.$filterOpen==true){
 			$height= "-300";
 			zf.$filterOpen=false;
@@ -333,10 +336,11 @@ zf.filter = function(){
 			// Animation complete.
 			//alert('oui'); 
 		});
-		return false;
+		//return false;
 	});
 	
-	$advancedFilter.find('.nav a').click(function(){
+	$advancedFilter.find('.nav a').click(function(event){
+		event.preventDefault();
 		$advancedFilter.find('.nav a').parent().removeClass('current');
 		$(this).parent().addClass('current');
 		$advancedFilter.animate({
@@ -345,10 +349,10 @@ zf.filter = function(){
 			// Animation complete.
 			//alert('oui'); 
 		});
-		return false;
+		// return false;
 	});
-	
-	$advancedFilter.find('a.close').click(function(){
+	$advancedFilter.find('a.close').click(function(event){
+		event.preventDefault();
 		$advancedFilter.find('.nav a').parent().removeClass('current');
 		$advancedFilter.animate({
 			left: '760',
@@ -359,7 +363,8 @@ zf.filter = function(){
 		return false;
 	});
 	
-	$advancedFilter.find('input.valid_button').click(function(){
+	$advancedFilter.find('input.valid_button').click(function(event){ // a fix pour enregistrer le filtre
+		event.stopPropagation();
 		$advancedFilter.find('.nav a').parent().removeClass('current');
 		$advancedFilter.animate({
 			left: '760',
@@ -367,7 +372,7 @@ zf.filter = function(){
 			// Animation complete.
 			//alert('oui'); 
 		});
-		return false;
+		// return false;
 	});
 	
 };
@@ -420,7 +425,7 @@ zf.init = function(){
 
 	zf.$filtre.on('submit', function(event){
 		console.log('kk');
-		// event.preventDefault();
+		event.preventDefault();
 		zf.getFilteredProjects($(this));
 	});
 
@@ -474,8 +479,9 @@ zf.init = function(){
 
 	zf.$page.on('click','#see-all',function() {
 		event.preventDefault();
-		$(this).attr('id','see-mine').html('Mes annonces');
-		zf.seeAll();
+		var $this=$(this);
+		$this.attr('id','see-mine');
+		zf.seeAll($this);
 	});
 
 	// More projects

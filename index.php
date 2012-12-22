@@ -13,7 +13,7 @@
 	<meta charset="utf-8">
 	<title>My clapps</title>
 	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
-	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title">
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -37,7 +37,7 @@
 							<?php else: ?>
 								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine">
 									<span class="text">Mes annonces</span>
-									<span class="number">4</span>
+									<span class="number"><?php echo getNbProject($user_fb) ?></span>
 								</a>
 							<?php endif; ?>
 						</li>
@@ -62,8 +62,8 @@
 							</ul>
 						</div>
 						<div class="field select">
-							<label for="">Date</label>
-							<div class="selector">
+							<label for="selector_date">Date</label>
+							<div class="selector" id="selector_date">
 								<div>
 									<span class="value" id="date_filter_selected">Dés que possible</span>
 									<span class="button">Modifier</span>

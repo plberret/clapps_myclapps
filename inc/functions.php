@@ -201,7 +201,7 @@
 				$regions=$R3->fetchAll();
 				foreach ($regions as $reg) {
 					$reg['type']='reg';
-					array_push($result,$reg);
+					//array_push($result,$reg);
 				}
 			}
 
