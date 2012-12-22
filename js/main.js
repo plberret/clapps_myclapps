@@ -24,6 +24,7 @@ zf.addFavorite = function($this) {
 			// resp = JSON.parse(resp);
 			if (resp.success) {
 				$this.html('Retirer des favoris').removeClass('favorite_link').addClass('unfavorite_link');
+				zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
 			} else {
 
 			}
@@ -40,6 +41,7 @@ zf.deleteFavorite = function($this) {
 			// resp = JSON.parse(resp);
 			if (resp.success) {
 				$this.html('Ajouter aux favoris').removeClass('unfavorite_link').addClass('favorite_link');
+				zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())-1)
 			} else {
 
 			}
