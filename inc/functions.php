@@ -74,7 +74,8 @@
 		global $baseDD;
 
 		$user = getIdFromFb();
-		$R1=$baseDD->prepare('DELETE FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user');
+		// $R1=$baseDD->prepare('DELETE FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user');
+		$R1=$baseDD->prepare('UPDATE mc_project SET current_state = 0 WHERE id_project = :id_project AND id_creator = :id_user');
 		$R1->bindParam(':id_project',$project['id']);
 		$R1->bindParam(':id_user',$user['id_user']);
 
@@ -91,10 +92,10 @@
 		$sql = 'SELECT count(*) AS nb FROM `mc_project`';
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
+			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array(':user_fb' => $user_fb);
 		}
-		
+
 		$q = $baseDD->prepare($sql);
 		$q->setFetchMode(PDO::FETCH_ASSOC);
 		$q->execute($array);
@@ -124,7 +125,7 @@
 		$sql = "SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
+			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array(':user_fb' => $user_fb);
 		}
 
@@ -146,7 +147,7 @@
 		$array = array('id_project' => $id_project);
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
-		
+
 		if($R1->execute($array)){
 			$projects=$R1->fetchAll();
 		}
@@ -201,7 +202,7 @@
 				$regions=$R3->fetchAll();
 				foreach ($regions as $reg) {
 					$reg['type']='reg';
-					array_push($result,$reg);
+					//array_push($result,$reg);
 				}
 			}
 

@@ -5,6 +5,7 @@
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
 	$nbProject = getNbProject($_GET['user_fb']);
+	echo getNbProject('BBBBBBBB');
 ?>
 
 <!doctype html>
@@ -13,7 +14,7 @@
 	<meta charset="utf-8">
 	<title>My clapps</title>
 	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
-	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title">
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -40,7 +41,7 @@
 							<?php else: ?>
 								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine">
 									<span class="text">Mes annonces</span>
-									<span class="number">4</span>
+									<span class="number"><?php echo getNbProject($user_fb) ?></span>
 								</a>
 							<?php endif; ?>
 						</li>
@@ -81,8 +82,8 @@
 							</ul>
 						</div>
 						<div class="field select">
-							<label for="">Date</label>
-							<div class="selector">
+							<label for="selector_date">Date</label>
+							<div class="selector" id="selector_date">
 								<div>
 									<span class="value" id="date_filter_selected">Dés que possible</span>
 									<span class="button">Modifier</span>
@@ -349,7 +350,7 @@
 				
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?><?php echo implode($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
+					<a href="?page=<?php echo $page+1; ?><?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
 			
