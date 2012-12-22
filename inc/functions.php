@@ -74,7 +74,8 @@
 		global $baseDD;
 
 		$user = getIdFromFb();
-		$R1=$baseDD->prepare('DELETE FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user');
+		// $R1=$baseDD->prepare('DELETE FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user');
+		$R1=$baseDD->prepare('UPDATE mc_project SET current_state = 0 WHERE id_project = :id_project AND id_creator = :id_user');
 		$R1->bindParam(':id_project',$project['id']);
 		$R1->bindParam(':id_user',$user['id_user']);
 

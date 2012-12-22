@@ -318,34 +318,52 @@ zf.updateFilter = function($this){
 zf.filter = function(){
 	
 	//var
-	zf.$filterOpen= true;
-	zf.$advancedFilterOpen= false;
+	zf.filterOpen= true;
+	zf.advancedFilterOpen= false;
 	$filter = zf.$page.find('#block_filters');
-	$advancedFilter = zf.$page.find('#filter_advanced');
+	advancedFilter = zf.$page.find('#filter_advanced');
 	
+	$(document).bind('mousewheel',function(event){
+		if ($(document).scrollTop()<=128 && !zf.filterOpen && event.originalEvent.wheelDelta > 0) {
+			zf.$projectsList.css({paddingTop:"180px"});
+			$(document).scrollTop(0);
+		} else if ($(document).scrollTop()<=128 && zf.filterOpen && event.originalEvent.wheelDelta > 0) {
+			zf.$projectsList.animate({paddingTop:"300px"}); // ça passe crème
+		};
+	})
+	
+
 	zf.$page.find('#searchButton').click(function(event){
 		event.preventDefault();
-		if(zf.$filterOpen==true){
+		if(zf.filterOpen==true){
 			$height= "-135";
-			zf.$filterOpen=false;
-		}else{
+			$top = "180px"
+			zf.filterOpen=false;
+		} else {
 			$height= "58";
-			zf.$filterOpen=true;
+			$top = "300px"
+			zf.filterOpen=true;
 		}
-		$filter.stop().animate({
+		$filter.stop(true,false).animate({
 			top: $height,
 		}, 1000, 'easeInOutExpo', function() {
 			// Animation complete.
 			//alert('oui'); 
 		});
+		if ($(document).scrollTop()<=40) {
+			zf.$projectsList.stop(true,false).animate({paddingTop:$top}, 1000, 'easeInOutExpo', function() {
+				// Animation complete.
+				//alert('oui'); 
+			});
+		};
 		//return false;
 	});
 	
-	$advancedFilter.find('.nav a').click(function(event){
+	advancedFilter.find('.nav a').click(function(event){
 		event.preventDefault();
-		$advancedFilter.find('.nav a').parent().removeClass('current');
+		advancedFilter.find('.nav a').parent().removeClass('current');
 		$(this).parent().addClass('current');
-		$advancedFilter.stop().animate({
+		advancedFilter.stop().animate({
 			width: '590',
 		}, 600, 'easeInOutExpo', function() {
 			// Animation complete.
@@ -353,10 +371,10 @@ zf.filter = function(){
 		});
 		// return false;
 	});
-	$advancedFilter.find('a.close').click(function(event){
+	advancedFilter.find('a.close').click(function(event){
 		event.preventDefault();
-		$advancedFilter.find('.nav a').parent().removeClass('current');
-		$advancedFilter.stop().animate({
+		advancedFilter.find('.nav a').parent().removeClass('current');
+		advancedFilter.stop().animate({
 			width: '50',
 		}, 600, 'easeInOutExpo', function() {
 			// Animation complete.
@@ -365,10 +383,10 @@ zf.filter = function(){
 		return false;
 	});
 	
-	$advancedFilter.find('input.valid_button').click(function(event){ // a fix pour enregistrer le filtre
+	advancedFilter.find('input.valid_button').click(function(event){ // a fix pour enregistrer le filtre
 		event.stopPropagation();
-		$advancedFilter.find('.nav a').parent().removeClass('current');
-		$advancedFilter.stop().animate({
+		advancedFilter.find('.nav a').parent().removeClass('current');
+		advancedFilter.stop().animate({
 			width: '50',
 		}, 600, 'easeInOutExpo', function() {
 			// Animation complete.
