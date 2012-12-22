@@ -153,7 +153,7 @@ zf.getMoreProjects = function($this) {
 			var $this=$(this);
 			setTimeout(function() {
 				// zf.$projectsList.find('.btn-more-projects').before($this.hide().fadeIn(500));
-				zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
+				zf.$projectsList.find('.btn-more-projects').before($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
 			},i*300);
 		})
 		if (zf.projectCurrentPage >= zf.maxPages) {
@@ -181,7 +181,7 @@ zf.getFilteredProjects = function($this){
 	// 	url: 'index.php',
 	// 	data: $this.serialize(),
 	// 	success: function(resp) { 
-			console.log($this.serialize());
+			// console.log($this.serialize());
 	// 	}
 	// });
 	zf.seeFiltered('index.php?filter=true&'+$this.serialize())
