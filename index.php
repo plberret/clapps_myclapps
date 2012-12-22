@@ -50,7 +50,7 @@
 			</div>
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
-					<p>Vous recherchez <span>dès que possible</span> un poste <span>d'un ingénieur du son</span> dans la commune de <span>Paris</span> et <span>100km</span> aux alentours.</p>
+					<p>Vous recherchez <span class="time">dès que possible</span> un poste <span class="work">d'un ingénieur du son</span> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours.</p>
 				</div>
 				<div id="notif_email">
 					<p>M'avertir des nouvelles annonces par email</p>
@@ -94,7 +94,7 @@
 									<li class="month">Ce mois-ci</li>
 									<li class="trimestre">Ce trimestre</li>
 								</ul>
-								<input type="hidden" name="date_filter" value="">
+								<input type="hidden" name="date_filter" id="date_filter" value="now">
 							</div>
 						</div>
 					</div>
