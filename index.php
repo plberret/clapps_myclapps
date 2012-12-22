@@ -5,6 +5,7 @@
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
 	$nbProject = getNbProject($_GET['user_fb']);
+	echo getNbProject('BBBBBBBB');
 ?>
 
 <!doctype html>
@@ -288,7 +289,7 @@
 				<?php endforeach; ?>
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?><?php echo implode($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
+					<a href="?page=<?php echo $page+1; ?><?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
 		</section>

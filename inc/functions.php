@@ -92,10 +92,10 @@
 		$sql = 'SELECT count(*) AS nb FROM `mc_project`';
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project = (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
+			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array(':user_fb' => $user_fb);
 		}
-		
+
 		$q = $baseDD->prepare($sql);
 		$q->setFetchMode(PDO::FETCH_ASSOC);
 		$q->execute($array);
