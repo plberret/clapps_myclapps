@@ -190,7 +190,7 @@ zf.getFilteredProjects = function($this){
 	$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
 	$currentFilter.find('.work').text($this.find('#profile').val())
 	$currentFilter.find('.location').text($this.find('#location').val())
-	$currentFilter.find('.distance').text($this.find('#distance').val())
+	$currentFilter.find('.distance').text($this.find('#distance').val()+'km')
 }
 
 zf.initAddProject = function() {

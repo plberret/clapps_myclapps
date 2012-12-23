@@ -5,7 +5,6 @@
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
 	$nbProject = getNbProject($_GET['user_fb']);
-	echo getNbProject('BBBBBBBB');
 ?>
 
 <!doctype html>
