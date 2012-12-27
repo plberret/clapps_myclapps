@@ -90,7 +90,6 @@ zf.seeFiltered = function(url){
 			});
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
 			setTimeout(function() {
-				console.log($this.find('.btn-more-projects')[0])
 				zf.$projectsList.append($this.find('.btn-more-projects'));
 			},$this.find('.project').length*300)
 		});
@@ -153,7 +152,7 @@ zf.getMoreProjects = function($this) {
 			var $this=$(this);
 			setTimeout(function() {
 				// zf.$projectsList.find('.btn-more-projects').before($this.hide().fadeIn(500));
-				zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
+				zf.$projectsList.find('.btn-more-projects').before($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
 			},i*300);
 		})
 		if (zf.projectCurrentPage >= zf.maxPages) {
@@ -181,10 +180,17 @@ zf.getFilteredProjects = function($this){
 	// 	url: 'index.php',
 	// 	data: $this.serialize(),
 	// 	success: function(resp) { 
-			console.log($this.serialize());
+			// console.log($this.serialize());
 	// 	}
 	// });
 	zf.seeFiltered('index.php?filter=true&'+$this.serialize())
+
+	// actualise current_filter block
+	$currentFilter = zf.$page.find('#current_filter');
+	$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
+	$currentFilter.find('.work').text($this.find('#profile').val())
+	$currentFilter.find('.location').text($this.find('#location').val())
+	$currentFilter.find('.distance').text($this.find('#distance').val()+'km')
 }
 
 zf.initAddProject = function() {
