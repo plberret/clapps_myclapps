@@ -459,10 +459,21 @@ zf.init = function(){
 	zf.$filtre = zf.$page.find('#block_filters');
 	zf.$projectsList = zf.$page.find('#projects');
 	
-	// init filters
+	// init elements
 	zf.filter();
-	// init custom fields
 	zf.customFields();
+	
+	// hide tuto
+	zf.$page.find("#block_button_tuto a").click(function(event) {
+		zf.$page.find("#tuto").hide();
+		zf.$page.find("header").show();
+		zf.$projectsList.show();
+	});
+	
+	// show tuto
+	zf.$page.find("#infoButton a").click(function(event) {
+		zf.$page.find("#tuto").show().css({'top': '58px'});
+	});
 	
 	zf.$page.find(".addProject a").fancybox({
 		afterShow: zf.initAddProject,

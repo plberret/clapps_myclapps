@@ -357,27 +357,52 @@
 		</section>
 		
 		<div id="tuto">
-			<div id="block_logo_tuto"></div>
-			<div id="block_button_tuto">
-				<h2>Trouver un tournage n’aura jamais été aussi simple !</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque rhoncus tortor non ...</p>
-				<a href="#">J'accède à l'application</a>
-			</div>
-			<div id="block_display_tuto">
-				<div class="title">
-					<h3>Myclapps en 4 étapes</h3>
+			<div id="light_header_tuto"></div>
+			<div id="content_tuto">
+				<div id="block_logo_tuto">
+					<p>My clapps</p>
 				</div>
-				<div class="display"></div>
+				<div id="block_button_tuto" class="clearfix">
+					<div class="desc">
+						<h2>Trouver un tournage n’aura jamais été aussi simple !</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Pellentesque rhoncus tortor non ...</p>
+					</div>
+					<a href="#">J'accède à l'application</a>
+				</div>
+				<div id="block_display_tuto">
+					<div class="title">
+						<h3>Myclapps en 4 étapes</h3>
+					</div>
+					<div class="display">
+						<div class="mask">
+							<img src="#" alt="Image tuto" />
+						</div>
+					</div>
+					<div id="display_bottom"></div>
+				</div>
+				<div id="block_nav_tuto">
+					<ul class="clearfix">
+						<li class="done"><a href="#">
+							<span></span>
+							<em>Rechercher/Filtrer</em>
+						</a></li>
+						<li class="done"><a href="#">
+							<span></span>
+							<em>Gestion des filtres</em>
+						</a></li>
+						<li class="current"><a href="#">
+							<span></span>
+							<em>Mise en favoris <br/>Partager une annonce</em>
+						</a></li>
+						<li class="next"><a href="#">
+							<span></span>
+							<em>Création d'une annonce <br/> Édition d'une annonce</em>
+						</a></li>
+					</ul>
+				</div>
 			</div>
-			<div id="block_nav_tuto">
-				<ul>
-					<li><a href="#">Rechercher/Filtrer</a></li>
-					<li><a href="#">Gestion des filtres</a></li>
-					<li><a href="#">Mise en favoris <br/>Partager une annonce</a></li>
-					<li><a href="#">Création d'une annonce <br/> Édition d'une annonce</a></li>
-				</ul>
-			</div>
-		</div>
+			<div id="curtain_tuto"></div>
+		</div><!-- fin tuto-->
 		
 	</div> <!-- fin page-->
 	
