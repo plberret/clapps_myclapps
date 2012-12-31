@@ -251,7 +251,9 @@
 				else:
 					$getProjects=getProjects($page,$_GET['user_fb']);
 				endif;
-				foreach ($getProjects as $project): ?>
+				foreach ($getProjects as $project): 
+					$valideDate = getValideDate($project['create_date']); // check if project was revalidate, (don't use create_date but update_date)
+				?>
 					<article class="project<?php if (isFavorite($project,$user_fb)): ?> favorite<?php endif ?>">
 						<div class="preview">
 							<div class="block_top clearfix">
@@ -259,7 +261,7 @@
 								<div class="title_block">
 									<div class="title">
 										<h2><?php echo $project['title']; ?></h2>
-										<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le 07.10.12</div>
+										<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
 									</div>
 									<div class="available clearfix">
 										<?php $activeActors=getActiveActors($project['id_project']); ?>
@@ -339,7 +341,7 @@
 							</div><!-- fin profile -->
 							<?php if (isAdmin($project,$user_fb)): ?>
 								<div class="manage clearfix">
-									<p>Validité de l'annonce : <span>14 jours restants</span></p>
+									<p>Validité de l'annonce : <span><?php echo $valideDate; if ($valideDate>1): ?> jours restants<?php else: ?> jour restant<?php endif ?></span></p>
 									<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 								</div>
 							<?php endif ?>

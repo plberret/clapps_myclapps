@@ -3,6 +3,26 @@
 	require_once 'connect.php';
 	require_once 'init.php';
 
+	function getValideDate($date){
+		$tsstart = DateTime::createFromFormat('Y-m-j',$date);
+		$start = $tsstart->getTimestamp();
+		$now = time();
+		$nbjours = ($now-$start)/(60*60*24);
+		$tt = strtotime('+2 week',$date);
+		$tt = 15*(60*60*24);
+		// var_dump($start + $tt);
+		// echo date('j/m/Y',$start + $tt);
+		return intval(-($now - ($start + $tt))/(60*60*24));
+		// return date('j', strtotime('+2 week',$date));
+		// return $nbjours;
+	}
+
+	function dateFormat($format, $date){
+		$Date = DateTime::createFromFormat('Y-m-j',$date);
+		$DateTs = $Date->getTimestamp();
+		return date($format,$DateTs);
+	}
+
 	function dateUstoFr($date){
 		$parsedDate = date_parse($date);
 		switch ($parsedDate['month']) {
