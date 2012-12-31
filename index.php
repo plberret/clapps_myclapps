@@ -292,8 +292,8 @@
 							</div>
 							<div class="bloc_see_more clearfix">
 								<div class="project_id">#<?php echo $project['id_project']; ?></div>
-								<div class="date">28 décembre 2012</div>
-								<div class="place">Paris 11e (75011)</div>
+								<div class="date"><?php echo dateUstoFr($project['date_filter']); ?></div>
+								<div class="place"><?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)</div>
 								<div id="see_button">
 									<a href="#" class="see-more"><span>Voir</span> plus</a>
 								</div>
