@@ -185,7 +185,7 @@
 		</header>
 	
 		<section id="projects">
-			<!--
+		
 			<article class="project">
 				<form action="">
 					<div class="preview">
@@ -193,7 +193,7 @@
 							<img src="" alt="photo profil" />
 							<div class="title_block">
 								<div class="title">
-									<h2><input type="text" value="Projet en mode édition" /></h2>
+									<input type="text" value="Projet en mode édition" />
 									<div>Ajouté par <span>Pierre-loic</span> le 07.10.12</div>
 								</div>
 								<div class="available clearfix">
@@ -216,32 +216,69 @@
 							<h3>Détails de l'annonce :</h3>
 							<textarea name="" id="" cols="30" rows="10">description</textarea>
 						</div>
-						<div class="clearfix">
+						<div class="bloc_see_more clearfix">
+							<div class="project_id">#3000</div>
+							<div class="date"><input type="text" value="28 décembre 2012" /></div>
+							<div class="place"><input type="text" value="Paris 11e (75011)" /></div>
 							<div id="see_button">
 								<a href="#" class="see-more"><span>Voir</span> plus</a>
 							</div>
-							<div class="date">
-								<input type="text" value="28 décembre 2012" />
-							</div>
-							<div class="place">
-								<input type="text" value="Paris 11e (75011)" />
-							</div>
-							<div class="project_id">#3000</div>
 						</div>
 					</div><!-- fin preview -->
-				<!--	<div class="more">
+					<div class="more">
 						<div class="profiles">
 							<ul>
+								<li class="clearfix">
+									<div class="icon iconActor"><span>36</span></div>
+									<div class="edit_desc"><textarea name="" placeholder="Description du profil">Une actrice blonde, 1m70 à forte poitrine acceptant les scènes de nudité</textarea></div>
+									
+								<!--	<div class="edit">
+										<div class="foundButton">
+											<a href="#">Trouvé</a>
+										</div>
+										<div class="deleteButton">
+											<a href="#">Supprimer</a>
+											<div class="confirm">
+												<p>êtes-vous sûr de vouloir supprimer ?</p>
+												<a href="#">Oui</a>
+												<a href="#">Non</a>
+											</div>
+										</div>
+									</div> -->
+								</li>
+								<li class="clearfix">
+									<div class="icon iconActor"><span>52</span></div>
+									<div class="edit_desc"><textarea name="" placeholder="Description du profil">Un acteur Barbu, 1m85 bien monté acceptant les scènes de nudité. </textarea></div>
+									
+								<!--	<div class="edit">
+										<div class="foundButton">
+											<a href="#">Trouvé</a>
+										</div>
+										<div class="deleteButton">
+											<a href="#">Supprimer</a>
+											<div class="confirm">
+												<p>êtes-vous sûr de vouloir supprimer ?</p>
+												<a href="#">Oui</a>
+												<a href="#">Non</a>
+											</div>
+										</div>
+									</div> -->
+								</li>
 								<li class="clearfix profileFound">
-									<div class="icon"></div>
-									<input type="text" value="Desc du profil" />
-									<div class="applyFound">Candidat trouvé</div>
+									<div class="icon iconActor"><span>52</span></div>
+									<p>Un acteur d'1m80</p>
+									<div class="apply applyFound">Candidat trouvé</div>
 								</li>
 							</ul>
 						</div><!-- fin profile -->
-			<!--		</div><!-- fin more -->
-			<!--	</form>
-			</article> -->
+						<div class="manage clearfix">
+							<a href="poppin/deleteProject.php" class="fancybox.ajax deleteProject">Supprimer l'annonce</a>
+							<input type="submit" value="Valider" />
+							<a href="#" class="cancelProject">Annuler</a>
+						</div>
+					</div><!-- fin more -->
+				</form>
+			</article>
 			
 			<?php
 				if (isset($_GET['id_project'])) :
@@ -332,15 +369,16 @@
 											<div class="icon <?php echo $profileDomain; ?>">
 											</div>
 											<p><?php echo $profile['person']; ?></p>
-										<div class="applyFound">Candidat trouvé</div>
+										<div class="apply applyFound">Candidat trouvé</div>
 										</li>
 									<?php } ?>
 								</ul>
 							</div><!-- fin profile -->
 							<?php if (isAdmin($project,$user_fb)): ?>
 								<div class="manage clearfix">
-									<p>Validité de l'annonce : <span>14 jours restants</span></p>
-									<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
+									<p>Validité de l'annonce : <span class="finish">Désactivée</span></p>
+									<a href="#" class="extendProject">Réactiver l'annonce</a>
+									<a href="#" class="editProject" data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 								</div>
 							<?php endif ?>
 						</div><!-- fin more -->

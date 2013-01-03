@@ -481,8 +481,23 @@ zf.init = function(){
 		zf.$page.find("#tuto").show().css({'top': '58px'});
 	});
 	
+	// fixe header 
+//	$(window).scroll(function(){
+//		$('header').css('top', $(this).scrollTop() + "px");
+//	});
+	
+	// fancybox add project
 	zf.$page.find(".addProject a").fancybox({
 		afterShow: zf.initAddProject,
+		closeClick  : false,
+		helpers   : { 
+			overlay : {closeClick: false}
+		}
+	});
+	
+	// fancybox delete project 
+	zf.$page.find("a.deleteProject").fancybox({
+		afterShow: zf.initDeleteProject,
 		closeClick  : false,
 		helpers   : { 
 			overlay : {closeClick: false}

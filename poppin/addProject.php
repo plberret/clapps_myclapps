@@ -12,21 +12,9 @@
 			<textarea id="desc" name="desc" placeholder="Description de votre annonce..."></textarea>
 		</div>
 		<div id="block_place" class="clearfix">
-			<div class="select">
+			<div class="date field">
 				<label for="">Date</label>
-				<div class="selector">
-					<div>
-						<span class="value" id="date_filter_selected">Dés que possible</span>
-						<span class="button">Modifier</span>
-					</div>
-					<ul>
-						<li>Dès que possible</li>
-						<li>Cette semaine</li>
-						<li>Ce mois-ci</li>
-						<li>Ce trimestre</li>
-					</ul>
-					<input type="hidden" name="date_filter" value="">
-				</div>
+				<input type="text" placeholder="Date du tournage" />
 			</div>
 			<div class="field">
 				<label for="">Lieu</label>
@@ -75,4 +63,12 @@
 	<div class="clearfix">
 		<input type="submit" id="add-project" value="Publier l'annonce" />
 	</div>
+	
+	<div class="message success">
+		<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
+	</div>
+	<div class="message error">
+		<p><span>Veuillez remplir tous les champs.</span></p>
+	</div>
+	
 </form>
