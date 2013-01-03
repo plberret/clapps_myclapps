@@ -3,6 +3,72 @@
 	require_once 'connect.php';
 	require_once 'init.php';
 
+	function getValideDate($date){
+		$tsstart = DateTime::createFromFormat('Y-m-j',$date);
+		$start = $tsstart->getTimestamp();
+		$now = time();
+		$nbjours = ($now-$start)/(60*60*24);
+		$tt = strtotime('+2 week',$date);
+		$tt = 15*(60*60*24);
+		// var_dump($start + $tt);
+		// echo date('j/m/Y',$start + $tt);
+		return intval(-($now - ($start + $tt))/(60*60*24));
+		// return date('j', strtotime('+2 week',$date));
+		// return $nbjours;
+	}
+
+	function dateFormat($format, $date){
+		$Date = DateTime::createFromFormat('Y-m-j',$date);
+		$DateTs = $Date->getTimestamp();
+		return date($format,$DateTs);
+	}
+
+	function dateUstoFr($date){
+		$parsedDate = date_parse($date);
+		switch ($parsedDate['month']) {
+			case '01':
+				$parsedDate['month'] = 'janvier';
+				break;
+			case '02':
+				$parsedDate['month'] = 'février';
+				break;
+			case '03':
+				$parsedDate['month'] = 'mars';
+				break;
+			case '04':
+				$parsedDate['month'] = 'avril';
+				break;
+			case '05':
+				$parsedDate['month'] = 'mai';
+				break;
+			case '06':
+				$parsedDate['month'] = 'juin';
+				break;
+			case '07':
+				$parsedDate['month'] = 'juillet';
+				break;
+			case '08':
+				$parsedDate['month'] = 'aout';
+				break;
+			case '09':
+				$parsedDate['month'] = 'septembre';
+				break;
+			case '10':
+				$parsedDate['month'] = 'octobre';
+				break;
+			case '11':
+				$parsedDate['month'] = 'novembre';
+				break;
+			case '12':
+				$parsedDate['month'] = 'décembre';
+				break;
+			default:
+				# code...
+				break;
+		}
+		return $parsedDate['day']." ".$parsedDate['month']." ".$parsedDate['year'];
+	}
+
 	function arrayToUrl($array){
 		$url ="";
 		foreach ($array as $key => $value) {
@@ -18,10 +84,12 @@
 		// print_r($data);
 		$user = getIdFromFb();
 		$data['id_creator'] = $user['id_user'];
-		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date) VALUES ( :title, :description, :id_creator, NOW())");
+		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date, place, date_filter) VALUES ( :title, :description, :id_creator, NOW(), :place, :date_filter)");
 		$R1->bindParam(':title',$data['title']);
 		$R1->bindParam(':description',$data['desc']);
 		$R1->bindParam(':id_creator',$data['id_creator']);
+		$R1->bindParam(':place',$data['place']);
+		$R1->bindParam(':date_filter',$data['date_filter']);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 
 
@@ -122,7 +190,7 @@
 	 function getProjects($page,$user_fb){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id_ville = place) AS place, (SELECT cp FROM villes WHERE id_ville = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
 			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
@@ -143,7 +211,7 @@
 	 function getProject($id_project){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project";
+		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id_ville = place) AS place, (SELECT cp FROM villes WHERE id_ville = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project";
 		$array = array('id_project' => $id_project);
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
@@ -213,7 +281,7 @@
 	 function getProjectsByFilters($page,$filters){
 	 	global $baseDD;
 
-		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, (SELECT img_url FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project";
+		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, pj.place, (SELECT img_url FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project";
 
 		if ($filters['domain']) {
 			$sql .= " AND domain = :domain AND pf.current_state = 1";

@@ -17,8 +17,8 @@
 				<input type="text" placeholder="Date du tournage" />
 			</div>
 			<div class="field">
-				<label for="">Lieu</label>
-				<input type="text" placeholder="Ville, département ou code postal" />
+				<label for="place">Lieu</label>
+				<input type="text" name="place" placeholder="Ville, département ou code postal" />
 				<ul id="autocompletion">
 					<li>Paris</li>
 					<li>Marseille</li>
