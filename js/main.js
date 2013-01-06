@@ -266,7 +266,7 @@ zf.jsonCitiesA = function($this){
 		$.getJSON('requests/citiesJson.php',{ville:value.trim()},function(resp){
 		//	console.log(resp)
 			if (resp) {
-				var $ul = $('<ul/>',{id:'autocCities'});
+				var $ul = $('<ul/>',{id:'autocCities', class:'autocompletion'});
 				var $li;
 				var respL = resp.length;
 				for(i=0;i<respL;i++){

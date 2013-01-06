@@ -74,11 +74,6 @@
 						<div class="field">
 							<label for="profile">Métier</label>
 							<input type="text" name="profile" id="profile" placeholder="Entrez le métier recherché ..." />
-							<ul id="autocompletion">
-								<li>Paris</li>
-								<li>Marseille</li>
-								<li>Lyon</li>
-							</ul>
 						</div>
 						<div class="field select">
 							<label for="selector_date">Date</label>
@@ -232,37 +227,43 @@
 									<div class="icon iconActor"><span>36</span></div>
 									<div class="edit_desc"><textarea name="" placeholder="Description du profil">Une actrice blonde, 1m70 à forte poitrine acceptant les scènes de nudité</textarea></div>
 									
-								<!--	<div class="edit">
-										<div class="foundButton">
-											<a href="#">Trouvé</a>
-										</div>
+									<div class="edit clearfix">
 										<div class="deleteButton">
 											<a href="#">Supprimer</a>
 											<div class="confirm">
 												<p>êtes-vous sûr de vouloir supprimer ?</p>
-												<a href="#">Oui</a>
-												<a href="#">Non</a>
+												<div>
+													<a href="#">Oui</a>
+													<a href="#">Annuler</a>
+												</div>
 											</div>
 										</div>
-									</div> -->
+										<div class="foundButton">
+											<a href="#"><span>Trouvé</span></a>
+										</div>
+									</div>
 								</li>
 								<li class="clearfix">
 									<div class="icon iconActor"><span>52</span></div>
 									<div class="edit_desc"><textarea name="" placeholder="Description du profil">Un acteur Barbu, 1m85 bien monté acceptant les scènes de nudité. </textarea></div>
 									
-								<!--	<div class="edit">
-										<div class="foundButton">
-											<a href="#">Trouvé</a>
-										</div>
+									<div class="edit">
 										<div class="deleteButton">
 											<a href="#">Supprimer</a>
 											<div class="confirm">
 												<p>êtes-vous sûr de vouloir supprimer ?</p>
-												<a href="#">Oui</a>
-												<a href="#">Non</a>
+												<div>
+													<a href="#">Oui</a>
+													<a href="#">Annuler</a>
+												</div>
 											</div>
 										</div>
-									</div> -->
+										<div class="quantity">
+											<a href="#" class="less_quantity number_control">-</a>
+											<input type="text" value="1" class="number" name="occurence[]"/>
+											<a href="#" class="more_quantity number_control">+</a>
+										</div>
+									</div>
 								</li>
 								<li class="clearfix profileFound">
 									<div class="icon iconActor"><span>52</span></div>
