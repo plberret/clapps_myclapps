@@ -330,7 +330,7 @@ header #block_current_filter #current_filter p {
 	line-height: 16px;
 }
 
-header #block_current_filter #current_filter p span {
+header #block_current_filter #current_filter p span:not(.opt) {
 	color: #e3a708;
 }
 

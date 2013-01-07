@@ -49,7 +49,7 @@
 			</div>
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
-					<p>Vous recherchez <span class="time">dès que possible</span> un poste <span class="work">d'un ingénieur du son</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
+					<p>Vous recherchez <span class="time">dès que possible</span> un poste<span class="work"> d'un ingénieur du son</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
 				</div>
 				<div id="notif_email">
 					<p>M'avertir des nouvelles annonces par email</p>
