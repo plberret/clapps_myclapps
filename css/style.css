@@ -307,6 +307,7 @@ header #bar_top #infoButton a {
 /* ////// FILTER ////// */
 
 header #block_current_filter {
+	display: none;
 	background: #111111;
 	height: 84px;
 	width: 810px;

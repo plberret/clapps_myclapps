@@ -186,11 +186,15 @@ zf.getFilteredProjects = function($this){
 	zf.seeFiltered('index.php?filter=true&'+$this.serialize())
 
 	// actualise current_filter block
-	$currentFilter = zf.$page.find('#current_filter');
+	$currentFilter = zf.$page.find('#block_current_filter');
+	$currentFilter.show();
 	$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
 	$currentFilter.find('.work').text($this.find('#profile').val())
 	$currentFilter.find('.location').text($this.find('#location').val())
 	$currentFilter.find('.distance').text($this.find('#distance').val()+'km')
+	if ($this.find('#location').val().trim().length==0) {
+		$currentFilter.find('.opt').hide()
+	};
 }
 
 zf.addAnonceFormOk = function(form){
