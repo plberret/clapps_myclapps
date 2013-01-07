@@ -194,7 +194,9 @@ zf.getFilteredProjects = function($this){
 	$currentFilter.find('.distance').text($this.find('#distance').val()+'km')
 	if ($this.find('#location').val().trim().length==0) {
 		$currentFilter.find('.opt').hide()
-	};
+	} else {
+			$currentFilter.find('.opt').show()
+	}
 }
 
 zf.addAnonceFormOk = function(form){
