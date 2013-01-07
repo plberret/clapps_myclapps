@@ -193,6 +193,17 @@ zf.getFilteredProjects = function($this){
 	$currentFilter.find('.distance').text($this.find('#distance').val()+'km')
 }
 
+zf.addAnonceFormOk = function(form){
+	// console.log(zf.$newProject.find('.field input'))
+	zf.$newProject.find('.required').each(function(){
+		if ($(this).val().trim().length == 0) {
+			console.log($(this))
+			return false
+		};
+	})
+	return false
+}
+
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	
@@ -245,17 +256,23 @@ zf.initAddProject = function() {
 	// SEND PROJECT
 	zf.$newProject.on('submit', function(event) {
 		event.preventDefault();
-		$.ajax({
-			url: $(this).attr('action'),
-			type: $(this).attr('method'),
-			data: $(this).serialize(),
-			success: function(resp) {
-				// resp = JSON.parse(resp);
-				$.fancybox.close();
-				zf.getOneProject(resp.id)
-				// location.reload();
-			}
-		});
+		if (zf.addAnonceFormOk($(this).serialize())) {
+			$.ajax({
+				url: $(this).attr('action'),
+				type: $(this).attr('method'),
+				data: $(this).serialize(),
+				success: function(resp) {
+					// resp = JSON.parse(resp);
+					$.fancybox.close();
+					zf.getOneProject(resp.id);
+					$('.message.success').fadeIn();
+					// location.reload();
+				}
+			});
+		} else {
+			$('.message.error').fadeIn();
+		}
+		
 	})
 };
 
