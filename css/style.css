@@ -860,6 +860,7 @@ section #newProject {
 }
 
 section article {
+	position: relative;
 	margin: 0 0 21px 65px;
 	width: 682px;
 }
@@ -1080,45 +1081,6 @@ section article .preview .bloc_see_more .date {
 section article .preview .bloc_see_more .place {
 	background: no-repeat url(../images/icon_place_project.png);
 	padding-left: 17px;
-}
-
-section article .preview #see_button {
-	position: relative;
-	top: 5px;
-	float: right;
-	height: 26px;
-	width: 99px;
-	line-height: 16px;
-	font-size: 12px;
-	margin-right: 7px;
-	-webkit-border-radius: 3px 3px 0 0;
-	-moz-border-radius: 3px 3px 0 0;
-	border-radius: 3px 3px 0 0;
-	background-color: #dfa200;
-	-webkit-box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
-	-moz-box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
-	box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
-	background-image: -webkit-linear-gradient(top, #363636, #1c1c1c);
-	background-image: -moz-linear-gradient(top, #363636, #1c1c1c);
-	background-image: -o-linear-gradient(top, #363636, #1c1c1c);
-	background-image: -ms-linear-gradient(top, #363636, #1c1c1c);
-	background-image: linear-gradient(to bottom, #363636, #1c1c1c);
-}
-
-section article .preview #see_button a {
-	display: block;
-	color: #f3b91e;
-	padding: 5px 0 5px 9px;
-	text-decoration: none;
-	background: no-repeat url('../images/arrow_see_more.png') 79px 10px;
-}
-
-section article .preview #see_button a span {
-	font-weight: bold;
-}
-
-section article .preview #see_button:hover a {
-	color: #FFF;
 }
 
 .btn-more-projects {
@@ -1408,6 +1370,45 @@ section article .more .manage input {
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
 	background-image: -ms-linear-gradient(top, #f4b50b, #b80);
 	background-image: linear-gradient(to bottom, #f4b50b, #b80);
+}
+
+section article #see_button {
+	position: absolute;
+	bottom: 1px;
+	right: 23px;
+	z-index: 100;
+	height: 26px;
+	width: 99px;
+	line-height: 16px;
+	font-size: 12px;
+	-webkit-border-radius: 3px 3px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
+	background-color: #dfa200;
+	-webkit-box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
+	-moz-box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
+	box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
+	background-image: -webkit-linear-gradient(top, #363636, #1c1c1c);
+	background-image: -moz-linear-gradient(top, #363636, #1c1c1c);
+	background-image: -o-linear-gradient(top, #363636, #1c1c1c);
+	background-image: -ms-linear-gradient(top, #363636, #1c1c1c);
+	background-image: linear-gradient(to bottom, #363636, #1c1c1c);
+}
+
+section article #see_button a {
+	display: block;
+	color: #f3b91e;
+	padding: 5px 0 5px 9px;
+	text-decoration: none;
+	background: no-repeat url('../images/arrow_see_more.png') 79px 10px;
+}
+
+section article #see_button a span {
+	font-weight: bold;
+}
+
+section article #see_button:hover a {
+	color: #FFF;
 }
 
 

@@ -14,7 +14,7 @@
 		<div id="block_place" class="clearfix">
 			<div class="date field">
 				<label for="">Date</label>
-				<input class="required" type="text" placeholder="Date du tournage" >
+				<input type="text" class="required" id="datepicker" placeholder="Date du tournage" />
 			</div>
 			<div class="field">
 				<label for="place">Lieu</label>

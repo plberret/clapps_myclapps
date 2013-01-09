@@ -66,7 +66,9 @@ zf.deleteProject = function($this) {
 };
 
 zf.seeMore = function($this) {
-	$this.parents('.preview').siblings('.more').stop(true,true).slideToggle(function() {
+	console.log($this);
+	console.log($this.siblings('.more'));
+	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
 		if ($(this).css('display')=='none') {
 			$this.html('Voir plus');
 		} else {
@@ -211,6 +213,12 @@ zf.addAnonceFormOk = function(form){
 }
 
 zf.initAddProject = function() {
+	
+	// date picker 
+	$(function() {
+		$( "#datepicker" ).datepicker();
+	});
+	
 	zf.$newProject = $('#newProject');
 
 	zf.$newProject.find('.field .autocomplete').keyup(function(){
@@ -524,6 +532,11 @@ zf.init = function(){
 //	$(window).scroll(function(){
 //		$('header').css('top', $(this).scrollTop() + "px");
 //	});
+	
+	// date picker 
+	$(function() {
+		zf.$page.find( ".datepicker" ).datepicker();
+	});
 	
 	// fancybox add project
 	zf.$page.find(".addProject a").fancybox({

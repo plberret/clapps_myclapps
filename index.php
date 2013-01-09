@@ -334,9 +334,6 @@
 								<div class="project_id">#<?php echo $project['id_project']; ?></div>
 								<div class="date"><?php echo dateUstoFr($project['date_filter']); ?></div>
 								<div class="place"><?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)</div>
-								<div id="see_button">
-									<a href="#" class="see-more"><span>Voir</span> plus</a>
-								</div>
 							</div>
 						</div><!-- fin preview -->
 						<div class="more">
@@ -381,16 +378,22 @@
 							</div><!-- fin profile -->
 							<?php if (isAdmin($project,$user_fb)): ?>
 								<div class="manage clearfix">
-									<?php if ($valideDate>0): ?>
-										<p>Validité de l'annonce : <span class="finish"><?php echo $valideDate; if ($valideDate>1): ?> jours restants<?php else: ?> jour restant<?php endif ?></span></p>
-									<?php else: ?>
-										<p>Désactivée</p>
-									<?php endif ?>
-									<?php if ($valideDate<3): ?><a href="#" class="extendProject">Réactiver l'annonce</a><?php endif; ?>
+									<p>Validité de l'annonce :
+										<?php if ($valideDate>0): ?>
+											<span class="valid"><?php echo $valideDate; if ($valideDate>1): ?> jours restants<?php else: ?> jour restant<?php endif ?></span>
+										<?php else: ?>
+											<span class="finish">Désactivée</span>
+										<?php endif ?>
+									</p>
+									<?php if ($valideDate<0): ?><a href="#" class="extendProject">Réactiver l'annonce</a><?php endif; ?>
+									<?php if (($valideDate>0)&&($valideDate<3)): ?><a href="#" class="extendProject">Prolonger l'annonce</a><?php endif; ?>
 									<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 								</div>
 							<?php endif ?>
 						</div><!-- fin more -->
+						<div id="see_button">
+							<a href="#" class="see-more"><span>Voir</span> plus</a>
+						</div>
 					</article>
 				<?php endforeach; ?>
 				
@@ -455,6 +458,8 @@
 	<div id="fb-root"></div>
 	
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+	 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>
