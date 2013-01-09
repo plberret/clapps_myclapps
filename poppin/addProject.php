@@ -30,8 +30,8 @@
 	
 	<div class="profiles">
 		<h3>Ajouter un(des) poste(s)</h3>
-		<div class="clearfix">
-			<input type="text" placeholder="Métier recherché" class="job required" />
+		<div class="clearfix field">
+			<input type="text" placeholder="Métier recherché" class="job required autocomplete" />
 			<!-- forcé en attendant l'update de leo -->
 			<input type="hidden" name="domain[]" value="1" />
 			<input type="text" name="profile[]" class="required entitled" placeholder="Intitulé du poste recherché" />

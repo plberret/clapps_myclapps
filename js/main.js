@@ -221,7 +221,12 @@ zf.initAddProject = function() {
 
 	zf.$newProject.find('.field .autocomplete').keyup(function(){
 		var $this=$(this);
-		zf.jsonCities($this);
+		if ($this.hasClass('job')) {
+			zf.jsonJobs($this);
+		}
+		else if($this.hasClass('location')){
+			zf.jsonCities($this);
+		}
 	})
 	
 	// UP NUMBER CHAR LEFT FOR TITLE
@@ -301,6 +306,36 @@ zf.initAddProject = function() {
 	})
 };
 
+zf.jsonJobs = function($this){
+	var value = $this.val();
+	if(!zf.isBlank(value) && value.length>2){
+		$.getJSON('requests/jobsJson.php',{job:value.trim()},function(resp){
+		//	console.log(resp)
+			if (resp) {
+				var $ul = $('<ul/>',{id:'autocJobs', class:'autocompletion'});
+				var $li;
+				var respL = resp.length;
+				for(i=0;i<respL;i++){
+					if (resp[i]) {
+						// if (!resp[i]['cp']){resp[i]['cp']=""}
+						$li = $('<li/>',{
+							html :'<a href="#" data-id="'+resp[i]['id_job']+'" data-domain="'+resp[i]["domain"]+'">'+resp[i]['name']+'</a>'
+						});
+						$ul.append($li)
+					};
+				}
+				$('ul#autocJobs').remove();
+			//	console.log($('#col3').find('ul'))
+				if (respL>0) {
+					$this.parent().append($ul)
+					// $('#col3').append($ul); // hide autoc if no result
+				}
+			};
+		});
+	} else {
+		$('ul#autocJobs').remove();
+	}
+}
 
 zf.jsonCities = function($this){
 	var value = $this.val();
@@ -572,7 +607,8 @@ zf.init = function(){
 			// TRIGGER CLICK ON CURRENT DISTANCE <- old // hit enter so nothing to do...
 
 		} else if (zf.isOkKey(event)) {
-			if ($this.hasClass('metier')) {
+			if ($this.hasClass('job')) {
+				zf.jsonJobs($this);
 			}
 			else if($this.hasClass('location')){
 				zf.jsonCities($this);

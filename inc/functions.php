@@ -234,6 +234,20 @@
 		return $projects;
 	 }
 
+	 function getAutocompletionJsonJobs($job){
+
+	 	global $baseDD;
+
+	 	$sql = 'SELECT id_job, name, domain FROM mc_jobs WHERE name LIKE :job GROUP BY name ORDER BY name ASC';
+		$array = array(':job' => $job.'%');
+		$R1 = $baseDD->prepare($sql);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+		if($R1->execute($array)){
+			$result=$R1->fetchAll();
+		}
+		echo json_encode($result);
+	}
+
 	 function getAutocompletionJsonCities($ville){
 
 	 	global $baseDD;
