@@ -169,7 +169,7 @@ body {
 	line-height: 15px;
 }
 
-/* ////// HEADER ////// */
+/* //////////// HEADER //////////// */
 
 header {
 	position: absolute;
@@ -304,108 +304,8 @@ header #bar_top #infoButton a {
 	background: no-repeat url(../images/icon_info_button.png) 14px 21px;
 }
 
-/* ////// FILTER ////// */
 
-header #block_current_filter {
-	display: none;
-	background: #111111;
-	height: 84px;
-	width: 810px;
-	border-bottom: 1px solid #1c1c1c;
-	-webkit-box-shadow: 0 0 8px rgba(0,0,0,.75);
-	-moz-box-shadow: 0 0 8px rgba(0,0,0,.75);
-	box-shadow: 0 0 8px rgba(0,0,0,.75);
-}
-
-header #block_current_filter #current_filter {
-	float: left;
-	width: 384px;
-	height: 28px;
-	border-right: 1px solid #0a0a0a;
-	padding: 28px 18px 28px 68px;
-}
-
-header #block_current_filter #current_filter p {
-	font-size: 13px;
-	line-height: 16px;
-}
-
-header #block_current_filter #current_filter p span:not(.opt) {
-	color: #e3a708;
-}
-
-header #block_current_filter #notif_email {
-	float: right;
-	width: 321px;
-	height: 67px;
-	border-left: 1px solid #1c1c1c;
-	padding: 17px 0 0 17px;
-}
-
-header #block_current_filter #notif_email p {
-	color: #6e6e6e;
-	font-size: 12px;
-	margin-bottom: 10px;
-}
-
-header #block_current_filter #notif_email input {
-	float: left;
-	width: 170px;
-	height: 17px;
-	line-height: 17px;
-	font-size: 12px;
-	color: #5b5b5b;
-	padding: 5px 10px;
-	border: 0;
-	margin: 0 4px 0 0 ;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
-header #block_current_filter #notif_email .switch {
-	float: left;
-	padding: 1px 0 0 1px;
-	width: 62px;
-	height: 26px;
-	line-height: 27px;
-	background: #080808;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #1a1a1a;
-}
-
-header #block_current_filter #notif_email .switch li {
-	float: left;
-	margin-right: 1px;
-	width: 30px;
-}
-
-header #block_current_filter #notif_email .switch li a {
-	display: block;
-	color: #373737;
-	font-size: 9px;
-	font-weight: bold;
-	text-decoration: none;
-	background: #0f0f0f;
-	border: 1px solid #1a1a1a;
-	height: 23px;
-	text-align: center;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
-header #block_current_filter #notif_email .switch li.current a {
-	color: #cc9503;
-	text-shadow: 0 0 7px rgba(221,163,7,.9);
-	background: none;
-	border: 0;
-}
-
-
-/* ////// FILTER ////// */
+/* //////////// FILTER //////////// */
 
 /* global */
 
@@ -631,7 +531,7 @@ header #filter #col3 #distances li a span.unite{
 }
 
 
-/* ////// ADVANCED FILTER ////// */
+/* //////////// ADVANCED FILTER //////////// */
 
 /* global */
 
@@ -849,7 +749,109 @@ header #filter_advanced #tabs #tab2, #filter_advanced #tabs #tab3  {
 }
 
 
-/* /// CONTENT /// */
+/* //////////// BLOC INFORMATION FILTER //////////// */
+
+header #block_current_filter {
+	display: none;
+	background: #111111;
+	height: 84px;
+	width: 810px;
+	border-bottom: 1px solid #1c1c1c;
+	-webkit-box-shadow: 0 0 8px rgba(0,0,0,.75);
+	-moz-box-shadow: 0 0 8px rgba(0,0,0,.75);
+	box-shadow: 0 0 8px rgba(0,0,0,.75);
+}
+
+header #block_current_filter #current_filter {
+	float: left;
+	width: 384px;
+	height: 28px;
+	border-right: 1px solid #0a0a0a;
+	padding: 28px 18px 28px 68px;
+}
+
+header #block_current_filter #current_filter p {
+	font-size: 13px;
+	line-height: 16px;
+}
+
+header #block_current_filter #current_filter p span:not(.opt) {
+	color: #e3a708;
+}
+
+header #block_current_filter #notif_email {
+	float: right;
+	width: 321px;
+	height: 67px;
+	border-left: 1px solid #1c1c1c;
+	padding: 17px 0 0 17px;
+}
+
+header #block_current_filter #notif_email p {
+	color: #6e6e6e;
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+
+header #block_current_filter #notif_email input {
+	float: left;
+	width: 170px;
+	height: 17px;
+	line-height: 17px;
+	font-size: 12px;
+	color: #5b5b5b;
+	padding: 5px 10px;
+	border: 0;
+	margin: 0 4px 0 0 ;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+header #block_current_filter #notif_email .switch {
+	float: left;
+	padding: 1px 0 0 1px;
+	width: 62px;
+	height: 26px;
+	line-height: 27px;
+	background: #080808;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #1a1a1a;
+}
+
+header #block_current_filter #notif_email .switch li {
+	float: left;
+	margin-right: 1px;
+	width: 30px;
+}
+
+header #block_current_filter #notif_email .switch li a {
+	display: block;
+	color: #373737;
+	font-size: 9px;
+	font-weight: bold;
+	text-decoration: none;
+	background: #0f0f0f;
+	border: 1px solid #1a1a1a;
+	height: 23px;
+	text-align: center;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+header #block_current_filter #notif_email .switch li.current a {
+	color: #cc9503;
+	text-shadow: 0 0 7px rgba(221,163,7,.9);
+	background: none;
+	border: 0;
+}
+
+
+
+/* //////////// CONTENT //////////// */
 
 section {
 	padding-top: 300px;
@@ -865,7 +867,38 @@ section article {
 	width: 682px;
 }
 
-/* preview */
+section article input:disabled,
+section article textarea:disabled {
+	background: 0;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	cursor: text;
+	resize: none;
+	overflow: hidden;
+}
+
+.btn-more-projects {
+	margin: 0 auto;
+	background: #121212;
+	height: 34px;
+	width: 681px;
+	margin-bottom: 30px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.btn-more-projects a {
+	display: block;
+	text-align: center;
+	color: #ffffff;
+	text-decoration: none;
+	line-height: 34px;
+}
+
+
+/* ------- preview ------- */
 
 section article .preview {
 	position: relative;
@@ -919,6 +952,11 @@ section article .preview .block_top .title_block .title h2 {
 	padding-top: 6px;
 	padding-bottom: 2px;
 	line-height: 19px;
+}
+
+section article .preview .block_top .title_block .title input:disabled {
+	font-size: 15px;
+	color: #dddddd;
 }
 
 section article .preview .block_top .title_block .title div {
@@ -1047,8 +1085,9 @@ section article .preview .desc h3 {
 	padding-bottom: 13px;
 }
 
-section article .preview .desc p {
+section article .preview .desc p textarea:disabled {
 	color: #8c8c8c;
+	font-size: 12px;
 }
 
 section article .preview .bloc_see_more {
@@ -1083,27 +1122,14 @@ section article .preview .bloc_see_more .place {
 	padding-left: 17px;
 }
 
-.btn-more-projects {
-	margin: 0 auto;
-	background: #121212;
-	height: 34px;
-	width: 681px;
-	margin-bottom: 30px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-}
-
-.btn-more-projects a {
-	display: block;
-	text-align: center;
-	color: #ffffff;
-	text-decoration: none;
-	line-height: 34px;
+section article .preview .bloc_see_more div input  {
+	color: #8c8c8c;
+	font-size: 12px;
+	line-height: 18px;
 }
 
 
-/* ----- more ----- */
+/* ----------- more ------------- */
 
 section article .more {
 	position: relative;
@@ -1171,8 +1197,8 @@ section article .profiles ul li .icon span {
 
 section article .profiles ul li > p {
 	color: #8c8c8c;
-	width: 427px;
-	padding: 17px 50px 17px 20px;
+	width: 420px;
+	padding: 17px 0px 17px 20px;
 	display: table-cell;
 }
 
@@ -1180,14 +1206,22 @@ section article .profiles ul li:hover > p {
 	color: #e1e1e1;
 }
 
+section article .profiles ul li > p textarea {
+	color: #8c8c8c;
+	height: 15px;
+	font-size: 12px;
+}
+
 section article .profiles ul li .apply {
-	padding-right: 13px;
 	display: table-cell;
 	vertical-align: middle;
+	width: 168px;
 }
 
 section article .profiles ul li .apply a {
+	float: right;
 	display: block;
+	margin-right: 13px;
 	background: #d09804;
 	background: -webkit-gradient(linear, left top, left bottom, from(#f3b40b), to(#bc8900));
 	background: -moz-linear-gradient(top,#f3b40b,#bc8900);
@@ -1207,7 +1241,8 @@ section article .profiles ul li .apply a {
 	vertical-align: middle;
 }
 
-/*profile found */
+
+/* profile found */
 
 section article .profiles ul li.profileFound {
 	opacity: 0.5;
@@ -1228,11 +1263,15 @@ section article .profiles ul li.profileFound p {
 }
 
 section article .profiles ul li.profileFound .applyFound {
+	text-align: right;
 	font-size: 12px;
 	height: 49px;
 	line-height: 49px;
 	padding-right: 18px;
 }
+
+
+/* manage */
 
 section article .manage {
 	margin-top: 15px;
@@ -1372,6 +1411,9 @@ section article .more .manage input {
 	background-image: linear-gradient(to bottom, #f4b50b, #b80);
 }
 
+
+/* see more */
+
 section article #see_button {
 	position: absolute;
 	bottom: 1px;
@@ -1414,13 +1456,13 @@ section article #see_button:hover a {
 
 /* -------------- Edition mode ---------------- */
 
-/* global */
+/* ///// global ////// */
 
-section article form input[type=text],
-section article form textarea {
+section article.edition form input[type=text],
+section article.edition form textarea {
 	background: #141414;
 	border: 1px solid #242424;
-	padding: 8px;
+	padding: 6px 8px;
 	font-size: 12px;
 	color: #f5f5f5;
 	-moz-border-radius: 3px;
@@ -1428,95 +1470,86 @@ section article form textarea {
 	border-radius: 3px;
 }
 
-section article form input[type=text]:focus,
-section article form textarea:focus {
+section article.edition form input[type=text]:focus,
+section article.edition form textarea:focus {
 	border: 1px solid #7f7f7f;
 	font-weight: bold;
 }
 
-section article form textarea {
+section article.edition form textarea {
 	width: 615px;
 	height: 42px;
 	resize: none;
 }
 
-/* preview */
+/* ////// preview ////// */
 
-section article form .preview .title input {
+section article.edition form .preview .title input {
 	padding: 5px 8px;
 	width: 441px;
 	position: relative;
 	left: -10px;
 }
 
-section article form .preview textarea {
+section article.edition form .preview textarea {
 	width: 633px;
 	position: relative;
 	top: -8px;
 	left: -10px;
 }
 
-section article form .preview .bloc_see_more input {
+section article.edition form .preview .bloc_see_more input {
 	padding: 4px 5px;
 	position: relative;
 	top: -8px;
 }
 
-/* profiles */
+/* ////// profiles ////// */
 
-section article form .more .profiles .edit_desc {
+section article.edition form .more .profiles .edit_desc {
 	display: table-cell;
 	padding: 9px;
 }
 
-section article form .more .profiles textarea {
+section article.edition form .more .profiles .edit_desc textarea {
 	width: 472px;
 	height: 15px;
 }
 
-section article form .more .profiles .edit {
+section article.edition form .more .profiles .add_field {
+	display: table-cell;
+	padding: 9px 0;
+}
+
+section article.edition form .more .profiles .add_job {
+	padding: 9px 6px 9px 9px;
+}
+
+section article.edition form .more .profiles .add_job input {
+	width: 182px;
+}
+
+section article.edition form .more .profiles .add_desc {
+	padding-right: 9px;
+}
+
+section article.edition form .more .profiles .add_desc input {
+	width: 318px;
+}
+
+section article.edition form .more .profiles .edit {
 	display: table-cell;
 	vertical-align: middle;
 	width: 100px;
 }
 
-section article form .more .profiles .edit .foundButton {
-	float: right;
-	margin: 3px 10px 0 0;
-}
-
-section article form .more .profiles .edit .foundButton > a {
-	display: block;
-	width: 19px;
-	height: 18px;
-	padding: 3px 0 0 3px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background: #677b2c;
-	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
-	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
-	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
-	background-image: -webkit-linear-gradient(top, #9ddc06, #638000);
-	background-image: -moz-linear-gradient(top, #9ddc06, #638000);
-	background-image: -o-linear-gradient(top, #9ddc06, #638000);
-	background-image: -ms-linear-gradient(top, #9ddc06, #638000);
-	background-image: linear-gradient(to bottom, #9ddc06, #638000);
-}
-
-section article form .more .profiles .edit .foundButton > a span {
-	display: block;
-	text-indent: -9999px;
-	background: no-repeat url(../images/icon_check_profile.png);
-}
-
-section article form .more .profiles .edit .deleteButton {
+section article.edition form .more .profiles .edit .deleteButton {
 	position: relative;
 	float: right;
-	margin: 8px 16px 0 0;
+	margin: 8px 16px 0 8px;
 }
 
-section article form .more .profiles .edit .deleteButton > a {
+section article.edition form .more .profiles .edit .deleteButton > a {
 	display: block;
 	text-indent: -9999px;
 	width: 13px;
@@ -1524,15 +1557,54 @@ section article form .more .profiles .edit .deleteButton > a {
 	background: no-repeat url(../images/icon_delete_profile.png);
 }
 
-section article form .more .profiles .edit .quantity  {
+section article.edition form .more .profiles .edit .line_control  {
+	float: right;
+	margin: 3px 9px 0 5px;
+}
+
+section article.edition form .more .profiles .edit .line_control a  {
+	
+	text-decoration: none;
+	display: block;
+	width: 23px;
+	height: 23px;
+	line-height: 23px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: #cdcdcd;
+	font-size: 18px;
+	text-align: center;
+	font-weight: bold;
+}
+
+section article.edition form .more .profiles .edit .line_control .delete-post {
+	background: #232323;
+	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+}
+
+section article.edition form .more .profiles .edit .line_control .add-post {
+	background: #0c0e11;
+	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
+	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
+	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
+	background-image: -webkit-linear-gradient(top, #709a0d, #638000);
+	background-image: -moz-linear-gradient(top, #709a0d, #638000);
+	background-image: -o-linear-gradient(top, #709a0d, #638000);
+	background-image: -ms-linear-gradient(top, #709a0d, #638000);
+	background-image: linear-gradient(to bottom, #709a0d, #638000);
+}
+
+section article.edition form .more .profiles .edit .quantity  {
 	position: relative;
-	margin-right: 8px;
 	float: right;
 	width: 63px;
 	height: 29px;
 }
 
-section article form .more .profiles .edit .quantity input {
+section article.edition form .more .profiles .edit .quantity input {
 	width: 42px;
 	height: 15px;
 	font-size: 11px;
@@ -1541,7 +1613,7 @@ section article form .more .profiles .edit .quantity input {
 	text-align: center;
 }
 
-section article form .more .profiles .edit .quantity .number_control  {
+section article.edition form .more .profiles .edit .quantity .number_control  {
 	position: absolute;
 	right: 2px;
 	display: block;
@@ -1554,7 +1626,7 @@ section article form .more .profiles .edit .quantity .number_control  {
 	font-weight: bold;
 }
 
-section article form .more .profiles .edit .quantity .more_quantity {
+section article.edition form .more .profiles .edit .quantity .more_quantity {
 	top: 2px;
 	-webkit-border-radius: 0 3px 0 0;
 	-moz-border-radius: 0 3px 0 0;
@@ -1565,7 +1637,7 @@ section article form .more .profiles .edit .quantity .more_quantity {
 	box-shadow: inset 0 1px #353535;
 }
 
-section article form .more .profiles .edit .quantity .less_quantity {
+section article.edition form .more .profiles .edit .quantity .less_quantity {
 	bottom: 2px ;
 	-webkit-border-radius: 0 0 3px;
 	-moz-border-radius: 0 0 3px;
@@ -1576,11 +1648,11 @@ section article form .more .profiles .edit .quantity .less_quantity {
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
 }
 
-section article form .more .profiles .deleteButton:hover .confirm {
+section article.edition form .more .profiles .deleteButton:hover .confirm {
 	display: block;
 }
 
-section article form .more .profiles .confirm {
+section article.edition form .more .profiles .confirm {
 	display: none;
 	position: absolute;
 	width: 250px;
@@ -1600,7 +1672,7 @@ section article form .more .profiles .confirm {
 	box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
 }
 
-section article form .more .profiles .confirm:before {
+section article.edition form .more .profiles .confirm:before {
 	position: absolute;
 	top: -8px;
 	right: 23px;
@@ -1610,16 +1682,16 @@ section article form .more .profiles .confirm:before {
 	border-bottom: 9px solid #131313;
 }
 
-section article form .more .profiles .confirm p {
+section article.edition form .more .profiles .confirm p {
 	padding-bottom: 3px;
 }
 
-section article form .more .profiles .confirm a {
+section article.edition form .more .profiles .confirm a {
 	color: #68707d;
 	margin: 0 2px;
 }
 
-section article form .more .profiles .confirm a:hover {
+section article.edition form .more .profiles .confirm a:hover {
 	color: #89bc04;
 }
 
@@ -2310,10 +2382,6 @@ section article form .more .profiles .confirm a:hover {
 #tuto #content_tuto #block_nav_tuto ul li.next a {
 	color: #353535;
 }
-
-/* #projects, header {
-	display: none;
-} */
 
 #tuto {
 	display: none;

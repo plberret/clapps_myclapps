@@ -181,7 +181,7 @@
 	
 		<section id="projects">
 		
-			<article class="project">
+			<article class="project edition">
 				<form action="">
 					<div class="preview">
 						<div class="block_top clearfix">
@@ -215,38 +215,14 @@
 							<div class="project_id">#3000</div>
 							<div class="date"><input type="text" value="28 décembre 2012" /></div>
 							<div class="place field"><input type="text" value="Paris 11e (75011)" class="autocomplete location"/></div>
-							<div id="see_button">
-								<a href="#" class="see-more"><span>Voir</span> plus</a>
-							</div>
 						</div>
 					</div><!-- fin preview -->
 					<div class="more">
 						<div class="profiles">
 							<ul>
 								<li class="clearfix">
-									<div class="icon iconActor"><span>36</span></div>
-									<div class="edit_desc"><textarea name="" placeholder="Description du profil">Une actrice blonde, 1m70 à forte poitrine acceptant les scènes de nudité</textarea></div>
-									
-									<div class="edit clearfix">
-										<div class="deleteButton">
-											<a href="#">Supprimer</a>
-											<div class="confirm">
-												<p>êtes-vous sûr de vouloir supprimer ?</p>
-												<div>
-													<a href="#">Oui</a>
-													<a href="#">Annuler</a>
-												</div>
-											</div>
-										</div>
-										<div class="foundButton">
-											<a href="#"><span>Trouvé</span></a>
-										</div>
-									</div>
-								</li>
-								<li class="clearfix">
 									<div class="icon iconActor"><span>52</span></div>
 									<div class="edit_desc"><textarea name="" placeholder="Description du profil">Un acteur Barbu, 1m85 bien monté acceptant les scènes de nudité. </textarea></div>
-									
 									<div class="edit">
 										<div class="deleteButton">
 											<a href="#">Supprimer</a>
@@ -266,9 +242,23 @@
 									</div>
 								</li>
 								<li class="clearfix profileFound">
-									<div class="icon iconActor"><span>52</span></div>
+									<div class="icon iconActor"></div>
 									<p>Un acteur d'1m80</p>
 									<div class="apply applyFound">Candidat trouvé</div>
+								</li>
+								<li class="clearfix">
+									<div class="add_job add_field"><input type="text" placeholder="Métier recherché" /></div>
+									<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
+									<div class="edit">
+										<div class="line_control">
+											<a href="#" class="add-post">+</a>
+										</div>
+										<div class="quantity">
+											<a href="#" class="less_quantity number_control">-</a>
+											<input type="text" value="1" class="number" name="occurence[]"/>
+											<a href="#" class="more_quantity number_control">+</a>
+										</div>
+									</div>
 								</li>
 							</ul>
 						</div><!-- fin profile -->
@@ -278,6 +268,9 @@
 							<a href="#" class="cancelProject">Annuler</a>
 						</div>
 					</div><!-- fin more -->
+					<div id="see_button">
+						<a href="#" class="see-more"><span>Voir</span> plus</a>
+					</div>
 				</form>
 			</article>
 			
@@ -292,7 +285,7 @@
 				foreach ($getProjects as $project): 
 					$valideDate = getValideDate($project['create_date']); // check if project was revalidate, (don't use create_date but update_date)
 				?>
-					<article class="project<?php if (isFavorite($project,$user_fb)): ?> favorite<?php endif ?>">
+					<article class="project read <?php if (isFavorite($project,$user_fb)): ?> favorite<?php endif ?>">
 						<div class="preview">
 							<div class="block_top clearfix">
 								<img src="<?php echo $project['img_creator'] ?>" alt="photo profil" />
@@ -353,7 +346,7 @@
 											<div class="icon <?php echo $profileDomain; ?>">
 												<span><?php echo $profile['occurence']; ?></span>
 											</div>
-											<p><input type="text" disabled="disabled" value="<?php echo $profile['person']; ?>"></p>
+											<p><textarea disabled="disabled"><?php echo $profile['person']; ?></textarea></p>
 											<div class="apply">
 												<?php if (!isAdmin($project,$user_fb)): ?>
 													<a href="#">Postuler</a>

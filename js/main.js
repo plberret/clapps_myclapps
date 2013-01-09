@@ -68,9 +68,13 @@ zf.deleteProject = function($this) {
 zf.seeMore = function($this) {
 	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
 		if ($(this).css('display')=='none') {
-			$this.html('Voir plus');
+			$this.fadeOut(500, function() {
+			    $this.html('Voir plus').fadeIn(500);
+			});
 		} else {
-			$this.html('Voir moins');
+			$this.fadeOut(500, function() {
+			    $this.html('Voir moins').fadeIn(500);
+			});
 		}
 	});
 }
