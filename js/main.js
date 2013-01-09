@@ -212,6 +212,11 @@ zf.addAnonceFormOk = function(form){
 
 zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
+
+	zf.$newProject.find('.field .autocomplete').keyup(function(){
+		var $this=$(this);
+		zf.jsonCities($this);
+	})
 	
 	// UP NUMBER CHAR LEFT FOR TITLE
 	zf.$newProject.on('keyup','#title',function(event) {
@@ -309,13 +314,16 @@ zf.jsonCities = function($this){
 						$ul.append($li)
 					};
 				}
-				$('#col3').find('ul#autocCities').remove();
+				$('ul#autocCities').remove();
 			//	console.log($('#col3').find('ul'))
 				if (respL>0) {
-					$('#col3').append($ul); // hide autoc if no result
+					$this.parent().append($ul)
+					// $('#col3').append($ul); // hide autoc if no result
 				}
 			};
 		});
+	} else {
+		$('ul#autocCities').remove();
 	}
 }
 
@@ -545,16 +553,17 @@ zf.init = function(){
 		zf.updateFilter($(this));
 	})
 
-	zf.$filtre.find('.field .autocomplete').keyup(function(event){
+	zf.$page.find('.field .autocomplete').keyup(function(event){
+		console.log('kkk')
 		event.preventDefault();
 		var $this=$(this);
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
 			// TRIGGER CLICK ON CURRENT DISTANCE <- old // hit enter so nothing to do...
 
 		} else if (zf.isOkKey(event)) {
-			if ($(this).hasClass('metier')) {
+			if ($this.hasClass('metier')) {
 			}
-			else if($(this).hasClass('location')){
+			else if($this.hasClass('location')){
 				zf.jsonCities($this);
 			}
 		};
