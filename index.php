@@ -214,7 +214,7 @@
 						<div class="bloc_see_more clearfix">
 							<div class="project_id">#3000</div>
 							<div class="date"><input type="text" value="28 décembre 2012" /></div>
-							<div class="place"><input type="text" value="Paris 11e (75011)" /></div>
+							<div class="place field"><input type="text" value="Paris 11e (75011)" class="autocomplete location"/></div>
 							<div id="see_button">
 								<a href="#" class="see-more"><span>Voir</span> plus</a>
 							</div>

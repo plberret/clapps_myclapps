@@ -77,6 +77,17 @@
 		return $url;
 	}
 
+	function changeFavoriteFilter($data){
+		global $baseDD;
+		
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('UPDATE mc_users SET filter = :filter WHERE id_creator = :id_user');
+		$R1->bindParam(':filter',$data);
+		if ($R1->execute()) {
+			echo json_encode(array(success => true ));
+		}
+	}
+
 	function addProject($data){
 		 
 		global $baseDD;

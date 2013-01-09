@@ -18,7 +18,7 @@
 			</div>
 			<div class="field">
 				<label for="place">Lieu</label>
-				<input class="required" type="text" name="place" placeholder="Ville, département ou code postal" />
+				<input class="required autocomplete location" type="text" name="place" placeholder="Ville, département ou code postal" />
 				<ul id="autocompletion">
 					<li>Paris</li>
 					<li>Marseille</li>
