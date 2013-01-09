@@ -298,7 +298,7 @@
 								<img src="<?php echo $project['img_creator'] ?>" alt="photo profil" />
 								<div class="title_block">
 									<div class="title">
-										<h2><?php echo $project['title']; ?></h2>
+										<h2><input type="text" disabled="disabled" value="<?php echo $project['title']; ?>"></h2>
 										<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
 									</div>
 									<div class="available clearfix">
@@ -328,12 +328,12 @@
 							</div>
 							<div class="desc">
 								<h3>Détails de l'annonce :</h3>
-								<p><?php echo $project['description']; ?></p>
+								<p><textarea disabled="disabled"><?php echo $project['description']; ?></textarea></p>
 							</div>
 							<div class="bloc_see_more clearfix">
 								<div class="project_id">#<?php echo $project['id_project']; ?></div>
-								<div class="date"><?php echo dateUstoFr($project['date_filter']); ?></div>
-								<div class="place"><?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)</div>
+								<div class="date"><input type="text" disabled="disabled" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
+								<div class="place"><input type="text" disabled="disabled" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
 							</div>
 						</div><!-- fin preview -->
 						<div class="more">
@@ -353,7 +353,7 @@
 											<div class="icon <?php echo $profileDomain; ?>">
 												<span><?php echo $profile['occurence']; ?></span>
 											</div>
-											<p><?php echo $profile['person']; ?></p>
+											<p><input type="text" disabled="disabled" value="<?php echo $profile['person']; ?>"></p>
 											<div class="apply">
 												<?php if (!isAdmin($project,$user_fb)): ?>
 													<a href="#">Postuler</a>
