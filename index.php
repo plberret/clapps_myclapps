@@ -49,7 +49,7 @@
 			</div>
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
-					<p>Vous recherchez <span class="time">dès que possible</span> un poste <span class="work">d'un ingénieur du son</span> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours.</p>
+					<p>Vous recherchez <span class="time">dès que possible</span> un poste<span class="work"> d'un ingénieur du son</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
 				</div>
 				<div id="notif_email">
 					<p>M'avertir des nouvelles annonces par email</p>
@@ -73,7 +73,7 @@
 					<div id="col2" class="col">
 						<div class="field">
 							<label for="profile">Métier</label>
-							<input type="text" name="profile" id="profile" placeholder="Entrez le métier recherché ..." />
+							<input type="text" name="profile" id="profile" class="metier autocomplete" placeholder="Entrez le métier recherché ..." />
 						</div>
 						<div class="field select">
 							<label for="selector_date">Date</label>
@@ -95,7 +95,7 @@
 					<div id="col3" class="col">
 						<div class="field">
 							<label for="location">Lieux</label>
-							<input type="text" name="location" id="location" autocomplete="off" placeholder="Ville, département ou code postal" />
+							<input type="text" name="location" id="location" class="location autocomplete" autocomplete="off" placeholder="Ville, département ou code postal" />
 							<input type="hidden" name="distance" value="100" id="distance" />
 						</div>
 						<ul id="distances" class="clearfix">
@@ -357,7 +357,9 @@
 												<span><?php echo $profile['occurence']; ?></span>
 											</div>
 											<p><?php echo $profile['person']; ?></p>
-											<div class="apply"><a href="#">Postuler</a></div> 
+											<?php if (!isAdmin($project,$user_fb)): ?>
+												<div class="apply"><a href="#">Postuler</a></div>
+											<?php endif; ?>
 										</li>
 									<?php } ?>
 									<?php foreach ($getProfilesFound as $profile) { ?>
@@ -379,26 +381,12 @@
 							</div><!-- fin profile -->
 							<?php if (isAdmin($project,$user_fb)): ?>
 								<div class="manage clearfix">
-									<p>Validité de l'annonce : 
-										<?php 
-											switch ($valideDate) {
-												case ($valideDate < 1):
-													echo '<span class="finish">Désactivée</span></p>';
-													echo "<a href='#' class='extendProject'>Réactiver l'annonce</a>";
-													break;
-												case 1:
-													echo '<span class="valid"> 1 jour restant</span></p>';
-													echo "<a href='#' class='extendProject'>Prolonger l'annonce</a>";
-													break;
-												case ($valideDate < 3):
-													echo '<span class="valid"> '.$valideDate.' jours restants</span></p>';
-													echo "<a href='#' class='extendProject'>Prolonger l'annonce</a>";
-													break;
-												default:
-													echo '<span class="valid"> '.$valideDate.' jours restants</span></p>';
-													break;
-											}
-										?>
+									<?php if ($valideDate>0): ?>
+										<p>Validité de l'annonce : <span class="finish"><?php echo $valideDate; if ($valideDate>1): ?> jours restants<?php else: ?> jour restant<?php endif ?></span></p>
+									<?php else: ?>
+										<p>Désactivée</p>
+									<?php endif ?>
+									<?php if ($valideDate<3): ?><a href="#" class="extendProject">Réactiver l'annonce</a><?php endif; ?>
 									<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 								</div>
 							<?php endif ?>

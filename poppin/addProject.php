@@ -5,20 +5,20 @@
 	<div class="desc">
 		<h3>Informations générales</h3>
 		<div class="field">
-			<input type="text" name="title" id="title" maxlength="80" placeholder="Titre de votre annonce" />
+			<input class="required" type="text" name="title" id="title" maxlength="80" placeholder="Titre de votre annonce" />
 			<em><span data-length="80">80</span> caractères restants</em>
 		</div>
 		<div class="text">
-			<textarea id="desc" name="desc" placeholder="Description de votre annonce..."></textarea>
+			<textarea class="required" id="desc" name="desc" placeholder="Description de votre annonce..."></textarea>
 		</div>
 		<div id="block_place" class="clearfix">
 			<div class="date field">
 				<label for="">Date</label>
-				<input type="text" id="datepicker" placeholder="Date du tournage" />
+				<input type="text" class="required" id="datepicker" placeholder="Date du tournage" />
 			</div>
 			<div class="field">
 				<label for="place">Lieu</label>
-				<input type="text" name="place" placeholder="Ville, département ou code postal" />
+				<input class="required" type="text" name="place" placeholder="Ville, département ou code postal" />
 				<ul id="autocompletion">
 					<li>Paris</li>
 					<li>Marseille</li>
@@ -31,10 +31,10 @@
 	<div class="profiles">
 		<h3>Ajouter un(des) poste(s)</h3>
 		<div class="clearfix">
-			<input type="text" placeholder="Métier recherché" class="job" />
+			<input type="text" placeholder="Métier recherché" class="job required" />
 			<!-- forcé en attendant l'update de leo -->
 			<input type="hidden" name="domain[]" value="1" />
-			<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
+			<input type="text" name="profile[]" class="required entitled" placeholder="Intitulé du poste recherché" />
 			<div class="quantity">
 				<a href="#" class="less number_control">-</a>
 				<input type="text" value="1" class="number" name="occurence[]"/>
