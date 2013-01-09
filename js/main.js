@@ -189,13 +189,13 @@ zf.getFilteredProjects = function($this){
 	$currentFilter = zf.$page.find('#block_current_filter');
 	$currentFilter.show();
 	$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
-	$currentFilter.find('.work').text($this.find('#profile').val())
+	$currentFilter.find('.work').text(' '+$this.find('#profile').val())
 	$currentFilter.find('.location').text($this.find('#location').val())
 	$currentFilter.find('.distance').text($this.find('#distance').val()+'km')
 	if ($this.find('#location').val().trim().length==0) {
 		$currentFilter.find('.opt').hide()
 	} else {
-			$currentFilter.find('.opt').show()
+		$currentFilter.find('.opt').show()
 	}
 }
 
@@ -203,7 +203,7 @@ zf.addAnonceFormOk = function(form){
 	// console.log(zf.$newProject.find('.field input'))
 	zf.$newProject.find('.required').each(function(){
 		if ($(this).val().trim().length == 0) {
-			console.log($(this))
+			// console.log($(this))
 			return false
 		};
 	})
@@ -241,27 +241,32 @@ zf.initAddProject = function() {
 	// ADD POST
 	zf.$newProject.on('click','#add-post',function(event) {
 		event.preventDefault();
+		var $this=$(this);
 		// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
 			var newPost = zf.$newProject.find('.profiles > div:last').clone().find('.entitled').val('').siblings('.number').val('1').end().end();
-			$(this).attr('id','').removeClass('add-post').addClass('delete').html('-');
+			$this.attr('id','').removeClass('add-post').addClass('delete').html('-');
 			zf.$newProject.find('.profiles').append(newPost);
 		// };
+		$this.parents('.profiles').find('.required').removeClass('required').end().children('div').eq(0).find('input[type=text]').addClass('required');
 	});
 	
 	// DELETE POST
 	zf.$newProject.on('click','.delete',function(event) {
 		event.preventDefault();
 		var $this=$(this);
-		if ($this.parent('div').find('.entitled').val()!='') { // if last post isn't empty
-			var oldPost = $this.parent('div').parent('div').clone().end().remove();
+		var $tparent = $this.parents('.profiles')
+		if ($this.parent('div').siblings('.entitled').val()!='') { // if last post isn't empty
+			var oldPost = $this.parent('div').parent('div').clone().end().remove(); // recovery oldPost mb
 		} else {
 			$this.parent('div').parent('div').remove();
 		}
+		$tparent.find('.required').removeClass('required').end().children('div').eq(0).find('input[type=text]').addClass('required');
 	});
 	
 	// SEND PROJECT
 	zf.$newProject.on('submit', function(event) {
 		event.preventDefault();
+		$('.required').removeClass('empty');
 		if (zf.addAnonceFormOk($(this).serialize())) {
 			$.ajax({
 				url: $(this).attr('action'),
@@ -275,7 +280,10 @@ zf.initAddProject = function() {
 					// location.reload();
 				}
 			});
+			$('.message.error').fadeOut();
 		} else {
+			$('.required[value=]').addClass('empty');
+			// $('.required[value=]').css('border','1px solid red');
 			$('.message.error').fadeIn();
 		}
 		
@@ -283,7 +291,7 @@ zf.initAddProject = function() {
 };
 
 
-zf.jsonCitiesA = function($this){
+zf.jsonCities = function($this){
 	var value = $this.val();
 	if(!zf.isBlank(value) && value.length>2){
 		$.getJSON('requests/citiesJson.php',{ville:value.trim()},function(resp){
@@ -311,8 +319,8 @@ zf.jsonCitiesA = function($this){
 	}
 }
 
-zf.jsonCitiesDown = function($this) {
-	$ul = zf.$filtre.find('#col3 ul#autocCities')
+zf.jsonListDown = function($this) {
+	$ul = zf.$filtre.find('#col3 ul#autocCities') // change this to make with metier
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
@@ -334,8 +342,8 @@ zf.jsonCitiesDown = function($this) {
 	}; // /if ul contains li
 };
 
-zf.jsonCitiesUp = function($this) {
-	$ul = zf.$filtre.find('#col3 ul#autocCities')
+zf.jsonListUp = function($this) {
+	$ul = zf.$filtre.find('#col3 ul#autocCities') // change this to make with metier
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
@@ -537,19 +545,23 @@ zf.init = function(){
 		zf.updateFilter($(this));
 	})
 
-	zf.$filtre.find('.field input[type="text"]').keyup(function(event){
+	zf.$filtre.find('.field .autocomplete').keyup(function(event){
 		event.preventDefault();
 		var $this=$(this);
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
-			// TRIGGER CLICK ON CURRENT DISTANCE MOTHER FUCKER
+			// TRIGGER CLICK ON CURRENT DISTANCE <- old // hit enter so nothing to do...
 
 		} else if (zf.isOkKey(event)) {
-			zf.jsonCitiesA($this);
+			if ($(this).hasClass('metier')) {
+			}
+			else if($(this).hasClass('location')){
+				zf.jsonCities($this);
+			}
 		};
 	}).keydown(function(event){
 		switch (event.keyCode) {
-			case 38: zf.jsonCitiesUp($(this)); break;
-			case 40: zf.jsonCitiesDown($(this)); break;
+			case 38: zf.jsonListUp($(this)); break;
+			case 40: zf.jsonListDown($(this)); break;
 		}
 	});
 

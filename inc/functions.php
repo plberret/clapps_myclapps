@@ -280,8 +280,8 @@
 
 	 function getProjectsByFilters($page,$filters){
 	 	global $baseDD;
-
-		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, pj.place, (SELECT img_url FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project";
+	 	// SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id_ville = place) AS place, (SELECT cp FROM villes WHERE id_ville = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`
+		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT nom FROM villes WHERE id_ville = pj.place) AS place, (SELECT cp FROM villes WHERE id_ville = pj.place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project";
 
 		if ($filters['domain']) {
 			$sql .= " AND domain = :domain AND pf.current_state = 1";

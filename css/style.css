@@ -1658,6 +1658,7 @@ section article form .more .profiles .confirm a:hover {
 }
 
 .fancybox-overlay form .message {
+	display: none;
 	position: relative;
 	width: 510px;
 	line-height: 16px;
@@ -1680,6 +1681,10 @@ section article form .more .profiles .confirm a:hover {
 .fancybox-overlay form .message.error {
 	border-top: 1px solid #b52200;
 	background: no-repeat url(../images/icon_fail.png) 10px center #921b00;
+}
+
+.fancybox-overlay form#newProject .empty {
+	border: 1px solid red;
 }
 
 /* ----- POPIN ADD PROJECT -------*/
