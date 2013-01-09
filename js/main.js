@@ -194,6 +194,12 @@ zf.getFilteredProjects = function($this){
 }
 
 zf.initAddProject = function() {
+	
+	// date picker 
+	$(function() {
+		$( "#datepicker" ).datepicker();
+	});
+	
 	zf.$newProject = $('#newProject');
 	
 	// UP NUMBER CHAR LEFT FOR TITLE
@@ -485,6 +491,11 @@ zf.init = function(){
 //	$(window).scroll(function(){
 //		$('header').css('top', $(this).scrollTop() + "px");
 //	});
+	
+	// date picker 
+	$(function() {
+		zf.$page.find( ".datepicker" ).datepicker();
+	});
 	
 	// fancybox add project
 	zf.$page.find(".addProject a").fancybox({

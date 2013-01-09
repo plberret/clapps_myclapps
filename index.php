@@ -379,8 +379,26 @@
 							</div><!-- fin profile -->
 							<?php if (isAdmin($project,$user_fb)): ?>
 								<div class="manage clearfix">
-									<p>Validité de l'annonce : <span class="finish"><?php echo $valideDate; if ($valideDate>1): ?> jours restants<?php else: ?> jour restant<?php endif ?></span></p>
-									<a href="#" class="extendProject">Réactiver l'annonce</a>
+									<p>Validité de l'annonce : 
+										<?php 
+											switch ($valideDate) {
+												case ($valideDate < 1):
+													echo '<span class="finish">Désactivée</span></p>';
+													echo "<a href='#' class='extendProject'>Réactiver l'annonce</a>";
+													break;
+												case 1:
+													echo '<span class="valid"> 1 jour restant</span></p>';
+													echo "<a href='#' class='extendProject'>Prolonger l'annonce</a>";
+													break;
+												case ($valideDate < 3):
+													echo '<span class="valid"> '.$valideDate.' jours restants</span></p>';
+													echo "<a href='#' class='extendProject'>Prolonger l'annonce</a>";
+													break;
+												default:
+													echo '<span class="valid"> '.$valideDate.' jours restants</span></p>';
+													break;
+											}
+										?>
 									<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 								</div>
 							<?php endif ?>
@@ -449,6 +467,8 @@
 	<div id="fb-root"></div>
 	
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+	 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>
