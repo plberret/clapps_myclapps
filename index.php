@@ -215,9 +215,6 @@
 							<div class="project_id">#3000</div>
 							<div class="date"><input type="text" value="28 décembre 2012" /></div>
 							<div class="place field"><input type="text" value="Paris 11e (75011)" class="autocomplete location"/></div>
-							<div id="see_button">
-								<a href="#" class="see-more"><span>Voir</span> plus</a>
-							</div>
 						</div>
 					</div><!-- fin preview -->
 					<div class="more">
@@ -278,6 +275,9 @@
 							<a href="#" class="cancelProject">Annuler</a>
 						</div>
 					</div><!-- fin more -->
+					<div id="see_button">
+						<a href="#" class="see-more"><span>Voir</span> plus</a>
+					</div>
 				</form>
 			</article>
 			

@@ -1171,8 +1171,8 @@ section article .profiles ul li .icon span {
 
 section article .profiles ul li > p {
 	color: #8c8c8c;
-	width: 427px;
-	padding: 17px 50px 17px 20px;
+	width: 420px;
+	padding: 17px 0px 17px 20px;
 	display: table-cell;
 }
 
@@ -1181,13 +1181,15 @@ section article .profiles ul li:hover > p {
 }
 
 section article .profiles ul li .apply {
-	padding-right: 13px;
 	display: table-cell;
 	vertical-align: middle;
+	width: 168px;
 }
 
 section article .profiles ul li .apply a {
+	float: right;
 	display: block;
+	margin-right: 13px;
 	background: #d09804;
 	background: -webkit-gradient(linear, left top, left bottom, from(#f3b40b), to(#bc8900));
 	background: -moz-linear-gradient(top,#f3b40b,#bc8900);
