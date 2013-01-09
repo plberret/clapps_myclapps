@@ -66,8 +66,6 @@ zf.deleteProject = function($this) {
 };
 
 zf.seeMore = function($this) {
-	console.log($this);
-	console.log($this.siblings('.more'));
 	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
 		if ($(this).css('display')=='none') {
 			$this.html('Voir plus');

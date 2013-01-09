@@ -354,9 +354,13 @@
 												<span><?php echo $profile['occurence']; ?></span>
 											</div>
 											<p><?php echo $profile['person']; ?></p>
-											<?php if (!isAdmin($project,$user_fb)): ?>
-												<div class="apply"><a href="#">Postuler</a></div>
-											<?php endif; ?>
+											<div class="apply">
+												<?php if (!isAdmin($project,$user_fb)): ?>
+													<a href="#">Postuler</a>
+												<?php else: ?>
+													<a href="#">J'ai trouvé</a>
+												<?php endif; ?>
+											</div>
 										</li>
 									<?php } ?>
 									<?php foreach ($getProfilesFound as $profile) { ?>
