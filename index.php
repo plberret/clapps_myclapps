@@ -73,7 +73,7 @@
 					<div id="col2" class="col">
 						<div class="field">
 							<label for="profile">Métier</label>
-							<input type="text" name="profile" id="profile" class="metier autocomplete" placeholder="Entrez le métier recherché ..." />
+							<input type="text" name="profile" id="profile" class="job autocomplete" placeholder="Entrez le métier recherché ..." />
 						</div>
 						<div class="field select">
 							<label for="selector_date">Date</label>
