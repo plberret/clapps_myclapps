@@ -1085,7 +1085,7 @@ section article .preview .desc h3 {
 	padding-bottom: 13px;
 }
 
-section article .preview .desc p textarea:disabled {
+section article .preview .desc textarea:disabled {
 	color: #8c8c8c;
 	font-size: 12px;
 }
@@ -1166,6 +1166,10 @@ section article .profiles ul li {
 	margin-bottom: 6px;
 }
 
+section article .profiles ul li.add-line {
+	display: none;
+}
+
 section article .profiles ul li .icon {
 	width: 52px;
 	display: table-cell;
@@ -1195,21 +1199,25 @@ section article .profiles ul li .icon span {
 	border-radius: 3px;
 }
 
-section article .profiles ul li > p {
+section article .profiles ul li .desc {
 	color: #8c8c8c;
 	width: 420px;
 	padding: 17px 0px 17px 20px;
 	display: table-cell;
 }
 
-section article .profiles ul li:hover > p {
+section article .profiles ul li:hover .desc {
 	color: #e1e1e1;
 }
 
-section article .profiles ul li > p textarea {
+section article .profiles ul li .desc textarea {
 	color: #8c8c8c;
 	height: 15px;
 	font-size: 12px;
+}
+
+section article .profiles ul li .edit {
+	display: none;
 }
 
 section article .profiles ul li .apply {
@@ -1275,6 +1283,10 @@ section article .profiles ul li.profileFound .applyFound {
 
 section article .manage {
 	margin-top: 15px;
+}
+
+section article .manage-edition {
+	display: none;
 }
 
 section article .manage p {
@@ -1367,7 +1379,7 @@ section article .more .manage .deleteProject {
 	background-image: linear-gradient(to bottom, #da2626, #701414);
 }
 
-section article .more .manage .cancelProject {
+section article .more .manage .cancelEditProject {
 	float: right;
 	margin-right: 6px;
 	padding: 7px 32px;

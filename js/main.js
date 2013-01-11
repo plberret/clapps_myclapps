@@ -49,6 +49,43 @@ zf.deleteFavorite = function($this) {
 	});
 };
 
+zf.editProject = function($this) {
+	$article=$this.parent().parent().parent().parent(); // best practise ????????
+	$article.removeClass('read').addClass('edition');
+	// change display 
+	$this.parent().hide();
+	$this.parent().siblings('.manage-edition').show();
+	// enable fields
+	$article.find("form input").removeAttr("disabled");
+	$article.find("form textarea").removeAttr("disabled");
+	// change profiles 
+	$article.find('.more .add-line').show();
+	$article.find('.more .desc').removeClass('desc').addClass('edit_desc');
+	$article.find('.more .apply').hide();
+	$article.find('.more .edit').show();
+};
+
+zf.updateProject = function($this) {
+	zf.cancelEditProject();
+};
+
+zf.cancelEditProject = function($this) {
+	$article=$this.parent().parent().parent().parent(); // best practise ????????
+	$article.removeClass('edition').addClass('read');
+	// change display 
+	$this.parent().hide();
+	$this.parent().siblings('.manage-read').show();
+	// disable fields
+	$article.find("form input").attr("disabled", "disabled");
+	$article.find("form textarea").attr("disabled", "disabled");
+	// change profiles 
+	$article.find('.more .add-line').hide();
+	$article.find('.more .edit_desc').removeClass('edit_desc').addClass('desc');
+	$article.find('.more .apply').show();
+	$article.find('.more .edit').hide();
+	
+};
+
 zf.deleteProject = function($this) {
 	$.ajax({
 		url: 'requests/deleteProject.php',
@@ -665,6 +702,22 @@ zf.init = function(){
 	zf.$page.on('click','.favorite_link',function(event) {
 		event.preventDefault();
 		zf.addFavorite($(this));
+	});
+	
+	zf.$page.on('click','.editProject',function(event) {
+		event.preventDefault();
+		zf.editProject($(this));
+	});
+	
+	zf.$page.on('submit','.project form',function(event) {
+		alert('oui'); 
+		event.preventDefault();
+		zf.updateProject($(this));
+	});
+	
+	zf.$page.on('click','.cancelEditProject',function(event) {
+		event.preventDefault();
+		zf.cancelEditProject($(this));
 	});
 
 	zf.$page.on('click','.deleteProject',function(event) {
