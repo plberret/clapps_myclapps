@@ -80,10 +80,9 @@ zf.cancelEditProject = function($this) {
 	$article.find("form textarea").attr("disabled", "disabled");
 	// change profiles 
 	$article.find('.more .add-line').hide();
-	$article.find('.more .edit_desc').removeClass('edit_desc').addClass('desc');
-	$article.find('.more .apply').show();
+	$article.find('.more .edit_desc').addClass('desc').removeClass('edit_desc');
 	$article.find('.more .edit').hide();
-	
+	$article.find('.more .apply').show();
 };
 
 zf.deleteProject = function($this) {
@@ -602,15 +601,6 @@ zf.customFields = function(){
 		$this.parent('ul').siblings('div').find('.value').html($this.html());
 		$this.parent('ul').siblings('input').attr('value', $this.attr('class'));
 	});
-	
-/*	$(this).parent().siblings('ul').find('li').click(function(){
-		//var contente = this.text();
-		$(this).parent().siblings('div').find('.value').html('contente' );
-		console.log($(this).text());
-		$(this).parent().hide();
-	}); */
-	
-	// custom autocompletion
 	
 };
 

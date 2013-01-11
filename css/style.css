@@ -946,7 +946,7 @@ section article .preview .block_top .title_block .title {
 	float: left;
 }
 
-section article .preview .block_top .title_block .title h2 {
+section article.read .preview .block_top .title_block .title h2 {
 	font-size: 15px;
 	color: #dddddd;
 	padding-top: 6px;
