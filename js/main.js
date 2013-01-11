@@ -67,7 +67,6 @@ zf.deleteProject = function($this) {
 
 zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
-		console.log('test')
 	// zf.$page.find('.field .autocomplete').keyup(function(event){
 		event.preventDefault();
 		var $this=$(this);
@@ -83,8 +82,6 @@ zf.autocomplete = function($this) {
 			}
 		};
 	}).on('keydown', '.field .autocomplete', function(event){
-		console.log('tep')
-		console.log(event.keyCode)
 		switch (event.keyCode) {
 			case 38: zf.jsonListUp($(this)); break;
 			case 40: zf.jsonListDown($(this)); break;
@@ -192,7 +189,6 @@ zf.seeMine = function($_this,event) {
 };
 
 zf.getMoreProjects = function($this,event) {
-	console.log($this.timestamp)
 	zf.currentAnim = event
 	zf.projectCurrentPage++;
 	var $newProject = $('<div/>');
@@ -560,6 +556,7 @@ zf.customFields = function(){
 	zf.$page.find(".selector .button").click(function(){
 		var $this = $(this);
 		$(this).parent().siblings('ul').show();
+		console.log($(this).parent().siblings('ul')[0])
 	});
 	
 	zf.$page.find(".selector ul li").click(function(){
@@ -600,7 +597,9 @@ zf.init = function(){
 	
 	$(window).click(function(event) {
 		event.preventDefault();
-		console.log('tepu')
+		if (event.target.localName != 'span' && event.target.className!='button') {
+			$('#col2 .field .selector ul').hide()
+		};
 		$('.autocompletion').remove()
 	})
 
