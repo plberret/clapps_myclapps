@@ -589,7 +589,7 @@ zf.filter = function(){
 zf.customFields = function(){
 	
 	// custom select
-	zf.$page.find(".selector .button").click(function(){
+	zf.$page.find(".selector .value, .selector .button ").click(function(){
 		var $this = $(this);
 		$(this).parent().siblings('ul').show();
 		console.log($(this).parent().siblings('ul')[0])
