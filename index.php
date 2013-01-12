@@ -148,23 +148,19 @@
 							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
 							<div class="clearfix">
 								<input type="text" class="email" placeholder="votreadresse@email.com" />
-								<ul class="switch">
-									<li class="current">
-										<a href="#">ON</a>
-									</li>
-									<li>
-										<a href="#">OFF</a>
-									</li>
-								</ul>
+								<a href="javascript:void" class="switch">
+									<span class="on state">ON</span>
+									<span class="off state current">OFF</span>
+									<span class="switch_button">Change</span>
+								</a>
 							</div>
 						</div>
 						<div id="tab2" class="tab">
-							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
-							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
-							<input type="text" value="Oui" />
-							<a href="#">Annuler</a>
-							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
-							<input type="text" value="votreadresse@email.com" />
+							<a href="javascript:void" class="switch">
+								<span class="on state">ON</span>
+								<span class="off state current">OFF</span>
+								<span class="switch_button">Change</span>
+							</a>
 						</div>
 						<div id="tab3" class="tab">
 							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
@@ -180,6 +176,7 @@
 		</header>
 	
 		<section id="projects">
+	
 			<?php
 				if (isset($_GET['id_project'])) :
 					$getProjects=getProject($_GET['id_project']);
@@ -232,7 +229,7 @@
 								</div>
 								<div class="bloc_see_more clearfix">
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
-									<div class="date"><input type="text" disabled="disabled" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
+									<div class="date"><input type="text" disabled="disabled" class="datepicker" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
 									<div class="place"><input type="text" disabled="disabled" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
 								</div>
 							</div><!-- fin preview -->
