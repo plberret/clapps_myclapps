@@ -107,7 +107,8 @@ zf.autocomplete = function($this) {
 		event.preventDefault();
 		var $this=$(this);
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
-			// TRIGGER CLICK ON CURRENT DISTANCE <- old // hit enter so nothing to do...
+
+			$this.blur()
 
 		} else if (zf.isOkKey(event)) {
 			if ($this.hasClass('job')) {
@@ -130,10 +131,15 @@ zf.autocomplete = function($this) {
 		$this.parents('.autocompletion').siblings('.autocomplete').val($this.find('span').text())
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
-		if (!$this.find('.autocompletion li').hasClass('current')) {
-			$(this).val($this.find('.autocompletion li:first-child a').text())
+		console.log('2')
+		console.log($this.find('.autocompletion li'))
+		if ($this.find('.autocompletion li').length > 0) {
+			console.log('kk')
+			if (!$this.find('.autocompletion li').hasClass('current')) {
+				$(this).val($this.find('.autocompletion li:first-child a').text())
+			};
+			$('.autocompletion').remove();
 		};
-		$('.autocompletion').remove();
 	});
 }
 
@@ -681,7 +687,7 @@ zf.init = function(){
 		if (event.target.localName != 'span' && event.target.className!='button') {
 			$('#col2 .field .selector ul').hide()
 		};
-		$('.autocompletion').remove()
+		// $('.autocompletion').remove();
 	})
 	
 	// date picker 
