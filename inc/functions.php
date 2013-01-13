@@ -248,7 +248,7 @@
 		echo json_encode($result);
 	}
 
-	 function getAutocompletionJsonCities($ville){
+	 function getAutocompletionJsonCities($ville,$restricted = false){
 
 	 	global $baseDD;
 
@@ -278,7 +278,14 @@
 				// }
 			}
 
-	 		$sql = 'SELECT cp, nom, id_ville, indice FROM villes WHERE nom LIKE :ville OR nom LIKE :ville2 ORDER BY indice DESC';
+	 		$sql = 'SELECT cp, nom, id_ville, indice FROM villes WHERE';
+			if ($restricted) {
+				$sql.=' restricted != 1';
+			} else {
+				$sql.=' restricted != 2';
+			}
+	 		$sql.=' AND (nom LIKE :ville OR nom LIKE :ville2) ORDER BY indice DESC';
+	 		// echo $sql;
 		 	//$sql = 'SELECT v.cp, v.nom, v.id_ville, d.nom_departement, r.nom_region FROM villes AS v, departements AS d, regions AS r WHERE v.nom LIKE :ville OR v.nom LIKE :ville2 OR d.nom_departement LIKE :dpt OR r.nom_region LIKE :region GROUP BY nom ORDER BY nom ASC';
 			// $array = array('ville' => $ville.'%','ville2' => str_replace(' ','-',$ville).'%', 'dpt' => $ville.'%', 'region' => $ville.'%');
 			$array = array(':ville' => $ville.'%',':ville2' => str_replace(' ','-',$ville).'%');

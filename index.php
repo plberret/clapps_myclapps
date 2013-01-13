@@ -109,7 +109,7 @@
 					<div id="col3" class="col">
 						<div class="field">
 							<label for="location">Lieux</label>
-							<input type="text" name="location" id="location" class="location autocomplete" autocomplete="off" placeholder="Ville, département ou code postal" />
+							<input type="text" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" />
 							<input type="hidden" name="distance" value="100" id="distance" />
 						</div>
 						<ul id="distances" class="clearfix">

@@ -442,9 +442,11 @@ zf.jsonJobs = function($this){
 }
 
 zf.jsonCities = function($this){
+	console.log($this[0])
 	var value = $this.val();
+	var restricted = $this.data('restricted');
 	if(!zf.isBlank(value) && value.length>2){
-		$.getJSON('requests/citiesJson.php',{ville:value.trim()},function(resp){
+		$.getJSON('requests/citiesJson.php',{ville:value.trim(),restricted:restricted},function(resp){
 		//	console.log(resp)
 			if (resp) {
 				var $ul = $('<ul/>',{id:'autocCities', class:'autocompletion'});
