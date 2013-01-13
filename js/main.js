@@ -119,12 +119,21 @@ zf.autocomplete = function($this) {
 		};
 	}).on('keydown', '.field .autocomplete', function(event){
 		switch (event.keyCode) {
-			case 38: zf.jsonListUp($(this)); break;
+			case 38:
+				event.preventDefault();
+				zf.jsonListUp($(this));
+			break;
 			case 40: zf.jsonListDown($(this)); break;
 		}
 	}).on('click', 'ul.autocompletion li a', function(){
 		var $this=$(this);
 		$this.parents('.autocompletion').siblings('.autocomplete').val($this.find('span').text())
+	}).on('focusout', '.field .autocomplete', function(){
+		// MFMFMF
+		if (!$this.find('.autocompletion li').hasClass('current')) {
+			$(this).val($this.find('.autocompletion li:first-child a').text())
+		};
+		$('.autocompletion').remove();
 	});
 }
 
@@ -292,6 +301,7 @@ zf.getFilteredProjects = function($this,event){
 	// actualise current_filter block
 	$currentFilter = zf.$page.find('#block_current_filter');
 	$currentFilter.show();
+	zf.$page.find('#block_current_filter.none').hide();
 	$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
 	$currentFilter.find('.work').text(' '+$this.find('#profile').val())
 	$currentFilter.find('.location').text($this.find('#location').val())
@@ -409,7 +419,7 @@ zf.jsonJobs = function($this){
 				var $ul = $('<ul/>',{id:'autocJobs', class:'autocompletion'});
 				var $li;
 				var respL = resp.length;
-				for(i=0;i<respL;i++){
+				for(i=0;i<6;i++){
 					if (resp[i]) {
 						// if (!resp[i]['cp']){resp[i]['cp']=""}
 						$li = $('<li/>',{
@@ -440,11 +450,11 @@ zf.jsonCities = function($this){
 				var $ul = $('<ul/>',{id:'autocCities', class:'autocompletion'});
 				var $li;
 				var respL = resp.length;
-				for(i=0;i<respL;i++){
+				for(i=0;i<6;i++){
 					if (resp[i]) {
-						if (!resp[i]['cp']){resp[i]['cp']=""}
+						if (!resp[i]['cp']){resp[i]['cp']=""} else {resp[i]['cp'] = '('+resp[i]['cp']+')'}
 						$li = $('<li/>',{
-						html :'<a href="#" data-id="'+resp[i]['id_ville']+'" data-type="'+resp[i]["type"]+'">'+resp[i]['cp']+' <span>'+resp[i]['nom']+'</span></a>'
+						html :'<a href="#" data-id="'+resp[i]['id_ville']+'" data-type="'+resp[i]["type"]+'"><span>'+resp[i]['nom']+'</span> '+resp[i]['cp']+'</a>'
 						});
 						$ul.append($li)
 					};
@@ -474,12 +484,12 @@ zf.jsonListDown = function($this) {
 				$next = $ul.children().eq(0)
 				$next.addClass('current'); // add class to first one
 			}
-			$this.val($next.find('span').text());
+			$this.val($next.text());
 		} else { // if current doesn't exist or if there is 1 result
 			$first = $ul.find('li:first-child') // define first
 			if ($this.val().trim()!=$first.find('span').text()) { // if current doesn't exist
 				$first.addClass('current'); // define first child as current
-				$this.val($first.find('span').text());
+				$this.val($first.text());
 			};
 		}
 	}; // /if ul contains li
@@ -497,12 +507,12 @@ zf.jsonListUp = function($this) {
 				$prev = $ul.children().last();
 				$prev.addClass('current'); // add class to first one
 			}
-			$this.val($prev.find('span').text());
+			$this.val($prev.text());
 		} else { // if current doesn't exist or if there is 1 result
 			$last = $ul.find('li:last-child') // define last
 			if ($this.val().trim()!=$last.find('span').text()) { // if current doesn't exist
 				$last.addClass('current'); // define last child as current
-				$this.val($last.find('span').text());
+				$this.val($last.text());
 			};
 		}
 	}; // /if ul contains li
@@ -535,7 +545,7 @@ zf.filter = function(){
 	})
 	
 
-	zf.$page.find('#searchButton').click(function(event){
+	zf.$page.find('#searchButton, .open_filtre').click(function(event){
 		event.preventDefault();
 		if(zf.filterOpen==true){
 			$height= "-135";
@@ -655,7 +665,7 @@ zf.init = function(){
 //		$('header').css('top', $(this).scrollTop() + "px");
 //	});
 	
-	// close select
+	// close select & autocompletion
 	$(window).click(function(event) {
 		event.preventDefault();
 		if (event.target.localName != 'span' && event.target.className!='button') {
