@@ -14,16 +14,11 @@
 		<div id="block_place" class="clearfix">
 			<div class="date field">
 				<label for="">Date</label>
-				<input type="text" class="required" id="datepicker" placeholder="Date du tournage" />
+				<input type="text" class="required datepicker" placeholder="Date du tournage" />
 			</div>
 			<div class="field">
 				<label for="place">Lieu</label>
 				<input class="required autocomplete location" type="text" name="place" placeholder="Ville, département ou code postal" />
-				<ul id="autocompletion">
-					<li>Paris</li>
-					<li>Marseille</li>
-					<li>Lyon</li>
-				</ul>
 			</div>
 		</div>
 	</div>

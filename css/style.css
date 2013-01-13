@@ -150,9 +150,31 @@ header, footer, section, article, nav {
 /* autocompletion */
 
 .autocompletion {
-	background: red;
+	position: absolute;
+	z-index:50;
+	background: #131313;
+	width: 232px;
+	margin-top: 1px;
 }
 
+.autocompletion li {
+	padding: 11px;
+	cursor: pointer;
+}
+
+.autocompletion li a {
+	color: #c0c0c0;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.autocompletion li:hover {
+	background: #cc9503;
+}
+
+.autocompletion li:hover a {
+	color: #010101;
+}
 
 /* -------------------------------- MISE EN PAGE -----------------------------------*/
 
@@ -357,27 +379,6 @@ header #filter .col .field input {
 	-webkit-box-shadow: inset 0 0 3px #000;
 	-moz-box-shadow: inset 0 0 3px #000;
 	box-shadow: inset 0 0 3px #000;
-}
-
-header #filter .col .field #autocompletion {
-	display: none;
-	position: absolute;
-	z-index:50;
-	background: #131313;
-	width: 232px;
-	margin-top: 1px;
-}
-
-header #filter .col .field #autocompletion li {
-	padding: 11px;
-	cursor: pointer;
-	color: #c0c0c0;
-	font-size: 12px;
-}
-
-header #filter .col .field #autocompletion li:hover {
-	background: #cc9503;
-	color: #010101;
 }
 
 
@@ -703,6 +704,8 @@ header #filter_advanced #tabs .tab .email {
 }
 
 header #filter_advanced #tabs .tab .switch {
+	display: block;
+	position: relative;
 	margin: 5px 18px 0 0;
 	padding: 1px 0 0 1px;
 	float: right;
@@ -716,35 +719,40 @@ header #filter_advanced #tabs .tab .switch {
 	border: 1px solid #101010;
 }
 
-header #filter_advanced #tabs .tab .switch li {
+header #filter_advanced #tabs .tab .switch .state {
 	float: left;
 	margin-right: 1px;
 	width: 30px;
-}
-
-header #filter_advanced #tabs .tab .switch li a {
 	display: block;
 	color: #373737;
 	font-size: 9px;
 	font-weight: bold;
 	text-decoration: none;
-	background: #0a0a0a;
-	border: 1px solid #101010;
 	height: 23px;
 	text-align: center;
+}
+
+header #filter_advanced #tabs .tab .switch .state.on {
+	color: #cc9503;
+	text-shadow: 0 0 7px rgba(221,163,7,.9);
+}
+
+header #filter_advanced #tabs .tab .switch .switch_button {
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	text-indent: -9999px;
+	display: block;
+	background: red;
+	border: 1px solid #101010;
+	height: 23px;
+	width: 28px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
 
-header #filter_advanced #tabs .tab .switch li.current a {
-	color: #cc9503;
-	text-shadow: 0 0 7px rgba(221,163,7,.9);
-	background: none;
-	border: 0;
-}
-
-header #filter_advanced #tabs #tab2, #filter_advanced #tabs #tab3  {
+header #filter_advanced #tabs .tab {
 	display: none;
 }
 
@@ -946,7 +954,7 @@ section article .preview .block_top .title_block .title {
 	float: left;
 }
 
-section article .preview .block_top .title_block .title h2 {
+section article.read .preview .block_top .title_block .title h2 {
 	font-size: 15px;
 	color: #dddddd;
 	padding-top: 6px;
@@ -1085,7 +1093,7 @@ section article .preview .desc h3 {
 	padding-bottom: 13px;
 }
 
-section article .preview .desc p textarea:disabled {
+section article .preview .desc textarea:disabled {
 	color: #8c8c8c;
 	font-size: 12px;
 }
@@ -1166,6 +1174,10 @@ section article .profiles ul li {
 	margin-bottom: 6px;
 }
 
+section article .profiles ul li.add-line {
+	display: none;
+}
+
 section article .profiles ul li .icon {
 	width: 52px;
 	display: table-cell;
@@ -1195,21 +1207,25 @@ section article .profiles ul li .icon span {
 	border-radius: 3px;
 }
 
-section article .profiles ul li > p {
+section article .profiles ul li .desc {
 	color: #8c8c8c;
 	width: 420px;
 	padding: 17px 0px 17px 20px;
 	display: table-cell;
 }
 
-section article .profiles ul li:hover > p {
+section article .profiles ul li:hover .desc {
 	color: #e1e1e1;
 }
 
-section article .profiles ul li > p textarea {
+section article .profiles ul li .desc textarea {
 	color: #8c8c8c;
 	height: 15px;
 	font-size: 12px;
+}
+
+section article .profiles ul li .edit {
+	display: none;
 }
 
 section article .profiles ul li .apply {
@@ -1275,6 +1291,10 @@ section article .profiles ul li.profileFound .applyFound {
 
 section article .manage {
 	margin-top: 15px;
+}
+
+section article .manage-edition {
+	display: none;
 }
 
 section article .manage p {
@@ -1367,7 +1387,7 @@ section article .more .manage .deleteProject {
 	background-image: linear-gradient(to bottom, #da2626, #701414);
 }
 
-section article .more .manage .cancelProject {
+section article .more .manage .cancelEditProject {
 	float: right;
 	margin-right: 6px;
 	padding: 7px 32px;

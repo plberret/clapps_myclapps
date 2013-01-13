@@ -49,6 +49,42 @@ zf.deleteFavorite = function($this) {
 	});
 };
 
+zf.editProject = function($this) {
+	$article=$this.parent().parent().parent().parent(); // best practise ????????
+	$article.removeClass('read').addClass('edition');
+	// change display 
+	$this.parent().hide();
+	$this.parent().siblings('.manage-edition').show();
+	// enable fields
+	$article.find("form input").removeAttr("disabled");
+	$article.find("form textarea").removeAttr("disabled");
+	// change profiles 
+	$article.find('.more .add-line').show();
+	$article.find('.more .desc').removeClass('desc').addClass('edit_desc');
+	$article.find('.more .apply').hide();
+	$article.find('.more .edit').show();
+};
+
+zf.updateProject = function($this) {
+	zf.cancelEditProject();
+};
+
+zf.cancelEditProject = function($this) {
+	$article=$this.parent().parent().parent().parent(); // best practise ????????
+	$article.removeClass('edition').addClass('read');
+	// change display 
+	$this.parent().hide();
+	$this.parent().siblings('.manage-read').show();
+	// disable fields
+	$article.find("form input").attr("disabled", "disabled");
+	$article.find("form textarea").attr("disabled", "disabled");
+	// change profiles 
+	$article.find('.more .add-line').hide();
+	$article.find('.more .edit_desc').addClass('desc').removeClass('edit_desc');
+	$article.find('.more .edit').hide();
+	$article.find('.more .apply').show();
+};
+
 zf.deleteProject = function($this) {
 	$.ajax({
 		url: 'requests/deleteProject.php',
@@ -90,6 +126,22 @@ zf.autocomplete = function($this) {
 		var $this=$(this);
 		$this.parents('.autocompletion').siblings('.autocomplete').val($this.find('span').text())
 	});
+}
+
+zf.switchEvent = function($this) {
+	$(this).$this;
+	$current = $this.find('.current');
+	$current.removeClass('current');
+	if($current.hasClass('on')){
+		$this.find('.off').addClass('current');
+		var position = 1;
+	}else{
+		$this.find('.on').addClass('current');
+		var position = 32;
+	}
+	$this.find('.switch_button').stop(true,false).animate({
+		left: position,
+	}, 300, 'easeInOutQuint');
 }
 
 zf.seeMore = function($this) {
@@ -269,10 +321,7 @@ zf.initAddProject = function() {
 	zf.autocomplete(zf.$newProject);
 
 	// date picker 
-	$(function() {
-		zf.$newProject.find("#datepicker").datepicker();
-	});
-	
+	zf.$newProject.find( ".datepicker" ).datepicker();
 	
 	// UP NUMBER CHAR LEFT FOR TITLE
 	zf.$newProject.on('keyup','#title',function(event) {
@@ -553,7 +602,7 @@ zf.filter = function(){
 zf.customFields = function(){
 	
 	// custom select
-	zf.$page.find(".selector .button").click(function(){
+	zf.$page.find(".selector .value, .selector .button ").click(function(){
 		var $this = $(this);
 		$(this).parent().siblings('ul').show();
 		console.log($(this).parent().siblings('ul')[0])
@@ -566,27 +615,14 @@ zf.customFields = function(){
 		$this.parent('ul').siblings('input').attr('value', $this.attr('class'));
 	});
 	
-/*	$(this).parent().siblings('ul').find('li').click(function(){
-		//var contente = this.text();
-		$(this).parent().siblings('div').find('.value').html('contente' );
-		console.log($(this).text());
-		$(this).parent().hide();
-	}); */
-	
-	// custom autocompletion
-	
 };
 
 zf.init = function(){
-	$('body').addClass('has-js');
-	// console.log('ok');
 	
-	// Blank links
-	$('a[rel=external]').click(function(){
-		window.open($(this).attr('href'));
-		return false;
-	});
-
+	// init js
+	$('body').addClass('has-js');
+	
+	// variables
 	zf.$page = $('#page');
 	zf.$filtre = zf.$page.find('#block_filters');
 	zf.$projectsList = zf.$page.find('#projects');
@@ -594,15 +630,14 @@ zf.init = function(){
 	// init elements
 	zf.filter();
 	zf.customFields();
+	zf.autocomplete(zf.$page);
 	
-	$(window).click(function(event) {
-		event.preventDefault();
-		if (event.target.localName != 'span' && event.target.className!='button') {
-			$('#col2 .field .selector ul').hide()
-		};
-		$('.autocompletion').remove()
-	})
-
+	// Blank links
+	$('a[rel=external]').click(function(){
+		window.open($(this).attr('href'));
+		return false;
+	});
+	
 	// hide tuto
 	zf.$page.find("#block_button_tuto a").click(function(event) {
 		zf.$page.find("#tuto").hide();
@@ -620,10 +655,23 @@ zf.init = function(){
 //		$('header').css('top', $(this).scrollTop() + "px");
 //	});
 	
+	// close select
+	$(window).click(function(event) {
+		event.preventDefault();
+		if (event.target.localName != 'span' && event.target.className!='button') {
+			$('#col2 .field .selector ul').hide()
+		};
+		$('.autocompletion').remove()
+	})
+	
 	// date picker 
-	$(function() {
-		zf.$page.find( ".datepicker" ).datepicker();
-	});
+	zf.$page.find( ".datepicker" ).datepicker();
+	
+	// switch
+	zf.$page.find( ".switch" ).click(function(event) {
+		event.preventDefault();
+		zf.switchEvent($(this));
+	})
 	
 	// fancybox add project
 	zf.$page.find(".addProject a").fancybox({
@@ -642,53 +690,88 @@ zf.init = function(){
 			overlay : {closeClick: false}
 		}
 	});
-
+	
+	// init page tab of lifter
+	zf.$filtre.find('.nav a').click(function(event) {
+		$this=$(this);
+		var link= $this.attr('href');
+		console.log(link);
+		$this.parents('#filter_advanced').find('.tab.active').removeClass('active').hide();
+		$this.parents('#filter_advanced').find(link).addClass('active').fadeIn(500);
+		
+	})
+	
+	// filter project
 	zf.$filtre.on('submit', function(event){
 		event.preventDefault();
 		zf.getFilteredProjects($(this),event);
 	});
-
+	
+	// update projects list by distance
 	zf.$filtre.find('#distances li a').click(function(event) {
 		event.preventDefault();
 		zf.updateFilter($(this));
 	})
-
-	zf.autocomplete(zf.$page);
-
+	
+	// add favorite
+	zf.$page.on('click','.favorite_link',function(event) {
+		event.preventDefault();
+		zf.addFavorite($(this));
+	});
+	
+	// remove from favorite
+	zf.$page.on('click','.unfavorite_link',function(event) {
+		event.preventDefault();
+		zf.deleteFavorite($(this));
+	});
+	
+	// change display to edit project
+	zf.$page.on('click','.editProject',function(event) {
+		event.preventDefault();
+		zf.editProject($(this));
+	});
+	
+	// update content of project
+	zf.$page.on('submit','.project form',function(event) {
+		alert('oui'); 
+		event.preventDefault();
+		zf.updateProject($(this));
+	});
+	
+	// cancel display of editing project
+	zf.$page.on('click','.cancelEditProject',function(event) {
+		event.preventDefault();
+		zf.cancelEditProject($(this));
+	});
+	
+	// delete project
+	zf.$page.on('click','.deleteProject',function(event) {
+		event.preventDefault();
+		zf.deleteProject($(this));
+	});
+	
+	// see mine projects
 	zf.$page.on('click','#see-mine',function(event) { // a protéger avec un .queue() (spamclick)
 		event.preventDefault();
 		var $this=$(this);
 		$this.attr('id','see-all').html('Voir toutes les annonces');
 		zf.seeMine($this,event);
 	});
-
-	zf.$page.on('click','.favorite_link',function(event) {
-		event.preventDefault();
-		zf.addFavorite($(this));
-	});
-
-	zf.$page.on('click','.deleteProject',function(event) {
-		event.preventDefault();
-		zf.deleteProject($(this));
-	});
-
-	zf.$page.on('click','.unfavorite_link',function(event) {
-		event.preventDefault();
-		zf.deleteFavorite($(this));
-	});
 	
-	zf.$projectsList.on('click','.see-more',function(event) {
-		event.preventDefault();
-		zf.seeMore($(this));
-	});
-
+	// see all projects
 	zf.$page.on('click','#see-all',function(event) {
 		event.preventDefault();
 		var $this=$(this);
 		//$this.attr('id','see-mine');
 		zf.seeAll($this,event);
 	});
-
+	
+	// see more/less of project
+	zf.$projectsList.on('click','.see-more',function(event) {
+		event.preventDefault();
+		zf.seeMore($(this));
+	});
+	
 	// More projects
 	zf.projectCurrentPage = parseInt(zf.$projectsList.find('.btn-more-projects a').data('nav'),10) || 0;
 	zf.$projectsList.on('click','.btn-more-projects a',function(event) {

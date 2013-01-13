@@ -148,23 +148,19 @@
 							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
 							<div class="clearfix">
 								<input type="text" class="email" placeholder="votreadresse@email.com" />
-								<ul class="switch">
-									<li class="current">
-										<a href="#">ON</a>
-									</li>
-									<li>
-										<a href="#">OFF</a>
-									</li>
-								</ul>
+								<a href="javascript:void" class="switch">
+									<span class="on state">ON</span>
+									<span class="off state current">OFF</span>
+									<span class="switch_button">Change</span>
+								</a>
 							</div>
 						</div>
 						<div id="tab2" class="tab">
-							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
-							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
-							<input type="text" value="Oui" />
-							<a href="#">Annuler</a>
-							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
-							<input type="text" value="votreadresse@email.com" />
+							<a href="javascript:void" class="switch">
+								<span class="on state">ON</span>
+								<span class="off state current">OFF</span>
+								<span class="switch_button">Change</span>
+							</a>
 						</div>
 						<div id="tab3" class="tab">
 							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
@@ -180,100 +176,7 @@
 		</header>
 	
 		<section id="projects">
-		
-			<article class="project edition">
-				<form action="">
-					<div class="preview">
-						<div class="block_top clearfix">
-							<img src="" alt="photo profil" />
-							<div class="title_block">
-								<div class="title">
-									<input type="text" value="Projet en mode édition" />
-									<div>Ajouté par <span>Pierre-loic</span> le 07.10.12</div>
-								</div>
-								<div class="available clearfix">
-									<div class="actors profile">
-										<span>22</span>
-										<p>Il reste 22 poste(s) de comédien(nes) disponible(s)</p>
-									</div> 
-									<div class="technicians profile">
-										<span>18</span>
-										<p>Il reste 18 poste(s) de technicien(nes) disponible(s)</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="share clearfix">
-							<a href="#" class="share_link">Partager l'annonce</a>
-							<a href="#" class="favorite_link">Ajouter aux favoris</a>
-						</div>
-						<div class="desc">
-							<h3>Détails de l'annonce :</h3>
-							<textarea name="" id="" cols="30" rows="10">description</textarea>
-						</div>
-						<div class="bloc_see_more clearfix">
-							<div class="project_id">#3000</div>
-							<div class="date"><input type="text" value="28 décembre 2012" /></div>
-							<div class="place field"><input type="text" value="Paris 11e (75011)" class="autocomplete location"/></div>
-						</div>
-					</div><!-- fin preview -->
-					<div class="more">
-						<div class="profiles">
-							<ul>
-								<li class="clearfix">
-									<div class="icon iconActor"><span>52</span></div>
-									<div class="edit_desc"><textarea name="" placeholder="Description du profil">Un acteur Barbu, 1m85 bien monté acceptant les scènes de nudité. </textarea></div>
-									<div class="edit">
-										<div class="deleteButton">
-											<a href="#">Supprimer</a>
-											<div class="confirm">
-												<p>êtes-vous sûr de vouloir supprimer ?</p>
-												<div>
-													<a href="#">Oui</a>
-													<a href="#">Annuler</a>
-												</div>
-											</div>
-										</div>
-										<div class="quantity">
-											<a href="#" class="less_quantity number_control">-</a>
-											<input type="text" value="1" class="number" name="occurence[]"/>
-											<a href="#" class="more_quantity number_control">+</a>
-										</div>
-									</div>
-								</li>
-								<li class="clearfix profileFound">
-									<div class="icon iconActor"></div>
-									<p>Un acteur d'1m80</p>
-									<div class="apply applyFound">Candidat trouvé</div>
-								</li>
-								<li class="clearfix">
-									<div class="add_job add_field"><input type="text" placeholder="Métier recherché" /></div>
-									<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
-									<div class="edit">
-										<div class="line_control">
-											<a href="#" class="add-post">+</a>
-										</div>
-										<div class="quantity">
-											<a href="#" class="less_quantity number_control">-</a>
-											<input type="text" value="1" class="number" name="occurence[]"/>
-											<a href="#" class="more_quantity number_control">+</a>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div><!-- fin profile -->
-						<div class="manage clearfix">
-							<a href="poppin/deleteProject.php" class="fancybox.ajax deleteProject">Supprimer l'annonce</a>
-							<input type="submit" value="Valider" />
-							<a href="#" class="cancelProject">Annuler</a>
-						</div>
-					</div><!-- fin more -->
-					<div id="see_button">
-						<a href="#" class="see-more"><span>Voir</span> plus</a>
-					</div>
-				</form>
-			</article>
-			
+	
 			<?php
 				if (isset($_GET['id_project'])) :
 					$getProjects=getProject($_GET['id_project']);
@@ -286,56 +189,95 @@
 					$valideDate = getValideDate($project['create_date']); // check if project was revalidate, (don't use create_date but update_date)
 				?>
 					<article class="project read <?php if (isFavorite($project,$user_fb)): ?> favorite<?php endif ?>">
-						<div class="preview">
-							<div class="block_top clearfix">
-								<img src="<?php echo $project['img_creator'] ?>" alt="photo profil" />
-								<div class="title_block">
-									<div class="title">
-										<h2><input type="text" disabled="disabled" value="<?php echo $project['title']; ?>"></h2>
-										<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
-									</div>
-									<div class="available clearfix">
-										<?php $activeActors=getActiveActors($project['id_project']); ?>
-										<?php $activeTechnicians=getActiveTechnicians($project['id_project']); ?>
-										<div class="actors profile">
-											<span><?php echo getOccurences($activeActors); ?></span>
-											<p>Il reste <?php echo getOccurences($activeActors); ?> poste(s) de comédien(nes) disponible(s)</p>
-										</div> 
-										<div class="technicians profile">
-											<span><?php echo getOccurences($activeTechnicians); ?></span>
-											<p>Il reste <?php echo getOccurences($activeTechnicians); ?> poste(s) de technicien(nes) disponible(s)</p>
+						<form action="">
+							<div class="preview">
+								<div class="block_top clearfix">
+									<img src="<?php echo $project['img_creator'] ?>" alt="photo profil" />
+									<div class="title_block">
+										<div class="title">
+											<h2><input type="text" disabled="disabled" value="<?php echo $project['title']; ?>"></h2>
+											<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
+										</div>
+										<div class="available clearfix">
+											<?php $activeActors=getActiveActors($project['id_project']); ?>
+											<?php $activeTechnicians=getActiveTechnicians($project['id_project']); ?>
+											<div class="actors profile">
+												<span><?php echo getOccurences($activeActors); ?></span>
+												<p>Il reste <?php echo getOccurences($activeActors); ?> poste(s) de comédien(nes) disponible(s)</p>
+											</div> 
+											<div class="technicians profile">
+												<span><?php echo getOccurences($activeTechnicians); ?></span>
+												<p>Il reste <?php echo getOccurences($activeTechnicians); ?> poste(s) de technicien(nes) disponible(s)</p>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 							
-							<div class="share clearfix">
-								<a href="#" class="share_link">Partager l'annonce</a>
-								<?php if (!isAdmin($project)): ?>
-									<?php if (isFavorite($project,$user_fb)): ?>
-										<a href="#" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
-									<?php else: ?>
-										<a href="#" data-id="<?php echo $project['id_project'] ?>" class="favorite_link">Ajouter aux favoris</a>
+								<div class="share clearfix">
+									<a href="#" class="share_link">Partager l'annonce</a>
+									<?php if (!isAdmin($project)): ?>
+										<?php if (isFavorite($project,$user_fb)): ?>
+											<a href="#" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
+										<?php else: ?>
+											<a href="#" data-id="<?php echo $project['id_project'] ?>" class="favorite_link">Ajouter aux favoris</a>
+										<?php endif ?>
 									<?php endif ?>
-								<?php endif ?>
-							</div>
-							<div class="desc">
-								<h3>Détails de l'annonce :</h3>
-								<p><textarea disabled="disabled"><?php echo $project['description']; ?></textarea></p>
-							</div>
-							<div class="bloc_see_more clearfix">
-								<div class="project_id">#<?php echo $project['id_project']; ?></div>
-								<div class="date"><input type="text" disabled="disabled" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
-								<div class="place"><input type="text" disabled="disabled" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
-							</div>
-						</div><!-- fin preview -->
-						<div class="more">
-							<div class="profiles">
-								<ul>
-									<?php $getProfiles=getProfiles($project['id_project']); ?>
-									<?php $getProfilesFound=getProfilesFound($project['id_project']); ?>
-									<?php foreach ($getProfiles as $profile) { ?>
-										<li class="clearfix">
+								</div>
+								<div class="desc">
+									<h3>Détails de l'annonce :</h3>
+									<textarea disabled="disabled"><?php echo $project['description']; ?></textarea>
+								</div>
+								<div class="bloc_see_more clearfix">
+									<div class="project_id">#<?php echo $project['id_project']; ?></div>
+									<div class="date"><input type="text" disabled="disabled" class="datepicker" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
+									<div class="place"><input type="text" disabled="disabled" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
+								</div>
+							</div><!-- fin preview -->
+							<div class="more">
+								<div class="profiles">
+									<ul>
+										<?php $getProfiles=getProfiles($project['id_project']); ?>
+										<?php $getProfilesFound=getProfilesFound($project['id_project']); ?>
+										<?php foreach ($getProfiles as $profile) { ?>
+											<li class="clearfix">
+												<?php 
+													if($profile['domain']==1){
+														$profileDomain="iconActor"; 
+													}elseif($profile['domain']==2){
+														$profileDomain="iconTechnician"; 
+													} 
+												?>
+												<div class="icon <?php echo $profileDomain; ?>">
+													<span><?php echo $profile['occurence']; ?></span>
+												</div>
+												<div class="desc"><textarea disabled="disabled"><?php echo $profile['person']; ?></textarea></div>
+												<div class="apply">
+													<?php if (!isAdmin($project,$user_fb)): ?>
+														<a href="#">Postuler</a>
+													<?php else: ?>
+														<a href="#">J'ai trouvé</a>
+													<?php endif; ?>
+												</div>
+												<div class="edit">
+													<div class="deleteButton">
+														<a href="#">Supprimer</a>
+														<div class="confirm">
+															<p>êtes-vous sûr de vouloir supprimer ?</p>
+															<div>
+																<a href="#">Oui</a>
+																<a href="#">Annuler</a>
+															</div>
+														</div>
+													</div>
+													<div class="quantity">
+														<a href="#" class="less_quantity number_control">-</a>
+														<input type="text" value="1" class="number" name="occurence[]"/>
+														<a href="#" class="more_quantity number_control">+</a>
+													</div>
+												</div>
+											</li>
+										<?php } ?>
+										<?php foreach ($getProfilesFound as $profile) { ?>
 											<?php 
 												if($profile['domain']==1){
 													$profileDomain="iconActor"; 
@@ -343,54 +285,53 @@
 													$profileDomain="iconTechnician"; 
 												} 
 											?>
-											<div class="icon <?php echo $profileDomain; ?>">
-												<span><?php echo $profile['occurence']; ?></span>
-											</div>
-											<p><textarea disabled="disabled"><?php echo $profile['person']; ?></textarea></p>
-											<div class="apply">
-												<?php if (!isAdmin($project,$user_fb)): ?>
-													<a href="#">Postuler</a>
-												<?php else: ?>
-													<a href="#">J'ai trouvé</a>
-												<?php endif; ?>
+											<li class="clearfix profileFound">
+												<div class="icon <?php echo $profileDomain; ?>">
+												</div>
+												<div class="desc"><?php echo $profile['person']; ?></div>
+											<div class="apply applyFound">Candidat trouvé</div>
+											</li>
+										<?php } ?>
+										<li class="add-line clearfix">
+											<div class="add_job add_field"><input type="text" placeholder="Métier recherché" /></div>
+											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
+											<div class="edit">
+												<div class="line_control">
+													<a href="#" class="add-post">+</a>
+												</div>
+												<div class="quantity">
+													<a href="#" class="less_quantity number_control">-</a>
+													<input type="text" value="1" class="number" name="occurence[]"/>
+													<a href="#" class="more_quantity number_control">+</a>
+												</div>
 											</div>
 										</li>
-									<?php } ?>
-									<?php foreach ($getProfilesFound as $profile) { ?>
-										<?php 
-											if($profile['domain']==1){
-												$profileDomain="iconActor"; 
-											}elseif($profile['domain']==2){
-												$profileDomain="iconTechnician"; 
-											} 
-										?>
-										<li class="clearfix profileFound">
-											<div class="icon <?php echo $profileDomain; ?>">
-											</div>
-											<p><?php echo $profile['person']; ?></p>
-										<div class="apply applyFound">Candidat trouvé</div>
-										</li>
-									<?php } ?>
-								</ul>
-							</div><!-- fin profile -->
-							<?php if (isAdmin($project,$user_fb)): ?>
-								<div class="manage clearfix">
-									<p>Validité de l'annonce :
-										<?php if ($valideDate>0): ?>
-											<span class="valid"><?php echo $valideDate; if ($valideDate>1): ?> jours restants<?php else: ?> jour restant<?php endif ?></span>
-										<?php else: ?>
-											<span class="finish">Désactivée</span>
-										<?php endif ?>
-									</p>
-									<?php if ($valideDate<0): ?><a href="#" class="extendProject">Réactiver l'annonce</a><?php endif; ?>
-									<?php if (($valideDate>0)&&($valideDate<3)): ?><a href="#" class="extendProject">Prolonger l'annonce</a><?php endif; ?>
-									<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
-								</div>
-							<?php endif ?>
-						</div><!-- fin more -->
-						<div id="see_button">
-							<a href="#" class="see-more"><span>Voir</span> plus</a>
-						</div>
+									</ul>
+								</div><!-- fin profile -->
+								<?php if (isAdmin($project,$user_fb)): ?>
+									<div class="manage manage-read clearfix">
+										<p>Validité de l'annonce :
+											<?php if ($valideDate>0): ?>
+												<span class="valid"><?php echo $valideDate; if ($valideDate>1): ?> jours restants<?php else: ?> jour restant<?php endif ?></span>
+											<?php else: ?>
+												<span class="finish">Désactivée</span>
+											<?php endif ?>
+										</p>
+										<?php if ($valideDate<0): ?><a href="#" class="extendProject">Réactiver l'annonce</a><?php endif; ?>
+										<?php if (($valideDate>0)&&($valideDate<3)): ?><a href="#" class="extendProject">Prolonger l'annonce</a><?php endif; ?>
+										<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
+									</div>
+									<div class="manage manage-edition clearfix">
+										<a href="poppin/deleteProject.php" class="fancybox.ajax deleteProject">Supprimer l'annonce</a>
+										<input type="submit" value="Valider" />
+										<a href="#" class="cancelEditProject">Annuler</a>
+									</div>
+								<?php endif ?>
+							</div><!-- fin more -->
+							<div id="see_button">
+								<a href="#" class="see-more"><span>Voir</span> plus</a>
+							</div>
+						</form>
 					</article>
 				<?php endforeach; ?>
 				
