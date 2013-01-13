@@ -431,7 +431,7 @@ header #filter #col1 #refresh_button:before {
 	position: absolute;
 	top: 0;
 	left: 33px;
-	z-index: 200;
+	z-index: 50;
 	display: block;
 	width: 0;
 	height: 33px;
@@ -622,15 +622,15 @@ header #filter_advanced #tabs {
 }
 
 header #filter_advanced #tabs .tab {
-	padding-top: 30px;
 	display: none;
+	padding-top: 43px;
 }
 
 header #filter_advanced #tabs .tab p {
 	font-size: 12px;
 	color: #616161;
 	line-height: 16px;
-	padding-left: 20px;
+	text-align: center;
 }
 
 header #filter_advanced #tabs .tab p strong {
@@ -643,8 +643,9 @@ header #filter_advanced #tabs .tab .choice {
 	width: 172px;
 }
 
-header #filter_advanced #tabs .tab .choice input {
+header #filter_advanced #tabs .tab .choice .valid_button {
 	float: left;
+	display: block;
 	cursor: pointer;
 	border: 0;
 	height: 24px;
@@ -746,6 +747,18 @@ header #filter_advanced #tabs .tab .notifs .switch .switch_button {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
+
+/* tab 3 */
+
+header #filter_advanced #tabs #tab1 {
+	padding-top: 30px;
+}
+
+header #filter_advanced #tabs #tab1 p {
+	padding-left: 20px;
+	text-align: left;
+}
+
 
 /* //////////// INFO HELPER //////////// */
 

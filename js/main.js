@@ -685,7 +685,7 @@ zf.init = function(){
 	})
 	
 	// date picker 
-	zf.$page.find( ".datepicker" ).datepicker();
+	zf.$page.find(".datepicker").datepicker();
 	
 	// switch
 	zf.$page.find( ".switch" ).click(function(event) {
