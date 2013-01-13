@@ -151,10 +151,13 @@ header, footer, section, article, nav {
 
 .autocompletion {
 	position: absolute;
-	z-index:50;
+	z-index:500;
 	background: #131313;
 	width: 232px;
 	margin-top: 1px;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.75);
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,.75);
+	box-shadow: 0 1px 3px rgba(0,0,0,.75);
 }
 
 .autocompletion li a {
@@ -620,6 +623,7 @@ header #filter_advanced #tabs {
 
 header #filter_advanced #tabs .tab {
 	padding-top: 30px;
+	display: none;
 }
 
 header #filter_advanced #tabs .tab p {
@@ -683,26 +687,21 @@ header #filter_advanced #tabs .tab .choice a {
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
 }
 
-header #filter_advanced #tabs .tab .email {
-	margin: 5px 0 0 20px;
+header #filter_advanced #tabs .tab .notifs p {
 	float: left;
+	color: #b3afa4;
 	font-size: 12px;
-	color: #999999;
-	width: 230px;
-	height: 17px;
-	line-height: 17px;
-	border: 0;
-	padding: 5px 10px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background-color: #d7d7d7;
+	padding-top: 12px;
 }
 
-header #filter_advanced #tabs .tab .switch {
+header #filter_advanced #tabs .tab .notifs p span {
+	font-weight: bold;
+}
+
+header #filter_advanced #tabs .tab .notifs .switch {
 	display: block;
 	position: relative;
-	margin: 5px 18px 0 0;
+	margin: 5px 30px 0 0;
 	padding: 1px 0 0 1px;
 	float: right;
 	width: 62px;
@@ -715,7 +714,7 @@ header #filter_advanced #tabs .tab .switch {
 	border: 1px solid #101010;
 }
 
-header #filter_advanced #tabs .tab .switch .state {
+header #filter_advanced #tabs .tab .notifs .switch .state {
 	float: left;
 	margin-right: 1px;
 	width: 30px;
@@ -728,28 +727,24 @@ header #filter_advanced #tabs .tab .switch .state {
 	text-align: center;
 }
 
-header #filter_advanced #tabs .tab .switch .state.on {
+header #filter_advanced #tabs .tab .notifs .switch .state.on {
 	color: #cc9503;
 	text-shadow: 0 0 7px rgba(221,163,7,.9);
 }
 
-header #filter_advanced #tabs .tab .switch .switch_button {
+header #filter_advanced #tabs .tab .notifs .switch .switch_button {
 	position: absolute;
 	top: 1px;
-	left: 1px;
+	left: 32px;
 	text-indent: -9999px;
 	display: block;
-	background: red;
-	border: 1px solid #101010;
+	background: #1c1c1c;
+	border: 1px solid #282828;
 	height: 23px;
 	width: 28px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-}
-
-header #filter_advanced #tabs .tab {
-	display: none;
 }
 
 /* //////////// INFO HELPER //////////// */
@@ -861,7 +856,7 @@ header #block_current_filter #notif_email p {
 	margin-bottom: 10px;
 }
 
-header #block_current_filter #notif_email input {
+header #block_current_filter #notif_email input[type=text] {
 	float: left;
 	width: 170px;
 	height: 17px;
@@ -876,47 +871,29 @@ header #block_current_filter #notif_email input {
 	border-radius: 3px;
 }
 
-header #block_current_filter #notif_email .switch {
-	float: left;
-	padding: 1px 0 0 1px;
-	width: 62px;
-	height: 26px;
-	line-height: 27px;
-	background: #080808;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #1a1a1a;
-}
-
-header #block_current_filter #notif_email .switch li {
-	float: left;
-	margin-right: 1px;
-	width: 30px;
-}
-
-header #block_current_filter #notif_email .switch li a {
-	display: block;
-	color: #373737;
-	font-size: 9px;
-	font-weight: bold;
-	text-decoration: none;
-	background: #0f0f0f;
-	border: 1px solid #1a1a1a;
-	height: 23px;
-	text-align: center;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
-header #block_current_filter #notif_email .switch li.current a {
-	color: #cc9503;
-	text-shadow: 0 0 7px rgba(221,163,7,.9);
-	background: none;
+header #block_current_filter #notif_email input[type=submit] {
+	cursor: pointer;
 	border: 0;
+	color: #010101;
+	font-weight: bold;
+	font-size: 11px;
+	text-shadow: 0 1px #e8af15;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #fff;
+	line-height: 17px;
+	padding: 5px;
+	margin: 0;
+	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
+	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
+	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
+	background-image: -webkit-linear-gradient(top, #f4b50b, #b80);
+	background-image: -moz-linear-gradient(top, #f4b50b, #b80);
+	background-image: -o-linear-gradient(top, #f4b50b, #b80);
+	background-image: -ms-linear-gradient(top, #f4b50b, #b80);
+	background-image: linear-gradient(to bottom, #f4b50b, #b80);
 }
-
 
 
 /* //////////// CONTENT //////////// */
@@ -1138,7 +1115,11 @@ section article .preview .share a.share_link {
 }
 
 section article .preview .share a.favorite_link {
-	background: no-repeat url(../images/logo_add_favorites.png);
+	background: no-repeat url(../images/logo_add_favorite.png);
+}
+
+section article .preview .share a.unfavorite_link {
+	background: no-repeat url(../images/logo_remove_favorite.png);
 }
 
 section article .preview .desc {

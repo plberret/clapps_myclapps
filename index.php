@@ -52,27 +52,22 @@
 					<p>Vous recherchez <span class="time">dès que possible</span> un poste<span class="work"> d'un ingénieur du son</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
 				</div>
 				<div id="notif_email">
-					<p>M'avertir des nouvelles annonces par email</p>
+					<p>Être tenu au courant des nouveautés de Clapps</p>
 					<form action="" class="clearfix">
 						<input type="text" placeholder="votreadresse@email.com" />
-						<ul class="switch">
-							<li><a href="#">ON</a></li>
-						</ul>
-						<input type="hidden" name="notif" value="" />
+						<input type="submit" value="Je reste informé" />
 					</form>
 				</div>
-			</div><div id="block_current_filter" class="clearfix none">
+			</div>
+			<div id="block_current_filter" class="clearfix none">
 				<div id="current_filter">
 					<p>Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
 				</div>
 				<div id="notif_email">
-					<p>M'avertir des nouvelles annonces par email</p>
+					<p>Être tenu au courant des nouveautés de Clapps</p>
 					<form action="" class="clearfix">
 						<input type="text" placeholder="votreadresse@email.com" />
-						<ul class="switch">
-							<li><a href="#">ON</a></li>
-						</ul>
-						<input type="hidden" name="notif" value="" />
+						<input type="submit" value="Je reste informé" />
 					</form>
 				</div>
 			</div>
@@ -156,12 +151,11 @@
 								<input type="submit" value="Oui" class="valid_button" />
 								<a href="#" class="close">Annuler</a>
 							</div>
-							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
-							<div class="clearfix">
-								<input type="text" class="email" placeholder="votreadresse@email.com" />
+							<div class="notifs clearfix">
+								<p><span>Activation</span> des notifications Facebook</p>
 								<a href="javascript:void" class="switch">
-									<span class="on state">ON</span>
-									<span class="off state current">OFF</span>
+									<span class="on state current">ON</span>
+									<span class="off state ">OFF</span>
 									<span class="switch_button">Change</span>
 								</a>
 							</div>
