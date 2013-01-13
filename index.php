@@ -61,6 +61,20 @@
 						<input type="hidden" name="notif" value="" />
 					</form>
 				</div>
+			</div><div id="block_current_filter" class="clearfix none">
+				<div id="current_filter">
+					<p>Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
+				</div>
+				<div id="notif_email">
+					<p>M'avertir des nouvelles annonces par email</p>
+					<form action="" class="clearfix">
+						<input type="text" placeholder="votreadresse@email.com" />
+						<ul class="switch">
+							<li><a href="#">ON</a></li>
+						</ul>
+						<input type="hidden" name="notif" value="" />
+					</form>
+				</div>
 			</div>
 			<form id="block_filters" action="">
 				<div id="filter" class="clearfix">
@@ -95,7 +109,7 @@
 					<div id="col3" class="col">
 						<div class="field">
 							<label for="location">Lieux</label>
-							<input type="text" name="location" id="location" class="location autocomplete" autocomplete="off" placeholder="Ville, département ou code postal" />
+							<input type="text" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" />
 							<input type="hidden" name="distance" value="100" id="distance" />
 						</div>
 						<ul id="distances" class="clearfix">

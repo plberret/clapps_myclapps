@@ -165,11 +165,11 @@ header, footer, section, article, nav {
 	padding: 11px;
 }
 
-.autocompletion li:hover {
+.autocompletion li:hover, .autocompletion li.current {
 	background: #cc9503;
 }
 
-.autocompletion li:hover a {
+.autocompletion li:hover a, .autocompletion li.current a {
 	color: #010101;
 }
 
@@ -805,6 +805,10 @@ header #block_filters .help_info li:after {
 
 /* //////////// BLOC INFORMATION FILTER //////////// */
 
+header #block_current_filter.none {
+	display: block;
+}
+
 header #block_current_filter {
 	display: none;
 	background: #111111;
@@ -823,6 +827,13 @@ header #block_current_filter #current_filter {
 	border-right: 1px solid #0a0a0a;
 	padding: 28px 18px 28px 68px;
 }
+header #block_current_filter.none #current_filter {
+	float: left;
+	width: 384px;
+	height: 50px;
+	border-right: 1px solid #0a0a0a;
+	padding: 18px 18px 16px 68px;
+}
 
 header #block_current_filter #current_filter p {
 	font-size: 13px;
@@ -831,6 +842,9 @@ header #block_current_filter #current_filter p {
 
 header #block_current_filter #current_filter p span:not(.opt) {
 	color: #e3a708;
+}
+header #block_current_filter #current_filter p span.open_filtre {
+	cursor: pointer;
 }
 
 header #block_current_filter #notif_email {

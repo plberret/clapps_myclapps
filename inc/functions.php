@@ -248,7 +248,7 @@
 		echo json_encode($result);
 	}
 
-	 function getAutocompletionJsonCities($ville){
+	 function getAutocompletionJsonCities($ville,$restricted = false){
 
 	 	global $baseDD;
 
@@ -265,25 +265,37 @@
 
 	 	} else {
 
-	 		$sql = 'SELECT cp, nom, id_ville, "ville" AS `type` FROM villes WHERE nom LIKE :ville OR nom LIKE :ville2 ORDER BY nom ASC';
+			$sql2 = 'SELECT nom_departement AS nom, code AS cp, id_departement AS id_ville, "dpt" AS `type`  FROM departements WHERE nom_departement LIKE :dpt OR code LIKE :dpt OR nom_departement LIKE :dpt2 ORDER BY nom_departement ASC';
+			$array2 = array(':dpt' => '%'.$ville.'%',':dpt2' => '%'.str_replace('-',' ',$ville).'%');
+			$R2 = $baseDD->prepare($sql2);
+			$R2->setFetchMode(PDO::FETCH_ASSOC);
+			if($R2->execute($array2)){
+				$result=$R2->fetchAll();
+				// $depts=$R2->fetchAll();
+				// foreach ($depts as $dpt) {
+				// 	$dpt['type']='dpt';
+				// 	array_push($result,$dpt);
+				// }
+			}
+
+	 		$sql = 'SELECT cp, nom, id_ville, indice FROM villes WHERE';
+			if ($restricted) {
+				$sql.=' restricted != 1';
+			} else {
+				$sql.=' restricted != 2';
+			}
+	 		$sql.=' AND (nom LIKE :ville OR nom LIKE :ville2) ORDER BY indice DESC';
+	 		// echo $sql;
 		 	//$sql = 'SELECT v.cp, v.nom, v.id_ville, d.nom_departement, r.nom_region FROM villes AS v, departements AS d, regions AS r WHERE v.nom LIKE :ville OR v.nom LIKE :ville2 OR d.nom_departement LIKE :dpt OR r.nom_region LIKE :region GROUP BY nom ORDER BY nom ASC';
 			// $array = array('ville' => $ville.'%','ville2' => str_replace(' ','-',$ville).'%', 'dpt' => $ville.'%', 'region' => $ville.'%');
 			$array = array(':ville' => $ville.'%',':ville2' => str_replace(' ','-',$ville).'%');
 			$R1 = $baseDD->prepare($sql);
 			$R1->setFetchMode(PDO::FETCH_ASSOC);
 			if($R1->execute($array)){
-				$result=$R1->fetchAll();
-			}
-
-			$sql2 = 'SELECT nom_departement AS nom, code AS cp, id_departement AS id_ville FROM departements WHERE nom_departement LIKE :dpt OR code LIKE :dpt OR nom_departement LIKE :dpt2 ORDER BY nom_departement ASC';
-			$array2 = array(':dpt' => '%'.$ville.'%',':dpt2' => '%'.str_replace('-',' ',$ville).'%');
-			$R2 = $baseDD->prepare($sql2);
-			$R2->setFetchMode(PDO::FETCH_ASSOC);
-			if($R2->execute($array2)){
-				$depts=$R2->fetchAll();
-				foreach ($depts as $dpt) {
-					$dpt['type']='dpt';
-					array_push($result,$dpt);
+				$villes=$R1->fetchAll();
+				foreach ($villes as $ville) {
+					$ville['type']='ville';
+					array_push($result,$ville);
 				}
 			}
 
@@ -295,7 +307,7 @@
 				$regions=$R3->fetchAll();
 				foreach ($regions as $reg) {
 					$reg['type']='reg';
-					//array_push($result,$reg);
+					array_push($result,$reg);
 				}
 			}
 
