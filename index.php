@@ -170,19 +170,18 @@
 							</div>
 						</div>
 						<div id="tab2" class="tab">
-							<a href="javascript:void" class="switch">
-								<span class="on state">ON</span>
-								<span class="off state current">OFF</span>
-								<span class="switch_button">Change</span>
-							</a>
+							<p><strong>Êtes-vous sûr de vouloir charger votre filtre ?</strong></p>
+							<div class="choice clearfix">
+								<a href="#" class="valid_button">Oui</a>
+								<a href="#" class="close">Annuler</a>
+							</div>
 						</div>
 						<div id="tab3" class="tab">
-							<p>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</p>
-							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
-							<input type="text" value="Oui" />
-							<a href="#">Annuler</a>
-							<p>Ne manquez aucunes annonces, activez les notifications emails</p>
-							<input type="text" value="votreadresse@email.com" />
+							<p><strong>Êtes-vous sûr de vouloir supprimer votre filtre ?</strong></p>
+							<div class="choice clearfix">
+								<a href="#" class="valid_button">Oui</a>
+								<a href="#" class="close">Annuler</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -244,7 +243,7 @@
 								<div class="bloc_see_more clearfix">
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
 									<div class="date"><input type="text" disabled="disabled" class="datepicker" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
-									<div class="place"><input type="text" disabled="disabled" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
+									<div class="place"><input type="text" disabled="disabled" id="location" name="location" class="location autocomplete" autocomplete="off" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
 								</div>
 							</div><!-- fin preview -->
 							<div class="more">
@@ -410,8 +409,9 @@
 	<div id="fb-root"></div>
 	
 	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-	 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<link rel="stylesheet" href="css/jquery-ui.css" />
+	<link rel="stylesheet" href="css/jquery.ui.theme.css" />
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>

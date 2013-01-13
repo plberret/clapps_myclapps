@@ -157,15 +157,12 @@ header, footer, section, article, nav {
 	margin-top: 1px;
 }
 
-.autocompletion li {
-	padding: 11px;
-	cursor: pointer;
-}
-
 .autocompletion li a {
 	color: #c0c0c0;
 	text-decoration: none;
 	font-size: 12px;
+	display: block;
+	padding: 11px;
 }
 
 .autocompletion li:hover, .autocompletion li.current {
