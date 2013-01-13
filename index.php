@@ -124,17 +124,14 @@
 				</div>
 				<div id="filter_advanced" class="clearfix">
 					<ul class="nav">
-						<li class="save current">
+						<li class="save">
 							<a href="#tab1"><span>Sauvegarder les filtres</span></a>
-						<!--	<span class="bubble">Sauvegarder les filtres</span> -->
 						</li>
 						<li class="load">
-							<a href="#tab2"><span>Charger mes filtres</span></a>
-						<!--	<span class="bubble">Charger mes filtres</span> -->
+							<a href="#tab2" ><span>Charger mes filtres</span></a>
 						</li>
 						<li class="delete">
-							<a href="#tab3"><span>Supprimer mes filtres</span></a>
-						<!--	<span class="bubble">Supprimer mes filtres</span> -->
+							<a href="#tab3" ><span>Supprimer mes filtres</span></a>
 						</li>
 					</ul>
 					<div id="tabs">
@@ -171,6 +168,11 @@
 						</div>
 					</div>
 				</div>
+				<ul class="help_info">
+					<li class="save">Sauvegarder les filtres</li>
+					<li class="load">Charger mes filtres</li>
+					<li class="delete">Supprimer mes filtres</li>
+				</ul>
 			</form>
 		</header>
 	

@@ -534,7 +534,6 @@ zf.filter = function(){
 		};
 	})
 	
-
 	zf.$page.find('#searchButton').click(function(event){
 		event.preventDefault();
 		if(zf.filterOpen==true){
@@ -563,22 +562,28 @@ zf.filter = function(){
 	
 	advancedFilter.find('.nav a').click(function(event){
 		event.preventDefault();
-		advancedFilter.find('.nav a').parent().removeClass('current');
-		$(this).parent().addClass('current');
+		// hide help info 
+		$filter.find('.help_info').hide();
+		// animation
 		advancedFilter.stop().animate({
 			width: '590',
 		}, 600, 'easeInOutExpo', function() {
+			zf.advancedFilterOpen= true;
 			// Animation complete.
 			//alert('oui'); 
 		});
 		// return false;
 	});
+	
 	advancedFilter.find('a.close').click(function(event){
 		event.preventDefault();
-		advancedFilter.find('.nav a').parent().removeClass('current');
+		// hide help info 
+		$filter.find('.help_info').show();
+		// animation
 		advancedFilter.stop().animate({
 			width: '50',
 		}, 600, 'easeInOutExpo', function() {
+			zf.advancedFilterOpen= false;
 			// Animation complete.
 			//alert('oui'); 
 		});
@@ -587,10 +592,13 @@ zf.filter = function(){
 	
 	advancedFilter.find('input.valid_button').click(function(event){ // a fix pour enregistrer le filtre
 		event.stopPropagation();
-		advancedFilter.find('.nav a').parent().removeClass('current');
+		// hide help info 
+		$filter.find('.help_info').show();
+		// animation
 		advancedFilter.stop().animate({
 			width: '50',
 		}, 600, 'easeInOutExpo', function() {
+			zf.advancedFilterOpen= false;
 			// Animation complete.
 			//alert('oui'); 
 		});
@@ -673,6 +681,16 @@ zf.init = function(){
 		zf.switchEvent($(this));
 	})
 	
+	// show help filter
+	zf.$page.find("#filter_advanced .nav a").hover(function(){
+		if(zf.advancedFilterOpen==false){
+			$actif = $(this).parent().attr('class');
+			zf.$page.find("#block_filters .help_info ."+$actif).show();
+		}
+	},function(){
+	    zf.$page.find("#block_filters .help_info li").hide();
+	});
+	
 	// fancybox add project
 	zf.$page.find(".addProject a").fancybox({
 		afterShow: zf.initAddProject,
@@ -691,14 +709,14 @@ zf.init = function(){
 		}
 	});
 	
-	// init page tab of lifter
+	// init page tab of filter
 	zf.$filtre.find('.nav a').click(function(event) {
 		$this=$(this);
+		zf.$filtre.find('.nav a').removeClass('current');
+		$this.addClass('current');
 		var link= $this.attr('href');
-		console.log(link);
 		$this.parents('#filter_advanced').find('.tab.active').removeClass('active').hide();
 		$this.parents('#filter_advanced').find(link).addClass('active').fadeIn(500);
-		
 	})
 	
 	// filter project

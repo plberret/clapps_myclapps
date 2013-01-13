@@ -539,7 +539,6 @@ header #filter_advanced {
 	top: 0px;
 	right: 0px;
 	width: 50px;
-	/*width: 590px;*/
 	height: 190px;
 	border-bottom: 1px solid #1b1b1b;
 	background: #0a0a0a;
@@ -593,7 +592,7 @@ header #filter_advanced .nav li:last-child a span {
 	border-bottom: 0;
 }
 
-header #filter_advanced .nav li.current a,
+header #filter_advanced .nav li a.current,
 header #filter_advanced .nav li:hover a {
 	color: #e1a508;
 }
@@ -751,6 +750,56 @@ header #filter_advanced #tabs .tab .switch .switch_button {
 
 header #filter_advanced #tabs .tab {
 	display: none;
+}
+
+/* //////////// INFO HELPER //////////// */
+
+header #block_filters .help_info {
+	position: absolute;
+	z-index: 200;
+	top: 13px;
+	right: 43px;
+	text-align: center;
+}
+
+header #block_filters .help_info li {
+	position: absolute;
+	display: none;
+	right: 0;
+	width: 140px;
+	height: 19px;
+	line-height: 19px;
+	font-size: 11px;
+	color: #d1d1d1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #1d1d1d;
+	-webkit-box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
+	-moz-box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
+	box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
+}
+
+header #block_filters .help_info li.save {
+	top: 19px;
+}
+
+header #block_filters .help_info li.load {
+	top: 52px;
+}
+
+header #block_filters .help_info li.delete {
+	top: 87px;
+}
+
+header #block_filters .help_info li:after {
+	position: absolute;
+	content:"";
+	top: 5px;
+	right: -6px;
+	border-bottom: 5px solid transparent;
+	border-top: 5px solid transparent;
+	border-left: 6px solid #1d1d1d;
 }
 
 
