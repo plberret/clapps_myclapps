@@ -245,7 +245,7 @@
 								<div class="bloc_see_more clearfix">
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
 									<div class="date"><input type="text" disabled="disabled" class="datepicker" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
-									<div class="place"><input type="text" disabled="disabled" id="location" name="location" class="location autocomplete" autocomplete="off" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
+									<div class="place field"><input type="text" disabled="disabled" id="location" name="location" class="location autocomplete" autocomplete="off" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
 								</div>
 							</div><!-- fin preview -->
 							<div class="more">
@@ -308,7 +308,7 @@
 											</li>
 										<?php } ?>
 										<li class="add-line clearfix">
-											<div class="add_job add_field"><input type="text" placeholder="Métier recherché" /></div>
+											<div class="add_job add_field field"><input type="text" class="autocomplete job" placeholder="Métier recherché" /></div>
 											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
 											<div class="edit">
 												<div class="line_control">
