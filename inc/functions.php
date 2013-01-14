@@ -95,12 +95,15 @@
 		// print_r($data);
 		$user = getIdFromFb();
 		$data['id_creator'] = $user['id_user'];
-		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date, place, date_filter) VALUES ( :title, :description, :id_creator, NOW(), :place, :date_filter)");
+		$dt = date_create_from_format( 'd/m/Y', $data['date_tournage'] );
+		$dateTournage =  $dt->format( 'Y/m/d' );
+		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date, place, date_filter, type_place) VALUES ( :title, :description, :id_creator, NOW(), :place, :date_filter, :type_place)");
 		$R1->bindParam(':title',$data['title']);
 		$R1->bindParam(':description',$data['desc']);
 		$R1->bindParam(':id_creator',$data['id_creator']);
-		$R1->bindParam(':place',$data['place']);
-		$R1->bindParam(':date_filter',$data['date_filter']);
+		$R1->bindParam(':place',$data['id_place']);
+		$R1->bindParam(':type_place',$data['type_place']);
+		$R1->bindParam(':date_filter',$dateTournage);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 
 
@@ -265,17 +268,12 @@
 
 	 	} else {
 
-			$sql2 = 'SELECT nom_departement AS nom, code AS cp, id_departement AS id_ville, "dpt" AS `type`  FROM departements WHERE nom_departement LIKE :dpt OR code LIKE :dpt OR nom_departement LIKE :dpt2 ORDER BY nom_departement ASC';
+			$sql2 = 'SELECT nom_departement AS nom, code AS cp, id_departement AS id_ville, "departements" AS `type`  FROM departements WHERE nom_departement LIKE :dpt OR code LIKE :dpt OR nom_departement LIKE :dpt2 ORDER BY nom_departement ASC';
 			$array2 = array(':dpt' => '%'.$ville.'%',':dpt2' => '%'.str_replace('-',' ',$ville).'%');
 			$R2 = $baseDD->prepare($sql2);
 			$R2->setFetchMode(PDO::FETCH_ASSOC);
 			if($R2->execute($array2)){
 				$result=$R2->fetchAll();
-				// $depts=$R2->fetchAll();
-				// foreach ($depts as $dpt) {
-				// 	$dpt['type']='dpt';
-				// 	array_push($result,$dpt);
-				// }
 			}
 
 	 		$sql = 'SELECT cp, nom, id_ville, indice FROM villes WHERE';
@@ -284,7 +282,7 @@
 			} else {
 				$sql.=' restricted != 2';
 			}
-	 		$sql.=' AND (nom LIKE :ville OR nom LIKE :ville2) ORDER BY indice DESC';
+	 		$sql.=' AND (nom LIKE :ville OR nom LIKE :ville2) ORDER BY indice DESC, nom ASC, CHAR_LENGTH(nom)';
 	 		// echo $sql;
 		 	//$sql = 'SELECT v.cp, v.nom, v.id_ville, d.nom_departement, r.nom_region FROM villes AS v, departements AS d, regions AS r WHERE v.nom LIKE :ville OR v.nom LIKE :ville2 OR d.nom_departement LIKE :dpt OR r.nom_region LIKE :region GROUP BY nom ORDER BY nom ASC';
 			// $array = array('ville' => $ville.'%','ville2' => str_replace(' ','-',$ville).'%', 'dpt' => $ville.'%', 'region' => $ville.'%');
@@ -294,7 +292,7 @@
 			if($R1->execute($array)){
 				$villes=$R1->fetchAll();
 				foreach ($villes as $ville) {
-					$ville['type']='ville';
+					$ville['type']='villes';
 					array_push($result,$ville);
 				}
 			}
@@ -306,7 +304,7 @@
 			if($R3->execute($array3)){
 				$regions=$R3->fetchAll();
 				foreach ($regions as $reg) {
-					$reg['type']='reg';
+					$reg['type']='regions';
 					array_push($result,$reg);
 				}
 			}

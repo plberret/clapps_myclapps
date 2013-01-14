@@ -239,7 +239,11 @@
 								<div class="bloc_see_more clearfix">
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
 									<div class="date"><input type="text" disabled="disabled" class="datepicker" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
-									<div class="place field"><input type="text" disabled="disabled" id="location" name="location" class="location autocomplete" autocomplete="off" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)"></div>
+									<div class="place field">
+										<input type="text" disabled="disabled" id="location" name="location" class="location autocomplete" autocomplete="off" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)">
+										<input type="hidden" name="id_place" class="id_place" />
+										<input type="hidden" name="type_place" class="type_place" />
+									</div>
 								</div>
 							</div><!-- fin preview -->
 							<div class="more">

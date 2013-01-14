@@ -126,20 +126,30 @@ zf.autocomplete = function($this) {
 			break;
 			case 40: zf.jsonListDown($(this)); break;
 		}
-	}).on('click', 'ul.autocompletion li a', function(){
+	}).on('hover', 'ul.autocompletion li a', function(){
 		var $this=$(this);
-		$this.parents('.autocompletion').siblings('.autocomplete').val($this.find('span').text())
+		$thisField = $this.parents('.autocompletion').siblings('.autocomplete')
+		$thisField.val($this.text())
+		$thisField.siblings('.id_place').val($this.data("id"))
+		$thisField.siblings('.type_place').val($this.data("type"))
+		zf.autocompletionHover = true;
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
-		console.log('2')
-		console.log($this.find('.autocompletion li'))
-		if ($this.find('.autocompletion li').length > 0) {
-			console.log('kk')
-			if (!$this.find('.autocompletion li').hasClass('current')) {
-				$(this).val($this.find('.autocompletion li:first-child a').text())
+		if (!zf.autocompletionHover) {
+			var $thisField = $(this);
+			$thisField.siblings('.id_place').val($this.find('.autocompletion li.current a').data("id"))
+			$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
+			if ($this.find('.autocompletion li').length > 0) {
+				console.log($thisField.siblings('.id_place')[0])
+				console.log($this.find('.autocompletion li.current a').data("id"))
+				if (!$this.find('.autocompletion li').hasClass('current')) {
+					$(this).val($this.find('.autocompletion li:first-child a').text())
+					$thisField.siblings('.id_place').val($this.find('.autocompletion li:first-child a').data("id"))
+					$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
+				};
 			};
-			$('.autocompletion').remove();
 		};
+		$('.autocompletion').remove();
 	});
 }
 
@@ -319,15 +329,18 @@ zf.getFilteredProjects = function($this,event){
 	}
 }
 
-zf.addAnonceFormOk = function(form){
+zf.addAnonceFormOk = function($form){
 	// console.log(zf.$newProject.find('.field input'))
-	zf.$newProject.find('.required').each(function(){
+	var t = true;
+	console.log($form.find('.required'))
+	$form.find('.required').each(function(){
 		if ($(this).val().trim().length == 0) {
 			// console.log($(this))
+			t = false;
 			return false
 		};
 	})
-	return false
+	return t;
 }
 
 zf.initAddProject = function() {
@@ -337,7 +350,7 @@ zf.initAddProject = function() {
 	zf.autocomplete(zf.$newProject);
 
 	// date picker 
-	zf.$newProject.find( ".datepicker" ).datepicker();
+	zf.$newProject.find( ".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
 	
 	// UP NUMBER CHAR LEFT FOR TITLE
 	zf.$newProject.on('keyup','#title',function(event) {
@@ -393,7 +406,7 @@ zf.initAddProject = function() {
 	zf.$newProject.on('submit', function(event) {
 		event.preventDefault();
 		$('.required').removeClass('empty');
-		if (zf.addAnonceFormOk($(this).serialize())) {
+		if (zf.addAnonceFormOk($(this))) {
 			$.ajax({
 				url: $(this).attr('action'),
 				type: $(this).attr('method'),
@@ -448,7 +461,7 @@ zf.jsonJobs = function($this){
 }
 
 zf.jsonCities = function($this){
-	console.log($this[0])
+	// console.log($this[0])
 	var value = $this.val();
 	var restricted = $this.data('restricted');
 	if(!zf.isBlank(value) && value.length>2){
@@ -495,10 +508,10 @@ zf.jsonListDown = function($this) {
 			$this.val($next.text());
 		} else { // if current doesn't exist or if there is 1 result
 			$first = $ul.find('li:first-child') // define first
-			if ($this.val().trim()!=$first.find('span').text()) { // if current doesn't exist
+			// if ($this.val().trim()!=$first.find('span').text()) { // if current doesn't exist
 				$first.addClass('current'); // define first child as current
 				$this.val($first.text());
-			};
+			// };
 		}
 	}; // /if ul contains li
 };
@@ -683,7 +696,7 @@ zf.init = function(){
 	
 	// close select & autocompletion
 	$(window).click(function(event) {
-		event.preventDefault();
+		// event.preventDefault();
 		if (event.target.localName != 'span' && event.target.className!='button') {
 			$('#col2 .field .selector ul').hide()
 		};
@@ -691,7 +704,7 @@ zf.init = function(){
 	})
 	
 	// date picker 
-	zf.$page.find( ".datepicker" ).datepicker();
+	zf.$page.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', regional : "fr" });
 	
 	// switch
 	zf.$page.find( ".switch" ).click(function(event) {
