@@ -204,7 +204,7 @@
 	 function getProjects($page,$user_fb){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id_ville = place) AS place, (SELECT cp FROM villes WHERE id_ville = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id = place) AS place, (SELECT cp FROM villes WHERE id = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
 			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
@@ -214,6 +214,7 @@
 		$sql .= " ORDER BY id_project DESC";
 		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 
+// echo $sql;
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 		if($R1->execute($array)){
@@ -225,7 +226,7 @@
 	 function getProject($id_project){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id_ville = place) AS place, (SELECT cp FROM villes WHERE id_ville = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project";
+		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id = place) AS place, (SELECT cp FROM villes WHERE id = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project";
 		$array = array('id_project' => $id_project);
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
