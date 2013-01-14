@@ -306,7 +306,7 @@
 											</li>
 										<?php } ?>
 										<li class="add-line clearfix">
-											<div class="add_job add_field field"><input type="text" class="autocomplete job" placeholder="Métier recherché" /></div>
+											<div class="add_job add_field field"><input type="text" class="job autocomplete" placeholder="Métier recherché" /></div>
 											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
 											<div class="edit">
 												<div class="line_control">
