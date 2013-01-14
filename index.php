@@ -201,7 +201,7 @@
 						<form action="">
 							<div class="preview">
 								<div class="block_top clearfix">
-									<img src="<?php echo $project['img_creator'] ?>" alt="photo profil" />
+									<img src="https://graph.facebook.com/<?php echo $project['id_creator'] ?>/picture" alt="photo profil <?php echo $project['name_creator'] ?>" />
 									<div class="title_block">
 										<div class="title">
 											<h2><input type="text" disabled="disabled" value="<?php echo $project['title']; ?>"></h2>
