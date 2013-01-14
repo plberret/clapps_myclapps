@@ -704,11 +704,7 @@ zf.init = function(){
 	})
 	
 	// date picker 
-<<<<<<< HEAD
-	zf.$page.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', regional : "fr" });
-=======
-	zf.$page.find(".datepicker").datepicker();
->>>>>>> 649d65d2251720a6e26b7da71e308c642c44e997
+	zf.$page.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy'});
 	
 	// switch
 	zf.$page.find( ".switch" ).click(function(event) {
