@@ -576,7 +576,12 @@ zf.filter = function(){
 	zf.advancedFilterOpen= false;
 	$filter = zf.$page.find('#block_filters');
 	advancedFilter = zf.$page.find('#filter_advanced');
-	
+	$filter.find('input').focusout(function(){
+		console.log('fo')
+	}).end().find('#date_filter').change(function(){
+		console.log('change')
+	})
+
 	$(document).bind('mousewheel',function(event){
 		if ($(document).scrollTop()<=128 && !zf.filterOpen && event.originalEvent.wheelDelta > 0) {
 			zf.$projectsList.css({paddingTop:"180px"});
