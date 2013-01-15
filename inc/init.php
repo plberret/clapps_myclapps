@@ -27,5 +27,6 @@ if (empty($data["user_id"])){
 	}
 }
 	$user_fb = $facebook->getUser();
+	$loginUrl = $facebook->getLoginUrl();
 
 ?>
