@@ -159,8 +159,8 @@
 							<div class="notifs clearfix">
 								<p><span>Activation</span> des notifications Facebook</p>
 								<a href="javascript:void" class="switch">
-									<span class="on state current">ON</span>
-									<span class="off state ">OFF</span>
+									<span class="on state <?php if(getNotifFilter()==1):?> current <?php endif; ?>">ON</span>
+									<span class="off state <?php  if(getNotifFilter()==0):?> current <?php endif; ?> ">OFF</span>
 									<span class="switch_button">Change</span>
 								</a>
 							</div>
@@ -342,7 +342,16 @@
 										<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 									</div>
 									<div class="manage manage-edition clearfix">
-										<a href="poppin/deleteProject.php" class="fancybox.ajax deleteProject">Supprimer l'annonce</a>
+										<div class="block_delete_project">
+											<a href="javascript:void(0)" class="button_delete_project">Supprimer l'annonce</a>
+											<div class="confirm">
+												<p>êtes-vous sûr de vouloir supprimer ?</p>
+												<div>
+													<a href="poppin/deleteProject.php" class="fancybox.ajax deleteProject valid_delete_project">Oui</a>
+													<a href="javascript:void(0)">Annuler</a>
+												</div>
+											</div>
+										</div>
 										<input type="submit" value="Valider" />
 										<a href="#" class="cancelEditProject">Annuler</a>
 									</div>

@@ -67,6 +67,27 @@ zf.deleteFavorite = function($this) {
 	});
 };
 
+zf.initEditProject = function() {
+	
+	// UP NUMBER VALUES FOR POST
+	zf.$projectsList.on('click','.profiles .quantity .number_control',function(event) {
+		event.preventDefault();
+		zf.numberControlProfile($(this));
+	});
+	
+	// ADD POST
+	zf.$projectsList.on('click','.profiles .line_control .add-post',function(event) {
+		event.preventDefault();
+		zf.addLineProfile($(this));
+	});
+	
+	// DELETE POST
+	zf.$projectsList.on('click','.profiles .line_control .delete',function(event) {
+		event.preventDefault();
+		zf.deleteLineProfile($(this));
+	});
+};
+
 zf.editProject = function($this) {
 	$article=$this.parent().parent().parent().parent(); // best practise ???????? .parents('.darkvador')
 	$article.removeClass('read').addClass('edition');
@@ -169,6 +190,23 @@ zf.autocomplete = function($this) {
 		};
 		$('.autocompletion').remove();
 	});
+}
+
+zf.initNotif = function($this) {
+	
+	// init
+	$(this).$this;
+	$current = $this.find('.current');
+	
+	// request
+	if($current.hasClass('on')){
+		var position = 32;
+	}else{
+		var position = 1;
+	}
+	
+	// set position
+	$this.find('.switch_button').css({ left: position });
 }
 
 zf.switchNotif = function($this) {
@@ -413,43 +451,21 @@ zf.initAddProject = function() {
 	});
 
 	// UP NUMBER VALUES FOR POST
-	zf.$newProject.on('click','.profiles div .number_control',function(event) {
+	zf.$newProject.on('click','.profiles ul li .number_control',function(event) {
 		event.preventDefault();
-		var $this=$(this);
-		zf.$number = $this.siblings('.number')
-		if($this.hasClass('more')){
-			zf.$number.val(parseInt(zf.$number.val())+1)
-		}
-		if($this.hasClass('less')){
-			if (zf.$number.val()!="1") {
-				zf.$number.val(parseInt(zf.$number.val())-1)
-			}
-		}
+		zf.numberControlProfile($(this));
 	});
 	
 	// ADD POST
-	zf.$newProject.on('click','#add-post',function(event) {
+	zf.$newProject.on('click','.profiles #add-post',function(event) {
 		event.preventDefault();
-		var $this=$(this);
-		// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
-			var newPost = zf.$newProject.find('.profiles > div:last').clone().find('.entitled').val('').siblings('.number').val('1').end().end();
-			$this.attr('id','').removeClass('add-post').addClass('delete').html('-');
-			zf.$newProject.find('.profiles').append(newPost);
-		// };
-		$this.parents('.profiles').find('.required').removeClass('required').end().children('div').eq(0).find('input[type=text]').addClass('required');
+		zf.addLineProfile($(this));
 	});
 	
 	// DELETE POST
-	zf.$newProject.on('click','.delete',function(event) {
+	zf.$newProject.on('click','.profiles .delete',function(event) {
 		event.preventDefault();
-		var $this=$(this);
-		var $tparent = $this.parents('.profiles')
-		if ($this.parent('div').siblings('.entitled').val()!='') { // if last post isn't empty
-			var oldPost = $this.parent('div').parent('div').clone().end().remove(); // recovery oldPost mb
-		} else {
-			$this.parent('div').parent('div').remove();
-		}
-		$tparent.find('.required').removeClass('required').end().children('div').eq(0).find('input[type=text]').addClass('required');
+		zf.deleteLineProfile($(this));
 	});
 	
 	// SEND PROJECT
@@ -478,6 +494,37 @@ zf.initAddProject = function() {
 		
 	})
 };
+
+zf.numberControlProfile = function($this){
+	zf.$number = $this.siblings('.number');
+	if($this.hasClass('more_quantity')){
+		zf.$number.val(parseInt(zf.$number.val())+1);
+	}
+	if($this.hasClass('less_quantity')){
+		if (zf.$number.val()!="1"){
+			zf.$number.val(parseInt(zf.$number.val())-1);
+		}
+	}
+}
+
+zf.addLineProfile = function($this){
+	// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
+		var newPost = zf.$newProject.find('.profiles ul li:last').clone().find('.entitled').val('').siblings('.number').val('1').end().end();
+		$this.attr('id','').removeClass('add-post').addClass('delete').html('-');
+		zf.$newProject.find('.profiles ul').append(newPost);
+	// };
+	$this.parents('.profiles').find('.required').removeClass('required').end().children('ul li').eq(0).find('input[type=text]').addClass('required');
+}
+
+zf.deleteLineProfile = function($this){
+	var $tparent = $this.parents('.profiles')
+	if ($this.parent('div').siblings('.entitled').val()!='') { // if last post isn't empty
+		var oldPost = $this.parent('div').parent('div').clone().end().remove(); // recovery oldPost mb
+	} else {
+		$this.parent('div').parent('div').remove();
+	}
+	$tparent.find('.required').removeClass('required').end().children('div').eq(0).find('input[type=text]').addClass('required');
+}
 
 zf.jsonJobs = function($this){
 	var value = $this.val();
@@ -783,6 +830,7 @@ zf.init = function(){
 	
 	// init elements
 	zf.filter();
+	zf.initEditProject();
 	zf.customFields();
 	zf.autocomplete(zf.$page);
 	
@@ -816,7 +864,13 @@ zf.init = function(){
 	// date picker 
 	zf.$page.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy'});
 	
-	// switch
+	// init switch
+	zf.$page.find( ".switch" ).each(function(){
+		event.preventDefault();
+		zf.initNotif($(this));
+	})
+	
+	// change switch position
 	zf.$page.find( ".switch" ).click(function(event) {
 		event.preventDefault();
 		zf.switchNotif($(this));

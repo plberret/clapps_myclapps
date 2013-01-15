@@ -489,6 +489,18 @@
 
 	 }
 	
+	function getNotifFilter(){
+		global $baseDD;
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('SELECT notif_filter FROM mc_users WHERE id_user = :id_user');
+		$R1->bindParam(':id_user',$user['id_user']);
+		if ($R1->execute()) {
+			$notif=$R1->fetch();
+		}
+		
+		return $notif['notif_filter'];
+	}
+	
 	function enableNotifFilter(){
 		global $baseDD;
 		$user = getIdFromFb();

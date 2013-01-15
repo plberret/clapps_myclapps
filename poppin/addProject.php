@@ -27,32 +27,34 @@
 	
 	<div class="profiles">
 		<h3>Ajouter un(des) poste(s)</h3>
-		<div class="clearfix field">
-			<input type="text" placeholder="Métier recherché" class="job required autocomplete" />
-			<input type="hidden" name="domain[]" value="3" />
-			<input type="text" name="profile[]" class="required entitled" placeholder="Intitulé du poste recherché" />
-			<div class="quantity">
-				<a href="#" class="less number_control">-</a>
-				<input type="text" value="1" class="number" name="occurence[]"/>
-				<a href="#" class="more number_control">+</a>
-			</div>
-			<div class="line_control">
-				<a href="#" class="delete">-</a>
-			</div>
-		</div>
-		<div class="clearfix">
-			<input type="text" placeholder="Métier recherché" class="job" />
-			<input type="hidden" name="domain[]" value="3" />
-			<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
-			<div class="quantity">
-				<a href="#" class="less number_control">-</a>
-				<input type="text" value="1" class="number" name="occurence[]"/>
-				<a href="#" class="more number_control">+</a>
-			</div>
-			<div class="line_control">
-				<a href="#" id="add-post">+</a>
-			</div>
-		</div>
+		<ul>
+			<li class="clearfix field">
+				<input type="text" placeholder="Métier recherché" class="job required autocomplete" />
+				<input type="hidden" name="domain[]" value="3" />
+				<input type="text" name="profile[]" class="required entitled" placeholder="Intitulé du poste recherché" />
+				<div class="quantity">
+					<a href="#" class="less_quantity number_control">-</a>
+					<input type="text" value="1" class="number" name="occurence[]"/>
+					<a href="#" class="more_quantity number_control">+</a>
+				</div>
+				<div class="line_control">
+					<a href="#" class="delete">-</a>
+				</div>
+			</li>
+			<li class="clearfix">
+				<input type="text" placeholder="Métier recherché" class="job" />
+				<input type="hidden" name="domain[]" value="3" />
+				<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
+				<div class="quantity">
+					<a href="#" class="less_quantity number_control">-</a>
+					<input type="text" value="1" class="number" name="occurence[]"/>
+					<a href="#" class="more_quantity number_control">+</a>
+				</div>
+				<div class="line_control">
+					<a href="#" id="add-post">+</a>
+				</div>
+			</li>
+		</ul>
 	</div>
 	
 	<div class="clearfix">
