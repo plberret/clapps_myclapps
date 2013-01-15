@@ -153,17 +153,37 @@ zf.autocomplete = function($this) {
 	});
 }
 
-zf.switchEvent = function($this) {
+zf.switchNotif = function($this) {
+	
+	// init
 	$(this).$this;
 	$current = $this.find('.current');
 	$current.removeClass('current');
+	
+	// request
 	if($current.hasClass('on')){
 		$this.find('.off').addClass('current');
 		var position = 1;
+		$.ajax({
+			url: 'requests/disableNotifFilter.php',
+			type: 'post',
+			success: function(resp) {
+				console.log(resp);
+			}
+		});
 	}else{
 		$this.find('.on').addClass('current');
 		var position = 32;
+		$.ajax({
+			url: 'requests/enableNotifFilter.php',
+			type: 'post',
+			success: function(resp) {
+				console.log(resp);
+			}
+		});
 	}
+	
+	// animation
 	$this.find('.switch_button').stop(true,false).animate({
 		left: position,
 	}, 300, 'easeInOutQuint');
@@ -731,7 +751,7 @@ zf.init = function(){
 	// switch
 	zf.$page.find( ".switch" ).click(function(event) {
 		event.preventDefault();
-		zf.switchEvent($(this));
+		zf.switchNotif($(this));
 	})
 	
 	// show help filter
