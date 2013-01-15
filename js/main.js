@@ -50,7 +50,7 @@ zf.deleteFavorite = function($this) {
 };
 
 zf.editProject = function($this) {
-	$article=$this.parent().parent().parent().parent(); // best practise ????????
+	$article=$this.parent().parent().parent().parent(); // best practise ???????? .parents('.darkvador')
 	$article.removeClass('read').addClass('edition');
 	// change display 
 	$this.parent().hide();
@@ -289,7 +289,8 @@ zf.getMoreProjects = function($this,event) {
 	zf.currentAnim = event
 	zf.projectCurrentPage++;
 	var $newProject = $('<div/>');
-	$newProject.load('index.php?page='+zf.projectCurrentPage+' #projects',function(resp) {
+	// console.log($this.attr('href'))
+	$newProject.load('index.php'+$this.attr('href')+' #projects',function(resp) {
 		var $this=$(this);
 		$this.find('.project').each(function(i) {
 			var $this=$(this);
@@ -495,7 +496,7 @@ zf.jsonCities = function($this){
 					if (resp[i]) {
 						if (!resp[i]['cp']){resp[i]['cp']=""} else {resp[i]['cp'] = '('+resp[i]['cp']+')'}
 						$li = $('<li/>',{
-						html :'<a href="#" data-id="'+resp[i]['id_ville']+'" data-type="'+resp[i]["type"]+'"><span>'+resp[i]['nom']+'</span> '+resp[i]['cp']+'</a>'
+						html :'<a href="#" data-id="'+resp[i]['id']+'" data-type="'+resp[i]["type"]+'"><span>'+resp[i]['nom']+'</span> '+resp[i]['cp']+'</a>'
 						});
 						$ul.append($li)
 					};
@@ -585,6 +586,12 @@ zf.filter = function(){
 		};
 	})
 
+
+	$filter.find('#refresh_button').click(function(event) {
+		event.preventDefault();
+		zf.seeFiltered($(this).attr('href'),event);
+	})
+
 	zf.$page.find('#searchButton, .open_filtre').click(function(event){
 		event.preventDefault();
 		if(zf.filterOpen==true){
@@ -643,7 +650,22 @@ zf.filter = function(){
 	
 	advancedFilter.find('input.valid_button').click(function(event){ // a fix pour enregistrer le filtre
 		event.stopPropagation();
+		event.preventDefault();
+		var $this=$(this).parents('form');
+		// ajax add filter
+		$.ajax({
+			url: 'requests/addFilter.php',
+			type: 'post',
+			data: {filter : $this.serialize()},
+			success: function(resp) {
+				// resp = JSON.parse(resp);
+				console.log(resp);
+				// location.reload();
+			}
+		});
+
 		// hide help info 
+
 		$filter.find('.help_info').show();
 		// animation
 		advancedFilter.stop().animate({

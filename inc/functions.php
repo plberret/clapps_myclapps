@@ -1,7 +1,7 @@
 <?php
-
-	require_once 'connect.php';
+	
 	require_once 'init.php';
+	require_once 'connect.php';
 
 	function getValideDate($date){
 		$tsstart = DateTime::createFromFormat('Y-m-j',$date);
@@ -94,15 +94,21 @@
 		
 		// print_r($data);
 		$user = getIdFromFb();
+		// date tournage
 		$data['id_creator'] = $user['id_user'];
 		$dt = date_create_from_format( 'd/m/Y', $data['date_tournage'] );
 		$dateTournage =  $dt->format( 'Y/m/d' );
-		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date, place, date_filter, type_place) VALUES ( :title, :description, :id_creator, NOW(), :place, :date_filter, :type_place)");
+		// type_place
+		$data['place_'.$data['type_place']] = $data['id_place'];
+
+
+		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date, place_villes, date_filter, place_departements, place_regions) VALUES ( :title, :description, :id_creator, NOW(), :place_villes, :date_filter, :place_departements, :place_regions)");
 		$R1->bindParam(':title',$data['title']);
 		$R1->bindParam(':description',$data['desc']);
 		$R1->bindParam(':id_creator',$data['id_creator']);
-		$R1->bindParam(':place',$data['id_place']);
-		$R1->bindParam(':type_place',$data['type_place']);
+		$R1->bindParam(':place_villes',$data['place_villes']);
+		$R1->bindParam(':place_departements',$data['place_departements']);
+		$R1->bindParam(':place_regions',$data['place_regions']);
 		$R1->bindParam(':date_filter',$dateTournage);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -110,7 +116,6 @@
 		if($R1->execute()){
 			$ID=$baseDD->lastInsertId('mc_project');
 		}
-		
 		foreach ($data['profile'] as $dat => $key) {
 			if (!empty($data['profile'][$dat]) && !empty($data['domain'][$dat])) {
 				$R2=$baseDD->prepare("INSERT INTO `mc_profile` (id_project, person, occurence, domain) VALUES ( :id, :person, :occurence, :domain)");
@@ -123,6 +128,18 @@
 		}
 
 		echo json_encode(array('id' => $ID));
+	}
+
+	function addFilter($filter){
+		global $baseDD;
+
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('UPDATE mc_users SET filter = :filter WHERE id_user = :id_user');
+		$R1->bindParam(':filter',$filter['filter']);
+		$R1->bindParam(':id_user',$user['id_user']);
+		if ($R1->execute()) {
+			echo json_encode(array('success' => true ));
+		}
 	}
 
 	function addFavorite($project){
@@ -204,7 +221,7 @@
 	 function getProjects($page,$user_fb){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
 			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
@@ -226,7 +243,7 @@
 	 function getProject($id_project){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id = place) AS place, (SELECT cp FROM villes WHERE id = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project";
+		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project";
 		$array = array('id_project' => $id_project);
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
@@ -258,7 +275,7 @@
 
 	 	if (is_numeric($ville)){
 
-	 		$sql2 = 'SELECT cp, nom, id_ville FROM villes WHERE cp LIKE :dpt GROUP BY nom ORDER BY nom ASC';
+	 		$sql2 = 'SELECT cp, nom, id FROM villes WHERE cp LIKE :dpt GROUP BY nom ORDER BY nom ASC';
 			$array2 = array(':dpt' => $ville.'%');
 			$R2 = $baseDD->prepare($sql2);
 			$R2->setFetchMode(PDO::FETCH_ASSOC);
@@ -269,7 +286,7 @@
 
 	 	} else {
 
-			$sql2 = 'SELECT nom_departement AS nom, code AS cp, id_departement AS id_ville, "departements" AS `type`  FROM departements WHERE nom_departement LIKE :dpt OR code LIKE :dpt OR nom_departement LIKE :dpt2 ORDER BY nom_departement ASC';
+			$sql2 = 'SELECT nom, cp, id, "departements" AS `type`  FROM departements WHERE nom LIKE :dpt OR cp LIKE :dpt OR nom LIKE :dpt2 ORDER BY nom ASC';
 			$array2 = array(':dpt' => '%'.$ville.'%',':dpt2' => '%'.str_replace('-',' ',$ville).'%');
 			$R2 = $baseDD->prepare($sql2);
 			$R2->setFetchMode(PDO::FETCH_ASSOC);
@@ -277,7 +294,7 @@
 				$result=$R2->fetchAll();
 			}
 
-	 		$sql = 'SELECT cp, nom, id_ville, indice FROM villes WHERE';
+	 		$sql = 'SELECT cp, nom, id, indice FROM villes WHERE';
 			if ($restricted) {
 				$sql.=' restricted != 1';
 			} else {
@@ -298,7 +315,7 @@
 				}
 			}
 
-			$sql3 = 'SELECT nom_region AS nom, id_region AS id_ville FROM regions WHERE nom_region LIKE :region ORDER BY nom_region ASC';
+			$sql3 = 'SELECT nom , id FROM regions WHERE nom LIKE :region ORDER BY nom ASC';
 			$array3 = array(':region' => '%'.$ville.'%');
 			$R3 = $baseDD->prepare($sql3);
 			$R3->setFetchMode(PDO::FETCH_ASSOC);
@@ -316,8 +333,8 @@
 
 	 function getProjectsByFilters($page,$filters){
 	 	global $baseDD;
-	 	// SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT nom FROM villes WHERE id_ville = place) AS place, (SELECT cp FROM villes WHERE id_ville = place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`
-		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT nom FROM villes WHERE id_ville = pj.place) AS place, (SELECT cp FROM villes WHERE id_ville = pj.place) AS zip_code, (SELECT img_url FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS img_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project";
+	 	// SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`
+		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project";
 
 		if ($filters['domain']) {
 			$sql .= " AND domain = :domain AND pf.current_state = 1";

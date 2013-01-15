@@ -5,6 +5,11 @@
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
 	$nbProject = getNbProject($_GET['user_fb']);
+	// $userFilter = getUserFilter();
+	$userFilter = 'profile=Figurant&date_filter=week&location=&distance=100';
+	$userFilterArray = array();
+	parse_str($userFilter, $values);
+
 ?>
 
 <!doctype html>
@@ -77,7 +82,7 @@
 						<h2>Filtrer la recherche</h2>
 						<p>Utiliser les différents filtres ci-contre
 						pour affiner votre recherche.</p>
-						<a href="javascript:void(0);" id="refresh_button">Réinitialiser la recherche</a>
+						<a href="?filter=false" id="refresh_button">Réinitialiser la recherche</a>
 					</div>
 					<div id="col2" class="col">
 						<div class="field">
@@ -187,10 +192,12 @@
 		<section id="projects">
 	
 			<?php
-				if (isset($_GET['id_project'])) :
+				if (isset($_GET['id_project'])) : // one project
 					$getProjects=getProject($_GET['id_project']);
-				elseif ($_GET['filter']):
+				elseif ($_GET['filter']): // filtre on
 					$getProjects=getProjectsByFilters($page,$_GET);
+				elseif ($userFilter && !$_GET['user_fb']): // user got default filter but not in his projects
+					$getProjects=getProjectsByFilters($page,$userFilterArray);
 				else:
 					$getProjects=getProjects($page,$_GET['user_fb']);
 				endif;
@@ -201,7 +208,7 @@
 						<form action="">
 							<div class="preview">
 								<div class="block_top clearfix">
-									<img src="<?php echo $project['img_creator'] ?>" alt="photo profil" />
+									<img src="https://graph.facebook.com/<?php echo $project['id_creator'] ?>/picture" alt="photo profil <?php echo $project['name_creator'] ?>" />
 									<div class="title_block">
 										<div class="title">
 											<h2><input type="text" disabled="disabled" value="<?php echo $project['title']; ?>"></h2>
@@ -350,7 +357,7 @@
 				
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?><?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
+					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
 			
