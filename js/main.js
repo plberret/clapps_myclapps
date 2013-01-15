@@ -69,23 +69,92 @@ zf.deleteFavorite = function($this) {
 
 zf.initEditProject = function() {
 	
-	// UP NUMBER VALUES FOR POST
+	// change display to edit project
+	zf.$page.on('click','.editProject',function(event) {
+		event.preventDefault();
+		zf.editProject($(this));
+	});
+	
+	// valid update of project
+	zf.$page.on('submit','.project form',function(event) {
+		alert('oui'); 
+		event.preventDefault();
+		zf.updateProject($(this));
+	});
+	
+	// cancel display of editing project
+	zf.$page.on('click','.cancelEditProject',function(event) {
+		event.preventDefault();
+		zf.cancelEditProject($(this));
+	});
+	
+	// button delete project
+	zf.$page.on('click','.block_delete_project .button_delete_project',function(event) {
+		event.preventDefault();
+		$(this).siblings('.confirm').fadeIn(150);
+	});
+	
+	// button cancel delete project
+	zf.$page.on('click','.block_delete_project .cancel_delete_project',function(event) {
+		event.preventDefault();
+		$(this).parents('.confirm').fadeOut(150);
+	});
+	
+	// button valid delete project
+	zf.$page.on('click','.block_delete_project .valid_delete_project',function(event) {
+		event.preventDefault();
+		zf.deleteProject($(this), function(){
+			// lancer la fancybox
+		});
+		console.log('valid delete project');
+		$(this).parents('.confirm').fadeOut(150);
+	});
+	
+	// fancybox delete project 
+	zf.$page.find("a.valid_delete_project").fancybox({
+		afterShow: zf.initDeleteProject,
+		closeClick  : false,
+		helpers   : { 
+			overlay : {closeClick: false}
+		}
+	});
+	
+	// number control
 	zf.$projectsList.on('click','.profiles .quantity .number_control',function(event) {
 		event.preventDefault();
 		zf.numberControlProfile($(this));
 	});
 	
-	// ADD POST
+	// add profile line
 	zf.$projectsList.on('click','.profiles .line_control .add-post',function(event) {
 		event.preventDefault();
 		zf.addLineProfile($(this));
 	});
 	
-	// DELETE POST
+	// delete profile line 
 	zf.$projectsList.on('click','.profiles .line_control .delete',function(event) {
 		event.preventDefault();
 		zf.deleteLineProfile($(this));
 	});
+	
+	// button delete existing line
+	zf.$projectsList.on('click','.profiles .edit .deleteButton a',function(event) {
+		event.preventDefault();
+		$(this).siblings('.confirm').fadeIn(150);
+	});
+	
+	//  cancel delete existing line
+	zf.$projectsList.on('click','.profiles .edit .cancel_delete_profile',function(event) {
+		event.preventDefault();
+		$(this).parents('.confirm').fadeOut(150);
+	});
+	//  confirm delete existing line
+	zf.$projectsList.on('click','.profiles .edit .confirm_delete_profile',function(event) {
+		event.preventDefault();
+		$(this).parents('.confirm').fadeOut(150);
+		zf.deleteProfile($(this));
+	});
+	
 };
 
 zf.editProject = function($this) {
@@ -508,22 +577,32 @@ zf.numberControlProfile = function($this){
 }
 
 zf.addLineProfile = function($this){
+	$projet=$this.parents('form');
 	// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
-		var newPost = zf.$newProject.find('.profiles ul li:last').clone().find('.entitled').val('').siblings('.number').val('1').end().end();
+		var newPost = $projet.find('.profiles ul li:last').clone().find('.entitled').val('').siblings('.number').val('1').end().end();
 		$this.attr('id','').removeClass('add-post').addClass('delete').html('-');
-		zf.$newProject.find('.profiles ul').append(newPost);
+		$projet.find('.profiles ul').append(newPost);
 	// };
 	$this.parents('.profiles').find('.required').removeClass('required').end().children('ul li').eq(0).find('input[type=text]').addClass('required');
 }
 
 zf.deleteLineProfile = function($this){
-	var $tparent = $this.parents('.profiles')
-	if ($this.parent('div').siblings('.entitled').val()!='') { // if last post isn't empty
-		var oldPost = $this.parent('div').parent('div').clone().end().remove(); // recovery oldPost mb
-	} else {
-		$this.parent('div').parent('div').remove();
-	}
+	var $tparent = $this.parents('.profiles');
+	//if ($this.parent('div').siblings('.entitled').val()!='') { // if last post isn't empty
+	//	var oldPost = $this.parents('li').clone().end().remove(); // recovery oldPost mb
+		console.log('1');
+	//} else {
+		$this.parents('li').remove();
+		console.log('2');
+	//}
 	$tparent.find('.required').removeClass('required').end().children('div').eq(0).find('input[type=text]').addClass('required');
+}
+
+zf.deleteProfile = function($this){
+	$profile=$this.parents('li');
+	$profile.fadeOut(300, function(){
+		$profile.remove();
+	});
 }
 
 zf.jsonJobs = function($this){
@@ -858,6 +937,7 @@ zf.init = function(){
 		if (event.target.localName != 'span' && event.target.className!='button') {
 			$('#col2 .field .selector ul').hide()
 		};
+		//zf.$projectsList.find('.deleteButton .confirm').fadeOut(150);
 		// $('.autocompletion').remove();
 	})
 	
@@ -889,15 +969,6 @@ zf.init = function(){
 	// fancybox add project
 	zf.$page.find(".addProject a").fancybox({
 		afterShow: zf.initAddProject,
-		closeClick  : false,
-		helpers   : { 
-			overlay : {closeClick: false}
-		}
-	});
-	
-	// fancybox delete project 
-	zf.$page.find("a.deleteProject").fancybox({
-		afterShow: zf.initDeleteProject,
 		closeClick  : false,
 		helpers   : { 
 			overlay : {closeClick: false}
@@ -942,31 +1013,6 @@ zf.init = function(){
 	zf.$page.on('click','.unfavorite_link',function(event) {
 		event.preventDefault();
 		zf.deleteFavorite($(this));
-	});
-	
-	// change display to edit project
-	zf.$page.on('click','.editProject',function(event) {
-		event.preventDefault();
-		zf.editProject($(this));
-	});
-	
-	// update content of project
-	zf.$page.on('submit','.project form',function(event) {
-		alert('oui'); 
-		event.preventDefault();
-		zf.updateProject($(this));
-	});
-	
-	// cancel display of editing project
-	zf.$page.on('click','.cancelEditProject',function(event) {
-		event.preventDefault();
-		zf.cancelEditProject($(this));
-	});
-	
-	// delete project
-	zf.$page.on('click','.deleteProject',function(event) {
-		event.preventDefault();
-		zf.deleteProject($(this));
 	});
 	
 	// see mine projects

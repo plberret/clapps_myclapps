@@ -280,12 +280,12 @@
 												</div>
 												<div class="edit">
 													<div class="deleteButton">
-														<a href="#">Supprimer</a>
+														<a href="#" class="button_delete_profile">Supprimer</a>
 														<div class="confirm">
 															<p>êtes-vous sûr de vouloir supprimer ?</p>
 															<div>
-																<a href="#">Oui</a>
-																<a href="#">Annuler</a>
+																<a href="#" class="confirm_delete_profile">Oui</a>
+																<a href="#" class="cancel_delete_profile">Annuler</a>
 															</div>
 														</div>
 													</div>
@@ -313,7 +313,7 @@
 											</li>
 										<?php } ?>
 										<li class="add-line clearfix">
-											<div class="add_job add_field field"><input type="text" class="job autocomplete" placeholder="Métier recherché" /></div>
+											<div class="add_job add_field field"><input type="text" class="job autocomplete entitled" placeholder="Métier recherché" /></div>
 											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
 											<div class="edit">
 												<div class="line_control">
@@ -337,23 +337,23 @@
 												<span class="finish">Désactivée</span>
 											<?php endif ?>
 										</p>
-										<?php if ($valideDate<0): ?><a href="#" class="extendProject">Réactiver l'annonce</a><?php endif; ?>
-										<?php if (($valideDate>0)&&($valideDate<3)): ?><a href="#" class="extendProject">Prolonger l'annonce</a><?php endif; ?>
-										<a href="#" class='editProject' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
+										<?php if ($valideDate<0): ?><a href="#" class="extendProject big_button">Réactiver l'annonce</a><?php endif; ?>
+										<?php if (($valideDate>0)&&($valideDate<3)): ?><a href="#" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
+										<a href="#" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 									</div>
 									<div class="manage manage-edition clearfix">
 										<div class="block_delete_project">
-											<a href="javascript:void(0)" class="button_delete_project">Supprimer l'annonce</a>
+											<a href="javascript:void(0)" class="button_delete_project big_button">Supprimer l'annonce</a>
 											<div class="confirm">
 												<p>êtes-vous sûr de vouloir supprimer ?</p>
 												<div>
-													<a href="poppin/deleteProject.php" class="fancybox.ajax deleteProject valid_delete_project">Oui</a>
-													<a href="javascript:void(0)">Annuler</a>
+													<a href="poppin/deleteProject.php" class="fancybox.ajax valid_delete_project">Oui</a>
+													<a href="javascript:void(0)" class="cancel_delete_project">Annuler</a>
 												</div>
 											</div>
 										</div>
 										<input type="submit" value="Valider" />
-										<a href="#" class="cancelEditProject">Annuler</a>
+										<a href="#" class="cancelEditProject big_button">Annuler</a>
 									</div>
 								<?php endif ?>
 							</div><!-- fin more -->

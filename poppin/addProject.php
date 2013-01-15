@@ -45,13 +45,15 @@
 				<input type="text" placeholder="Métier recherché" class="job" />
 				<input type="hidden" name="domain[]" value="3" />
 				<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
-				<div class="quantity">
-					<a href="#" class="less_quantity number_control">-</a>
-					<input type="text" value="1" class="number" name="occurence[]"/>
-					<a href="#" class="more_quantity number_control">+</a>
-				</div>
-				<div class="line_control">
-					<a href="#" id="add-post">+</a>
+				<div>
+					<div class="quantity">
+						<a href="#" class="less_quantity number_control">-</a>
+						<input type="text" value="1" class="number" name="occurence[]"/>
+						<a href="#" class="more_quantity number_control">+</a>
+					</div>
+					<div class="line_control">
+						<a href="#" id="add-post">+</a>
+					</div>
 				</div>
 			</li>
 		</ul>
