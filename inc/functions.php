@@ -142,6 +142,20 @@
 		}
 	}
 
+	function getFilter(){
+		global $baseDD;
+
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('SELECT filter FROM mc_users WHERE id_user = :id_user');
+		$R1->bindParam(':id_user',$user['id_user']);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+		if ($R1->execute()) {
+			// echo json_encode(array('success' => true ));
+			$result = $R1->fetch();
+			echo json_encode($result);
+		}
+	}
+
 	function addFavorite($project){
 
 		global $baseDD;

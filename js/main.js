@@ -7,6 +7,24 @@ zf.isBlank = function(str) {
 	return (!str || /^\s*$/.test(str));
 };
 
+zf.getVarUrl = function(url,param) {
+	var params = {};
+	var get = url.slice(url.indexOf('?') + 1).split('&');
+	var getLength= get.length;
+	for(var i = 0; i < getLength; i++)
+	{
+		Var = get[i].split('=');
+		params[Var[0]] = Var[1];
+	}
+	if (param){
+		return params[param];
+	}
+	else{
+		return params;
+	}
+};
+
+
 zf.isOkKey = function(event) {
 	if (event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40) {
 		return false
@@ -577,9 +595,9 @@ zf.filter = function(){
 	$filter = zf.$page.find('#block_filters');
 	advancedFilter = zf.$page.find('#filter_advanced');
 	$filter.find('input').focusout(function(){
-		console.log('fo')
+		$filter.trigger('submit');
 	}).end().find('#date_filter').change(function(){
-		console.log('change')
+		$filter.trigger('submit');
 	})
 
 	$(document).bind('mousewheel',function(event){
@@ -653,6 +671,46 @@ zf.filter = function(){
 		return false;
 	});
 	
+	advancedFilter.find('a.valid_button.load').click(function(event){
+		event.preventDefault();
+		var $this=$(this);
+		$.ajax({
+			url: 'requests/getFilter.php',
+			success: function(resp) {
+				// console.log(resp); // CI GIT UN TABLEAU DONT LES VALEURS DOIVENT ETRE MISE SUR LE FILTRE
+				var filter = zf.getVarUrl(resp.filter);
+				$.each(filter, function(key, value) {
+					$filter.find('#'+key).val(value)
+				})
+				$filter.find('#selector_date .'+filter.date_filter).trigger('click')
+				$filter.find('#distances a.'+filter.distance).trigger('click')
+
+				$this.parents("#tab2").children().hide().end().append('<p class="alert">Votre filtre a bien été chargé !</p>').delay(1500).fadeOut(function(){
+					advancedFilter.find('a.close').trigger('click');
+					$this.parents("#tab2").children().show().end().find('.alert').remove()
+				})
+			}
+		});
+
+	});
+
+	advancedFilter.find('a.valid_button.delete').click(function(event){
+		event.preventDefault();
+		var $this=$(this);
+		$.ajax({
+			url: 'requests/addFilter.php',
+			type: 'post',
+			data: {filter : ''},
+			success: function(resp) {
+				// console.log(resp);
+				$this.parents("#tab3").children().hide().end().append('<p class="alert">Votre filtre a bien été supprimé !</p>').delay(1500).fadeOut(function(){
+					advancedFilter.find('a.close').trigger('click');
+					$this.parents("#tab3").children().show().end().find('.alert').remove()
+				})
+			}
+		});
+	});
+
 	advancedFilter.find('input.valid_button').click(function(event){ // a fix pour enregistrer le filtre
 		event.stopPropagation();
 		event.preventDefault();
@@ -665,22 +723,21 @@ zf.filter = function(){
 			success: function(resp) {
 				// resp = JSON.parse(resp);
 				console.log(resp);
-				// location.reload();
+				$this.find("#tab1").children().hide().end().append('<p class="alert">Votre filtre a bien été sauvegardé !</p>').delay(1500).fadeOut(function(){
+					$this.find("#tab1").children().show().end().find('.alert').remove()
+
+					$filter.find('.help_info').show();
+					// animation
+					advancedFilter.stop().animate({
+						width: '50',
+					}, 600, 'easeInOutExpo', function() {
+						zf.advancedFilterOpen= false;
+						// Animation complete.
+						//alert('oui'); 
+					});
+				})
 			}
 		});
-
-		// hide help info 
-
-		$filter.find('.help_info').show();
-		// animation
-		advancedFilter.stop().animate({
-			width: '50',
-		}, 600, 'easeInOutExpo', function() {
-			zf.advancedFilterOpen= false;
-			// Animation complete.
-			//alert('oui'); 
-		});
-		// return false;
 	});
 	
 };
@@ -698,7 +755,7 @@ zf.customFields = function(){
 		var $this = $(this);
 		$this.parent('ul').hide();
 		$this.parent('ul').siblings('div').find('.value').html($this.html());
-		$this.parent('ul').siblings('input').attr('value', $this.attr('class'));
+		$this.parent('ul').siblings('input').attr('value', $this.attr('class')).trigger('change');
 	});
 	
 };

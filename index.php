@@ -113,23 +113,23 @@
 							<input type="hidden" name="distance" value="100" id="distance" />
 						</div>
 						<ul id="distances" class="clearfix">
-							<li><a href="#">
+							<li><a href="#" class="50">
 								<span class="number">50 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#" class="current">
+							<li><a href="#" class="current 100">
 								<span class="number">100 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#">
+							<li><a href="#" class="200">
 								<span class="number">200 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#">
+							<li><a href="#" class="500">
 								<span class="number">500 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#">
+							<li><a href="#" class="1000">
 								<span class="number">1000 </span>
 								<span class="unite">KM</span>
 							</a></li>
@@ -168,14 +168,14 @@
 						<div id="tab2" class="tab">
 							<p><strong>Êtes-vous sûr de vouloir charger votre filtre ?</strong></p>
 							<div class="choice clearfix">
-								<a href="#" class="valid_button">Oui</a>
+								<a href="#" class="valid_button load">Oui</a>
 								<a href="#" class="close">Annuler</a>
 							</div>
 						</div>
 						<div id="tab3" class="tab">
 							<p><strong>Êtes-vous sûr de vouloir supprimer votre filtre ?</strong></p>
 							<div class="choice clearfix">
-								<a href="#" class="valid_button">Oui</a>
+								<a href="#" class="valid_button delete">Oui</a>
 								<a href="#" class="close">Annuler</a>
 							</div>
 						</div>

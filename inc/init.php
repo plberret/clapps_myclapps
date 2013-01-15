@@ -28,5 +28,6 @@ $auth_url = "https://www.facebook.com/dialog/oauth?client_id=" .APP_ID. "&redire
 	}
 
 	$user_fb = $facebook->getUser();
+	$loginUrl = $facebook->getLoginUrl();
 
 ?>
