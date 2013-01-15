@@ -457,6 +457,29 @@
 		 return $technicians;
 
 	 }
-	 
 	
-   ?>
+	function enableNotifFilter(){
+		global $baseDD;
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('UPDATE mc_users SET notif_filter = 1 WHERE id_user = :id_user');
+		$R1->bindParam(':id_user',$user['id_user']);
+		if ($R1->execute()) {
+			echo json_encode(array(success => $user ));
+		} else {
+			echo json_encode(array(success => false ));
+		}
+	}
+	
+	function disableNotifFilter(){
+		global $baseDD;
+		$user = getIdFromFb();
+		$R1=$baseDD->prepare('UPDATE mc_users SET notif_filter = 0 WHERE id_user = :id_user');
+		$R1->bindParam(':id_user',$user['id_user']);
+		if ($R1->execute()) {
+			echo json_encode(array(success => "à 0" ));
+		} else {
+			echo json_encode(array(success => false ));
+		}
+	}
+	
+?>
