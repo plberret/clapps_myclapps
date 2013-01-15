@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json'); 
-require_once('../inc/functions.php');
-addFavorite($_POST);
+	header('Content-Type: application/json'); 
+	require_once('../inc/functions.php');
+	addFavorite($_POST);
 ?>

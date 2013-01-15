@@ -5,6 +5,11 @@
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
 	$nbProject = getNbProject($_GET['user_fb']);
+	// $userFilter = getUserFilter();
+	$userFilter = 'profile=Figurant&date_filter=week&location=&distance=100';
+	$userFilterArray = array();
+	parse_str($userFilter, $values);
+
 ?>
 
 <!doctype html>
@@ -187,10 +192,12 @@
 		<section id="projects">
 	
 			<?php
-				if (isset($_GET['id_project'])) :
+				if (isset($_GET['id_project'])) : // one project
 					$getProjects=getProject($_GET['id_project']);
-				elseif ($_GET['filter']):
+				elseif ($_GET['filter']): // filtre on
 					$getProjects=getProjectsByFilters($page,$_GET);
+				elseif ($userFilter && !$_GET['user_fb']): // user got default filter but not in his projects
+					$getProjects=getProjectsByFilters($page,$userFilterArray);
 				else:
 					$getProjects=getProjects($page,$_GET['user_fb']);
 				endif;
@@ -350,7 +357,7 @@
 				
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?><?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
+					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
 			
