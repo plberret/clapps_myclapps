@@ -566,6 +566,12 @@ zf.filter = function(){
 		};
 	})
 
+
+	$filter.find('#refresh_button').click(function(event) {
+		event.preventDefault();
+		zf.seeFiltered($(this).attr('href'),event);
+	})
+
 	zf.$page.find('#searchButton, .open_filtre').click(function(event){
 		event.preventDefault();
 		if(zf.filterOpen==true){

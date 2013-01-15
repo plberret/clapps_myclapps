@@ -82,7 +82,7 @@
 						<h2>Filtrer la recherche</h2>
 						<p>Utiliser les différents filtres ci-contre
 						pour affiner votre recherche.</p>
-						<a href="javascript:void(0);" id="refresh_button">Réinitialiser la recherche</a>
+						<a href="?filter=false" id="refresh_button">Réinitialiser la recherche</a>
 					</div>
 					<div id="col2" class="col">
 						<div class="field">
