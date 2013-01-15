@@ -481,7 +481,7 @@
 		$R1=$baseDD->prepare('UPDATE mc_users SET notif_filter = 1 WHERE id_user = :id_user');
 		$R1->bindParam(':id_user',$user['id_user']);
 		if ($R1->execute()) {
-			echo json_encode(array(success => $user ));
+			echo json_encode(array(success => true ));
 		} else {
 			echo json_encode(array(success => false ));
 		}
@@ -493,10 +493,35 @@
 		$R1=$baseDD->prepare('UPDATE mc_users SET notif_filter = 0 WHERE id_user = :id_user');
 		$R1->bindParam(':id_user',$user['id_user']);
 		if ($R1->execute()) {
-			echo json_encode(array(success => "à 0" ));
+			echo json_encode(array(success => true ));
 		} else {
 			echo json_encode(array(success => false ));
 		}
+	}
+	
+	function addListSubscribe($user){
+		global $baseDD;
+		
+		require_once '../api/mailchimp/MCAPI.class.php';
+		require_once '../api/mailchimp/config.inc.php';
+
+		$api = new MCAPI($apikey);
+	//	$retval = $api->listSubscribe( $listId, $email, $merge_vars, $email_type='html', $double_optin=false, $update_existing=false, $replace_interests=true, $send_welcome=true );
+
+		if($api->errorCode){
+			switch ($api->errorCode) {
+				case 214:
+					echo json_encode(array(error => "Cet email est déjà enregistré dans notre base." ));
+					break;
+				default:
+					echo json_encode(array(error => "Une erreur est survenue, veuillez réessayer. Merci de nous contacter si le problème persiste." ));
+			}
+		}else{
+			echo json_encode(array( success => $user['email'] ));
+		}
+		// tester si l'utilisateur existe, add ou update
+		// si on update, recuperer ces infos 
+		
 	}
 	
 ?>

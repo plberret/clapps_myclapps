@@ -189,6 +189,17 @@ zf.switchNotif = function($this) {
 	}, 300, 'easeInOutQuint');
 }
 
+zf.addSubscribe = function($this){
+	$.ajax({
+		url: $this.attr('action'),
+		type: 'post',
+		data: $this.serialize(),
+		success: function(resp) { 
+			 console.log(resp);
+		}
+	});
+}
+
 zf.seeMore = function($this) {
 	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
 		if ($(this).css('display')=='none') {
@@ -731,11 +742,6 @@ zf.init = function(){
 		zf.$page.find("#tuto").show().css({'top': '58px'});
 	});
 	
-	// fixe header 
-//	$(window).scroll(function(){
-//		$('header').css('top', $(this).scrollTop() + "px");
-//	});
-	
 	// close select & autocompletion
 	$(window).click(function(event) {
 		// event.preventDefault();
@@ -798,13 +804,19 @@ zf.init = function(){
 		zf.getFilteredProjects($(this),event);
 	});
 	
+	// filter project
+	zf.$page.on('submit', '#addSubscribe', function(event) {
+		event.preventDefault();
+		zf.addSubscribe($(this));
+	});
+	
 	// update projects list by distance
 	zf.$filtre.find('#distances li a').click(function(event) {
 		event.preventDefault();
 		zf.updateFilter($(this));
 	})
 	
-	// add favorite
+	// add to favorite
 	zf.$page.on('click','.favorite_link',function(event) {
 		event.preventDefault();
 		zf.addFavorite($(this));

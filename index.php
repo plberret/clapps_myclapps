@@ -58,8 +58,8 @@
 				</div>
 				<div id="notif_email">
 					<p>Être tenu au courant des nouveautés de Clapps</p>
-					<form action="" class="clearfix">
-						<input type="text" placeholder="votreadresse@email.com" />
+					<form action="requests/addListSubscribe.php" id="addSubscribe" class="clearfix">
+						<input type="text" name="email" placeholder="votreadresse@email.com" />
 						<input type="submit" value="Je reste informé" />
 					</form>
 				</div>
@@ -70,8 +70,8 @@
 				</div>
 				<div id="notif_email">
 					<p>Être tenu au courant des nouveautés de Clapps</p>
-					<form action="" class="clearfix">
-						<input type="text" placeholder="votreadresse@email.com" />
+					<form action="requests/addListSubscribe.php" id="addSubscribe" class="clearfix">
+						<input type="text" name="email" placeholder="votreadresse@email.com" />
 						<input type="submit" value="Je reste informé" />
 					</form>
 				</div>
