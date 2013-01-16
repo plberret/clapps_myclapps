@@ -267,32 +267,38 @@
 														$profileDomain="iconTechnician"; 
 													} 
 												?>
-												<div class="icon <?php echo $profileDomain; ?>">
-													<span><?php echo $profile['occurence']; ?></span>
+												<div class="block_read">
+													<div class="icon <?php echo $profileDomain; ?>">
+														<span><?php echo $profile['occurence']; ?></span>
+													</div>
+													<div class="desc"><p><span>Exemple de métier : </span><?php echo $profile['person']; ?></p></div>
+													<div class="apply">
+														<?php if (!isAdmin($project,$user_fb)): ?>
+															<a href="#">Postuler</a>
+														<?php else: ?>
+															<a href="#">J'ai trouvé</a>
+														<?php endif; ?>
+													</div>
 												</div>
-												<div class="desc"><textarea disabled="disabled"><?php echo $profile['person']; ?></textarea></div>
-												<div class="apply">
-													<?php if (!isAdmin($project,$user_fb)): ?>
-														<a href="#">Postuler</a>
-													<?php else: ?>
-														<a href="#">J'ai trouvé</a>
-													<?php endif; ?>
-												</div>
-												<div class="edit">
-													<div class="deleteButton">
-														<a href="#" class="button_delete_profile">Supprimer</a>
-														<div class="confirm">
-															<p>êtes-vous sûr de vouloir supprimer ?</p>
-															<div>
-																<a href="#" class="confirm_delete_profile">Oui</a>
-																<a href="#" class="cancel_delete_profile">Annuler</a>
+												<div class="block_edition">
+													<div class="add_job add_field field"><input type="text" class="job autocomplete entitled" placeholder="Métier recherché"  value="Exemple de métier"/></div>
+													<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" value="<?php echo $profile['person']; ?>" /></div>
+													<div class="edit">
+														<div class="deleteButton">
+															<a href="#" class="button_delete_profile">Supprimer</a>
+															<div class="confirm">
+																<p>êtes-vous sûr de vouloir supprimer ?</p>
+																<div>
+																	<a href="#" class="confirm_delete_profile">Oui</a>
+																	<a href="#" class="cancel_delete_profile">Annuler</a>
+																</div>
 															</div>
 														</div>
-													</div>
-													<div class="quantity">
-														<a href="#" class="less_quantity number_control">-</a>
-														<input type="text" value="1" class="number" name="occurence[]"/>
-														<a href="#" class="more_quantity number_control">+</a>
+														<div class="quantity">
+															<a href="#" class="less_quantity number_control">-</a>
+															<input type="text" value="1" class="number" name="occurence[]"/>
+															<a href="#" class="more_quantity number_control">+</a>
+														</div>
 													</div>
 												</div>
 											</li>

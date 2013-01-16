@@ -908,7 +908,7 @@ header #block_current_filter #notif_email input[type=submit] {
 }
 
 
-/* //////////// CONTENT //////////// */
+/* --------------------------- CONTENT ---------------------------- */
 
 section {
 	padding-top: 300px;
@@ -916,23 +916,6 @@ section {
 
 section #newProject {
 	display: none;
-}
-
-section article {
-	position: relative;
-	margin: 0 0 21px 65px;
-	width: 682px;
-}
-
-section article input:disabled,
-section article textarea:disabled {
-	background: 0;
-	border: 0;
-	padding: 0;
-	margin: 0;
-	cursor: text;
-	resize: none;
-	overflow: hidden;
 }
 
 .btn-more-projects {
@@ -955,7 +938,56 @@ section article textarea:disabled {
 }
 
 
-/* ------- preview ------- */
+/* --------------------------- PROJECTS ---------------------------- */
+
+/*  ----------- Global ----------- */ 
+
+section article {
+	position: relative;
+	margin: 0 0 21px 65px;
+	width: 682px;
+}
+
+section article input:disabled,
+section article textarea:disabled {
+	background: 0;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	cursor: text;
+	resize: none;
+	overflow: hidden;
+}
+
+/* ----------- Edition ---------- */
+
+section article.edition form input[type=text],
+section article.edition form textarea {
+	background: #141414;
+	border: 1px solid #242424;
+	padding: 6px 8px;
+	font-size: 12px;
+	color: #f5f5f5;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+section article.edition form input[type=text]:focus,
+section article.edition form textarea:focus {
+	border: 1px solid #7f7f7f;
+	font-weight: bold;
+}
+
+section article.edition form textarea {
+	width: 615px;
+	height: 42px;
+	resize: none;
+}
+
+/* /////////////////// PREVIEW ///////////////// */
+
+/*  ----------- Global ----------- */ 
 
 section article .preview {
 	position: relative;
@@ -1004,16 +1036,15 @@ section article .preview .block_top .title_block .title {
 }
 
 section article.read .preview .block_top .title_block .title h2 {
-	font-size: 15px;
-	color: #dddddd;
 	padding-top: 6px;
 	padding-bottom: 2px;
 	line-height: 19px;
 }
 
 section article .preview .block_top .title_block .title input:disabled {
-	font-size: 15px;
+	font-size: 14px;
 	color: #dddddd;
+	width: 460px;
 }
 
 section article .preview .block_top .title_block .title div {
@@ -1149,6 +1180,7 @@ section article .preview .desc h3 {
 section article .preview .desc textarea:disabled {
 	color: #8c8c8c;
 	font-size: 12px;
+	width: 632px;
 }
 
 section article .preview .bloc_see_more {
@@ -1189,8 +1221,30 @@ section article .preview .bloc_see_more div input  {
 	line-height: 18px;
 }
 
+/*  ----------- Edition ----------- */ 
 
-/* ----------- more ------------- */
+section article.edition form .preview .title input {
+	padding: 5px 8px;
+	width: 441px;
+	position: relative;
+	left: -10px;
+}
+
+section article.edition form .preview textarea {
+	width: 633px;
+	position: relative;
+	top: -8px;
+	left: -10px;
+}
+
+section article.edition form .preview .bloc_see_more input {
+	padding: 4px 5px;
+	position: relative;
+	top: -8px;
+}
+
+
+/* /////////////////// MORE ///////////////// */
 
 section article .more {
 	position: relative;
@@ -1207,6 +1261,9 @@ section article .more {
 	-webkit-border-bottom-right-radius: 3px;
 	padding-bottom: 50px;
 }
+
+
+/*  ----------- Profile read ----------- */ 
 
 section article .profiles {
 	padding-top: 24px;
@@ -1234,6 +1291,7 @@ section article .profiles ul li.add-line {
 section article .profiles ul li .icon {
 	width: 52px;
 	display: table-cell;
+	background: no-repeat url(../images/logo_actor_profile.png) #0b0d0f center center;
 }
 
 section article .profiles ul li .iconActor {
@@ -1267,14 +1325,25 @@ section article .profiles ul li .desc {
 	display: table-cell;
 }
 
+section article .profiles ul li p span {
+	color: #FFF;
+	font-weight: bold;
+	margin-right: 5px;
+}
+
 section article .profiles ul li:hover .desc {
 	color: #e1e1e1;
 }
 
-section article .profiles ul li .desc textarea {
+section article .profiles ul li textarea {
+	overflow: hidden;
+}
+
+section article.read .profiles ul li .desc textarea {
+	width: 385px;
 	color: #8c8c8c;
-	height: 15px;
 	font-size: 12px;
+	overflow: hidden;
 }
 
 section article .profiles ul li .edit {
@@ -1311,7 +1380,203 @@ section article .profiles ul li .apply a {
 }
 
 
-/* profile found */
+/*  ---------- Profile edition ---------- */ 
+
+section article form .more .profiles li .block_edition {
+	display: none;
+}
+
+section article.edition form .more .profiles .edit_desc {
+	display: table-cell;
+	padding: 9px;
+}
+
+section article.edition form .more .profiles .edit_desc textarea {
+	width: 472px;
+	height: 15px;
+}
+
+section article.edition form .more .profiles .add_field {
+	display: table-cell;
+	padding: 9px 0;
+}
+
+section article.edition form .more .profiles .add_job {
+	padding: 9px 6px 9px 9px;
+}
+
+section article.edition form .more .profiles .add_job input {
+	width: 182px;
+}
+
+section article.edition form .more .profiles .add_desc {
+	padding-right: 9px;
+}
+
+section article.edition form .more .profiles .add_desc input {
+	width: 318px;
+}
+
+section article.edition form .more .profiles .edit {
+	display: table-cell;
+	vertical-align: middle;
+	width: 100px;
+}
+
+section article.edition form .more .profiles .edit .deleteButton {
+	position: relative;
+	float: right;
+	margin: 8px 16px 0 8px;
+}
+
+section article.edition form .more .profiles .edit .deleteButton > a {
+	display: block;
+	text-indent: -9999px;
+	width: 13px;
+	height: 13px;
+	background: no-repeat url(../images/icon_delete_profile.png);
+}
+
+section article.edition form .more .profiles .edit .line_control  {
+	float: right;
+	margin: 3px 9px 0 5px;
+}
+
+section article.edition form .more .profiles .edit .line_control a  {
+	
+	text-decoration: none;
+	display: block;
+	width: 23px;
+	height: 23px;
+	line-height: 23px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: #cdcdcd;
+	font-size: 18px;
+	text-align: center;
+	font-weight: bold;
+}
+
+section article.edition form .more .profiles .edit .line_control .delete {
+	background: #232323;
+	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+}
+
+section article.edition form .more .profiles .edit .line_control .add-post {
+	background: #0c0e11;
+	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
+	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
+	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
+	background-image: -webkit-linear-gradient(top, #709a0d, #638000);
+	background-image: -moz-linear-gradient(top, #709a0d, #638000);
+	background-image: -o-linear-gradient(top, #709a0d, #638000);
+	background-image: -ms-linear-gradient(top, #709a0d, #638000);
+	background-image: linear-gradient(to bottom, #709a0d, #638000);
+}
+
+section article.edition form .more .profiles .edit .quantity  {
+	position: relative;
+	float: right;
+	width: 63px;
+	height: 29px;
+}
+
+section article.edition form .more .profiles .edit .quantity input {
+	width: 42px;
+	height: 15px;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 6px 19px 6px 0;
+	text-align: center;
+}
+
+section article.edition form .more .profiles .edit .quantity .number_control  {
+	position: absolute;
+	right: 2px;
+	display: block;
+	width: 17px;
+	height: 12px;
+	text-align: center;
+	text-decoration: none;
+	color: #5d5d5d;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+section article.edition form .more .profiles .edit .quantity .more_quantity {
+	top: 2px;
+	-webkit-border-radius: 0 3px 0 0;
+	-moz-border-radius: 0 3px 0 0;
+	border-radius: 0 3px 0 0;
+	background: #232323;
+	-webkit-box-shadow: inset 0 1px #353535;
+	-moz-box-shadow: inset 0 1px #353535;
+	box-shadow: inset 0 1px #353535;
+}
+
+section article.edition form .more .profiles .edit .quantity .less_quantity {
+	bottom: 2px ;
+	-webkit-border-radius: 0 0 3px;
+	-moz-border-radius: 0 0 3px;
+	border-radius: 0 0 3px;
+	background: #191919;
+	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+}
+
+section article.edition form .more .profiles .confirm {
+	display: none;
+	position: absolute;
+	width: 250px;
+	top: 27px;
+	right: -23px;
+	z-index: 100;
+	font-size: 12px; 
+	color: #d4d4d4;
+	padding: 9px 0;
+	text-align: center;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #131313;
+	-webkit-box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
+	-moz-box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
+	box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
+}
+
+section article.edition form .more .profiles .confirm:before {
+	position: absolute;
+	top: -8px;
+	right: 23px;
+	content: "";
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 9px solid #131313;
+}
+
+section article.edition form .more .profiles .confirm p {
+	padding-bottom: 3px;
+}
+
+section article.edition form .more .profiles .confirm a {
+	color: #68707d;
+	margin: 0 5px;
+}
+
+section article.edition form .more .profiles .confirm a.confirm_delete_profile:hover {
+	color: #89bc04;
+}
+
+section article.edition form .more .profiles .confirm a.cancel_delete_profile:hover {
+	color: #f63636;
+}
+
+
+/*  ----------- Profile found ----------- */ 
 
 section article .profiles ul li.profileFound {
 	opacity: 0.5;
@@ -1340,7 +1605,7 @@ section article .profiles ul li.profileFound .applyFound {
 }
 
 
-/* manage */
+/*  ----------- Manage ----------- */ 
 
 section article .manage {
 	margin-top: 15px;
@@ -1536,7 +1801,7 @@ section article .more .manage input {
 }
 
 
-/* see more */
+/* /////////////////// SEE MORE ///////////////// */
 
 section article #see_button {
 	position: absolute;
@@ -1575,248 +1840,6 @@ section article #see_button a span {
 
 section article #see_button:hover a {
 	color: #FFF;
-}
-
-
-/* -------------- Edition mode ---------------- */
-
-/* ///// global ////// */
-
-section article.edition form input[type=text],
-section article.edition form textarea {
-	background: #141414;
-	border: 1px solid #242424;
-	padding: 6px 8px;
-	font-size: 12px;
-	color: #f5f5f5;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-}
-
-section article.edition form input[type=text]:focus,
-section article.edition form textarea:focus {
-	border: 1px solid #7f7f7f;
-	font-weight: bold;
-}
-
-section article.edition form textarea {
-	width: 615px;
-	height: 42px;
-	resize: none;
-}
-
-/* ////// preview ////// */
-
-section article.edition form .preview .title input {
-	padding: 5px 8px;
-	width: 441px;
-	position: relative;
-	left: -10px;
-}
-
-section article.edition form .preview textarea {
-	width: 633px;
-	position: relative;
-	top: -8px;
-	left: -10px;
-}
-
-section article.edition form .preview .bloc_see_more input {
-	padding: 4px 5px;
-	position: relative;
-	top: -8px;
-}
-
-/* ////// profiles ////// */
-
-section article.edition form .more .profiles .edit_desc {
-	display: table-cell;
-	padding: 9px;
-}
-
-section article.edition form .more .profiles .edit_desc textarea {
-	width: 472px;
-	height: 15px;
-}
-
-section article.edition form .more .profiles .add_field {
-	display: table-cell;
-	padding: 9px 0;
-}
-
-section article.edition form .more .profiles .add_job {
-	padding: 9px 6px 9px 9px;
-}
-
-section article.edition form .more .profiles .add_job input {
-	width: 182px;
-}
-
-section article.edition form .more .profiles .add_desc {
-	padding-right: 9px;
-}
-
-section article.edition form .more .profiles .add_desc input {
-	width: 318px;
-}
-
-section article.edition form .more .profiles .edit {
-	display: table-cell;
-	vertical-align: middle;
-	width: 100px;
-}
-
-section article.edition form .more .profiles .edit .deleteButton {
-	position: relative;
-	float: right;
-	margin: 8px 16px 0 8px;
-}
-
-section article.edition form .more .profiles .edit .deleteButton > a {
-	display: block;
-	text-indent: -9999px;
-	width: 13px;
-	height: 13px;
-	background: no-repeat url(../images/icon_delete_profile.png);
-}
-
-section article.edition form .more .profiles .edit .line_control  {
-	float: right;
-	margin: 3px 9px 0 5px;
-}
-
-section article.edition form .more .profiles .edit .line_control a  {
-	
-	text-decoration: none;
-	display: block;
-	width: 23px;
-	height: 23px;
-	line-height: 23px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	color: #cdcdcd;
-	font-size: 18px;
-	text-align: center;
-	font-weight: bold;
-}
-
-section article.edition form .more .profiles .edit .line_control .delete {
-	background: #232323;
-	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
-	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
-	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
-}
-
-section article.edition form .more .profiles .edit .line_control .add-post {
-	background: #0c0e11;
-	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
-	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
-	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
-	background-image: -webkit-linear-gradient(top, #709a0d, #638000);
-	background-image: -moz-linear-gradient(top, #709a0d, #638000);
-	background-image: -o-linear-gradient(top, #709a0d, #638000);
-	background-image: -ms-linear-gradient(top, #709a0d, #638000);
-	background-image: linear-gradient(to bottom, #709a0d, #638000);
-}
-
-section article.edition form .more .profiles .edit .quantity  {
-	position: relative;
-	float: right;
-	width: 63px;
-	height: 29px;
-}
-
-section article.edition form .more .profiles .edit .quantity input {
-	width: 42px;
-	height: 15px;
-	font-size: 11px;
-	font-weight: bold;
-	padding: 6px 19px 6px 0;
-	text-align: center;
-}
-
-section article.edition form .more .profiles .edit .quantity .number_control  {
-	position: absolute;
-	right: 2px;
-	display: block;
-	width: 17px;
-	height: 12px;
-	text-align: center;
-	text-decoration: none;
-	color: #5d5d5d;
-	font-size: 12px;
-	font-weight: bold;
-}
-
-section article.edition form .more .profiles .edit .quantity .more_quantity {
-	top: 2px;
-	-webkit-border-radius: 0 3px 0 0;
-	-moz-border-radius: 0 3px 0 0;
-	border-radius: 0 3px 0 0;
-	background: #232323;
-	-webkit-box-shadow: inset 0 1px #353535;
-	-moz-box-shadow: inset 0 1px #353535;
-	box-shadow: inset 0 1px #353535;
-}
-
-section article.edition form .more .profiles .edit .quantity .less_quantity {
-	bottom: 2px ;
-	-webkit-border-radius: 0 0 3px;
-	-moz-border-radius: 0 0 3px;
-	border-radius: 0 0 3px;
-	background: #191919;
-	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
-	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
-	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
-}
-
-section article.edition form .more .profiles .confirm {
-	display: none;
-	position: absolute;
-	width: 250px;
-	top: 27px;
-	right: -23px;
-	z-index: 100;
-	font-size: 12px; 
-	color: #d4d4d4;
-	padding: 9px 0;
-	text-align: center;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background-color: #131313;
-	-webkit-box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
-	-moz-box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
-	box-shadow: 0 0 4px rgba(0,0,0,.57), inset 0 1px #2e2e2e;
-}
-
-section article.edition form .more .profiles .confirm:before {
-	position: absolute;
-	top: -8px;
-	right: 23px;
-	content: "";
-	border-left: 7px solid transparent;
-	border-right: 7px solid transparent;
-	border-bottom: 9px solid #131313;
-}
-
-section article.edition form .more .profiles .confirm p {
-	padding-bottom: 3px;
-}
-
-section article.edition form .more .profiles .confirm a {
-	color: #68707d;
-	margin: 0 5px;
-}
-
-section article.edition form .more .profiles .confirm a.confirm_delete_profile:hover {
-	color: #89bc04;
-}
-
-section article.edition form .more .profiles .confirm a.cancel_delete_profile:hover {
-	color: #f63636;
 }
 
 
@@ -2205,6 +2228,10 @@ section article.edition form .more .profiles .confirm a.cancel_delete_profile:ho
 	margin: 37px 0 11px;
 }
 
+.fancybox-overlay #blocDelete form .select ul {
+	width: 355px;
+}
+
 .fancybox-overlay #blocDelete form .select label {
 	display: block;
 	margin-bottom: 15px;
@@ -2232,6 +2259,10 @@ section article.edition form .more .profiles .confirm a.cancel_delete_profile:ho
 	width: 591px;
 	height: 15px;
 	line-height: 15px;
+}
+
+.fancybox-overlay #blocDelete form .field.precise {
+	display: none;
 }
 
 .fancybox-overlay #blocDelete form .text textarea {

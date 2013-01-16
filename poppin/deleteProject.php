@@ -12,15 +12,15 @@
 					<span class="button">Modifier</span>
 				</div>
 				<ul>
-					<li>J'ai composé mon équipe avec clapps</li>
-					<li>J'ai trouvé via un autre service</li>
-					<li>J'ai trouvé via mon réseau</li>
-					<li>Autres</li>
+					<li class="clapps">J'ai composé mon équipe avec clapps</li>
+					<li class="autre_service">J'ai trouvé via un autre service</li>
+					<li class="mon_reseau">J'ai trouvé via mon réseau</li>
+					<li class="autres">Autres</li>
 				</ul>
-				<input type="hidden" name="reason" value="">
+				<input type="hidden" name="reason" class="reason" value="">
 			</div>
 		</div>
-		<div class="field">
+		<div class="field precise">
 			<input type="text" placeholder="Précisez" />
 		</div>
 		<div class="text">

@@ -67,97 +67,42 @@ zf.deleteFavorite = function($this) {
 	});
 };
 
-zf.initEditProject = function() {
-	
-	// change display to edit project
-	zf.$page.on('click','.editProject',function(event) {
-		event.preventDefault();
-		zf.editProject($(this));
-	});
-	
-	// valid update of project
-	zf.$page.on('submit','.project form',function(event) {
-		alert('oui'); 
-		event.preventDefault();
-		zf.updateProject($(this));
-	});
-	
-	// cancel display of editing project
-	zf.$page.on('click','.cancelEditProject',function(event) {
-		event.preventDefault();
-		zf.cancelEditProject($(this));
-	});
-	
-	// button delete project
-	zf.$page.on('click','.block_delete_project .button_delete_project',function(event) {
-		event.preventDefault();
-		$(this).siblings('.confirm').fadeIn(150);
-	});
-	
-	// button cancel delete project
-	zf.$page.on('click','.block_delete_project .cancel_delete_project',function(event) {
-		event.preventDefault();
-		$(this).parents('.confirm').fadeOut(150);
-	});
-	
-	// button valid delete project
-	zf.$page.on('click','.block_delete_project .valid_delete_project',function(event) {
-		event.preventDefault();
-		zf.deleteProject($(this), function(){
-			// lancer la fancybox
-		});
-		console.log('valid delete project');
-		$(this).parents('.confirm').fadeOut(150);
-	});
-	
-	// fancybox delete project 
-	zf.$page.find("a.valid_delete_project").fancybox({
-		afterShow: zf.initDeleteProject,
-		closeClick  : false,
-		helpers   : { 
-			overlay : {closeClick: false}
-		}
-	});
-	
-	// number control
-	zf.$projectsList.on('click','.profiles .quantity .number_control',function(event) {
-		event.preventDefault();
-		zf.numberControlProfile($(this));
-	});
-	
-	// add profile line
-	zf.$projectsList.on('click','.profiles .line_control .add-post',function(event) {
-		event.preventDefault();
-		zf.addLineProfile($(this));
-	});
-	
-	// delete profile line 
-	zf.$projectsList.on('click','.profiles .line_control .delete',function(event) {
-		event.preventDefault();
-		zf.deleteLineProfile($(this));
-	});
-	
-	// button delete existing line
-	zf.$projectsList.on('click','.profiles .edit .deleteButton a',function(event) {
-		event.preventDefault();
-		$(this).siblings('.confirm').fadeIn(150);
-	});
-	
-	//  cancel delete existing line
-	zf.$projectsList.on('click','.profiles .edit .cancel_delete_profile',function(event) {
-		event.preventDefault();
-		$(this).parents('.confirm').fadeOut(150);
-	});
-	//  confirm delete existing line
-	zf.$projectsList.on('click','.profiles .edit .confirm_delete_profile',function(event) {
-		event.preventDefault();
-		$(this).parents('.confirm').fadeOut(150);
-		zf.deleteProfile($(this));
-	});
-	
+zf.editProject = function($this) {
+	$article=$this.parents('article');
+	$article.removeClass('read').addClass('edition');
+	// change display 
+	$this.parent().hide();
+	$this.parent().siblings('.manage-edition').show();
+	// enable fields
+	$article.find("form input").removeAttr("disabled");
+	$article.find("form textarea").removeAttr("disabled");
+	// change profiles
+	$article.find('.block_read').hide();
+	$article.find('.block_edition').show();
+	$article.find('.more .add-line').show();
+	// hide profiles found
+	$article.find('.profileFound').hide();
 };
 
-zf.editProject = function($this) {
+zf.cancelEditProject = function($this) {
+	$article=$this.parents('article');
+	$article.removeClass('edition').addClass('read');
+	// change display 
+	$this.parent().hide();
+	$this.parent().siblings('.manage-read').show();
+	// disable fields
+	$article.find("form input").attr("disabled", "disabled");
+	$article.find("form textarea").attr("disabled", "disabled");
+	// change profiles 
+	$article.find('.more .add-line').hide();
+	$article.find('.block_read').show();
+	$article.find('.block_edition').hide();
+	// show profiles found
+	$article.find('.profileFound').show();
+};
+
+// OLD
+/*zf.editProject = function($this) {
 	$article=$this.parent().parent().parent().parent(); // best practise ???????? .parents('.darkvador')
 	$article.removeClass('read').addClass('edition');
 	// change display 
@@ -171,14 +116,10 @@ zf.editProject = function($this) {
 	$article.find('.more .desc').removeClass('desc').addClass('edit_desc');
 	$article.find('.more .apply').hide();
 	$article.find('.more .edit').show();
-};
-
-zf.updateProject = function($this) {
-	zf.cancelEditProject();
-};
+}; 
 
 zf.cancelEditProject = function($this) {
-	$article=$this.parent().parent().parent().parent(); // best practise ????????
+	$article=$this.parents('article');
 	$article.removeClass('edition').addClass('read');
 	// change display 
 	$this.parent().hide();
@@ -191,7 +132,13 @@ zf.cancelEditProject = function($this) {
 	$article.find('.more .edit_desc').addClass('desc').removeClass('edit_desc');
 	$article.find('.more .edit').hide();
 	$article.find('.more .apply').show();
+};*/
+
+zf.updateProject = function($this) {
+	zf.cancelEditProject();
 };
+
+
 
 zf.deleteProject = function($this) {
 	$.ajax({
@@ -500,70 +447,6 @@ zf.addAnonceFormOk = function($form){
 	return t;
 }
 
-zf.initAddProject = function() {
-	
-	zf.$newProject = $('#newProject');
-
-	zf.autocomplete(zf.$newProject);
-
-	// date picker 
-	zf.$newProject.find( ".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
-	
-	// UP NUMBER CHAR LEFT FOR TITLE
-	zf.$newProject.on('keyup','#title',function(event) {
-		event.preventDefault();
-		var $this = $(this);
-		var charLength = $this.val().length;
-		var $lengthLeft = $this.siblings('em').find('span');
-		var lengthLeft = $this.siblings('em').find('span').data('length');
-		$lengthLeft.html(lengthLeft - charLength);
-	});
-
-	// UP NUMBER VALUES FOR POST
-	zf.$newProject.on('click','.profiles ul li .number_control',function(event) {
-		event.preventDefault();
-		zf.numberControlProfile($(this));
-	});
-	
-	// ADD POST
-	zf.$newProject.on('click','.profiles #add-post',function(event) {
-		event.preventDefault();
-		zf.addLineProfile($(this));
-	});
-	
-	// DELETE POST
-	zf.$newProject.on('click','.profiles .delete',function(event) {
-		event.preventDefault();
-		zf.deleteLineProfile($(this));
-	});
-	
-	// SEND PROJECT
-	zf.$newProject.on('submit', function(event) {
-		event.preventDefault();
-		$('.required').removeClass('empty');
-		if (zf.addAnonceFormOk($(this))) {
-			$.ajax({
-				url: $(this).attr('action'),
-				type: $(this).attr('method'),
-				data: $(this).serialize(),
-				success: function(resp) {
-					// resp = JSON.parse(resp);
-					$.fancybox.close();
-					zf.getOneProject(resp.id);
-					$('.message.success').fadeIn();
-					// location.reload();
-				}
-			});
-			$('.message.error').fadeOut();
-		} else {
-			$('.required[value=]').addClass('empty');
-			// $('.required[value=]').css('border','1px solid red');
-			$('.message.error').fadeIn();
-		}
-		
-	})
-};
-
 zf.numberControlProfile = function($this){
 	zf.$number = $this.siblings('.number');
 	if($this.hasClass('more_quantity')){
@@ -726,7 +609,7 @@ zf.updateFilter = function($this){
 // Filter
 zf.filter = function(){
 	
-	//var
+	// var
 	zf.filterOpen= true;
 	zf.advancedFilterOpen= false;
 	$filter = zf.$page.find('#block_filters');
@@ -745,7 +628,6 @@ zf.filter = function(){
 			zf.$projectsList.animate({paddingTop:"300px"}); // ça passe crème
 		};
 	})
-
 
 	$filter.find('#refresh_button').click(function(event) {
 		event.preventDefault();
@@ -879,22 +761,222 @@ zf.filter = function(){
 	
 };
 
-zf.customFields = function(){
+zf.customFields = function($conteneur){
 	
 	// custom select
-	zf.$page.find(".selector .value, .selector .button ").click(function(){
+	$conteneur.find(".selector .value, .selector .button ").click(function(){
 		var $this = $(this);
 		$(this).parent().siblings('ul').show();
-		console.log($(this).parent().siblings('ul')[0])
 	});
 	
-	zf.$page.find(".selector ul li").click(function(){
+	$conteneur.find(".selector ul li").click(function(){
 		var $this = $(this);
 		$this.parent('ul').hide();
 		$this.parent('ul').siblings('div').find('.value').html($this.html());
 		$this.parent('ul').siblings('input').attr('value', $this.attr('class')).trigger('change');
 	});
 	
+};
+
+zf.initSeeProject = function() {
+	
+	// add to favorite
+	zf.$page.on('click','.favorite_link',function(event) {
+		event.preventDefault();
+		zf.addFavorite($(this));
+	});
+	
+	// remove from favorite
+	zf.$page.on('click','.unfavorite_link',function(event) {
+		event.preventDefault();
+		zf.deleteFavorite($(this));
+	});
+	
+	// see more/less of project
+	zf.$projectsList.on('click','.see-more',function(event) {
+		event.preventDefault();
+		zf.seeMore($(this));
+	});
+	
+	// custom size of fields 
+	zf.$projectsList.find('.project .title input').each(function(){
+		
+	})
+	
+	// custom size of fields 
+	zf.$projectsList.find('.project.read .profiles textarea').each(function(){
+		console.log($(this).height());
+	})
+	
+};
+
+zf.initAddProject = function() {
+	
+	zf.$newProject = $('#newProject');
+
+	zf.autocomplete(zf.$newProject);
+
+	// date picker 
+	zf.$newProject.find( ".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
+	
+	// UP NUMBER CHAR LEFT FOR TITLE
+	zf.$newProject.on('keyup','#title',function(event) {
+		event.preventDefault();
+		var $this = $(this);
+		var charLength = $this.val().length;
+		var $lengthLeft = $this.siblings('em').find('span');
+		var lengthLeft = $this.siblings('em').find('span').data('length');
+		$lengthLeft.html(lengthLeft - charLength);
+	});
+
+	// UP NUMBER VALUES FOR POST
+	zf.$newProject.on('click','.profiles ul li .number_control',function(event) {
+		event.preventDefault();
+		zf.numberControlProfile($(this));
+	});
+	
+	// ADD POST
+	zf.$newProject.on('click','.profiles #add-post',function(event) {
+		event.preventDefault();
+		zf.addLineProfile($(this));
+	});
+	
+	// DELETE POST
+	zf.$newProject.on('click','.profiles .delete',function(event) {
+		event.preventDefault();
+		zf.deleteLineProfile($(this));
+	});
+	
+	// SEND PROJECT
+	zf.$newProject.on('submit', function(event) {
+		event.preventDefault();
+		$('.required').removeClass('empty');
+		if (zf.addAnonceFormOk($(this))) {
+			$.ajax({
+				url: $(this).attr('action'),
+				type: $(this).attr('method'),
+				data: $(this).serialize(),
+				success: function(resp) {
+					// resp = JSON.parse(resp);
+					$.fancybox.close();
+					zf.getOneProject(resp.id);
+					$('.message.success').fadeIn();
+					// location.reload();
+				}
+			});
+			$('.message.error').fadeOut();
+		} else {
+			$('.required[value=]').addClass('empty');
+			// $('.required[value=]').css('border','1px solid red');
+			$('.message.error').fadeIn();
+		}
+		
+	})
+};
+
+zf.initEditProject = function() {
+	
+	// change display to edit project
+	zf.$page.on('click','.editProject',function(event) {
+		event.preventDefault();
+		zf.editProject($(this));
+	});
+	
+	// valid update of project
+	zf.$page.on('submit','.project form',function(event) {
+		alert('oui'); 
+		event.preventDefault();
+		zf.updateProject($(this));
+	});
+	
+	// cancel display of editing project
+	zf.$page.on('click','.cancelEditProject',function(event) {
+		event.preventDefault();
+		zf.cancelEditProject($(this));
+	});
+	
+	// button delete project
+	zf.$page.on('click','.block_delete_project .button_delete_project',function(event) {
+		event.preventDefault();
+		$(this).siblings('.confirm').fadeIn(150);
+	});
+	
+	// button cancel delete project
+	zf.$page.on('click','.block_delete_project .cancel_delete_project',function(event) {
+		event.preventDefault();
+		$(this).parents('.confirm').fadeOut(150);
+	});
+	
+	// button valid delete project
+	zf.$page.on('click','.block_delete_project .valid_delete_project',function(event) {
+		event.preventDefault();
+		zf.deleteProject($(this), function(){
+			// lancer la fancybox
+		});
+		console.log('valid delete project');
+		$(this).parents('.confirm').fadeOut(150);
+	});
+	
+	// fancybox delete project 
+	zf.$page.find("a.valid_delete_project").fancybox({
+		afterShow: zf.initDeleteProject,
+		closeClick  : false,
+		helpers   : { 
+			overlay : {closeClick: false}
+		}
+	});
+	
+	// number control
+	zf.$projectsList.on('click','.profiles .quantity .number_control',function(event) {
+		event.preventDefault();
+		zf.numberControlProfile($(this));
+	});
+	
+	// add profile line
+	zf.$projectsList.on('click','.profiles .line_control .add-post',function(event) {
+		event.preventDefault();
+		zf.addLineProfile($(this));
+	});
+	
+	// delete profile line 
+	zf.$projectsList.on('click','.profiles .line_control .delete',function(event) {
+		event.preventDefault();
+		zf.deleteLineProfile($(this));
+	});
+	
+	// button delete existing line
+	zf.$projectsList.on('click','.profiles .edit .deleteButton a',function(event) {
+		event.preventDefault();
+		$(this).siblings('.confirm').fadeIn(150);
+	});
+	
+	//  cancel delete existing line
+	zf.$projectsList.on('click','.profiles .edit .cancel_delete_profile',function(event) {
+		event.preventDefault();
+		$(this).parents('.confirm').fadeOut(150);
+	});
+	//  confirm delete existing line
+	zf.$projectsList.on('click','.profiles .edit .confirm_delete_profile',function(event) {
+		event.preventDefault();
+		$(this).parents('.confirm').fadeOut(150);
+		zf.deleteProfile($(this));
+	});
+	
+};
+
+zf.initDeleteProject = function() {
+	// init selector
+	zf.customFields($('#blocDelete'));
+	
+	// hide 'precisez' field
+	$value=$('#blocDelete').find('.selector .reason');
+	$value.change(function() {
+		if(($value.attr('value')=="autre_service")||($value.attr('value')=="autres")){
+			$('#blocDelete').find('.precise').fadeIn(300);
+		}else{
+			$('#blocDelete').find('.precise').fadeOut(300);
+		}
+	});
 };
 
 zf.init = function(){
@@ -909,8 +991,9 @@ zf.init = function(){
 	
 	// init elements
 	zf.filter();
+	zf.initSeeProject();
 	zf.initEditProject();
-	zf.customFields();
+	zf.customFields(zf.$page);
 	zf.autocomplete(zf.$page);
 	
 	// Blank links
@@ -1003,18 +1086,6 @@ zf.init = function(){
 		zf.updateFilter($(this));
 	})
 	
-	// add to favorite
-	zf.$page.on('click','.favorite_link',function(event) {
-		event.preventDefault();
-		zf.addFavorite($(this));
-	});
-	
-	// remove from favorite
-	zf.$page.on('click','.unfavorite_link',function(event) {
-		event.preventDefault();
-		zf.deleteFavorite($(this));
-	});
-	
 	// see mine projects
 	zf.$page.on('click','#see-mine',function(event) { // a protéger avec un .queue() (spamclick)
 		event.preventDefault();
@@ -1029,12 +1100,6 @@ zf.init = function(){
 		var $this=$(this);
 		//$this.attr('id','see-mine');
 		zf.seeAll($this,event);
-	});
-	
-	// see more/less of project
-	zf.$projectsList.on('click','.see-more',function(event) {
-		event.preventDefault();
-		zf.seeMore($(this));
 	});
 	
 	// More projects

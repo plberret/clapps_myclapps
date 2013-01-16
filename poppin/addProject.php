@@ -5,8 +5,8 @@
 	<div class="desc">
 		<h3>Informations générales</h3>
 		<div class="field">
-			<input class="required" type="text" name="title" id="title" maxlength="80" placeholder="Titre de votre annonce" />
-			<em><span data-length="80">80</span> caractères restants</em>
+			<input class="required" type="text" name="title" id="title" maxlength="60" placeholder="Titre de votre annonce" />
+			<em><span data-length="60">60</span> caractères restants</em>
 		</div>
 		<div class="text">
 			<textarea class="required" id="desc" name="desc" placeholder="Description de votre annonce..."></textarea>
