@@ -197,21 +197,21 @@ zf.autocomplete = function($this) {
 		var $this=$(this);
 		$thisField = $this.parents('.autocompletion').siblings('.autocomplete')
 		$thisField.val($this.text())
-		$thisField.siblings('.id_place').val($this.data("id"))
+		$thisField.siblings('.id_place, .idjob').val($this.data("id"))
 		$thisField.siblings('.type_place').val($this.data("type"))
 		zf.autocompletionHover = true;
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
 		if (!zf.autocompletionHover) {
 			var $thisField = $(this);
-			$thisField.siblings('.id_place').val($this.find('.autocompletion li.current a').data("id"))
+			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
 			$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
 			if ($this.find('.autocompletion li').length > 0) {
 				console.log($thisField.siblings('.id_place')[0])
 				console.log($this.find('.autocompletion li.current a').data("id"))
 				if (!$this.find('.autocompletion li').hasClass('current')) {
 					$(this).val($this.find('.autocompletion li:first-child a').text())
-					$thisField.siblings('.id_place').val($this.find('.autocompletion li:first-child a').data("id"))
+					$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
 					$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
 				};
 			};
