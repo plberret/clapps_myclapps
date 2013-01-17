@@ -182,14 +182,14 @@
 		}
 	}
 
-	function deleteProject($project){
+	function deleteProject($idProject){
 
 		global $baseDD;
 
 		$user = getIdFromFb();
-		// $R1=$baseDD->prepare('DELETE FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user');
-		$R1=$baseDD->prepare('UPDATE mc_project SET current_state = 0 WHERE id_project = :id_project AND id_creator = :id_user');
-		$R1->bindParam(':id_project',$project['id']);
+		$sql = 'UPDATE mc_project SET current_state = 0 WHERE id_project = :id_project AND id_creator = :id_user';
+		$R1=$baseDD->prepare($sql);
+		$R1->bindParam(':id_project',$idProject['id']);
 		$R1->bindParam(':id_user',$user['id_user']);
 
 		if ($R1->execute()) {
@@ -199,13 +199,37 @@
 		}
 	}
 
+	function deleteProjectWhy($data){
+
+		global $baseDD;
+
+		$user = getIdFromFb();
+		$sql = 'UPDATE mc_project SET reason = :reason, reason_desc = :reason_desc WHERE id_project = :id_project AND id_creator = :id_user';
+		$R1=$baseDD->prepare($sql);
+		$R1->bindParam(':id_project',$data['id']);
+		$R1->bindParam(':id_user',$user['id_user']);
+		$R1->bindParam(':reason',$data['reason']);
+		$R1->bindParam(':reason_desc',$data['desc']);
+
+		$sql2 = 'INSERT INTO mc_remarques (id_user, remarque) VALUES ( :id, :remarque)';
+		$R2=$baseDD->prepare($sql2);
+		$R2->bindParam(':id',$data['id']);
+		$R2->bindParam(':remarque',$data['remarque']);
+
+		if ($R1->execute() && $R2->execute()) {
+			echo json_encode(array(success => true )); // triggered meme si retour vide
+		} else {
+			echo json_encode(array(success => false ));
+		}
+	}
+
 	function getNbProject($user_fb){
 
 		global $baseDD;
-		$sql = 'SELECT count(*) AS nb FROM `mc_project`';
+		$sql = 'SELECT count(*) AS nb FROM `mc_project` WHERE current_state != 0';
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
+			$sql .= ' AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array(':user_fb' => $user_fb);
 		}
 
@@ -238,8 +262,10 @@
 		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
+			$sql .= ' WHERE current_state != 0 AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 			$array = array(':user_fb' => $user_fb);
+		} else {
+			$sql .= ' WHERE current_state = 1';
 		}
 
 		$sql .= " ORDER BY id_project DESC";
@@ -257,7 +283,7 @@
 	 function getProject($id_project){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project";
+		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project AND current_state = 1";
 		$array = array('id_project' => $id_project);
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
@@ -348,10 +374,10 @@
 	 function getProjectsByFilters($page,$filters){
 	 	global $baseDD;
 	 	// SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`
-		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project";
+		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
 
 		if ($filters['domain']) {
-			$sql .= " AND domain = :domain AND pf.current_state = 1";
+			$sql .= " AND domain = :domain";
 		}
 
 		// if ($filters['region']) {
@@ -449,6 +475,7 @@
 		
 		$R1=$baseDD->prepare('SELECT id_user FROM `mc_users` WHERE user_fb = :user_fb');
 		$R1->bindParam(':user_fb',$user_fb);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
 		
 		 if($R1->execute()){
 			$id=$R1->fetch();

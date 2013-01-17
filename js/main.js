@@ -140,7 +140,7 @@ zf.updateProject = function($this) {
 
 
 
-zf.deleteProject = function($this) {
+zf.deleteProject = function($this,callback) {
 	$.ajax({
 		url: 'requests/deleteProject.php',
 		type: 'post',
@@ -149,6 +149,8 @@ zf.deleteProject = function($this) {
 			// resp = JSON.parse(resp);
 			if (resp.success) {
 				$this.parents('article.project').fadeOut();
+				zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())-1);
+				callback();
 			} else {
 
 			}
@@ -298,7 +300,7 @@ zf.seeFiltered = function(url,event){
 				var $this=$(this);
 				setTimeout(function() {
 					if (zf.currentAnim == event) {
-						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
+						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 					} else {
 						console.log('blocked',event)
 					}
@@ -325,7 +327,7 @@ zf.seeAll = function($_this,event) {
 				var $this=$(this);
 				setTimeout(function() {
 					if (zf.currentAnim == event) {
-						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
+						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 					} else {
 						console.log('blocked',event)
 					}
@@ -354,7 +356,7 @@ zf.seeMine = function($_this,event) {
 				setTimeout(function() {
 					if (zf.currentAnim == event) {
 					// zf.$projectsList.append($this.hide().fadeIn(500));
-						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
+						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 					} else {
 						console.log('blocked',event)
 					}
@@ -380,7 +382,7 @@ zf.getMoreProjects = function($this,event) {
 
 			setTimeout(function() {
 				if (event == zf.currentAnim) {
-					zf.$projectsList.find('.btn-more-projects').before($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
+					zf.$projectsList.find('.btn-more-projects').before($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 				}
 				else {
 					console.log('bloked',event)
@@ -610,12 +612,19 @@ zf.updateFilter = function($this){
 zf.filter = function(){
 	
 	// var
+	oldValue = "";
 	zf.filterOpen= true;
 	zf.advancedFilterOpen= false;
 	$filter = zf.$page.find('#block_filters');
 	advancedFilter = zf.$page.find('#filter_advanced');
-	$filter.find('input').focusout(function(){
-		$filter.trigger('submit');
+	$filter.find('input').click(function(event) {
+		event.preventDefault();
+		oldValue = $(this).val()
+	})
+	.focusout(function(event){
+		if (oldValue != $(this).val()) {
+			$filter.trigger('submit');
+		};
 	}).end().find('#date_filter').change(function(){
 		$filter.trigger('submit');
 	})
@@ -630,7 +639,20 @@ zf.filter = function(){
 	})
 
 	$filter.find('#refresh_button').click(function(event) {
+		// init filter
 		event.preventDefault();
+		$filter.find('input[type=text]').val('');
+		var defaultDate = $filter.find('#selector_date ul li').eq(0)
+		$filter.find('#date_filter_selected').text(defaultDate.text());
+		$filter.find('#date_filter').val(defaultDate.attr('class'));
+		var $dist = $filter.find('#distances li a.current');
+		if (!$dist.hasClass('100')) {
+			$dist.removeClass('current');
+			$filter.find('#distance').val('100');
+			$filter.find('#distances li a.100').addClass('current');
+		};
+
+
 		zf.seeFiltered($(this).attr('href'),event);
 	})
 
@@ -861,6 +883,7 @@ zf.initAddProject = function() {
 					$.fancybox.close();
 					zf.getOneProject(resp.id);
 					$('.message.success').fadeIn();
+					zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
 					// location.reload();
 				}
 			});
@@ -910,21 +933,23 @@ zf.initEditProject = function() {
 	// button valid delete project
 	zf.$page.on('click','.block_delete_project .valid_delete_project',function(event) {
 		event.preventDefault();
+		var $this=$(this);
 		zf.deleteProject($(this), function(){
 			// lancer la fancybox
+			$.fancybox.open($this,{
+				afterShow: zf.initDeleteProject,
+				closeClick  : false,
+				helpers   : { 
+					overlay : {closeClick: false}
+				}
+			})
 		});
 		console.log('valid delete project');
 		$(this).parents('.confirm').fadeOut(150);
 	});
 	
 	// fancybox delete project 
-	zf.$page.find("a.valid_delete_project").fancybox({
-		afterShow: zf.initDeleteProject,
-		closeClick  : false,
-		helpers   : { 
-			overlay : {closeClick: false}
-		}
-	});
+
 	
 	// number control
 	zf.$projectsList.on('click','.profiles .quantity .number_control',function(event) {
@@ -965,18 +990,33 @@ zf.initEditProject = function() {
 };
 
 zf.initDeleteProject = function() {
+	var $thisFancy=$(this);
 	// init selector
 	zf.customFields($('#blocDelete'));
+	zf.$customFields = $('#blocDelete');
 	
 	// hide 'precisez' field
-	$value=$('#blocDelete').find('.selector .reason');
+	$value=zf.$customFields.find('.selector .reason');
 	$value.change(function() {
 		if(($value.attr('value')=="autre_service")||($value.attr('value')=="autres")){
-			$('#blocDelete').find('.precise').fadeIn(300);
+			zf.$customFields.find('.precise').fadeIn(300);
 		}else{
-			$('#blocDelete').find('.precise').fadeOut(300);
+			zf.$customFields.find('.precise').fadeOut(300);
 		}
 	});
+
+	zf.$customFields.on('submit', 'form',function(event) {
+		event.preventDefault();
+		$.ajax({
+				url: 'requests/deleteProjectWhy.php',
+				type: 'post',
+				type: 'post',
+				data: $(this).serialize()+'&id='+$thisFancy[0].element.data('id'),
+				success: function(resp) {
+					// $('.message.success').fadeIn();
+				}
+			});
+	})
 };
 
 zf.init = function(){
