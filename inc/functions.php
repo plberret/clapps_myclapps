@@ -147,17 +147,26 @@
 			$ID=$baseDD->lastInsertId('mc_project');
 		}
 		foreach ($data['profile'] as $dat => $key) {
-			if (!empty($data['profile'][$dat]) && !empty($data['domain'][$dat])) {
-				$R2=$baseDD->prepare("INSERT INTO `mc_profile` (id_project, person, occurence, domain) VALUES ( :id, :person, :occurence, :domain)");
-				$R2->bindParam(':id',$ID);
-				$R2->bindParam(':person',$data['profile'][$dat]);
-				$R2->bindParam(':occurence',$data['occurence'][$dat]);
-				$R2->bindParam(':domain',$data['domain'][$dat]);
-				if($R2->execute()){}
+			if (!empty($data['profile'][$dat])) {
+				if (empty($data['id_job'][$dat])) {
+					$R2=$baseDD->prepare("INSERT INTO `mc_jobs` (name, domain) VALUES ( :name, 3)");
+					$R2->bindParam(':name',$data['name'][$dat]);
+					if($R2->execute()){
+						$IDJOB=$baseDD->lastInsertId('mc_jobs');
+					}
+				} else {
+					$IDJOB = $data['id_job'][$dat];
+				}
+				$R3=$baseDD->prepare("INSERT INTO `mc_profile` (id_project, person, occurence, id_job) VALUES ( :id, :person, :occurence, :id_job)");
+				$R3->bindParam(':id',$ID);
+				$R3->bindParam(':person',$data['profile'][$dat]);
+				$R3->bindParam(':occurence',$data['occurence'][$dat]);
+				$R3->bindParam(':id_job',$IDJOB);
+				if($R3->execute()){
+					echo json_encode(array('id' => $ID));
+				}
 			}
 		}
-
-		echo json_encode(array('id' => $ID));
 	}
 
 	function addFilter($filter){
@@ -289,7 +298,7 @@
 	 function getProjects($page,$user_fb){
 
 		global $baseDD;
-		$sql = "SELECT id_project, loop, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+		$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
 			$sql .= ' WHERE current_state != 0 AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
@@ -313,7 +322,7 @@
 	 function getProject($id_project){
 
 		global $baseDD;
-		$sql = "SELECT id_project, loop, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project AND current_state = 1";
+		$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project AND current_state = 1";
 		$array = array('id_project' => $id_project);
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
@@ -507,11 +516,28 @@
 		$R1->bindParam(':user_fb',$user_fb);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 		
-		 if($R1->execute()){
+		if($R1->execute()){
 			$id=$R1->fetch();
 		}
 		
 		return $id;
+	}
+
+	function profileFound($data){
+		global $baseDD;
+
+		$user = getIdFromFb();
+
+		$sql = 'UPDATE mc_profile SET current_state = 2  WHERE id_profile = :id_profile AND id_project = (SELECT id_project FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user)';
+		$R1=$baseDD->prepare($sql);
+		$R1->bindParam(':id_user',$user['id_user']);
+		$R1->bindParam(':id_profile',$data['id_profile']);
+		$R1->bindParam(':id_project',$data['id_project']);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+		
+		if($R1->execute()){
+			echo json_encode(array('success' => true ));
+		}
 	}
 
 	function getActiveActors($project){
