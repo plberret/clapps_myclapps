@@ -655,14 +655,14 @@ zf.filter = function(){
 		$filter.trigger('submit');
 	})
 
-	$(document).bind('mousewheel',function(event){
+/*	$(document).bind('mousewheel',function(event){
 		if ($(document).scrollTop()<=128 && !zf.filterOpen && event.originalEvent.wheelDelta > 0) {
 			zf.$projectsList.css({paddingTop:"180px"});
 			$(document).scrollTop(0);
 		} else if ($(document).scrollTop()<=128 && zf.filterOpen && event.originalEvent.wheelDelta > 0) {
 			zf.$projectsList.animate({paddingTop:"300px"}); // ça passe crème
 		};
-	})
+	}) */
 
 	$filter.find('#refresh_button').click(function(event) {
 		// init filter
@@ -682,7 +682,7 @@ zf.filter = function(){
 		zf.seeFiltered($(this).attr('href'),event);
 	})
 
-	zf.$page.find('#searchButton, .open_filtre').click(function(event){
+/*	zf.$page.find('#searchButton, .open_filtre').click(function(event){
 		event.preventDefault();
 		if(zf.filterOpen==true){
 			$height= "-135";
@@ -706,7 +706,7 @@ zf.filter = function(){
 			});
 		};
 		//return false;
-	});
+	}); */
 	
 	advancedFilter.find('.nav a').click(function(event){
 		event.preventDefault();
@@ -906,15 +906,13 @@ zf.initAddProject = function() {
 				type: $(this).attr('method'),
 				data: $(this).serialize(),
 				success: function(resp) {
-					// resp = JSON.parse(resp);
-					
 					zf.getOneProject(resp.id);
-					$('.message.success').fadeIn();
+					$('#successAddProject').fadeIn();
+					$.fancybox.close();
 					setTimeout(function(){
-						$.fancybox.close();
+						$('#successAddProject').fadeOut();
 					},5000);
 					zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
-					// location.reload();
 				}
 			});
 			$('.message.error').fadeOut();
@@ -1093,8 +1091,6 @@ zf.init = function(){
 		if (event.target.localName != 'span' && event.target.className!='button') {
 			$('#col2 .field .selector ul').hide()
 		};
-		//zf.$projectsList.find('.deleteButton .confirm').fadeOut(150);
-		// $('.autocompletion').remove();
 	})
 	
 	// extendProject
@@ -1207,11 +1203,6 @@ zf.init = function(){
 		var $this=$(this);
 		//$this.attr('id','see-mine');
 		zf.seeAll($this,event);
-	});
-	
-	$(window).scroll(function() {
-	    //$('#myElement').css('top', $(this).scrollTop() + "px");
-	console.log('scroll');
 	});
 	
 	// More projects

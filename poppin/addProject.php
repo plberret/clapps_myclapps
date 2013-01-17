@@ -62,10 +62,6 @@
 	<div class="clearfix">
 		<input type="submit" id="add-project" value="Publier l'annonce" />
 	</div>
-	
-	<div class="message success">
-		<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
-	</div>
 	<div class="message error">
 		<p><span>Veuillez remplir tous les champs.</span></p>
 	</div>

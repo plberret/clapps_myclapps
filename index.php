@@ -180,7 +180,9 @@
 		</header>
 	
 		<section id="projects">
-	
+			<div id="successAddProject" class="message success">
+				<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
+			</div>
 			<?php
 				if (isset($_GET['id_project'])) : // one project
 					$getProjects=getProject($_GET['id_project']);

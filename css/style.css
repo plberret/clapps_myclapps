@@ -176,6 +176,34 @@ header, footer, section, article, nav {
 	color: #010101;
 }
 
+/* messages */
+
+.message {
+	display: none;
+	position: relative;
+	width: 510px;
+	line-height: 16px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	font-size: 12px;
+	color: #ffffff;
+	padding: 7px 47px 7px 50px;
+}
+
+.message span {
+	font-weight: bold;
+}
+
+.message.success {
+	border-top: 1px solid #8eb709;
+	background: no-repeat url(../images/icon_success.png) 10px center #628100;
+}
+
+.message.error {
+	border-top: 1px solid #b52200;
+	background: no-repeat url(../images/icon_fail.png) 10px center #921b00;
+}
+
 /* -------------------------------- MISE EN PAGE -----------------------------------*/
 
 body {
@@ -333,6 +361,9 @@ header #block_filters {
 	position: absolute;
 	top: 58px;
 	width: 810px;
+	/* en attendant la sortie de l'app */
+	display: none;
+	/* en attendant la sortie de l'app */
 }
 
 header #filter {
@@ -909,11 +940,19 @@ header #block_current_filter #notif_email input[type=submit] {
 /* --------------------------- CONTENT ---------------------------- */
 
 section {
-	padding-top: 300px;
+	/* en attendant la sortie de l'app */
+	/* padding-top: 300px; */
+	/* en attendant la sortie de l'app */
+	padding-top: 120px;
 }
 
 section #newProject {
 	display: none;
+}
+
+section #successAddProject {
+	width: 587px; 
+	margin-bottom: 20px;
 }
 
 .btn-more-projects {
@@ -1179,6 +1218,7 @@ section article .preview .desc p {
 	color: #8c8c8c;
 	font-size: 12px;
 	width: 632px;
+	word-wrap: break-word;
 }
 
 section article .preview .desc textarea {
@@ -1884,32 +1924,6 @@ section article #see_button:hover a {
 	-webkit-box-shadow: inset 0 0 2px #000;
 	-moz-box-shadow: inset 0 0 2px #000;
 	box-shadow: inset 0 0 2px #000;
-}
-
-.fancybox-overlay form .message {
-	display: none;
-	position: relative;
-	width: 510px;
-	line-height: 16px;
-	margin: 0 auto;
-	margin-bottom: 10px;
-	font-size: 12px;
-	color: #ffffff;
-	padding: 7px 47px 7px 50px;
-}
-
-.fancybox-overlay form .message span {
-	font-weight: bold;
-}
-
-.fancybox-overlay form .message.success {
-	border-top: 1px solid #8eb709;
-	background: no-repeat url(../images/icon_success.png) 10px center #628100;
-}
-
-.fancybox-overlay form .message.error {
-	border-top: 1px solid #b52200;
-	background: no-repeat url(../images/icon_fail.png) 10px center #921b00;
 }
 
 .fancybox-overlay form#newProject .empty {
