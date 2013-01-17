@@ -1,6 +1,5 @@
 <?php 
-// $user_fb="BBBBBBBB";
-//$user_fb="AAAAAAAA";
+
 require_once 'settings.php';
 require_once 'FBSDK/facebook.php';
 
@@ -21,12 +20,13 @@ $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
 
 if (empty($data["user_id"])){
 	if(empty($user_fb)) {
+		
 		// if(empty($_SESSION['data']['user_id'])) {
-			// echo("<script> top.location.href='" . $auth_url . "'</script>");
-		$user_fb=$data['user_id'];
+		 	echo("<script> top.location.href='" . $auth_url . "'</script>");
+			//echo("<script> top.location.href='" . $auth_url . "'</script>");
+			// header('Location: '.$auth_url );   
 	}
 }
 	$user_fb = $facebook->getUser();
-	$loginUrl = $facebook->getLoginUrl();
 
 ?>

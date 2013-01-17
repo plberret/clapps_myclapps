@@ -1,6 +1,6 @@
 <?php
 	
-	require_once 'init.php';
+	require_once 'initFb.php';
 	require_once 'settings.php';
 	require_once 'connect.php';
 
