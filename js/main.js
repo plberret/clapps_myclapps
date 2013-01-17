@@ -621,8 +621,7 @@ zf.filter = function(){
 	$filter.find('input').click(function(event) {
 		event.preventDefault();
 		oldValue = $(this).val()
-	})
-	.focusout(function(event){
+	}).focusout(function(event){
 		if (oldValue != $(this).val()) {
 			$filter.trigger('submit');
 		};
@@ -1065,6 +1064,34 @@ zf.init = function(){
 		// $('.autocompletion').remove();
 	})
 	
+	// extendProject
+	zf.$projectsList.find('.extendProject').on('click',function(event) {
+		event.preventDefault();
+		var $this=$(this);
+		$.ajax({
+			url: 'requests/activateProject.php',
+			type: 'post',
+			data: {id:$this.data('id')},
+			success: function(resp) {
+				console.log(resp);
+			}
+		});
+	});
+
+	// profileFound
+	zf.$projectsList.find('.profile_found').on('click',function(event) {
+		event.preventDefault();
+		var $this=$(this);
+		$.ajax({
+			url: 'requests/profileFound.php',
+			type: 'post',
+			data: {id_project:$this.data('id'),id_profile:$this.data('idprofile')},
+			success: function(resp) {
+				console.log(resp);
+			}
+		});
+	});
+
 	// date picker 
 	zf.$page.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy'});
 	
