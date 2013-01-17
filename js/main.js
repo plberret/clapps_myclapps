@@ -105,23 +105,30 @@ zf.deleteFavorite = function($this) {
 
 zf.editProject = function($this) {
 	$article=$this.parents('article');
+	zf.$oldArticle = $article.clone();
 	$article.removeClass('read').addClass('edition');
 	// change display 
-	$this.parent().hide();
-	$this.parent().siblings('.manage-edition').show();
+	$this.parent().addClass('hide');
+	$this.parent().siblings('.manage-edition').removeClass('hide');
 	// enable fields
 	$article.find("form input").removeAttr("disabled");
 	$article.find("form textarea").removeAttr("disabled");
 	// change profiles
-	$article.find('.block_read').hide();
-	$article.find('.block_edition').show();
-	$article.find('.more .add-line').show();
+	$article.find('.block_read').addClass('hide');
+	$article.find('.block_edition').removeClass('hide');
+	$article.find('.more .add-line').removeClass('hide');
 	// hide profiles found
-	$article.find('.profileFound').hide();
+	$article.find('.profileFound').addClass('hide');
+
+
 };
 
 zf.cancelEditProject = function($this) {
-	$article=$this.parents('article');
+	// $article=$this.parents('article');
+	$this.parents('article').html(zf.$oldArticle.html()).removeClass('edition').addClass('read');
+
+	/*
+
 	$article.removeClass('edition').addClass('read');
 	// change display 
 	$this.parent().hide();
@@ -135,6 +142,8 @@ zf.cancelEditProject = function($this) {
 	$article.find('.block_edition').hide();
 	// show profiles found
 	$article.find('.profileFound').show();
+
+	*/
 };
 
 zf.updateProject = function($this) {
@@ -1085,7 +1094,11 @@ zf.init = function(){
 			type: 'post',
 			data: {id_project:$this.data('id'),id_profile:$this.data('idprofile')},
 			success: function(resp) {
-				console.log(resp);
+				// console.log(resp);
+				$this.parent().siblings('.icon').find('span').fadeOut();
+				$this.parents('li.profile').addClass('profileFound');
+				$this.parent().addClass('applyFound').html('Candidat trouvé');
+
 			}
 		});
 	});

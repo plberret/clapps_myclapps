@@ -276,12 +276,15 @@
 														<?php if (!isAdmin($project,$user_fb)): ?>
 															<a href="#">Postuler</a>
 														<?php else: ?>
-															<a href="#" class="profile_found" data-id="<?php echo $profile['id'] ?>"  data-idprofile="<?php echo $project['id_project'] ?>" >J'ai trouvé</a>
+															<a href="#" class="profile_found" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" >J'ai trouvé</a>
 														<?php endif; ?>
 													</div>
 												</div>
-												<div class="block_edition">
-													<div class="add_job add_field field"><input type="text" class="job autocomplete entitled" placeholder="Métier recherché"  value="Exemple de métier"/></div>
+												<div class="block_edition hide">
+													<div class="add_job add_field field">
+														<input type="text" class="job autocomplete entitled" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>"/>
+														<input type="hidden" class="idjob" name="id_job" value="<?php echo $profile['id_job']; ?>" />
+													</div>
 													<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" value="<?php echo $profile['person']; ?>" /></div>
 													<div class="edit">
 														<div class="deleteButton">
@@ -318,7 +321,7 @@
 											<div class="apply applyFound">Candidat trouvé</div>
 											</li>
 										<?php } ?>
-										<li class="add-line profile clearfix">
+										<li class="add-line hide profile clearfix">
 											<div class="add_job add_field field"><input type="text" class="job autocomplete entitled" placeholder="Métier recherché" /></div>
 											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
 											<div class="edit">
@@ -347,7 +350,7 @@
 										<?php if (($valideDate>0)&&($valideDate<=DAY_UNTIL_REACTIVATE)): ?><a href="#" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
 										<a href="#" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 									</div>
-									<div class="manage manage-edition clearfix">
+									<div class="manage manage-edition hide clearfix">
 										<div class="block_delete_project">
 											<a href="javascript:void(0)" class="button_delete_project big_button">Supprimer l'annonce</a>
 											<div class="confirm">
