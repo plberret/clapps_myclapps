@@ -202,7 +202,7 @@
 					$getProjects=getProjects($page,$_GET['user_fb']);
 				endif;
 				foreach ($getProjects as $project): 
-					$valideDate = getValideDate($project['create_date']); // check if project was revalidate, (don't use create_date but update_date)
+					$valideDate = getValideDate($project['create_date'],$project['loop']); // check if project was revalidate, (don't use create_date but update_date)
 				?>
 					<article class="project read <?php if (isFavorite($project,$user_fb)): ?> favorite<?php endif ?>">
 						<form action="">
@@ -271,12 +271,12 @@
 													<div class="icon <?php echo $profileDomain; ?>">
 														<span><?php echo $profile['occurence']; ?></span>
 													</div>
-													<div class="desc"><p><span>Exemple de métier : </span><?php echo $profile['person']; ?></p></div>
+													<div class="desc"><p><span><?php echo $profile['name']; ?> : </span><?php echo $profile['person']; ?></p></div>
 													<div class="apply">
 														<?php if (!isAdmin($project,$user_fb)): ?>
 															<a href="#">Postuler</a>
 														<?php else: ?>
-															<a href="#">J'ai trouvé</a>
+															<a href="#" class="profile_found" data-id="<?php echo $profile['id'] ?>"  data-idprofile="<?php echo $project['id_project'] ?>" >J'ai trouvé</a>
 														<?php endif; ?>
 													</div>
 												</div>
@@ -314,7 +314,7 @@
 											<li class="clearfix profileFound">
 												<div class="icon <?php echo $profileDomain; ?>">
 												</div>
-												<div class="desc"><?php echo $profile['person']; ?></div>
+												<div class="desc"><p><span><?php echo $profile['name']; ?> : </span><?php echo $profile['person']; ?></p></div>
 											<div class="apply applyFound">Candidat trouvé</div>
 											</li>
 										<?php } ?>
@@ -343,8 +343,8 @@
 												<span class="finish">Désactivée</span>
 											<?php endif ?>
 										</p>
-										<?php if ($valideDate<0): ?><a href="#" class="extendProject big_button">Réactiver l'annonce</a><?php endif; ?>
-										<?php if (($valideDate>0)&&($valideDate<3)): ?><a href="#" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
+										<?php if ($valideDate<0): ?><a href="#" class="extendProject big_button" data-id="<?php echo $project['id_project'] ?>">Réactiver l'annonce</a><?php endif; ?>
+										<?php if (($valideDate>0)&&($valideDate<=DAY_UNTIL_REACTIVATE)): ?><a href="#" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
 										<a href="#" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 									</div>
 									<div class="manage manage-edition clearfix">

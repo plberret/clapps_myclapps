@@ -1,20 +1,50 @@
 <?php
 	
 	require_once 'init.php';
+	require_once 'settings.php';
 	require_once 'connect.php';
 
-	function getValideDate($date){
+	function getValideDate($date,$loop){
 		$tsstart = DateTime::createFromFormat('Y-m-j',$date);
 		$start = $tsstart->getTimestamp();
 		$now = time();
 		$nbjours = ($now-$start)/(60*60*24);
-		$tt = strtotime('+2 week',$date);
-		$tt = 15*(60*60*24);
-		// var_dump($start + $tt);
-		// echo date('j/m/Y',$start + $tt);
+		$nb = 2+$loop;
+		$tt = $nb*7*(60*60*24); // $nb semaines
 		return intval(-($now - ($start + $tt))/(60*60*24));
 		// return date('j', strtotime('+2 week',$date));
 		// return $nbjours;
+	}
+
+	function activateProject($data){
+		
+		global $baseDD;
+
+		$user = getIdFromFb();
+		var_dump($data);
+		var_dump($user);
+		$sql = 'SELECT create_date, `loop` FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user';
+		$R1=$baseDD->prepare($sql);
+		$R1->bindParam(':id_project',$data['id']);
+		$R1->bindParam(':id_user',$user['id_user']);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+
+		if($R1->execute()){
+			$result=$R1->fetch();
+			var_dump($result);
+			if (getValideDate($result['create_date'],$result['loop'])<=DAY_UNTIL_REACTIVATE) {
+				$loop = $result['loop']+1;
+				echo $loop;
+				$R2=$baseDD->prepare('UPDATE mc_project SET `loop` = :loop WHERE id_project = :id_project');
+				$R2->bindParam(':loop',$loop);
+				$R2->bindParam(':id_project',$data['id']);
+				if ($R2->execute()) {
+					echo json_encode(array(success => true ));
+				}
+			}
+		}
+
+
 	}
 
 	function dateFormat($format, $date){
@@ -259,7 +289,7 @@
 	 function getProjects($page,$user_fb){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+		$sql = "SELECT id_project, loop, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
 			$sql .= ' WHERE current_state != 0 AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
@@ -268,7 +298,7 @@
 			$sql .= ' WHERE current_state = 1';
 		}
 
-		$sql .= " ORDER BY id_project DESC";
+		$sql .= " ORDER BY `loop` DESC, id_project DESC";
 		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 
 // echo $sql;
@@ -283,7 +313,7 @@
 	 function getProject($id_project){
 
 		global $baseDD;
-		$sql = "SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project AND current_state = 1";
+		$sql = "SELECT id_project, loop, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project AND current_state = 1";
 		$array = array('id_project' => $id_project);
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
@@ -374,7 +404,7 @@
 	 function getProjectsByFilters($page,$filters){
 	 	global $baseDD;
 	 	// SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`
-		$sql =  "SELECT pj.id_project, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
+		$sql =  "SELECT pj.id_project, pj.loop, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
 
 		if ($filters['domain']) {
 			$sql .= " AND domain = :domain";
@@ -385,7 +415,7 @@
 		// }
 
 		$sql .= " GROUP BY pj.id_project";
-		$sql .= " ORDER BY id_project DESC";
+		$sql .= " ORDER BY `loop` DESC, id_project DESC";
 		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		
 		$R1=$baseDD->prepare($sql);
@@ -406,7 +436,7 @@
 		
 		global $baseDD;
 		
-		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` WHERE id_project=:project AND current_state=1");
+		 $R1=$baseDD->prepare("SELECT mcp.* , mcj.* FROM `mc_profile` AS mcp, mc_jobs AS mcj WHERE mcp.id_project=:project AND mcp.id_job=mcj.id_job AND current_state=1");
 		 $R1->bindParam(':project',$project);
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 		
@@ -421,7 +451,7 @@
 		
 		global $baseDD;
 		
-		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` WHERE id_project=:project AND current_state=2");
+		 $R1=$baseDD->prepare("SELECT mcp.* , mcj.* FROM `mc_profile` AS mcp, mc_jobs AS mcj WHERE mcp.id_project=:project AND mcp.id_job=mcj.id_job AND current_state=2");
 		 $R1->bindParam(':project',$project);
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 		
@@ -488,7 +518,7 @@
 
 		global $baseDD;
 
-		 $R1=$baseDD->prepare("SELECT person, occurence FROM `mc_profile` WHERE id_project=:project AND domain=1 AND current_state=1 ");
+		 $R1=$baseDD->prepare("SELECT person, occurence FROM `mc_profile` AS mcp, mc_jobs AS mcj WHERE id_project=:project AND mcp.id_job=mcj.id_job AND domain=1 AND current_state=1 ");
 		 $R1->bindParam(':project',$project);
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -504,7 +534,7 @@
 
 		global $baseDD;
 
-		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` WHERE id_project=:project AND domain=2 AND current_state=1 ");
+		 $R1=$baseDD->prepare("SELECT * FROM `mc_profile` AS mcp, mc_jobs AS mcj WHERE id_project=:project AND mcp.id_job=mcj.id_job AND domain=2 AND current_state=1 ");
 		 $R1->bindParam(':project',$project);
 		 $R1->setFetchMode(PDO::FETCH_ASSOC);
 
