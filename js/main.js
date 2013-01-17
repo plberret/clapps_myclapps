@@ -942,7 +942,9 @@ zf.initEditProject = function() {
 				closeClick  : false,
 				helpers   : { 
 					overlay : {closeClick: false}
-				}
+				},
+				scrolling : 'no',
+				topRatio : 0
 			})
 			// scrollTop 
 			FB.Canvas.scrollTo(0,0);
