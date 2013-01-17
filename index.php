@@ -353,7 +353,7 @@
 											<div class="confirm">
 												<p>êtes-vous sûr de vouloir supprimer ?</p>
 												<div>
-													<a href="poppin/deleteProject.php" class="fancybox.ajax valid_delete_project">Oui</a>
+													<a href="poppin/deleteProject.php" data-id="<?php echo $project['id_project'] ?>" class="fancybox.ajax valid_delete_project">Oui</a>
 													<a href="javascript:void(0)" class="cancel_delete_project">Annuler</a>
 												</div>
 											</div>
