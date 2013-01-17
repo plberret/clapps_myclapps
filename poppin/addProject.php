@@ -41,8 +41,8 @@
 					<a href="#" class="delete">-</a>
 				</div>
 			</li>
-			<li class="clearfix">
-				<input type="text" placeholder="Métier recherché" class="job" />
+			<li class="clearfix field">
+				<input type="text" placeholder="Métier recherché" class="job autocomplete" />
 				<input type="hidden" name="domain[]" value="3" />
 				<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
 				<div>
