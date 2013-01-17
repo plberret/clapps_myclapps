@@ -3,6 +3,8 @@
 require_once 'settings.php';
 require_once 'FBSDK/facebook.php';
 
+require_once './inc/functions.php';
+
 $facebook = new Facebook(array(
 	'appId' => APP_ID,
 	'secret' => APP_SECRET,
@@ -19,14 +21,14 @@ list($encoded_sig, $payload) = explode('.', $signed_request, 2);
 $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
 
 if (empty($data["user_id"])){
-	if(empty($user_fb)) {
-		
 		// if(empty($_SESSION['data']['user_id'])) {
-		 	echo("<script> top.location.href='" . $auth_url . "'</script>");
+		 	// echo("<script> top.location.href='" . $auth_url . "'</script>");
 			//echo("<script> top.location.href='" . $auth_url . "'</script>");
 			// header('Location: '.$auth_url );   
+} else {
+	if (!getIdFromFb()) {
+		$data =$facebook->api('/me');
+		createUser($data);
 	}
 }
-	$user_fb = $facebook->getUser();
-
 ?>
