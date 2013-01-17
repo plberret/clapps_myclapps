@@ -42,7 +42,7 @@
 				</div>
 			</li>
 			<li class="clearfix field">
-				<input type="text" placeholder="Métier recherché" class="job autocomplete" />
+				<input type="text" placeholder="Métier recherché" class="job autocomplete" name="name[]" />
 				<input type="hidden" name="id_job[]" class="idjob" />
 				<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
 				<div>

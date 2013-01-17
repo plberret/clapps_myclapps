@@ -43,8 +43,6 @@
 				}
 			}
 		}
-
-
 	}
 
 	function dateFormat($format, $date){
@@ -252,7 +250,7 @@
 
 		$sql2 = 'INSERT INTO mc_remarques (id_user, remarque) VALUES ( :id, :remarque)';
 		$R2=$baseDD->prepare($sql2);
-		$R2->bindParam(':id',$data['id']);
+		$R2->bindParam(':id',$user['id_user']);
 		$R2->bindParam(':remarque',$data['remarque']);
 
 		if ($R1->execute() && $R2->execute()) {
@@ -521,6 +519,19 @@
 		}
 		
 		return $id;
+	}
+
+	function createUser($data){
+		global $baseDD;
+
+		$name = $data['firstname'].' '.$data['lastname'];
+		$R1=$baseDD->prepare('INSERT INTO `mc_users` (user_fb, name) VALUES (:user_fb, :name)');
+		$R1->bindParam(':user_fb',$data['id']);
+		$R1->bindParam(':name',$data['name']);
+
+		if($R1->execute()){
+			$ID=$baseDD->lastInsertId('mc_users');
+		}
 	}
 
 	function profileFound($data){
