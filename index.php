@@ -93,7 +93,7 @@
 							<label for="selector_date">Date</label>
 							<div class="selector" id="selector_date">
 								<div>
-									<span class="value" id="date_filter_selected">Dés que possible</span>
+									<span class="value" id="date_filter_selected">Indifférent</span>
 									<span class="button">Modifier</span>
 								</div>
 								<ul>
@@ -102,7 +102,7 @@
 									<li class="month">Ce mois-ci</li>
 									<li class="trimestre">Ce trimestre</li>
 								</ul>
-								<input type="hidden" name="date_filter" id="date_filter" value="now">
+								<input type="hidden" name="date_filter" id="date_filter" value="">
 							</div>
 						</div>
 					</div>
@@ -259,7 +259,7 @@
 										<?php $getProfiles=getProfiles($project['id_project']); ?>
 										<?php $getProfilesFound=getProfilesFound($project['id_project']); ?>
 										<?php foreach ($getProfiles as $profile) { ?>
-											<li class="clearfix">
+											<li class="clearfix profile">
 												<?php 
 													if($profile['domain']==1){
 														$profileDomain="iconActor"; 
@@ -311,14 +311,14 @@
 													$profileDomain="iconTechnician"; 
 												} 
 											?>
-											<li class="clearfix profileFound">
+											<li class="clearfix profile profileFound">
 												<div class="icon <?php echo $profileDomain; ?>">
 												</div>
 												<div class="desc"><?php echo $profile['person']; ?></div>
 											<div class="apply applyFound">Candidat trouvé</div>
 											</li>
 										<?php } ?>
-										<li class="add-line clearfix">
+										<li class="add-line profile clearfix">
 											<div class="add_job add_field field"><input type="text" class="job autocomplete entitled" placeholder="Métier recherché" /></div>
 											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
 											<div class="edit">

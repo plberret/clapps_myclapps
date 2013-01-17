@@ -1,7 +1,43 @@
+
+// requestAnim shim layer by Paul Irish
+var lastTime = 0;
+var vendors = ['ms', 'moz', 'webkit', 'o'];
+for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+	window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+	window.cancelAnimationFrame = 
+	window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+}
+
+if (!window.requestAnimationFrame)
+window.requestAnimationFrame = function(callback, element) {
+	var currTime = new Date().getTime();
+	var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+	var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+	timeToCall);
+	lastTime = currTime + timeToCall;
+	return id;
+};
+
+if (!window.cancelAnimationFrame)
+window.cancelAnimationFrame = function(id) {
+	clearTimeout(id);
+};
+
+
 /* FUNCTIONS
 --------------------------------------------------------------------------------------------------------------------------------------*/
 
 var zf = zf || {};
+
+
+zf.launchScrollEvent = function() {
+	zf.rAFLaunchAnim = requestAnimationFrame(zf.launchScrollEvent);
+	console.log('scroll test');
+	FB.Canvas.getPageInfo( function(info) {
+	//	console.log( info.scrollTop );
+	//	$('header').css({top: info.scrollTop});
+	}); 
+};
 
 zf.isBlank = function(str) {
 	return (!str || /^\s*$/.test(str));
@@ -101,44 +137,9 @@ zf.cancelEditProject = function($this) {
 	$article.find('.profileFound').show();
 };
 
-// OLD
-/*zf.editProject = function($this) {
-	$article=$this.parent().parent().parent().parent(); // best practise ???????? .parents('.darkvador')
-	$article.removeClass('read').addClass('edition');
-	// change display 
-	$this.parent().hide();
-	$this.parent().siblings('.manage-edition').show();
-	// enable fields
-	$article.find("form input").removeAttr("disabled");
-	$article.find("form textarea").removeAttr("disabled");
-	// change profiles 
-	$article.find('.more .add-line').show();
-	$article.find('.more .desc').removeClass('desc').addClass('edit_desc');
-	$article.find('.more .apply').hide();
-	$article.find('.more .edit').show();
-}; 
-
-zf.cancelEditProject = function($this) {
-	$article=$this.parents('article');
-	$article.removeClass('edition').addClass('read');
-	// change display 
-	$this.parent().hide();
-	$this.parent().siblings('.manage-read').show();
-	// disable fields
-	$article.find("form input").attr("disabled", "disabled");
-	$article.find("form textarea").attr("disabled", "disabled");
-	// change profiles 
-	$article.find('.more .add-line').hide();
-	$article.find('.more .edit_desc').addClass('desc').removeClass('edit_desc');
-	$article.find('.more .edit').hide();
-	$article.find('.more .apply').show();
-};*/
-
 zf.updateProject = function($this) {
 	zf.cancelEditProject();
 };
-
-
 
 zf.deleteProject = function($this) {
 	$.ajax({
@@ -354,7 +355,7 @@ zf.seeMine = function($_this,event) {
 				setTimeout(function() {
 					if (zf.currentAnim == event) {
 					// zf.$projectsList.append($this.hide().fadeIn(500));
-						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'500px'}).animate({left:'0',opacity:1},500));
+						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'50px'}).animate({left:'0',opacity:1},500));
 					} else {
 						console.log('blocked',event)
 					}
@@ -912,18 +913,31 @@ zf.initEditProject = function() {
 		event.preventDefault();
 		zf.deleteProject($(this), function(){
 			// lancer la fancybox
+			// start scroll top
 		});
-		console.log('valid delete project');
+	/*	$('html, body').animate({
+			scrollTop: 0
+		}, 2000, function(){
+			console.log('yes sir yes');
+		}); */
+		
+		FB.Canvas.getPageInfo(function(info) {
+			fbScrollTop = info.scrollTop;
+			console.log(fbScrollTop);
+		});
+		FB.Canvas.scrollTo(0,0);
 		$(this).parents('.confirm').fadeOut(150);
 	});
-	
+		
 	// fancybox delete project 
 	zf.$page.find("a.valid_delete_project").fancybox({
 		afterShow: zf.initDeleteProject,
 		closeClick  : false,
 		helpers   : { 
 			overlay : {closeClick: false}
-		}
+		},
+		scrolling : 'no',
+		topRatio : 0
 	});
 	
 	// number control
@@ -1011,7 +1025,7 @@ zf.init = function(){
 	
 	// show tuto
 	zf.$page.find("#infoButton a").click(function(event) {
-		zf.$page.find("#tuto").show().css({'top': '58px'});
+	//	zf.$page.find("#tuto").show().css({'top': '58px'});
 	});
 	
 	// close select & autocompletion
@@ -1054,8 +1068,10 @@ zf.init = function(){
 		afterShow: zf.initAddProject,
 		closeClick  : false,
 		helpers   : { 
-			overlay : {closeClick: false}
-		}
+			overlay : {closeClick: false},
+		},
+		scrolling : 'no',
+		topRatio : 0
 	});
 	
 	// init page tab of filter
@@ -1102,6 +1118,11 @@ zf.init = function(){
 		zf.seeAll($this,event);
 	});
 	
+	$(window).scroll(function() {
+	    //$('#myElement').css('top', $(this).scrollTop() + "px");
+	console.log('scroll');
+	});
+	
 	// More projects
 	zf.projectCurrentPage = parseInt(zf.$projectsList.find('.btn-more-projects a').data('nav'),10) || 0;
 	zf.$projectsList.on('click','.btn-more-projects a',function(event) {
@@ -1109,6 +1130,7 @@ zf.init = function(){
 		zf.getMoreProjects($(this),event);
 	});
 	
+	zf.launchScrollEvent();
 };
 
 /* DOM READY

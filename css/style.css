@@ -151,7 +151,7 @@ header, footer, section, article, nav {
 
 .autocompletion {
 	position: absolute;
-	z-index:500;
+	z-index: 500;
 	background: #131313;
 	width: 232px;
 	margin-top: 1px;
@@ -306,8 +306,6 @@ header #bar_top nav ul li.myProject #see-mine .number {
 
 header #bar_top .bar_top_button {
 	float: right;
-	width: 48px;
-	height: 58px;
 	border-left: 1px solid #282828;
 }
 
@@ -1269,12 +1267,12 @@ section article .profiles {
 	padding-top: 24px;
 }
 
-section article .profiles ul {
+section article .profiles > ul {
 	width: 662px;
 	margin: 0 auto;
 }
 
-section article .profiles ul li {
+section article .profiles ul li.profile {
 	position: relative;
 	background: repeat url(../images/pattern-bloc-acteur.png);
 	-webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.75);
@@ -2035,35 +2033,39 @@ section article #see_button:hover a {
 
 /* liste des postes recherchés */
 
-.fancybox-overlay #newProject .profiles ul li {
+.fancybox-overlay #newProject .profiles li {
 	position: relative;
 	margin: 4px 0;
 }
 
-.fancybox-overlay #newProject .profiles ul li input {
+.fancybox-overlay #newProject .profiles li input {
 	height: 17px;
 	line-height: 17px;
 	padding: 5px 10px;
 }
 
-.fancybox-overlay #newProject .profiles ul li input.job {
+.fancybox-overlay #newProject .profiles li input.job {
 	width: 149px;
 	margin-right: 4px;
 }
 
-.fancybox-overlay #newProject .profiles ul li input.entitled {
+.fancybox-overlay #newProject .profiles li input.entitled {
 	width: 314px;
 	margin-right: 4px;
 }
 
-.fancybox-overlay #newProject .profiles ul li .quantity  {
+.fancybox-overlay #newProject .profiles li #autocJobs {
+	top: 28px;
+}
+
+.fancybox-overlay #newProject .profiles li .quantity  {
 	position: relative;
 	float: left;
 	width: 63px;
 	height: 29px;
 }
 
-.fancybox-overlay #newProject .profiles ul li .quantity input {
+.fancybox-overlay #newProject .profiles li .quantity input {
 	width: 42px;
 	height: 15px;
 	font-size: 11px;
@@ -2072,7 +2074,7 @@ section article #see_button:hover a {
 	text-align: center;
 }
 
-.fancybox-overlay #newProject .profiles ul li .quantity .number_control  {
+.fancybox-overlay #newProject .profiles li .quantity .number_control  {
 	position: absolute;
 	right: 2px;
 	display: block;
@@ -2085,7 +2087,7 @@ section article #see_button:hover a {
 	font-weight: bold;
 }
 
-.fancybox-overlay #newProject .profiles ul li .quantity .more_quantity {
+.fancybox-overlay #newProject .profiles li .quantity .more_quantity {
 	top: 2px;
 	-webkit-border-radius: 0 3px 0 0;
 	-moz-border-radius: 0 3px 0 0;
@@ -2096,7 +2098,7 @@ section article #see_button:hover a {
 	box-shadow: inset 0 1px #353535;
 }
 
-.fancybox-overlay #newProject .profiles ul li .quantity .less_quantity {
+.fancybox-overlay #newProject .profiles li .quantity .less_quantity {
 	bottom: 2px ;
 	-webkit-border-radius: 0 0 3px;
 	-moz-border-radius: 0 0 3px;
@@ -2157,9 +2159,9 @@ section article #see_button:hover a {
 	background-image: linear-gradient(to bottom, #709a0d, #638000);
 }
 
-.fancybox-overlay #newProject .profiles input,
-.fancybox-overlay #newProject .profiles select, 
-.fancybox-overlay #newProject .profiles a {
+.fancybox-overlay #newProject .profiles li input,
+.fancybox-overlay #newProject .profiles li select, 
+.fancybox-overlay #newProject .profiles li div a {
 	float: left;
 }
 
