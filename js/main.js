@@ -880,9 +880,12 @@ zf.initAddProject = function() {
 				data: $(this).serialize(),
 				success: function(resp) {
 					// resp = JSON.parse(resp);
-					$.fancybox.close();
+					
 					zf.getOneProject(resp.id);
 					$('.message.success').fadeIn();
+					setTimeout(function(){
+						$.fancybox.close();
+					},5000);
 					zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
 					// location.reload();
 				}
@@ -1013,7 +1016,10 @@ zf.initDeleteProject = function() {
 				type: 'post',
 				data: $(this).serialize()+'&id='+$thisFancy[0].element.data('id'),
 				success: function(resp) {
-					// $('.message.success').fadeIn();
+					 $('.message.success').fadeIn();
+					setTimeout(function(){
+						$.fancybox.close();
+					},2000);
 				}
 			});
 	})
