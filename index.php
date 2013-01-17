@@ -55,18 +55,7 @@
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
 					<p>Vous recherchez <span class="time">dès que possible</span> un poste<span class="work"> d'un ingénieur du son</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
-				</div>
-				<div id="notif_email">
-					<p>Être tenu au courant des nouveautés de Clapps</p>
-					<form action="requests/addListSubscribe.php" id="addSubscribe" class="clearfix">
-						<input type="text" name="email" placeholder="votreadresse@email.com" />
-						<input type="submit" value="Je reste informé" />
-					</form>
-				</div>
-			</div>
-			<div id="block_current_filter" class="clearfix none">
-				<div id="current_filter">
-					<p>Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
+					<p class="none">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
 				</div>
 				<div id="notif_email">
 					<p>Être tenu au courant des nouveautés de Clapps</p>
@@ -97,12 +86,13 @@
 									<span class="button">Modifier</span>
 								</div>
 								<ul>
+									<li class="all">Indifférent</li>
 									<li class="now">Dès que possible</li>
 									<li class="week">Cette semaine</li>
 									<li class="month">Ce mois-ci</li>
 									<li class="trimestre">Ce trimestre</li>
 								</ul>
-								<input type="hidden" name="date_filter" id="date_filter" value="">
+								<input type="hidden" name="date_filter" id="date_filter" value="all">
 							</div>
 						</div>
 					</div>
@@ -241,7 +231,8 @@
 								</div>
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
-									<textarea disabled="disabled"><?php echo $project['description']; ?></textarea>
+									<textarea class="hide" id='animated'><?php echo $project['description']; ?></textarea>
+									<p><?php echo $project['description']; ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
@@ -439,6 +430,7 @@
 	<script src="js/libs/jquery-ui.datepicker.js"></script>
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/libs/jquery.autosize.js" type="text/javascript" charset="utf-8"></script>
 	<script src="./js/main.js"></script>
 	<script type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
 	

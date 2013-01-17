@@ -9,7 +9,7 @@
 			<em><span data-length="60">60</span> caractères restants</em>
 		</div>
 		<div class="text">
-			<textarea class="required" id="desc" name="desc" placeholder="Description de votre annonce..."></textarea>
+			<textarea class="required" id='animated' name="desc" placeholder="Description de votre annonce..."></textarea>
 		</div>
 		<div id="block_place" class="clearfix">
 			<div class="date field">

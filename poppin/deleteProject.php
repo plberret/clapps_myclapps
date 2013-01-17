@@ -8,7 +8,7 @@
 			<label for="">Pourquoi avez-vous supprimé votre annonce ?</label>
 			<div class="selector">
 				<div>
-					<span class="value" id="date_filter_selected">J'ai composé mon équipe avec clapps</span>
+					<span class="value" id="date_filter_selected">Sélectionnez une raison...</span>
 					<span class="button">Modifier</span>
 				</div>
 				<ul>

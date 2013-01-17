@@ -989,7 +989,7 @@ section article.edition form textarea {
 
 section article .preview {
 	position: relative;
-	height: 240px;
+/*	height: 240px; */
 	z-index: 2;
 	background: repeat url(../images/pattern-annonce-replie.png);
 	border: 1px solid #2c2c2c;
@@ -1165,7 +1165,7 @@ section article .preview .share a.unfavorite_link {
 
 section article .preview .desc {
 	margin: 0 24px 11px;
-	height: 80px;
+	/*height: 80px;*/
 }
 
 section article .preview .desc h3 {
@@ -1175,10 +1175,17 @@ section article .preview .desc h3 {
 	padding-bottom: 13px;
 }
 
-section article .preview .desc textarea:disabled {
+section article .preview .desc p {
 	color: #8c8c8c;
 	font-size: 12px;
 	width: 632px;
+}
+
+section article .preview .desc textarea {
+	vertical-align: top;
+	-webkit-transition: height 0.2s;
+	-moz-transition: height 0.2s;
+	transition: height 0.2s;
 }
 
 section article .preview .bloc_see_more {

@@ -112,15 +112,15 @@ zf.editProject = function($this) {
 	$this.parent().siblings('.manage-edition').removeClass('hide');
 	// enable fields
 	$article.find("form input").removeAttr("disabled");
-	$article.find("form textarea").removeAttr("disabled");
+	// display description
+	$article.find('.preview .desc p').addClass('hide');
+	$article.find('.preview .desc textarea').removeClass('hide').autosize({append: "\n"});
 	// change profiles
 	$article.find('.block_read').addClass('hide');
 	$article.find('.block_edition').removeClass('hide');
 	$article.find('.more .add-line').removeClass('hide');
 	// hide profiles found
 	$article.find('.profileFound').addClass('hide');
-
-
 };
 
 zf.cancelEditProject = function($this) {
@@ -272,6 +272,23 @@ zf.switchNotif = function($this) {
 		left: position,
 	}, 300, 'easeInOutQuint');
 }
+
+/*
+(function($) { 
+    // jQuery function to set a maximum length or characters for a page element it can handle mutiple elements
+        $.fn.createExcerpts = function(elems,length,more_txt) {
+        $.each($(elems), function() { 
+            var item_html = $(this).html(); //
+            item_html = item_html.replace(/<\/?[^>]+>/gi, ''); //replace html tags
+            item_html = jQuery.trim(item_html);  //trim whitespace
+            $(this).html(item_html.substring(0,length)+more_txt);  //update the html on page
+        });
+        return this; //allow jQuery chaining 
+    }
+})(jQuery);
+
+/example call
+$().createExcerpts('.blogpost',280,'...'); */
 
 zf.addSubscribe = function($this){
 	$.ajax({
@@ -433,7 +450,7 @@ zf.getFilteredProjects = function($this,event){
 	// actualise current_filter block
 	$currentFilter = zf.$page.find('#block_current_filter');
 	$currentFilter.show();
-	zf.$page.find('#block_current_filter.none').hide();
+	zf.$page.find('#block_current_filter p.none').hide();
 	$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
 	$currentFilter.find('.work').text(' '+$this.find('#profile').val())
 	$currentFilter.find('.location').text($this.find('#location').val())
@@ -846,6 +863,7 @@ zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 
 	zf.autocomplete(zf.$newProject);
+	zf.$newProject.find('textarea').autosize({append: "\n"});
 
 	// date picker 
 	zf.$newProject.find( ".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
@@ -1010,7 +1028,7 @@ zf.initDeleteProject = function() {
 	// hide 'precisez' field
 	$value=zf.$customFields.find('.selector .reason');
 	$value.change(function() {
-		if(($value.attr('value')=="autre_service")||($value.attr('value')=="autres")){
+		if(($value.attr('value')=="autre_service")||($value.attr('value')=="autre")){
 			zf.$customFields.find('.precise').fadeIn(300);
 		}else{
 			zf.$customFields.find('.precise').fadeOut(300);
