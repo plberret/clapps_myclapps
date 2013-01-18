@@ -121,7 +121,7 @@ zf.editProject = function($this) {
 	// hide profiles found
 	$article.find('.profileFound').addClass('hide');
 	// disable button see-button
-	$article.find('.see-button').addClass('hide');
+	$article.find('#block_see_button').fadeOut(250);
 };
 
 zf.cancelEditProject = function($this) {
@@ -165,6 +165,8 @@ zf.editProjectPartTwo = function($this) {
 	$article.find('.more .add-line').addClass('hide');
 	// hide profiles found
 	$article.find('.profileFound').removeClass('hide');
+	// enable button see-more
+	$article.find('#block_see_button').fadeIn(250);
 };
 
 zf.updateProject = function($this) {
