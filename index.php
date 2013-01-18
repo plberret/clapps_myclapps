@@ -204,7 +204,8 @@
 									<img src="https://graph.facebook.com/<?php echo $project['id_creator'] ?>/picture" alt="photo profil <?php echo $project['name_creator'] ?>" />
 									<div class="title_block">
 										<div class="title">
-											<h2><input type="text" disabled="disabled" value="<?php echo $project['title']; ?>" maxlength="60"></h2>
+											<h2><input type="text" disabled="disabled" name="title" value="<?php echo $project['title']; ?>" maxlength="60" ></h2>
+											<input type="hidden" name="id_project" value="<?php echo $project['id_project'] ?>">
 											<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
 										</div>
 										<div class="available clearfix">
@@ -238,6 +239,7 @@
 									<p><?php echo $project['description']; ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
+		
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
 									<div class="date"><input type="text" disabled="disabled" class="datepicker" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
 									<div class="place field">
@@ -276,10 +278,10 @@
 												</div>
 												<div class="block_edition hide">
 													<div class="add_job add_field field">
-														<input type="text" class="job autocomplete entitled" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>"/>
-														<input type="hidden" class="idjob" name="id_job" value="<?php echo $profile['id_job']; ?>" />
+														<input type="text" class="job autocomplete entitled" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>" name="name[]" />
+														<input type="hidden" class="idjob" name="id_job[]" value="<?php echo $profile['id_job']; ?>" />
 													</div>
-													<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" value="<?php echo $profile['person']; ?>" /></div>
+													<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
 													<div class="edit">
 														<div class="deleteButton">
 															<a href="#" class="button_delete_profile">Supprimer</a>
@@ -316,8 +318,9 @@
 											</li>
 										<?php } ?>
 										<li class="add-line hide profile clearfix">
-											<div class="add_job add_field field"><input type="text" class="job autocomplete entitled" placeholder="Métier recherché" /></div>
-											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" /></div>
+											<div class="add_job add_field field"><input type="text" class="job autocomplete entitled" placeholder="Métier recherché" name="name[]" /></div>
+											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" name="profile[]"/></div>
+											<input type="hidden" class="idjob" name="id_job[]" />
 											<div class="edit">
 												<div class="line_control">
 													<a href="#" class="add-post">+</a>
