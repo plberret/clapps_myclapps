@@ -181,7 +181,7 @@ zf.updateProject = function($_this) {
 					// console.log($_this)
 					// $this.find('.see-more').trigger('click');
 					$this.find('.more').show();
-					$this.find('.see-more').removeClass('see-more').addClass('see-less').html('<span>Voir</span> moins').show();
+					$this.find('.see-more').removeClass('see-more').addClass('see-less').html('<span>Voir</span> moins').css({'display':'block'});
 					$next = $_this.parent().next();
 					$_this.remove()
 					$next.before($this);
