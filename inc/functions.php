@@ -144,8 +144,16 @@
 			$array['description'] = $data['desc'];
 		 }
 
+		 if (!empty($data['date_filter'])) {
+		 	if (!empty($data['desc']) || !empty($data['title'])) {
+		 		$sql .= ",";
+			}
+			$sql .= " date_filter = :date_filter";
+			$array['date_filter'] = $data['date_filter'];
+		 }
+
 		if ($data['id_place']) {
-			if (!empty($data['desc']) || !empty($data['title'])) {
+			if (!empty($data['desc']) || !empty($data['title']) || empty($data['date_filter']) ) {
 				$sql .= ",";
 			}
 			$array['place_villes'] = 0;
