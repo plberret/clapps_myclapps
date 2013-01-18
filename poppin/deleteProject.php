@@ -12,7 +12,7 @@
 					<span class="button">Modifier</span>
 				</div>
 				<ul>
-					<li class="clapps">J'ai composé mon équipe avec clapps</li>
+					<li class="clapps">J'ai composé mon équipe avec Clapps</li>
 					<li class="autre_service">J'ai trouvé via un autre service</li>
 					<li class="mon_reseau">J'ai trouvé via mon réseau</li>
 					<li class="autre">Autre</li>

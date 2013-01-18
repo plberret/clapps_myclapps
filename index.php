@@ -235,7 +235,7 @@
 								</div>
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
-									<textarea class="hide" id='animated' name="desc"><?php echo $project['description']; ?></textarea>
+									<textarea class="hide" id='normal'><?php echo $project['description']; ?></textarea>
 									<p><?php echo $project['description']; ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">

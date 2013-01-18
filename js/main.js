@@ -113,7 +113,7 @@ zf.editProject = function($this) {
 	$article.find("form input").removeAttr("disabled");
 	// display description
 	$article.find('.preview .desc p').addClass('hide');
-	$article.find('.preview .desc textarea').removeClass('hide').autosize({append: "\n"});
+	$article.find('.preview .desc textarea').removeClass('hide').autosize();
 	// change profiles
 	$article.find('.block_read').addClass('hide');
 	$article.find('.block_edition').removeClass('hide');
@@ -121,7 +121,7 @@ zf.editProject = function($this) {
 	// hide profiles found
 	$article.find('.profileFound').addClass('hide');
 	// disable button see-button
-	$article.find('.see-button').addClass('hide');
+	$article.find('#block_see_button').fadeOut(250);
 };
 
 zf.cancelEditProject = function($this) {
@@ -165,6 +165,8 @@ zf.editProjectPartTwo = function($this) {
 	$article.find('.more .add-line').addClass('hide');
 	// hide profiles found
 	$article.find('.profileFound').removeClass('hide');
+	// enable button see-more
+	$article.find('#block_see_button').fadeIn(250);
 };
 
 zf.updateProject = function($_this) {
@@ -952,7 +954,7 @@ zf.initAddProject = function() {
 	})
 
 	zf.autocomplete(zf.$newProject);
-	zf.$newProject.find('textarea').autosize({append: "\n"});
+	zf.$newProject.find('textarea').autosize();
 
 	// date picker 
 	zf.$newProject.find( ".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
@@ -1023,11 +1025,12 @@ zf.initAddProject = function() {
 };
 
 zf.initEditProject = function() {
-	
+		
 	// change display to edit project
 	zf.$page.on('click','.editProject',function(event) {
 		event.preventDefault();
 		zf.editProject($(this));
+		// date picker 
 	});
 	
 	// valid update of project

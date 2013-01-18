@@ -1223,9 +1223,6 @@ section article .preview .desc p {
 
 section article .preview .desc textarea {
 	vertical-align: top;
-	-webkit-transition: height 0.2s;
-	-moz-transition: height 0.2s;
-	transition: height 0.2s;
 }
 
 section article .preview .bloc_see_more {
