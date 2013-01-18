@@ -167,14 +167,23 @@ zf.editProjectPartTwo = function($this) {
 	$article.find('.profileFound').removeClass('hide');
 };
 
-zf.updateProject = function($this) {
+zf.updateProject = function($_this) {
 	$.ajax({
 		url: 'requests/updateProject.php',
 		type: 'post',
-		data: $this.serialize(),
+		data: $_this.serialize(),
 		success: function(resp) {
 			if (resp.success) {
-				zf.editProjectPartTwo($this);
+				// zf.editProjectPartTwo($this);
+				zf.getOneProject(resp.id,function($this){
+					// console.log($_this)
+					// $this.find('.see-more').trigger('click');
+					$this.find('.more').show();
+					$this.find('.see-more').removeClass('see-more').addClass('see-less').html('<span>Voir</span> moins').show();
+					$next = $_this.parent().next();
+					$_this.remove()
+					$next.before($this);
+				})
 			} else {
 
 			}
@@ -231,7 +240,7 @@ zf.autocomplete = function($this) {
 		$thisField = $this.parents('.autocompletion').siblings('.autocomplete')
 		if (!zf.autocompletionHover) {
 			zf.oldAutocomplete = $thisField.val();
-			console.log(zf.oldAutocomplete);
+			// console.log(zf.oldAutocomplete);
 		}
 		$thisField.val($this.text())
 		$thisField.siblings('.id_place, .idjob').val($this.data("id"))
@@ -239,7 +248,6 @@ zf.autocomplete = function($this) {
 		zf.autocompletionHover = true;
 	}).on('mouseleave', 'ul.autocompletion', function(){
 		var $this=$(this);
-		console.log('rrrkrkrk')
 		$thisField = $this.siblings('.autocomplete')
 		$thisField.val(zf.oldAutocomplete);
 		zf.autocompletionHover = false;
@@ -250,8 +258,8 @@ zf.autocomplete = function($this) {
 			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
 			$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
 			if ($this.find('.autocompletion li').length > 0) {
-				console.log($thisField.siblings('.id_place')[0])
-				console.log($this.find('.autocompletion li.current a').data("id"))
+				// console.log($thisField.siblings('.id_place')[0])
+				// console.log($this.find('.autocompletion li.current a').data("id"))
 				if (!$this.find('.autocompletion li').hasClass('current')) {
 					$(this).val($this.find('.autocompletion li:first-child a').text())
 					$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
@@ -296,7 +304,7 @@ zf.switchNotif = function($this) {
 			url: 'requests/disableNotifFilter.php',
 			type: 'post',
 			success: function(resp) {
-				console.log(resp);
+				// console.log(resp);
 			}
 		});
 	}else{
@@ -306,7 +314,7 @@ zf.switchNotif = function($this) {
 			url: 'requests/enableNotifFilter.php',
 			type: 'post',
 			success: function(resp) {
-				console.log(resp);
+				// console.log(resp);
 			}
 		});
 	}
@@ -340,7 +348,7 @@ zf.addSubscribe = function($this){
 		type: 'post',
 		data: $this.serialize(),
 		success: function(resp) { 
-			 console.log(resp);
+			 // console.log(resp);
 		}
 	});
 }
@@ -373,13 +381,15 @@ zf.seeFiltered = function(url,event){
 					if (zf.currentAnim == event) {
 						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 					} else {
-						console.log('blocked',event)
+						// console.log('blocked',event)
 					}
 				},i*300);
 			});
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
 			setTimeout(function() {
-				zf.$projectsList.append($this.find('.btn-more-projects'));
+				if (zf.currentAnim == event) {
+					zf.$projectsList.append($this.find('.btn-more-projects'));
+				}
 			},$this.find('.project').length*300)
 		});
 	});
@@ -400,14 +410,16 @@ zf.seeAll = function($_this,event) {
 					if (zf.currentAnim == event) {
 						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 					} else {
-						console.log('blocked',event)
+						// console.log('blocked',event)
 					}
 					// zf.$projectsList.append($this.hide().fadeIn(500));
 				},i*300);
 			});
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
 			setTimeout(function() {
-				zf.$projectsList.append($this.find('.btn-more-projects'));
+				if (zf.currentAnim == event) {
+					zf.$projectsList.append($this.find('.btn-more-projects'));
+				}
 			},$this.find('.project').length*300)
 		});
 	});
@@ -429,13 +441,15 @@ zf.seeMine = function($_this,event) {
 					// zf.$projectsList.append($this.hide().fadeIn(500));
 						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 					} else {
-						console.log('blocked',event)
+						// console.log('blocked',event)
 					}
 				},i*300);
 			});
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
 			setTimeout(function() {
-				zf.$projectsList.append($this.find('.btn-more-projects'));
+				if (zf.currentAnim == event) {
+					zf.$projectsList.append($this.find('.btn-more-projects'));
+				}
 			},$this.find('.project').length*300)
 		});
 	});
@@ -456,7 +470,7 @@ zf.getMoreProjects = function($this,event) {
 					zf.$projectsList.find('.btn-more-projects').before($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 				}
 				else {
-					console.log('bloked',event)
+					// console.log('bloked',event)
 				}
 				// zf.$projectsList.find('.btn-more-projects').before($this.hide().fadeIn(500)); // old
 			},i*300);
@@ -469,14 +483,18 @@ zf.getMoreProjects = function($this,event) {
 	});
 }
 
-zf.getOneProject = function(id) {
+zf.getOneProject = function(id,callback) {
 	var $newProject = $('<div/>');
 	$newProject.load('index.php?id_project='+id+' #projects',function(resp) {
 		$newProject.find('.project').each(function(i) {
 			var $this=$(this);
-			setTimeout(function() {
-				zf.$projectsList.find('.project').eq(0).before($this.hide().fadeIn(1000));
-			},1000);
+			if (callback) {
+				callback($this)
+			} else {
+				setTimeout(function() {
+					zf.$projectsList.find('.project').eq(0).before($this.hide().fadeIn());
+				},1000);
+			}
 		})
 	});
 }
@@ -509,7 +527,7 @@ zf.getFilteredProjects = function($this,event){
 zf.addAnonceFormOk = function($form){
 	// console.log(zf.$newProject.find('.field input'))
 	var t = true;
-	console.log($form.find('.required'))
+	// console.log($form.find('.required'))
 	$form.find('.required').each(function(){
 		if ($(this).val().trim().length == 0) {
 			// console.log($(this))
@@ -535,23 +553,24 @@ zf.numberControlProfile = function($this){
 zf.addLineProfile = function($this){
 	$projet=$this.parents('form');
 	// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
-		var newPost = $projet.find('.profiles ul li:last').clone().find('.entitled').val('').siblings('.number').val('1').end().end();
+		var newPost = $projet.find('.profiles ul li:last').clone().find('.plp').val('').siblings('.number').val('1').end().end();
 		$this.attr('id','').removeClass('add-post').addClass('delete').html('-');
 		$projet.find('.profiles ul').append(newPost);
 	// };
-	$this.parents('.profiles').find('.required').removeClass('required').end().children('ul li').eq(0).find('input[type=text]').addClass('required');
+	$this.parents('.profiles').find('.required').removeClass('required').end().find('li').eq(0).find('.plp').addClass('required')
+
 }
 
 zf.deleteLineProfile = function($this){
 	var $tparent = $this.parents('.profiles');
+	$this.parents('li').remove();
+	$tparent.find('.required').removeClass('required').end().find('li').eq(0).find('.plp').addClass('required')
 	//if ($this.parent('div').siblings('.entitled').val()!='') { // if last post isn't empty
 	//	var oldPost = $this.parents('li').clone().end().remove(); // recovery oldPost mb
-		console.log('1');
+		// console.log('1');
 	//} else {
-		$this.parents('li').remove();
-		console.log('2');
+		// console.log('2');
 	//}
-	$tparent.find('.required').removeClass('required').end().children('div').eq(0).find('input[type=text]').addClass('required');
 }
 
 zf.deleteProfile = function($this){
@@ -833,7 +852,7 @@ zf.filter = function(){
 			data: {filter : $this.serialize()},
 			success: function(resp) {
 				// resp = JSON.parse(resp);
-				console.log(resp);
+				// console.log(resp);
 				$this.find("#tab1").children().hide().end().append('<p class="alert">Votre filtre a bien été sauvegardé !</p>').delay(1500).fadeOut(function(){
 					$this.find("#tab1").children().show().end().find('.alert').remove()
 
@@ -880,7 +899,7 @@ zf.getPlacePosition = function(lieu){
 	zf.geocoder.geocode( { 'address': lieu}, function(results, status) {
 		/* Si l'adresse a pu être géolocalisée */
 		if (status == google.maps.GeocoderStatus.OK) {
-			console.log(results[0]);
+			// console.log(results[0]);
 		} else {
 			alert("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
 		}
@@ -917,7 +936,7 @@ zf.initSeeProject = function() {
 	
 	// custom size of fields 
 	zf.$projectsList.find('.project.read .profiles textarea').each(function(){
-		console.log($(this).height());
+		// console.log($(this).height());
 	})
 	
 };
@@ -969,20 +988,27 @@ zf.initAddProject = function() {
 	// SEND PROJECT
 	zf.$newProject.on('submit', function(event) {
 		event.preventDefault();
+		var $this=$(this);
+		$this.find('#add-project').attr('disabled','disabled')
 		$('.required').removeClass('empty');
-		if (zf.addAnonceFormOk($(this))) {
+		if (zf.addAnonceFormOk($this)) {
 			$.ajax({
-				url: $(this).attr('action'),
-				type: $(this).attr('method'),
-				data: $(this).serialize(),
+				url: $this.attr('action'),
+				type: $this.attr('method'),
+				data: $this.serialize(),
 				success: function(resp) {
-					zf.getOneProject(resp.id);
-					$('#successAddProject').fadeIn();
-					$.fancybox.close();
-					setTimeout(function(){
-						$('#successAddProject').fadeOut();
-					},5000);
-					zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
+					if (resp.success) {
+						zf.getOneProject(resp.id);
+						$('#successAddProject').fadeIn();
+						$.fancybox.close();
+						setTimeout(function(){
+							$('#successAddProject').fadeOut();
+						},5000);
+						zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
+					} else {
+						$('.message.error').fadeIn();
+						$this.find('#add-project').removeAttr('disabled')
+					}
 				}
 			});
 			$('.message.error').fadeOut();
@@ -990,6 +1016,7 @@ zf.initAddProject = function() {
 			$('.required[value=]').addClass('empty');
 			// $('.required[value=]').css('border','1px solid red');
 			$('.message.error').fadeIn();
+			$this.find('#add-project').removeAttr('disabled')
 		}
 		
 	})
@@ -1170,7 +1197,7 @@ zf.init = function(){
 			type: 'post',
 			data: {id:$this.data('id')},
 			success: function(resp) {
-				console.log(resp);
+				// console.log(resp);
 			}
 		});
 	});

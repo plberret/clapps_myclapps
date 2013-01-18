@@ -235,7 +235,7 @@
 								</div>
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
-									<textarea class="hide" id='animated'><?php echo $project['description']; ?></textarea>
+									<textarea class="hide" id='animated' name="desc"><?php echo $project['description']; ?></textarea>
 									<p><?php echo $project['description']; ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
@@ -278,10 +278,10 @@
 												</div>
 												<div class="block_edition hide">
 													<div class="add_job add_field field">
-														<input type="text" class="job autocomplete entitled" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>" name="name[]" />
+														<input type="text" class="job autocomplete plp" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>" name="name[]" />
 														<input type="hidden" class="idjob" name="id_job[]" value="<?php echo $profile['id_job']; ?>" />
 													</div>
-													<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
+													<div class="add_desc add_field"><input type="text" class="plp" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
 													<div class="edit">
 														<div class="deleteButton">
 															<a href="#" class="button_delete_profile">Supprimer</a>
@@ -318,8 +318,8 @@
 											</li>
 										<?php } ?>
 										<li class="add-line hide profile clearfix">
-											<div class="add_job add_field field"><input type="text" class="job autocomplete entitled" placeholder="Métier recherché" name="name[]" /></div>
-											<div class="add_desc add_field"><input type="text" placeholder="Description du poste recherché" name="profile[]"/></div>
+											<div class="add_job add_field field"><input type="text" class="job autocomplete plp" placeholder="Métier recherché" name="name[]" /></div>
+											<div class="add_desc add_field"><input type="text" class="plp" placeholder="Description du poste recherché" name="profile[]"/></div>
 											<input type="hidden" class="idjob" name="id_job[]" />
 											<div class="edit">
 												<div class="line_control">

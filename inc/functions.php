@@ -126,17 +126,33 @@
 		// $dt = date_create_from_format( 'd/m/Y', $data['date_tournage'] );
 		// $dateTournage =  $dt->format( 'Y/m/d' );
 		// type_place
-		$array = array('title' => $data['title'], 'id_project' => $data['id_project']);
+		$array = array('id_project' => $data['id_project']);
 		
 
-		$sql = "UPDATE `mc_project` SET title = :title, description = description";
+		$sql = "UPDATE `mc_project` SET";
+
+		if (!empty($data['title'])) {
+			$sql .= " title = :title";
+			$array['title'] = $data['title'];
+		 }
+
+		if (!empty($data['desc'])) {
+			if (!empty($data['title'])) {
+				$sql .= ",";
+			}
+			$sql .= " description = :description";
+			$array['description'] = $data['desc'];
+		 }
 
 		if ($data['id_place']) {
+			if (!empty($data['desc']) || !empty($data['title'])) {
+				$sql .= ",";
+			}
 			$array['place_villes'] = 0;
 			$array['place_departements'] = 0;
 			$array['place_regions'] = 0;
 			$array['place_'.$data['type_place']] = $data['id_place'];
-			$sql .= ", place_villes = :place_villes,  place_departements = :place_departements, place_regions = :place_regions";
+			$sql .= " place_villes = :place_villes,  place_departements = :place_departements, place_regions = :place_regions";
 		}
 
 		$sql .=" WHERE id_project = :id_project";
@@ -151,6 +167,8 @@
 		// $R1->bindParam(':place_regions',$data['place_regions']);
 		// $R1->bindParam(':date_filter',$dateTournage);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
+
+// echo $sql;
 
 		if($R1->execute($array)){
 			$R1b=$baseDD->prepare("DELETE FROM mc_profile WHERE id_project = :id_project AND current_state = 1");
@@ -181,11 +199,15 @@
 					}
 				}
 				if ($ok) {
-					echo json_encode(array('success' => true ));
+					echo json_encode(array('success' => true, 'id' => $data['id_project'] ));
+				} else {
+					echo json_encode(array('success' => false ));
 				}
 			} else {
-				echo json_encode(array('success' => true ));
+				echo json_encode(array('success' => true, 'id' => $data['id_project'] ));
 			}
+		} else {
+			echo json_encode(array('success' => false ));
 		}
 	}
 
@@ -202,6 +224,20 @@
 		// type_place
 		$data['place_'.$data['type_place']] = $data['id_place'];
 
+		// var_dump($data);
+
+		$check = 0;
+		foreach ($data as $key => $value) {
+			if (empty($value) && $key != 'name' && $key != 'profile') {
+				echo json_encode(array('success' => false));
+				return false;
+			} elseif (empty($value) && $key == 'name' && $key == 'profile'){
+				$check ++;
+				if ($check <2) {
+					echo json_encode(array('success' => false));
+				}
+			}
+		}
 
 		$R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date, place_villes, date_filter, place_departements, place_regions) VALUES ( :title, :description, :id_creator, NOW(), :place_villes, :date_filter, :place_departements, :place_regions)");
 		$R1->bindParam(':title',$data['title']);
@@ -234,9 +270,14 @@
 				$R3->bindParam(':occurence',$data['occurence'][$dat]);
 				$R3->bindParam(':id_job',$IDJOB);
 				if($R3->execute()){
-					echo json_encode(array('id' => $ID));
+					$ok = true;
 				}
 			}
+		}
+		if ($ok){
+			echo json_encode(array('success' => true ,'id' => $ID));
+		} else {
+			echo json_encode(array('success' => false));
 		}
 	}
 
