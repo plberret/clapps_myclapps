@@ -294,7 +294,7 @@
 														</div>
 														<div class="quantity">
 															<a href="#" class="less_quantity number_control">-</a>
-															<input type="text" value="1" class="number" name="occurence[]"/>
+															<input type="text" value="<?php echo $profile['occurence']; ?>" class="number" name="occurence[]"/>
 															<a href="#" class="more_quantity number_control">+</a>
 														</div>
 													</div>
