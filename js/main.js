@@ -115,6 +115,11 @@ zf.editProject = function($this) {
 	// display description
 	$article.find('.preview .desc p').addClass('hide');
 	$article.find('.preview .desc textarea').removeClass('hide').autosize();
+	// display date, place
+	$article.find('.preview .date p').addClass('hide');
+	$article.find('.preview .date .datepicker').removeClass('hide');
+	$article.find('.preview .place p').addClass('hide');
+	$article.find('.preview .place .location').removeClass('hide');
 	// change profiles
 	$article.find('.block_read').addClass('hide');
 	$article.find('.block_edition').removeClass('hide');
@@ -160,6 +165,11 @@ zf.editProjectPartTwo = function($this) {
 	// display description
 	$article.find('.preview .desc p').removeClass('hide').text($article.find('.preview .desc textarea').val());
 	$article.find('.preview .desc textarea').addClass('hide');
+	// display date, place
+	$article.find('.preview .date .datepicker').addClass('hide');
+	$article.find('.preview .date p').removeClass('hide');
+	$article.find('.preview .place .location').addClass('hide');
+	$article.find('.preview .place p').removeClass('hide');
 	// change profiles
 	$article.find('.block_read').removeClass('hide');
 	$article.find('.block_edition').addClass('hide');
@@ -902,25 +912,33 @@ zf.getPlacePosition = function(lieu, callback){
 	zf.geocoder.geocode( { 'address': lieu}, function(results, status) {
 		/* Si l'adresse a pu être géolocalisée */
 		if (status == google.maps.GeocoderStatus.OK) {
-			var lieu = results[0].address_components[0].long_name;
-			var type = results[0].address_components[0].types;
-			var lat = results[0].geometry.location.Ya;
-			var lng = results[0].geometry.location.Za;
+			var type = results[0].address_components[0].types[0];
 			if(type=="locality"){
 				var zipCode = results[0].address_components[1].short_name;
-				//zf.$addCity(lieu, zipCode, lat, lng);
-				console.log('on insere une ville');
-			}else if(type=="administrative_area_level_2"){
-				var zipCode = results[0].address_components[0].short_name;
-				//zf.$addDepartment(lieu, zipCode);
-				console.log('on insere un departement');
-			}else if(type=="administrative_area_level_1"){
-				console.log('on insere une region');
-			//	zf.$addArea(lieu);
+				var lieu = results[0].address_components[0].long_name;
+				var lat = results[0].geometry.location.Ya;
+				var lng = results[0].geometry.location.Za;
+				$.ajax({
+					url: 'requests/addCity.php',
+					type: 'post',
+					data: {
+						place: lieu,
+						zip: zipCode,
+						latitude: lat,
+						longitude: lng
+					},success: function(rep) {
+						var donnees=new Array(); 
+						donnees["success"] = true;
+						donnees["id"]= rep['id'];
+						donnees["type"]="villes";
+						console.log("je passe en success")
+						callback(donnees);
+					},error: function(jqXHR, textStatus, errorThrown) {
+						callback('notFound');
+					}
+				}); 
 			}
-		//	callback(results[0]);
 		} else {
-		//	alert("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
 			callback('notFound');
 		}
 		
@@ -1022,47 +1040,62 @@ zf.initAddProject = function() {
 			if($value.val().trim().length == 0){
 				zf.getPlacePosition($value.siblings('.location').val(), function(request){
 					if(request=='notFound'){
-						console.log('afficher un message d erreur');
+						$('.message.error').fadeIn().find('p span').html('Cette destination est introuvable.');
+						$this.find('#add-project').removeAttr('disabled');
+						$value.siblings('.location').addClass('empty');
+						return false;
+					}
+					if(request['success'] == true){
+						$value.val(request['id']);
+						$value.siblings('.type_place').val(request['type']);
+						// requete ajax
+						$.ajax({
+							url: $this.attr('action'),
+							type: $this.attr('method'),
+							data: $this.serialize(),
+							success: function(resp) {
+								if (resp.success) {
+									zf.getOneProject(resp.id);
+									$('#successAddProject').fadeIn();
+									$.fancybox.close();
+									FB.Canvas.scrollTo(0,0);
+									setTimeout(function(){
+										$('#successAddProject').fadeOut();
+									},5000);
+									zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
+								} else {
+									$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
+									$this.find('#add-project').removeAttr('disabled');
+								}
+							}
+						});
+						$('.message.error').fadeOut();
 					}
 				});
+			}else{
+				$.ajax({
+					url: $this.attr('action'),
+					type: $this.attr('method'),
+					data: $this.serialize(),
+					success: function(resp) {
+						if (resp.success) {
+							zf.getOneProject(resp.id);
+							$('#successAddProject').fadeIn();
+							$.fancybox.close();
+							FB.Canvas.scrollTo(0,0);
+							setTimeout(function(){
+								$('#successAddProject').fadeOut();
+							},5000);
+							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
+						} else {
+							$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
+							$this.find('#add-project').removeAttr('disabled');
+						}
+					}
+				});
+				$('.message.error').fadeOut();
 			}
 			
-			// tester si la destination est bonne 
-	
-			//var lat = 
-			// "locality" - "administrative_area_level_2" - "administrative_area_level_1" - -"country"
-
-			// tester si le champ à une value 
-			// si non, on fait la requete google map 
-			// si on trouve un resultat, on regarde si il s'agit d'une ville ou region puis on stock
-				// si ville, nom, type, long, lat , code postal du territoire 
-				// si territoire, nom, type
-				// si region, nom, type
-				// puis on rempli le champ value avec l'id et le type
-				// si on en trouve pas, on retourne un message d'erreur 
-				
-			// requete ajax
-			$.ajax({
-				url: $this.attr('action'),
-				type: $this.attr('method'),
-				data: $this.serialize(),
-				success: function(resp) {
-					if (resp.success) {
-						zf.getOneProject(resp.id);
-						$('#successAddProject').fadeIn();
-						$.fancybox.close();
-						FB.Canvas.scrollTo(0,0);
-						setTimeout(function(){
-							$('#successAddProject').fadeOut();
-						},5000);
-						zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
-					} else {
-						$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
-						$this.find('#add-project').removeAttr('disabled')
-					}
-				}
-			});
-			$('.message.error').fadeOut();
 		} else {
 			$('.required[value=]').addClass('empty');
 			// $('.required[value=]').css('border','1px solid red');
