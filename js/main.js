@@ -897,32 +897,41 @@ zf.customFields = function($conteneur){
 	
 };
 
-zf.getPlacePosition = function(lieu){
+zf.getPlacePosition = function(lieu, callback){
 	/* Appel au service de geocodage avec l'adresse en paramètre */
 	zf.geocoder.geocode( { 'address': lieu}, function(results, status) {
 		/* Si l'adresse a pu être géolocalisée */
 		if (status == google.maps.GeocoderStatus.OK) {
-			console.log(results[0]);
 			var lieu = results[0].address_components[0].long_name;
-			var type = results[0].address_components[0].types[0];
+			var type = results[0].address_components[0].types;
 			var lat = results[0].geometry.location.Ya;
 			var lng = results[0].geometry.location.Za;
-			//var lat = 
-			// "locality" - "administrative_area_level_2" - "administrative_area_level_1" - -"country"
-			console.log(lieu);
-			console.log(type);
-			console.log(lng);
-			
+			if(type=="locality"){
+				var zipCode = results[0].address_components[1].short_name;
+				//zf.$addCity(lieu, zipCode, lat, lng);
+				console.log('on insere une ville');
+			}else if(type=="administrative_area_level_2"){
+				var zipCode = results[0].address_components[0].short_name;
+				//zf.$addDepartment(lieu, zipCode);
+				console.log('on insere un departement');
+			}else if(type=="administrative_area_level_1"){
+				console.log('on insere une region');
+			//	zf.$addArea(lieu);
+			}
+		//	callback(results[0]);
 		} else {
-			alert("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
+		//	alert("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
+			callback('notFound');
 		}
+		
 	});
+	
 };
 
 zf.initSeeProject = function() {
 	
 	
-	zf.$page.find(".preview .desc p").ellipsis();
+	zf.$page.find(".preview .desc p").dotdotdot();
 	
 	// add to favorite
 	zf.$page.on('click','.favorite_link',function(event) {
@@ -1002,16 +1011,27 @@ zf.initAddProject = function() {
 	});
 	
 	// SEND PROJECT
-	zf.$newProject.on('submit', function(event) {
-		zf.getPlacePosition('Delle ');
-		return false;
+	zf.$newProject.on('submit', function(event) {		
 		event.preventDefault();
 		var $this=$(this);
 		$this.find('#add-project').attr('disabled','disabled')
 		$('.required').removeClass('empty');
 		if (zf.addAnonceFormOk($this)) {
-			// tester si la destination est bonne 
+			// test if value of place is empty
+			$value = zf.$newProject.find('#block_place .id_place');
+			if($value.val().trim().length == 0){
+				zf.getPlacePosition($value.siblings('.location').val(), function(request){
+					if(request=='notFound'){
+						console.log('afficher un message d erreur');
+					}
+				});
+			}
 			
+			// tester si la destination est bonne 
+	
+			//var lat = 
+			// "locality" - "administrative_area_level_2" - "administrative_area_level_1" - -"country"
+
 			// tester si le champ à une value 
 			// si non, on fait la requete google map 
 			// si on trouve un resultat, on regarde si il s'agit d'une ville ou region puis on stock
