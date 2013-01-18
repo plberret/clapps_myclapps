@@ -905,8 +905,14 @@ zf.getPlacePosition = function(lieu){
 			console.log(results[0]);
 			var lieu = results[0].address_components[0].long_name;
 			var type = results[0].address_components[0].types[0];
+			var lat = results[0].geometry.location.Ya;
+			var lng = results[0].geometry.location.Za;
+			//var lat = 
 			// "locality" - "administrative_area_level_2" - "administrative_area_level_1" - -"country"
 			console.log(lieu);
+			console.log(type);
+			console.log(lng);
+			
 		} else {
 			alert("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
 		}
@@ -1009,10 +1015,13 @@ zf.initAddProject = function() {
 			// tester si le champ à une value 
 			// si non, on fait la requete google map 
 			// si on trouve un resultat, on regarde si il s'agit d'une ville ou region puis on stock
-				// puis on rempli le champ value avec l'id 
+				// si ville, nom, type, long, lat , code postal du territoire 
+				// si territoire, nom, type
+				// si region, nom, type
+				// puis on rempli le champ value avec l'id et le type
 				// si on en trouve pas, on retourne un message d'erreur 
+				
 			// requete ajax
-			
 			$.ajax({
 				url: $this.attr('action'),
 				type: $this.attr('method'),
