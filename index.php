@@ -23,7 +23,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<div id="page">
+	<div id="page" style="display:none;">
 		<header>
 			<div id="bar_top" class="clearfix">
 				<div id="logo">
