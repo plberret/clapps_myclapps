@@ -236,7 +236,7 @@
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
 									<textarea name="desc" class="hide" id='normal'><?php echo $project['description']; ?></textarea>
-									<p style="width:200px; height:80px; border:1px solid red"><?php echo nl2br($project['description']); ?></p>
+									<p><?php echo nl2br($project['description']); ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
 		
