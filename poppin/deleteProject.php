@@ -24,7 +24,7 @@
 			<input type="text" name="desc" placeholder="Précisez" />
 		</div>
 		<div class="text">
-			<textarea name="remarque" placeholder="Vous avez des remarques ? n’hésitez pas ..." ></textarea>
+			<textarea name="remarque" placeholder="Vous avez des remarques ? N’hésitez pas ..." ></textarea>
 		</div>
 		<input type="submit" value="Soumettre" />
 	</form>
