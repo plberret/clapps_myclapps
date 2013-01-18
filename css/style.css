@@ -1318,6 +1318,10 @@ section article .profiles > ul {
 	margin: 0 auto;
 }
 
+section article.read .profiles > ul {
+	margin-bottom: 50px;
+}
+
 section article .profiles ul li.profile {
 	position: relative;
 	background: repeat url(../images/pattern-bloc-acteur.png);
