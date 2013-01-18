@@ -104,6 +104,7 @@ zf.deleteFavorite = function($this) {
 
 zf.editProject = function($this) {
 	$article=$this.parents('article');
+	$article.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', minDate: 0});
 	zf.$oldArticle = $article.clone();
 	$article.removeClass('read').addClass('edition');
 	// change display 
@@ -127,7 +128,6 @@ zf.editProject = function($this) {
 zf.cancelEditProject = function($this) {
 	// $article=$this.parents('article');
 	$this.parents('article').html(zf.$oldArticle.html()).removeClass('edition').addClass('read');
-
 	/*
 
 	$article.removeClass('edition').addClass('read');
@@ -860,7 +860,12 @@ zf.customFields = function($conteneur){
 	// custom select
 	$conteneur.find(".selector .value, .selector .button ").click(function(){
 		var $this = $(this);
-		$(this).parent().siblings('ul').show();
+		$liste= $this.parent().siblings('ul');
+		if($liste.css('display')=='none'){
+			$liste.show();
+		}else{
+			$liste.hide();
+		}
 	});
 	
 	$conteneur.find(".selector ul li").click(function(){
@@ -938,7 +943,7 @@ zf.initAddProject = function() {
 	zf.$newProject.find('textarea').autosize();
 
 	// date picker 
-	zf.$newProject.find( ".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
+	zf.$newProject.find( ".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy', minDate: 0 });
 	
 	// UP NUMBER CHAR LEFT FOR TITLE
 	zf.$newProject.on('keyup','#title',function(event) {
@@ -981,6 +986,7 @@ zf.initAddProject = function() {
 					zf.getOneProject(resp.id);
 					$('#successAddProject').fadeIn();
 					$.fancybox.close();
+					FB.Canvas.scrollTo(0,0);
 					setTimeout(function(){
 						$('#successAddProject').fadeOut();
 					},5000);
@@ -1113,10 +1119,10 @@ zf.initDeleteProject = function() {
 				type: 'post',
 				data: $(this).serialize()+'&id='+$thisFancy[0].element.data('id'),
 				success: function(resp) {
-					 $('.message.success').fadeIn();
+					// $('.message.success').fadeIn();
 					setTimeout(function(){
 						$.fancybox.close();
-					},2000);
+					},200);
 				}
 			});
 	})
@@ -1197,7 +1203,7 @@ zf.init = function(){
 	});
 
 	// date picker 
-	zf.$page.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy'});
+	zf.$page.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', minDate: 0});
 	
 	// init switch
 	zf.$page.find( ".switch" ).each(function(){
@@ -1228,7 +1234,6 @@ zf.init = function(){
 		helpers   : { 
 			overlay : {closeClick: false},
 		},
-		scrolling : 'no',
 		topRatio : 0
 	});
 	

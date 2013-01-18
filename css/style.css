@@ -91,10 +91,9 @@ header, footer, section, article, nav {
 
 .select .selector div {
 	position: relative;
-	width: 110px;
-	height: 15px;
+	width: 155px;
+	height: 33px;
 	line-height: 15px;
-	padding: 9px 35px 9px 10px;
 	font-size: 12px;
 	color: #c0c0c0;
 	border: solid 1px #1a1a1a;
@@ -106,6 +105,11 @@ header, footer, section, article, nav {
 	-moz-box-shadow: inset 0 0 3px #000;
 	box-shadow: inset 0 0 3px #000;
 	cursor: pointer;
+}
+
+.select .selector span.value {
+	display: block;
+	padding: 9px 35px 9px 10px;
 }
 
 .select .selector span.button {
@@ -342,6 +346,11 @@ header #bar_top .bar_top_button a {
 	width: 50px;
 	height: 58px;
 	text-indent: -9999px;
+}
+
+header #bar_top #searchButton, 
+header #bar_top #infoButton {
+	display: none;
 }
 
 header #bar_top #searchButton a {
@@ -1020,6 +1029,7 @@ section article.edition form textarea {
 	width: 615px;
 	height: 42px;
 	resize: none;
+	font-family: 'Droid Sans', sans-serif;
 }
 
 /* /////////////////// PREVIEW ///////////////// */
@@ -1365,7 +1375,7 @@ section article .profiles ul li .icon span {
 
 section article .profiles ul li .desc {
 	color: #8c8c8c;
-	width: 420px;
+	width: 455px;
 	padding: 17px 0px 17px 20px;
 	display: table-cell;
 }
@@ -1398,7 +1408,7 @@ section article .profiles ul li .edit {
 section article .profiles ul li .apply {
 	display: table-cell;
 	vertical-align: middle;
-	width: 168px;
+	width: 130px;
 }
 
 section article .profiles ul li .apply a {
@@ -1646,11 +1656,11 @@ section article .profiles ul li.profileFound p {
 }
 
 section article .profiles ul li.profileFound .applyFound {
-	text-align: right;
 	font-size: 12px;
 	height: 49px;
 	line-height: 49px;
-	padding-right: 18px;
+	width: 133px;
+	text-align: center;
 }
 
 
@@ -1923,6 +1933,7 @@ section article #block_see_button:hover a {
 	border: 1px solid #252525;
 	color: #d1d1d1;
 	font-size: 13px;
+	font-family: 'Droid Sans', sans-serif;
 	line-height: 17px;
 	padding: 12px;
 	-webkit-border-radius: 3px;
@@ -2024,6 +2035,7 @@ section article #block_see_button:hover a {
 .fancybox-overlay #newProject .desc div textarea {
 	width: 453px;
 	height: 104px;
+	font-family: 'Droid Sans', sans-serif;
 }
 
 /* champ date et lieu */
@@ -2304,6 +2316,7 @@ section article #block_see_button:hover a {
 	color: #929292;
 	width: 591px;
 	height: 130px;
+	font-family: 'Droid Sans', sans-serif;
 }
 
 .fancybox-overlay #blocDelete form input[type=submit] {

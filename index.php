@@ -206,7 +206,7 @@
 										<div class="title">
 											<h2><input type="text" disabled="disabled" name="title" value="<?php echo $project['title']; ?>" maxlength="60" ></h2>
 											<input type="hidden" name="id_project" value="<?php echo $project['id_project'] ?>">
-											<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
+											<div>Postée par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
 										</div>
 										<div class="available clearfix">
 											<?php $activeActors=getActiveActors($project['id_project']); ?>
@@ -236,7 +236,7 @@
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
 									<textarea class="hide" id='normal'><?php echo $project['description']; ?></textarea>
-									<p><?php echo $project['description']; ?></p>
+									<p><?php echo nl2br($project['description']); ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
 		
