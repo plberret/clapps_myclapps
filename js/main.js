@@ -897,17 +897,16 @@ zf.customFields = function($conteneur){
 	
 };
 
-zf.initMap = function(){
-	zf.geocoder = new google.maps.Geocoder();
-	zf.getPlacePosition('Delle');
-};
-
 zf.getPlacePosition = function(lieu){
 	/* Appel au service de geocodage avec l'adresse en paramètre */
 	zf.geocoder.geocode( { 'address': lieu}, function(results, status) {
 		/* Si l'adresse a pu être géolocalisée */
 		if (status == google.maps.GeocoderStatus.OK) {
-			// console.log(results[0]);
+			console.log(results[0]);
+			var lieu = results[0].address_components[0].long_name;
+			var type = results[0].address_components[0].types[0];
+			// "locality" - "administrative_area_level_2" - "administrative_area_level_1" - -"country"
+			console.log(lieu);
 		} else {
 			alert("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
 		}
@@ -915,6 +914,9 @@ zf.getPlacePosition = function(lieu){
 };
 
 zf.initSeeProject = function() {
+	
+	
+	zf.$page.find(".preview .desc p").ellipsis();
 	
 	// add to favorite
 	zf.$page.on('click','.favorite_link',function(event) {
@@ -995,11 +997,22 @@ zf.initAddProject = function() {
 	
 	// SEND PROJECT
 	zf.$newProject.on('submit', function(event) {
+		zf.getPlacePosition('Delle ');
+		return false;
 		event.preventDefault();
 		var $this=$(this);
 		$this.find('#add-project').attr('disabled','disabled')
 		$('.required').removeClass('empty');
 		if (zf.addAnonceFormOk($this)) {
+			// tester si la destination est bonne 
+			
+			// tester si le champ à une value 
+			// si non, on fait la requete google map 
+			// si on trouve un resultat, on regarde si il s'agit d'une ville ou region puis on stock
+				// puis on rempli le champ value avec l'id 
+				// si on en trouve pas, on retourne un message d'erreur 
+			// requete ajax
+			
 			$.ajax({
 				url: $this.attr('action'),
 				type: $this.attr('method'),
@@ -1015,7 +1028,7 @@ zf.initAddProject = function() {
 						},5000);
 						zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
 					} else {
-						$('.message.error').fadeIn();
+						$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
 						$this.find('#add-project').removeAttr('disabled')
 					}
 				}
@@ -1024,10 +1037,9 @@ zf.initAddProject = function() {
 		} else {
 			$('.required[value=]').addClass('empty');
 			// $('.required[value=]').css('border','1px solid red');
-			$('.message.error').fadeIn();
+			$('.message.error').fadeIn().find('p span').html('Veuillez remplir tous les champs.');
 			$this.find('#add-project').removeAttr('disabled')
 		}
-		
 	})
 };
 
@@ -1322,8 +1334,8 @@ zf.init = function(){
 		zf.getMoreProjects($(this),event);
 	});
 	
-	// init map 
-	zf.initMap();
+	// init geocoder google map 
+	zf.geocoder = new google.maps.Geocoder();
 	
 	// init frame
 	zf.launchScrollEvent();

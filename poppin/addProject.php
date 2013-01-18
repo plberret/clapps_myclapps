@@ -63,7 +63,7 @@
 		<input type="submit" id="add-project" value="Publier l'annonce" />
 	</div>
 	<div class="message error">
-		<p><span>Veuillez remplir tous les champs.</span></p>
+		<p><span>Une erreur est survenue, veuillez réessayer</span></p>
 	</div>
 	
 </form>
