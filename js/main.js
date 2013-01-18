@@ -113,7 +113,7 @@ zf.editProject = function($this) {
 	$article.find("form input").removeAttr("disabled");
 	// display description
 	$article.find('.preview .desc p').addClass('hide');
-	$article.find('.preview .desc textarea').removeClass('hide').autosize({append: "\n"});
+	$article.find('.preview .desc textarea').removeClass('hide').autosize();
 	// change profiles
 	$article.find('.block_read').addClass('hide');
 	$article.find('.block_edition').removeClass('hide');
@@ -933,7 +933,7 @@ zf.initAddProject = function() {
 	})
 
 	zf.autocomplete(zf.$newProject);
-	zf.$newProject.find('textarea').autosize({append: "\n"});
+	zf.$newProject.find('textarea').autosize();
 
 	// date picker 
 	zf.$newProject.find( ".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
@@ -996,11 +996,12 @@ zf.initAddProject = function() {
 };
 
 zf.initEditProject = function() {
-	
+		
 	// change display to edit project
 	zf.$page.on('click','.editProject',function(event) {
 		event.preventDefault();
 		zf.editProject($(this));
+		// date picker 
 	});
 	
 	// valid update of project
