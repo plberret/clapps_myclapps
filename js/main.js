@@ -180,24 +180,30 @@ zf.editProjectPartTwo = function($this) {
 	$article.find('#block_see_button').fadeIn(250);
 };
 
-zf.updateProject = function($_this) {
+zf.updateProject = function($form) {
 	$.ajax({
 		url: 'requests/updateProject.php',
 		type: 'post',
-		data: $_this.serialize(),
+		data: $form.serialize(),
 		success: function(resp) {
 			if (resp.success) {
 				// zf.editProjectPartTwo($this);
 				zf.getOneProject(resp.id,function($this){
-					// console.log($_this)
+					// console.log($form)
 					// $this.find('.see-more').trigger('click');
-					console.log($this)
-					zf.$page.find('.project.edition').remove();
+					console.log($this[0])
+					// zf.$page.find('.project.edition').remove();
 					$this.find('.more').show();
 					$this.find('.see-more').removeClass('see-more').addClass('see-less').html('<span>Voir</span> moins').css({'display':'block'});
-					$next = $_this.parent().next();
-					$_this.remove()
-					$next.before($this);
+					$next = $form.parent().next();
+					console.log($form);
+					if ($next.length) {
+						$form.parent().remove()
+						$next.before($this);
+					} else {
+						$form.parent().after($this)
+						$form.parent().remove()
+					}
 					$this.css('opacity',1)
 					$this.find('.preview .desc p').removeClass('elips').dotdotdot();
 				})
