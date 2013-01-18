@@ -29,9 +29,9 @@
 		<h3>Ajouter un(des) poste(s)</h3>
 		<ul>
 			<li class="clearfix field">
-				<input type="text" placeholder="Métier recherché" class="job required autocomplete" name="name[]" />
+				<input type="text" placeholder="Métier recherché" class="job required autocomplete plp" name="name[]" />
 				<input type="hidden" name="id_job[]" class="idjob" />
-				<input type="text" name="profile[]" class="required entitled" placeholder="Intitulé du poste recherché" />
+				<input type="text" name="profile[]" class="required entitled plp" placeholder="Intitulé du poste recherché" />
 				<div class="quantity">
 					<a href="#" class="less_quantity number_control">-</a>
 					<input type="text" value="1" class="number" name="occurence[]"/>
@@ -42,9 +42,9 @@
 				</div>
 			</li>
 			<li class="clearfix field">
-				<input type="text" placeholder="Métier recherché" class="job autocomplete" name="name[]" />
+				<input type="text" placeholder="Métier recherché" class="job autocomplete plp" name="name[]" />
 				<input type="hidden" name="id_job[]" class="idjob" />
-				<input type="text" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
+				<input type="text" name="profile[]" class="entitled plp" placeholder="Intitulé du poste recherché" />
 				<div>
 					<div class="quantity">
 						<a href="#" class="less_quantity number_control">-</a>
