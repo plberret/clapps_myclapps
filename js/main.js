@@ -31,12 +31,11 @@ var zf = zf || {};
 
 
 zf.launchScrollEvent = function() {
-	zf.rAFLaunchAnim = requestAnimationFrame(zf.launchScrollEvent);
-	console.log('scroll test');
-	FB.Canvas.getPageInfo( function(info) {
+//	zf.rAFLaunchAnim = requestAnimationFrame(zf.launchScrollEvent);
+//	FB.Canvas.getPageInfo( function(info) {
 	//	console.log( info.scrollTop );
 	//	$('header').css({top: info.scrollTop});
-	}); 
+//	}); 
 };
 
 zf.isBlank = function(str) {
@@ -77,10 +76,10 @@ zf.addFavorite = function($this) {
 		success: function(resp) {
 			// resp = JSON.parse(resp);
 			if (resp.success) {
-				$this.html('Retirer des favoris').removeClass('favorite_link').addClass('unfavorite_link');
-				zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
-			} else {
-
+				$this.fadeOut(200, function(){
+					$this.html('Retirer des favoris').removeClass('favorite_link').addClass('unfavorite_link').fadeIn(200);
+				})
+				zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
 			}
 		}
 	});
@@ -94,10 +93,10 @@ zf.deleteFavorite = function($this) {
 		success: function(resp) {
 			// resp = JSON.parse(resp);
 			if (resp.success) {
-				$this.html('Ajouter aux favoris').removeClass('unfavorite_link').addClass('favorite_link');
-				zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())-1)
-			} else {
-
+				$this.fadeOut(200, function(){
+					$this.html('Ajouter aux favoris').removeClass('unfavorite_link').addClass('favorite_link').fadeIn(200);
+				})
+				zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())-1);
 			}
 		}
 	});
@@ -121,6 +120,8 @@ zf.editProject = function($this) {
 	$article.find('.more .add-line').removeClass('hide');
 	// hide profiles found
 	$article.find('.profileFound').addClass('hide');
+	// disable button see-button
+	$article.find('.see-button').addClass('hide');
 };
 
 zf.cancelEditProject = function($this) {
@@ -304,12 +305,12 @@ zf.addSubscribe = function($this){
 zf.seeMore = function($this) {
 	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
 		if ($(this).css('display')=='none') {
-			$this.fadeOut(500, function() {
-			    $this.html('Voir plus').fadeIn(500);
+			$this.fadeOut(200, function() {
+			    $this.removeClass('see-less').addClass('see-more').html('<span>Voir</span> plus').fadeIn(200);
 			});
 		} else {
-			$this.fadeOut(500, function() {
-			    $this.html('Voir moins').fadeIn(500);
+			$this.fadeOut(200, function() {
+			    $this.removeClass('see-more').addClass('see-less').html('<span>Voir</span> moins').fadeIn(200);
 			});
 		}
 	});
@@ -826,6 +827,23 @@ zf.customFields = function($conteneur){
 	
 };
 
+zf.initMap = function(){
+	zf.geocoder = new google.maps.Geocoder();
+	zf.getPlacePosition('Delle');
+};
+
+zf.getPlacePosition = function(lieu){
+	/* Appel au service de geocodage avec l'adresse en paramètre */
+	zf.geocoder.geocode( { 'address': lieu}, function(results, status) {
+		/* Si l'adresse a pu être géolocalisée */
+		if (status == google.maps.GeocoderStatus.OK) {
+			console.log(results[0]);
+		} else {
+			alert("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
+		}
+	});
+};
+
 zf.initSeeProject = function() {
 	
 	// add to favorite
@@ -841,9 +859,12 @@ zf.initSeeProject = function() {
 	});
 	
 	// see more/less of project
-	zf.$projectsList.on('click','.see-more',function(event) {
+	zf.$projectsList.on('click','.see-button',function(event) {
 		event.preventDefault();
-		zf.seeMore($(this));
+		$this=$(this);
+		if(!$this.hasClass('hide')){
+			zf.seeMore($this);
+		}
 	});
 	
 	// custom size of fields 
@@ -1051,7 +1072,6 @@ zf.initDeleteProject = function() {
 };
 
 zf.init = function(){
-	
 	// init js
 	$('body').addClass('has-js');
 	
@@ -1212,7 +1232,12 @@ zf.init = function(){
 		zf.getMoreProjects($(this),event);
 	});
 	
+	// init map 
+	zf.initMap();
+	
+	// init frame
 	zf.launchScrollEvent();
+	
 };
 
 /* DOM READY

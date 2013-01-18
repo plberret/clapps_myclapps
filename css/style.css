@@ -1304,7 +1304,6 @@ section article .more {
 	border-bottom-right-radius: 3px;
 	-moz-border-radius-bottomright: 3px;
 	-webkit-border-bottom-right-radius: 3px;
-	padding-bottom: 50px;
 }
 
 
@@ -1657,7 +1656,7 @@ section article .profiles ul li.profileFound .applyFound {
 /*  ----------- Manage ----------- */ 
 
 section article .manage {
-	margin-top: 15px;
+	margin: 15px 0 50px 0;
 }
 
 /*section article .manage-edition {
@@ -1852,7 +1851,7 @@ section article .more .manage input {
 
 /* /////////////////// SEE MORE ///////////////// */
 
-section article #see_button {
+section article #block_see_button {
 	position: absolute;
 	bottom: 1px;
 	right: 23px;
@@ -1875,20 +1874,27 @@ section article #see_button {
 	background-image: linear-gradient(to bottom, #363636, #1c1c1c);
 }
 
-section article #see_button a {
+section article #block_see_button a {
 	display: block;
 	color: #f3b91e;
 	padding: 5px 0 5px 9px;
 	text-decoration: none;
+}
+
+section article #block_see_button a.see-more {
 	background: no-repeat url('../images/arrow_see_more.png') 79px 10px;
 }
 
-section article #see_button a span {
+section article #block_see_button a.see-less {
+	background: no-repeat url('../images/arrow_see_less.png') 79px 10px;
+}
+
+section article #block_see_button a span {
 	font-weight: bold;
 }
 
-section article #see_button:hover a {
-	color: #FFF;
+section article #block_see_button:hover a {
+	color: #e6cb85;
 }
 
 
