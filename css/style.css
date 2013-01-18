@@ -1038,7 +1038,7 @@ section article.edition form textarea {
 
 section article .preview {
 	position: relative;
-	height: 240px;
+	/*height: 240px;*/
 	z-index: 2;
 	background: repeat url(../images/pattern-annonce-replie.png);
 	border: 1px solid #2c2c2c;
@@ -1214,7 +1214,7 @@ section article .preview .share a.unfavorite_link {
 
 section article .preview .desc {
 	margin: 0 24px 11px;
-	height: 80px;
+	/*height: 80px;*/
 }
 
 section article .preview .desc h3 {
@@ -1222,6 +1222,11 @@ section article .preview .desc h3 {
 	color: #FFF;
 	font-weight: bold;
 	padding-bottom: 13px;
+}
+
+section article .preview .desc p.elips {
+	height: 50px;
+	overflow: hidden;
 }
 
 section article .preview .desc p {

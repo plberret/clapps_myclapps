@@ -181,11 +181,15 @@ zf.updateProject = function($_this) {
 				zf.getOneProject(resp.id,function($this){
 					// console.log($_this)
 					// $this.find('.see-more').trigger('click');
+					console.log($this)
+					zf.$page.find('.project.edition').remove();
 					$this.find('.more').show();
 					$this.find('.see-more').removeClass('see-more').addClass('see-less').html('<span>Voir</span> moins').css({'display':'block'});
 					$next = $_this.parent().next();
 					$_this.remove()
 					$next.before($this);
+					$this.css('opacity',1)
+					$this.find('.preview .desc p').removeClass('elips').dotdotdot();
 				})
 			} else {
 
@@ -256,20 +260,23 @@ zf.autocomplete = function($this) {
 		zf.autocompletionHover = false;
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
-		if (!zf.autocompletionHover) {
-			var $thisField = $(this);
-			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
-			$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
-			if ($this.find('.autocompletion li').length > 0) {
-				// console.log($thisField.siblings('.id_place')[0])
-				// console.log($this.find('.autocompletion li.current a').data("id"))
-				if (!$this.find('.autocompletion li').hasClass('current')) {
-					$(this).val($this.find('.autocompletion li:first-child a').text())
-					$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
-					$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
-				};
-			};
-		};
+
+
+		// if (!zf.autocompletionHover) {
+		// 	var $thisField = $(this);
+		// 	$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
+		// 	$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
+		// 	if ($this.find('.autocompletion li').length > 0) {
+		// 		// console.log($thisField.siblings('.id_place')[0])
+		// 		// console.log($this.find('.autocompletion li.current a').data("id"))
+		// 		if (!$this.find('.autocompletion li').hasClass('current')) {
+		// 			$(this).val($this.find('.autocompletion li:first-child a').text())
+		// 			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
+		// 			$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
+		// 		};
+		// 	};
+		// };
+
 		$('.autocompletion').remove();
 		zf.autocompletionHover = false;
 	});
@@ -357,6 +364,10 @@ zf.addSubscribe = function($this){
 }
 
 zf.seeMore = function($this) {
+	var $txta = $this.parents('form').find('textarea');
+	var txt = $txta.text();
+	$this.parent().siblings('.preview').find('.desc p').text(txt).removeClass('elips').trigger("destroy");
+	// console.log($this.parent().siblings('.preview').find('.desc p')[0])
 	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
 		if ($(this).css('display')=='none') {
 			$this.fadeOut(200, function() {
@@ -383,6 +394,7 @@ zf.seeFiltered = function(url,event){
 				setTimeout(function() {
 					if (zf.currentAnim == event) {
 						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
+						$this.find(".preview .desc p").dotdotdot();
 					} else {
 						// console.log('blocked',event)
 					}
@@ -412,6 +424,7 @@ zf.seeAll = function($_this,event) {
 				setTimeout(function() {
 					if (zf.currentAnim == event) {
 						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
+						$this.find(".preview .desc p").dotdotdot();
 					} else {
 						// console.log('blocked',event)
 					}
@@ -443,6 +456,7 @@ zf.seeMine = function($_this,event) {
 					if (zf.currentAnim == event) {
 					// zf.$projectsList.append($this.hide().fadeIn(500));
 						zf.$projectsList.append($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
+						$this.find(".preview .desc p").dotdotdot();
 					} else {
 						// console.log('blocked',event)
 					}
@@ -471,6 +485,7 @@ zf.getMoreProjects = function($this,event) {
 			setTimeout(function() {
 				if (event == zf.currentAnim) {
 					zf.$projectsList.find('.btn-more-projects').before($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
+					$this.find(".preview .desc p").dotdotdot();
 				}
 				else {
 					// console.log('bloked',event)
@@ -495,7 +510,8 @@ zf.getOneProject = function(id,callback) {
 				callback($this)
 			} else {
 				setTimeout(function() {
-					zf.$projectsList.find('.project').eq(0).before($this.hide().fadeIn());
+					zf.$projectsList.find('.project').eq(0).before($this.css('opacity',1).hide().fadeIn());
+					$this.find(".preview .desc p").dotdotdot();
 				},1000);
 			}
 		})
@@ -932,6 +948,8 @@ zf.initSeeProject = function() {
 	
 	
 	zf.$page.find(".preview .desc p").dotdotdot();
+
+	// console.log(zf.$page.find('.preview .desc p'))
 	
 	// add to favorite
 	zf.$page.on('click','.favorite_link',function(event) {
@@ -1205,6 +1223,22 @@ zf.init = function(){
 	zf.$page = $('#page');
 	zf.$filtre = zf.$page.find('#block_filters');
 	zf.$projectsList = zf.$page.find('#projects');
+
+
+
+	zf.$projectsList.find('.project').each(function(i) {
+		var $this=$(this);
+		setTimeout(function() {
+			if (zf.currentAnim == event) {
+				if (i < 1) {
+					$this.css('opacity',1);
+				} else {
+					$this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo');
+				}
+				$this.find(".preview .desc p").dotdotdot();
+			}
+		},i*300);
+	});
 	
 	// init elements
 	zf.filter();

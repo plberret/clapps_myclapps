@@ -197,7 +197,7 @@
 				foreach ($getProjects as $project): 
 					$valideDate = getValideDate($project['create_date'],$project['loop']); // check if project was revalidate, (don't use create_date but update_date)
 				?>
-					<article class="project read <?php if (isFavorite($project,$user_fb)): ?> favorite<?php endif ?>">
+					<article style="opacity:0" class="project read <?php if (isFavorite($project,$user_fb)): ?> favorite<?php endif ?>">
 						<form action="">
 							<div class="preview">
 								<div class="block_top clearfix">
@@ -236,7 +236,7 @@
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
 									<textarea name="desc" class="hide" id='normal'><?php echo $project['description']; ?></textarea>
-									<p><?php echo nl2br($project['description']); ?></p>
+									<p class="elips"><?php echo nl2br($project['description']); ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
 		
@@ -441,7 +441,7 @@
 	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.autosize.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-<!--	<script src="js/libs/jquery.autoellipsis-1.0.10.min.js" type="text/javascript"></script> -->
+	<script src="js/libs/jquery.autoellipsis-1.0.10.min.js" type="text/javascript"></script> 
 	<script src="js/libs/jquery.dotdotdot-1.5.4-packed.js" type="text/javascript"></script>
 	<script src="./js/main.js"></script>
 	<script type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
