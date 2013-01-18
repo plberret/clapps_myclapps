@@ -236,7 +236,7 @@
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
 									<textarea name="desc" class="hide" id='normal'><?php echo $project['description']; ?></textarea>
-									<p style="width:200px; height:80px; border:1px solid red"><?php echo nl2br($project['description']); ?></p>
+									<p style="height: 50px;"><?php echo nl2br($project['description']); ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
 		
@@ -441,8 +441,8 @@
 	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.autosize.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-	
-	<script src="js/libs/jquery.autoellipsis-1.0.10.min.js" type="text/javascript"></script>
+<!--	<script src="js/libs/jquery.autoellipsis-1.0.10.min.js" type="text/javascript"></script> -->
+	<script src="js/libs/jquery.dotdotdot-1.5.4-packed.js" type="text/javascript"></script>
 	<script src="./js/main.js"></script>
 	<script type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
 	
