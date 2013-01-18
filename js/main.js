@@ -105,7 +105,7 @@ zf.deleteFavorite = function($this) {
 zf.editProject = function($this) {
 	$article=$this.parents('article');
 	$article.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', minDate: 0});
-	zf.$oldArticle = $article.clone();
+	zf.$oldArticle = $article.clone(true,true);
 	$article.removeClass('read').addClass('edition');
 	// change display 
 	$this.parent().addClass('hide');
@@ -127,7 +127,8 @@ zf.editProject = function($this) {
 
 zf.cancelEditProject = function($this) {
 	// $article=$this.parents('article');
-	$this.parents('article').html(zf.$oldArticle.html()).removeClass('edition').addClass('read');
+	$this.parents('article').next().before(zf.$oldArticle).end().remove();
+	// $this.parents('article').html(zf.$oldArticle.html()).removeClass('edition').addClass('read');
 	/*
 
 	$article.removeClass('edition').addClass('read');
@@ -1233,8 +1234,9 @@ zf.init = function(){
 	});
 
 	// profileFound
-	zf.$projectsList.find('.profile_found').on('click',function(event) {
+	zf.$page.on('click','.profile_found',function(event) {
 		event.preventDefault();
+		console.log('kkk')
 		var $this=$(this);
 		$.ajax({
 			url: 'requests/profileFound.php',
@@ -1251,7 +1253,12 @@ zf.init = function(){
 	});
 
 	// date picker 
-	zf.$page.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', minDate: 0});
+	zf.$page.find( ".datepicker" ).each(function() {
+  		$(this).datepicker({
+    		altField: $(this).siblings('.date_filter'),
+			dateFormat: 'dd MM yy', minDate: 0 ,altFormat : 'yy-mm-dd'
+  		})
+	});
 	
 	// init switch
 	zf.$page.find( ".switch" ).each(function(){

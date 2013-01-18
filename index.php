@@ -236,12 +236,15 @@
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
 									<textarea name="desc" class="hide" id='normal'><?php echo $project['description']; ?></textarea>
-									<p><?php echo nl2br($project['description']); ?></p>
+									<p style="width:200px; height:80px; border:1px solid red"><?php echo nl2br($project['description']); ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
 		
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
-									<div class="date"><input type="text" disabled="disabled" class="datepicker" value="<?php echo dateUstoFr($project['date_filter']); ?>"></div>
+									<div class="date">
+										<input type="text" disabled="disabled" class="datepicker" value="<?php echo dateUstoFr($project['date_filter']); ?>">
+										<input type="hidden" name="date_filter" class="date_filter">
+									</div>
 									<div class="place field">
 										<input type="text" disabled="disabled" id="location" name="location" class="location autocomplete" autocomplete="off" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)">
 										<input type="hidden" name="id_place" class="id_place" />
