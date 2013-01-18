@@ -1,7 +1,7 @@
 <?php 
 
 require_once 'settings.php';
-require_once 'FBSDK/facebook.php';
+require_once 'api/fbsdk/facebook.php';
 
 require_once './inc/functions.php';
 

@@ -1,5 +1,4 @@
 <?php
-	
 	require_once 'initFb.php';
 	require_once 'settings.php';
 	require_once 'connect.php';
@@ -718,7 +717,6 @@
 		}
 		// tester si l'utilisateur existe, add ou update
 		// si on update, recuperer ces infos 
-		
 	}
 
 ?>

@@ -1,5 +1,6 @@
 <?php 
 	require_once './inc/init.php';
+	//require_once './inc/initFb.php';
 	require_once './inc/settings.php';
 	require_once './inc/functions.php';
 	$page=$_GET['page'];
@@ -203,7 +204,7 @@
 									<img src="https://graph.facebook.com/<?php echo $project['id_creator'] ?>/picture" alt="photo profil <?php echo $project['name_creator'] ?>" />
 									<div class="title_block">
 										<div class="title">
-											<h2><input type="text" disabled="disabled" name="title" value="<?php echo $project['title']; ?>"></h2>
+											<h2><input type="text" disabled="disabled" name="title" value="<?php echo $project['title']; ?>" maxlength="60" ></h2>
 											<input type="hidden" name="id_project" value="<?php echo $project['id_project'] ?>">
 											<div>Ajouté par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
 										</div>
@@ -362,8 +363,8 @@
 									</div>
 								<?php endif ?>
 							</div><!-- fin more -->
-							<div id="see_button">
-								<a href="#" class="see-more"><span>Voir</span> plus</a>
+							<div id="block_see_button">
+								<a href="#" class="see-more see-button"><span>Voir</span> plus</a>
 							</div>
 						</form>
 					</article>
@@ -436,6 +437,7 @@
 	<script src="js/libs/jquery.fancybox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/libs/jquery.autosize.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 	<script src="./js/main.js"></script>
 	<script type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
 	
