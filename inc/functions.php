@@ -116,6 +116,80 @@
 		}
 	}
 
+	function updateProject($data){
+
+		global $baseDD;
+		
+		// print_r($data);
+		$user = getIdFromFb();
+
+		// date tournage
+		// $dt = date_create_from_format( 'd/m/Y', $data['date_tournage'] );
+		// $dateTournage =  $dt->format( 'Y/m/d' );
+		// type_place
+		$array = array('title' => $data['title'], 'id_project' => $data['id_project']);
+		
+
+		$sql = "UPDATE `mc_project` SET title = :title, description = description";
+
+		if ($data['id_place']) {
+			$array['place_villes'] = 0;
+			$array['place_departements'] = 0;
+			$array['place_regions'] = 0;
+			$array['place_'.$data['type_place']] = $data['id_place'];
+			$sql .= ", place_villes = :place_villes,  place_departements = :place_departements, place_regions = :place_regions";
+		}
+
+		$sql .=" WHERE id_project = :id_project";
+		// $sql .= "place_villes = :place_villes, date_filter = :date_filter, place_departements = :place_departements, place_regions = :place_regions");
+		// $R1=$baseDD->prepare("INSERT INTO `mc_project` (title, description, id_creator, create_date, place_villes, date_filter, place_departements, place_regions) VALUES ( :title, :description, :id_creator, NOW(), :place_villes, :date_filter, :place_departements, :place_regions)");
+		$R1=$baseDD->prepare($sql);
+		// $R1->bindParam(':title',$data['title']);
+		// $R1->bindParam(':description',$data['desc']);
+		// $R1->bindParam(':id_creator',$data['id_creator']);
+		// $R1->bindParam(':place_villes',$data['place_villes']);
+		// $R1->bindParam(':place_departements',$data['place_departements']);
+		// $R1->bindParam(':place_regions',$data['place_regions']);
+		// $R1->bindParam(':date_filter',$dateTournage);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+
+		if($R1->execute($array)){
+			$R1b=$baseDD->prepare("DELETE FROM mc_profile WHERE id_project = :id_project AND current_state = 1");
+			$R1b->bindParam(':id_project',$data['id_project']);
+			$R1b->execute();
+			if (!empty($data['profile'][0])) {
+				foreach ($data['profile'] as $dat => $key) {
+					if (!empty($data['profile'][$dat])) {
+						if (empty($data['id_job'][$dat])) {
+							$R2=$baseDD->prepare("INSERT INTO `mc_jobs` (name, domain) VALUES ( :name, 3)");
+							$R2->bindParam(':name',$data['name'][$dat]);
+							if($R2->execute()){
+								$IDJOB=$baseDD->lastInsertId('mc_jobs');
+							}
+						} else {
+							$IDJOB = $data['id_job'][$dat];
+						}
+						$R3=$baseDD->prepare("INSERT INTO `mc_profile` (id_project, person, occurence, id_job) VALUES ( :id, :person, :occurence, :id_job)");
+						$R3->bindParam(':id',$data['id_project']);
+						$R3->bindParam(':person',$data['profile'][$dat]);
+						$R3->bindParam(':occurence',$data['occurence'][$dat]);
+						$R3->bindParam(':id_job',$IDJOB);
+						if($R3->execute()){
+							$ok = true;
+						} else {
+							$ok = false;
+						}
+					}
+				}
+				if ($ok) {
+					echo json_encode(array('success' => true ));
+				}
+			} else {
+				echo json_encode(array('success' => true ));
+			}
+		}
+	}
+
 	function addProject($data){
 		 
 		global $baseDD;
@@ -336,11 +410,14 @@
 
 	 	global $baseDD;
 
-	 	$sql = 'SELECT id_job, name, domain FROM mc_jobs WHERE name LIKE :job GROUP BY name ORDER BY name ASC';
-		$array = array(':job' => $job.'%');
+	 	$sql = 'SELECT id_job, name, domain FROM mc_jobs WHERE name LIKE :job OR name LIKE :job2 GROUP BY name ORDER BY name ASC';
 		$R1 = $baseDD->prepare($sql);
+		$job1 = $job.'%';
+		$job2 = '% '.$job.'%';
+		$R1->bindParam(':job',$job1);
+		$R1->bindParam(':job2',$job2);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
-		if($R1->execute($array)){
+		if($R1->execute()){
 			$result=$R1->fetchAll();
 		}
 		echo json_encode($result);
