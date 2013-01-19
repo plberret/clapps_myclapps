@@ -8,6 +8,7 @@
 	$nbProject = getNbProject($_GET['user_fb']);
 	// $userFilter = getUserFilter();
 	$userFilter = 'profile=Figurant&date_filter=week&location=&distance=100';
+	$userFilter = '';
 	$userFilterArray = array();
 	parse_str($userFilter, $values);
 
@@ -55,12 +56,12 @@
 			</div>
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
-					<?php if ($userFilter): ?>
-						<p>Vous recherchez <span class="time">dès que possible</span> un poste<span class="work"> d'un ingénieur du son</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
-						<p class="hide">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
+					<?php if (!empty($userFilter)): ?>
+						<p>Vous recherchez un poste<span class="work"> d'un ingénieur du son</span><span class="time"> dès que possible</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
+						<p class="hide none">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
 					<?php else: ?>
-						<p class="hide">Vous recherchez <span class="time">dès que possible</span> un poste<span class="work"> d'un ingénieur du son</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
-						<p>Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
+						<p class="hide">Vous recherchez un poste<span class="work"> d'un ingénieur du son</span><span class="time"> dès que possible</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
+						<p class="none">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
 					<?php endif ?>
 					
 				</div>
@@ -72,7 +73,7 @@
 					</form>
 				</div>
 			</div>
-			<form id="block_filters" action="">
+			<form<?php if (!empty($userFilter)): ?> class="less"<?php endif; ?> id="block_filters" action="">
 				<div id="filter" class="clearfix">
 					<div id="col1" class="col">
 						<h2>Filtrer la recherche</h2>
@@ -186,7 +187,7 @@
 			</form>
 		</header>
 	
-		<section id="projects">
+		<section id="projects"<?php if (!empty($userFilter)): ?> class="margedless"<?php endif; ?>>
 			<div id="successAddProject" class="message success">
 				<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
 			</div>

@@ -375,6 +375,10 @@ header #block_filters {
 	/* en attendant la sortie de l'app */
 }
 
+header #block_filters.less {
+	top: -135px;
+}
+
 header #filter {
 	height: 147px;
 	background: repeat url('../images/pattern-bloc-filters.png');
@@ -887,7 +891,13 @@ header #block_current_filter #current_filter p {
 
 header #block_current_filter #current_filter p span:not(.opt) {
 	color: #e3a708;
+	text-transform: lowercase;
 }
+
+header #block_current_filter #current_filter p span.location{
+	text-transform: initial;
+}
+
 header #block_current_filter #current_filter p span.open_filtre {
 	cursor: pointer;
 }
@@ -953,6 +963,10 @@ section {
 	 padding-top: 300px; 
 	/* en attendant la sortie de l'app */
 	/*padding-top: 120px;*/
+}
+
+section.margedless{
+	padding-top: 180px
 }
 
 section #newProject {
