@@ -348,10 +348,10 @@ header #bar_top .bar_top_button a {
 	text-indent: -9999px;
 }
 
-header #bar_top #searchButton, 
+/*header #bar_top #searchButton, 
 header #bar_top #infoButton {
 	display: none;
-}
+}*/
 
 header #bar_top #searchButton a {
 	background: no-repeat url(../images/icon_search_button.png) 14px 23px;
@@ -371,7 +371,7 @@ header #block_filters {
 	top: 58px;
 	width: 810px;
 	/* en attendant la sortie de l'app */
-	display: none;
+	/*display: none;*/
 	/* en attendant la sortie de l'app */
 }
 
@@ -855,7 +855,7 @@ header #block_current_filter.none {
 }
 
 header #block_current_filter {
-	display: none;
+	/*display: none;*/
 	background: #111111;
 	height: 84px;
 	width: 810px;
@@ -950,9 +950,9 @@ header #block_current_filter #notif_email input[type=submit] {
 
 section {
 	/* en attendant la sortie de l'app */
-	/* padding-top: 300px; */
+	 padding-top: 300px; 
 	/* en attendant la sortie de l'app */
-	padding-top: 120px;
+	/*padding-top: 120px;*/
 }
 
 section #newProject {

@@ -780,7 +780,7 @@ zf.filter = function(){
 		zf.seeFiltered($(this).attr('href'),event);
 	})
 
-/*	zf.$page.find('#searchButton, .open_filtre').click(function(event){
+	zf.$page.find('#searchButton, .open_filtre').click(function(event){
 		event.preventDefault();
 		if(zf.filterOpen==true){
 			$height= "-135";
@@ -804,7 +804,7 @@ zf.filter = function(){
 			});
 		};
 		//return false;
-	}); */
+	}); 
 	
 	advancedFilter.find('.nav a').click(function(event){
 		event.preventDefault();
