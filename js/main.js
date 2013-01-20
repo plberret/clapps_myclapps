@@ -191,7 +191,6 @@ zf.updateProject = function($form) {
 				zf.getOneProject(resp.id,function($this){
 					// console.log($form)
 					// $this.find('.see-more').trigger('click');
-					console.log($this[0])
 					// zf.$page.find('.project.edition').remove();
 					$this.find('.more').show();
 					$this.find('.see-more').removeClass('see-more').addClass('see-less').html('<span>Voir</span> moins').css({'display':'block'});
@@ -386,7 +385,12 @@ zf.addSubscribe = function($this){
 zf.seeMore = function($this) {
 	var $txta = $this.parents('form').find('textarea');
 	var txt = $txta.text();
-	$this.parent().siblings('.preview').find('.desc p').text(txt).removeClass('elips').trigger("destroy");
+	if($this.hasClass('see-less')){
+		$this.parent().siblings('.preview').find('.desc p').addClass('elips').dotdotdot();
+		console.log($this.parent().siblings('.preview').find('.desc p'), 'eifhezufh');
+	}else{
+		$this.parent().siblings('.preview').find('.desc p').text(txt).removeClass('elips').trigger("destroy");
+	}
 	// console.log($this.parent().siblings('.preview').find('.desc p')[0])
 	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
 		if ($(this).css('display')=='none') {
@@ -541,7 +545,7 @@ zf.getOneProject = function(id,callback) {
 		$newProject.find('.project').each(function(i) {
 			var $this=$(this);
 			if (callback) {
-				callback($this)
+				callback($this);
 			} else {
 				setTimeout(function() {
 					zf.$projectsList.find('.project').eq(0).before($this.css('opacity',1).hide().fadeIn());
@@ -1288,7 +1292,8 @@ zf.init = function(){
 	zf.$filtre = zf.$page.find('#block_filters');
 	zf.$projectsList = zf.$page.find('#projects');
 
-
+	// show content 
+	zf.$page.fadeIn();
 
 	zf.$projectsList.find('.project').each(function(i) {
 		var $this=$(this);
