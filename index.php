@@ -5,7 +5,6 @@
 	require_once './inc/functions.php';
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
-	$nbProject = getNbProject($_GET['user_fb']);
 	// $userFilter = getUserFilter();
 	$userFilter = 'profile=Figurant&date_filter=week&location=&distance=100';
 	$userFilter = '';
@@ -109,6 +108,8 @@
 							<label for="location">Lieux</label>
 							<input type="text" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" />
 							<input type="hidden" name="distance" value="100" id="distance" />
+							<input type="hidden" name="id_place" class="id_place" />
+							<input type="hidden" name="type_place" class="type_place" />
 						</div>
 						<ul id="distances" class="clearfix">
 							<li><a href="#" class="50">
@@ -194,12 +195,16 @@
 			<?php
 				if (isset($_GET['id_project'])) : // one project
 					$getProjects=getProject($_GET['id_project']);
+					$nbProject = getProject($_GET['id_project'],true);
 				elseif ($_GET['filter']): // filtre on
 					$getProjects=getProjectsByFilters($page,$_GET);
+					$nbProject = getProjectsByFilters($page,$_GET,true);
 				elseif ($userFilter && !$_GET['user_fb']): // user got default filter but not in his projects
 					$getProjects=getProjectsByFilters($page,$userFilterArray);
+					$nbProject = getProjectsByFilters($page,$userFilterArray,true);
 				else:
 					$getProjects=getProjects($page,$_GET['user_fb']);
+					$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
 				endif;
 				foreach ($getProjects as $project): 
 					$valideDate = getValideDate($project['create_date'],$project['loop']); // check if project was revalidate, (don't use create_date but update_date)
@@ -381,7 +386,7 @@
 						</form>
 					</article>
 				<?php endforeach; ?>
-				
+				<?php var_dump($nbProject); ?>
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
 					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
@@ -453,7 +458,7 @@
 	<script src="js/libs/jquery.autoellipsis-1.0.10.min.js" type="text/javascript"></script> 
 	<script src="js/libs/jquery.dotdotdot-1.5.4-packed.js" type="text/javascript"></script>
 	<script src="./js/main.js"></script>
-	<script type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
+	<script class="maxPages" type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
 	
 	<?php
 		echo '<script>

@@ -172,11 +172,13 @@ header, footer, section, article, nav {
 	padding: 11px;
 }
 
-.autocompletion li:hover, .autocompletion li.current {
+/*.autocompletion li:hover, */
+.autocompletion li.current {
 	background: #cc9503;
 }
 
-.autocompletion li:hover a, .autocompletion li.current a {
+/*.autocompletion li:hover a, */
+.autocompletion li.current a {
 	color: #010101;
 }
 
@@ -2009,8 +2011,8 @@ section article #block_see_button:hover a {
 }
 
 .fancybox-overlay #newProject .field #autocompletion li:hover {
-	background: #cc9503;
-	color: #010101;
+	/*background: #cc9503;*/
+	/*color: #010101;*/
 }
 
 .fancybox-overlay #newProject select {
