@@ -1107,8 +1107,11 @@ zf.initAddProject = function() {
 					data: $this.serialize(),
 					success: function(resp) {
 						if (resp.success) {
-							zf.getOneProject(resp.id);
-							$('#successAddProject').fadeIn();
+							zf.getOneProject(resp.id,function($thiz) {
+								$thiz.css('opacity',1);
+								$('#successAddProject').fadeIn();
+								$('#successAddProject').after($thiz);
+							});
 							$.fancybox.close();
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
