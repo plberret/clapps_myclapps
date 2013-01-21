@@ -172,11 +172,13 @@ header, footer, section, article, nav {
 	padding: 11px;
 }
 
-.autocompletion li:hover, .autocompletion li.current {
+/*.autocompletion li:hover, */
+.autocompletion li.current {
 	background: #cc9503;
 }
 
-.autocompletion li:hover a, .autocompletion li.current a {
+/*.autocompletion li:hover a, */
+.autocompletion li.current a {
 	color: #010101;
 }
 
@@ -365,6 +367,10 @@ header #block_filters {
 	position: absolute;
 	top: 58px;
 	width: 810px;
+}
+
+header #block_filters.less {
+	top: -135px;
 }
 
 header #filter {
@@ -847,7 +853,7 @@ header #block_current_filter.none {
 }
 
 header #block_current_filter {
-	display: none;
+	/*display: none;*/
 	background: #111111;
 	height: 84px;
 	width: 810px;
@@ -879,7 +885,13 @@ header #block_current_filter #current_filter p {
 
 header #block_current_filter #current_filter p span:not(.opt) {
 	color: #e3a708;
+	text-transform: lowercase;
 }
+
+header #block_current_filter #current_filter p span.location{
+	text-transform: initial;
+}
+
 header #block_current_filter #current_filter p span.open_filtre {
 	cursor: pointer;
 }
@@ -942,6 +954,10 @@ header #block_current_filter #notif_email input[type=submit] {
 
 section {
 	padding-top: 300px;
+}
+
+section.margedless{
+	padding-top: 180px
 }
 
 section #newProject {
@@ -1985,8 +2001,8 @@ section article #block_see_button:hover a {
 }
 
 .fancybox-overlay #newProject .field #autocompletion li:hover {
-	background: #cc9503;
-	color: #010101;
+	/*background: #cc9503;*/
+	/*color: #010101;*/
 }
 
 .fancybox-overlay #newProject select {

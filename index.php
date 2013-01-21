@@ -5,9 +5,9 @@
 	require_once './inc/functions.php';
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
-	$nbProject = getNbProject($_GET['user_fb']);
 	// $userFilter = getUserFilter();
 	$userFilter = 'profile=Figurant&date_filter=week&location=&distance=100';
+	$userFilter = '';
 	$userFilterArray = array();
 	parse_str($userFilter, $values);
 
@@ -55,8 +55,14 @@
 			</div>
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
-					<p>Vous recherchez <span class="time">dès que possible</span> un poste<span class="work"> d'un ingénieur du son</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
-					<p class="none">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
+					<?php if (!empty($userFilter)): ?>
+						<p>Vous recherchez un poste<span class="work"> d'un ingénieur du son</span><span class="time"> dès que possible</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
+						<p class="hide none">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
+					<?php else: ?>
+						<p class="hide">Vous recherchez un poste<span class="work"> d'un ingénieur du son</span><span class="time"> dès que possible</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
+						<p class="none">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
+					<?php endif ?>
+					
 				</div>
 				<div id="notif_email">
 					<p>Être tenu au courant des nouveautés de Clapps</p>
@@ -66,7 +72,7 @@
 					</form>
 				</div>
 			</div>
-			<form id="block_filters" action="">
+			<form<?php if (!empty($userFilter)): ?> class="less"<?php endif; ?> id="block_filters" action="">
 				<div id="filter" class="clearfix">
 					<div id="col1" class="col">
 						<h2>Filtrer la recherche</h2>
@@ -102,6 +108,8 @@
 							<label for="location">Lieux</label>
 							<input type="text" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" />
 							<input type="hidden" name="distance" value="100" id="distance" />
+							<input type="hidden" name="id_place" class="id_place" />
+							<input type="hidden" name="type_place" class="type_place" />
 						</div>
 						<ul id="distances" class="clearfix">
 							<li><a href="#" class="50">
@@ -180,19 +188,23 @@
 			</form>
 		</header>
 	
-		<section id="projects">
+		<section id="projects"<?php if (!empty($userFilter)): ?> class="margedless"<?php endif; ?>>
 			<div id="successAddProject" class="message success">
 				<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
 			</div>
 			<?php
 				if (isset($_GET['id_project'])) : // one project
 					$getProjects=getProject($_GET['id_project']);
+					$nbProject = getProject($_GET['id_project'],true);
 				elseif ($_GET['filter']): // filtre on
 					$getProjects=getProjectsByFilters($page,$_GET);
+					$nbProject = getProjectsByFilters($page,$_GET,true);
 				elseif ($userFilter && !$_GET['user_fb']): // user got default filter but not in his projects
 					$getProjects=getProjectsByFilters($page,$userFilterArray);
+					$nbProject = getProjectsByFilters($page,$userFilterArray,true);
 				else:
 					$getProjects=getProjects($page,$_GET['user_fb']);
+					$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
 				endif;
 				foreach ($getProjects as $project): 
 					$valideDate = getValideDate($project['create_date'],$project['loop']); // check if project was revalidate, (don't use create_date but update_date)
@@ -374,7 +386,9 @@
 						</form>
 					</article>
 				<?php endforeach; ?>
-				
+			<?php $nbProject = intval($nbProject[0]['count'])?>
+			<?php var_dump($nbProject) ?>
+			<?php var_dump(POST_PER_PAGE) ?>
 			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
 					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
@@ -446,7 +460,7 @@
 	<script src="js/libs/jquery.autoellipsis-1.0.10.min.js" type="text/javascript"></script> 
 	<script src="js/libs/jquery.dotdotdot-1.5.4-packed.js" type="text/javascript"></script>
 	<script src="./js/main.js"></script>
-	<script type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
+	<script class="maxPages" type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
 	
 	<?php
 		echo '<script>

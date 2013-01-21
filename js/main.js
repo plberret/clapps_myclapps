@@ -236,6 +236,9 @@ zf.autocomplete = function($this) {
 			break;
 			case 40: zf.jsonListDown($(this)); break;
 		}
+	}).on('mouseleave', 'ul.autocompletion li a', function(event){
+		$(this).parent().removeClass('current');
+		// console.log('rr')
 	}).on('mouseenter', 'ul.autocompletion li a', function(event){
 		event.preventDefault()
 		var $this=$(this);
@@ -247,6 +250,7 @@ zf.autocomplete = function($this) {
 		$thisField.val($this.text())
 		$thisField.siblings('.id_place, .idjob').val($this.data("id"))
 		$thisField.siblings('.type_place').val($this.data("type"))
+		$this.parent().addClass('current');
 		zf.autocompletionHover = true;
 	}).on('mouseleave', 'ul.autocompletion', function(){
 		var $this=$(this);
@@ -365,14 +369,16 @@ zf.seeMore = function($this) {
 }
 
 zf.seeFiltered = function(url,event){
-	zf.currentAnim = event
+	zf.currentAnim = event;
+	zf.$page.find('.btn-more-projects').remove()
 	zf.$projectsList.fadeOut(300,function() {
 		$(this).children().remove().end().show();
 		var $newProject = $('<div/>');
 		$newProject.load(url+' #page',function(resp) {
 			var $this=$(this);
 			zf.$page.find('#see-all').attr('id','see-mine').html($this.find('#see-mine').html());
-			$this.find('.project').each(function(i) {
+			$projects = $this.find('.project');
+			$projects.each(function(i) {
 				var $this=$(this);
 				setTimeout(function() {
 					if (zf.currentAnim == event) {
@@ -386,9 +392,10 @@ zf.seeFiltered = function(url,event){
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
 			setTimeout(function() {
 				if (zf.currentAnim == event) {
+					console.log('ok')
 					zf.$projectsList.append($this.find('.btn-more-projects'));
 				}
-			},$this.find('.project').length*300)
+			},$projects.length*300)
 		});
 	});
 };
@@ -462,12 +469,18 @@ zf.getMoreProjects = function($this,event) {
 	// console.log($this.attr('href'))
 	$newProject.load('index.php'+$this.attr('href')+' #projects',function(resp) {
 		var $this=$(this);
-		$this.find('.project').each(function(i) {
-			var $this=$(this);
+		zf.$projectsList.find('.btn-more-projects').remove()
+		// console.log()
 
+		// eval($this.find('.maxPages'))
+		// console.log($this.find('.maxPages'))
+		// console.log(zf.maxPages);
+		$projects = $this.find('.project');
+		$projects.each(function(i) {
+			var $this=$(this);
 			setTimeout(function() {
 				if (event == zf.currentAnim) {
-					zf.$projectsList.find('.btn-more-projects').before($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
+					zf.$projectsList.last().before($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 					$this.find(".preview .desc p").dotdotdot();
 				}
 				else {
@@ -476,11 +489,16 @@ zf.getMoreProjects = function($this,event) {
 				// zf.$projectsList.find('.btn-more-projects').before($this.hide().fadeIn(500)); // old
 			},i*300);
 		})
-		if (zf.projectCurrentPage >= zf.maxPages) {
-			zf.$projectsList.find('.btn-more-projects').delay(($this.find('.project').length)*300).animate({opacity:0},300,function() {
-				$(this).remove()
-			});
-		};
+		setTimeout(function() {
+			if (zf.currentAnim == event) {
+				zf.$projectsList.append($this.find('.btn-more-projects'));
+			}
+		},$this.find('.project').length*300)
+		// if (zf.projectCurrentPage >= zf.maxPages) {
+			// zf.$projectsList.find('.btn-more-projects').delay(($this.find('.project').length)*300).animate({opacity:0},300,function() {
+				// $(this).remove()
+			// });
+		// };
 	});
 }
 
@@ -513,9 +531,16 @@ zf.getFilteredProjects = function($this,event){
 
 	// actualise current_filter block
 	$currentFilter = zf.$page.find('#block_current_filter');
-	$currentFilter.show();
-	zf.$page.find('#block_current_filter p.none').hide();
-	$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
+	if ($this.find('#profile').val().length == 0 && $this.find('#location').val().length == 0 && $this.find('#date_filter').val()=='all') {
+		zf.$page.find('#block_current_filter p.none').removeClass('hide').siblings('p').addClass('hide');
+	} else {
+		zf.$page.find('#block_current_filter p.none').addClass('hide').siblings('p').removeClass('hide');
+	}
+	if ($this.find('.'+zf.$page.find('#date_filter').val()).text()!='Indifférent') {
+		$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
+	} else {
+		$currentFilter.find('.time').text('')
+	}
 	$currentFilter.find('.work').text(' '+$this.find('#profile').val())
 	$currentFilter.find('.location').text($this.find('#location').val())
 	$currentFilter.find('.distance').text($this.find('#distance').val()+'km')
@@ -653,16 +678,16 @@ zf.jsonListDown = function($this) {
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
 			$next = $curr.next() // define next()
 			if ($next.length) { // if next() exist
-				$curr.next().addClass('current'); // add class to next()
+				$curr.next().addClass('current').find('a').trigger('mouseenter'); // add class to next()
 			} else { // else
 				$next = $ul.children().eq(0)
-				$next.addClass('current'); // add class to first one
+				$next.addClass('current').find('a').trigger('mouseenter'); // add class to first one
 			}
 			$this.val($next.text());
 		} else { // if current doesn't exist or if there is 1 result
 			$first = $ul.find('li:first-child') // define first
 			// if ($this.val().trim()!=$first.find('span').text()) { // if current doesn't exist
-				$first.addClass('current'); // define first child as current
+				$first.addClass('current').find('a').trigger('mouseenter'); // define first child as current
 				$this.val($first.text());
 			// };
 		}
@@ -673,19 +698,20 @@ zf.jsonListUp = function($this) {
 	$ul = $('ul.autocompletion')
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
+		console.log($curr[0]);
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
 			$prev = $curr.prev() // define prev()
 			if ($prev.length) { // if prev() exist
-				$curr.prev().addClass('current'); // add class to prev()
+				$curr.prev().addClass('current').find('a').trigger('mouseenter'); // add class to prev()
 			} else { // else
 				$prev = $ul.children().last();
-				$prev.addClass('current'); // add class to first one
+				$prev.addClass('current').find('a').trigger('mouseenter'); // add class to first one
 			}
 			$this.val($prev.text());
 		} else { // if current doesn't exist or if there is 1 result
 			$last = $ul.find('li:last-child') // define last
 			if ($this.val().trim()!=$last.find('span').text()) { // if current doesn't exist
-				$last.addClass('current'); // define last child as current
+				$last.addClass('current').find('a').trigger('mouseenter'); // define last child as current
 				$this.val($last.text());
 			};
 		}
@@ -705,7 +731,11 @@ zf.filter = function(){
 	
 	// var
 	oldValue = "";
-	zf.filterOpen= true;
+	if (zf.$filtre.hasClass('less')) {
+		zf.filterOpen= false;
+	} else {
+		zf.filterOpen= true;
+	}
 	zf.advancedFilterOpen= false;
 	$filter = zf.$page.find('#block_filters');
 	advancedFilter = zf.$page.find('#filter_advanced');
@@ -743,7 +773,7 @@ zf.filter = function(){
 			$filter.find('#distances li a.100').addClass('current');
 		};
 
-
+		zf.$page.find('#block_current_filter p.none').removeClass('hide').siblings('p').addClass('hide');
 		zf.seeFiltered($(this).attr('href'),event);
 	})
 
@@ -751,21 +781,21 @@ zf.filter = function(){
 		event.preventDefault();
 		if(zf.filterOpen==true){
 			$height= "-135";
-			$top = "180px"
+			$pdtop = "180px"
 			zf.filterOpen=false;
 		} else {
 			$height= "58";
-			$top = "300px"
+			$pdtop = "300px"
 			zf.filterOpen=true;
 		}
-		$filter.stop(true,false).animate({
+		$filter.removeClass('hide').stop(true,false).animate({
 			top: $height,
 		}, 1000, 'easeInOutExpo', function() {
 			// Animation complete.
 			//alert('oui'); 
 		});
 		if ($(document).scrollTop()<=40) {
-			zf.$projectsList.stop(true,false).animate({paddingTop:$top}, 1000, 'easeInOutExpo', function() {
+			zf.$projectsList.stop(true,false).animate({paddingTop:$pdtop}, 1000, 'easeInOutExpo', function() {
 				// Animation complete.
 				//alert('oui'); 
 			});
@@ -875,23 +905,18 @@ zf.filter = function(){
 };
 
 zf.customFields = function($conteneur){
-	
 	// custom select
 	$conteneur.find(".selector .value, .selector .button ").click(function(){
-		var $this = $(this);
-		$liste= $this.parent().siblings('ul');
-		if($liste.css('display')=='none'){
-			$liste.show();
-		}else{
-			$liste.hide();
-		}
+		$(this).parent().siblings('ul').toggle();
 	});
 	
 	$conteneur.find(".selector ul li").click(function(){
 		var $this = $(this);
 		$this.parent('ul').hide();
 		$this.parent('ul').siblings('div').find('.value').html($this.html());
-		$this.parent('ul').siblings('input').attr('value', $this.attr('class')).trigger('change');
+		if ($this.parent('ul').siblings('input').val() != $this.attr('class')) {
+			$this.parent('ul').siblings('input').val($this.attr('class')).trigger('change');
+		};
 	});
 	
 };

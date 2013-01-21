@@ -382,15 +382,52 @@
 		}
 	}
 
-	function getNbProject($user_fb){
+	function getNbProject($data){
 
 		global $baseDD;
-		$sql = 'SELECT count(*) AS nb FROM `mc_project` WHERE current_state != 0';
-		
-		if (!empty($user_fb)) {
-			$sql .= ' AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
-			$array = array(':user_fb' => $user_fb);
+
+		$sql =  "SELECT count(pj.*) FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
+
+		if ($filters['profile']) {
+			$sql .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE name = :profile) AND pf.current_state = 1";
+			$array['profile'] = $filters['profile'];
+			// echo $filters['profile'];
 		}
+
+		if ($filters['id_place']) {
+			echo "vtff";
+			$filters['place_'.$filters['type_place']] = $filters['id_place'];
+			if ($filter['type_place']=='villes') {
+				$sql .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes)) < :maxdist)";
+			}
+			
+			// $sql .= " AND pj.place_villes = :place_villes AND pj.place_departements = :place_departements AND pj.place_regions = :place_regions";
+			// $array['place_regions']=($filters['place_regions'])?$filters['place_regions']:0;
+			$array['place_villes']=($filters['place_villes'])?$filters['place_villes']:0;
+			// $array['place_departements']=($filters['place_departements'])?$filters['place_departements']:0;
+			$array['maxdist']=100000;
+		}
+
+		$sql .= " GROUP BY pj.id_project";
+		$sql .= " ORDER BY `loop` DESC, id_project DESC";
+
+
+
+
+
+
+
+
+		// $sql = 'SELECT count(*) AS nb FROM `mc_project` WHERE current_state != 0';
+		
+		// if (!empty($data['user_fb'])) {
+		// 	$sql .= ' AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
+		// 	$array = array(':user_fb' => $user_fb);
+		// }
+		// if (!empty($data['user_fb'])) {
+		// 	$sql .= ' AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
+		// 	$array = array(':user_fb' => $user_fb);
+		// }
 
 		$q = $baseDD->prepare($sql);
 		$q->setFetchMode(PDO::FETCH_ASSOC);
@@ -511,9 +548,9 @@
 			$R1->setFetchMode(PDO::FETCH_ASSOC);
 			if($R1->execute($array)){
 				$villes=$R1->fetchAll();
-				foreach ($villes as $ville) {
-					$ville['type']='villes';
-					array_push($result,$ville);
+				foreach ($villes as $vil) {
+					$vil['type']='villes';
+					array_push($result,$vil);
 				}
 			}
 
@@ -533,33 +570,70 @@
 	 	}	 	
 	 }
 
-	 function getProjectsByFilters($page,$filters){
+	 function getProjectsByFilters($page,$filters,$count = false){
 	 	global $baseDD;
-	 	// SELECT id_project, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`
-		$sql =  "SELECT pj.id_project, pj.loop, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
+	 	if ($filters['id_place']) {
+				$filters['place_'.$filters['type_place']] = $filters['id_place'];
+			}
+	 	if ($count) {
+	 		$sql = "SELECT count(DISTINCT pj.id_project) AS count";
+	 	} else {
+			$sql = "SELECT pj.id_project, pj.loop, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator";
+			if ($filters['place_villes']) {
+				$sql .= ", (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) AS distance";
+			}
+	 	}
+		$sql.=" FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
 
-		if ($filters['domain']) {
-			$sql .= " AND domain = :domain";
+		if ($filters['profile']) {
+			$sql .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE name = :profile) AND pf.current_state = 1";
+			$array['profile'] = $filters['profile'];
+			// echo $filters['profile'];
+		}
+		if ($filters['place_villes']) {
+			$sql .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
+			$array['place_villes']=($filters['place_villes'])?$filters['place_villes']:0;
+			$array['maxdist']=$filters['distance'].'000';
+		}
+		if ($filters['place_departements']) {
+			$sql .=" AND pj.place_departements = :place_departements OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement = :place_departements)";
+			$array['place_departements']=($filters['place_departements'])?$filters['place_departements']:0;
+		}
+		if ($filters['place_regions']) {
+			$sql .=" AND pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions))";
+			$array['place_regions']=($filters['place_regions'])?$filters['place_regions']:0;
 		}
 
-		// if ($filters['region']) {
-			// $sql .= " AND getDistance((SELECT lat FROM villes WHERE id_ville = :ville),(SELECT lng FROM villes WHERE id_ville = :ville),lat,lng) < 100000";
+		if (!$count) {
+			$sql .= " GROUP BY pj.id_project";
+			if ($filters['place_villes']) {
+				$sql .= " ORDER BY `loop` DESC, distance ASC, pj.id_project DESC";
+			} else {
+				$sql .= " ORDER BY `loop` DESC, pj.id_project DESC";
+			}
+		}
+			$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		// }
-
-		$sql .= " GROUP BY pj.id_project";
-		$sql .= " ORDER BY `loop` DESC, id_project DESC";
-		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		
+// var_dump($filters);
+// var_dump($count);
+
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 
-		if ($filters['domain']) {
-			$R1->bindParam('domain',$filters['domain']);
+
+// var_dump($array);
+		if($R1->execute($array)){
+			$projects = $R1->fetchAll();
 		}
 		
-		if($R1->execute($array)){
-			$projects=$R1->fetchAll();
-		}
+
+		// if ($count) {
+			// echo "$sql";
+			// foreach ($project[0] as $key => $value) {
+				// $project = $value->$key;
+			// }
+		// }
 		 
 		return $projects;
 	 }
