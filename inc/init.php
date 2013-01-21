@@ -2,7 +2,6 @@
 
 require_once 'settings.php';
 require_once 'api/fbsdk/facebook.php';
-
 require_once './inc/functions.php';
 
 $facebook = new Facebook(array(
@@ -11,8 +10,7 @@ $facebook = new Facebook(array(
 	));
 
 // Get User ID
-
-$auth_url = "https://www.facebook.com/dialog/oauth?client_id=" .APP_ID. "&redirect_uri=" . urlencode("https://www.facebook.com/pages/null/" .APP_PAGE_ID. "/?sk=app_".APP_ID);
+$auth_url = "https://www.facebook.com/dialog/oauth?client_id=" .APP_ID. "&scope=publish_actions,manage_notifications&redirect_uri=" . urlencode("https://www.facebook.com/pages/null/" .APP_PAGE_ID. "/?sk=app_".APP_ID);
 
 $signed_request = $_REQUEST["signed_request"];
 
@@ -22,7 +20,7 @@ $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
 
 if(empty($data["user_id"])){
 	if(empty($user_fb)) {
-		// echo("<script> top.location.href='" . $auth_url . "'</script>"); 
+		echo("<script> top.location.href='" . $auth_url . "'</script>"); 
 	}
 }else{
 	if(!getIdFromFb()){
@@ -30,5 +28,21 @@ if(empty($data["user_id"])){
 		createUser($data);
 	}
 }
+
+//echo  $access_token; 
+/*
+try {
+  $facebook->api('/me/notifications','POST',
+                   array( 
+                     'message' => 'Hello World!',
+                     'link' => 'www.example.com'
+                        )
+                );
+} catch(FacebookApiException $e) {
+  $result = $e->getResult();
+  error_log(json_encode($result));
+}
+//$notif =$facebook->api('/me/notifications');
+*/
 
 ?>
