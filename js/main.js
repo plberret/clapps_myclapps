@@ -213,9 +213,14 @@ zf.deleteProject = function($this,callback) {
 
 zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
-	// zf.$page.find('.field .autocomplete').keyup(function(event){
 		event.preventDefault();
 		var $this=$(this);
+		console.log(zf.$filtre.find('a.current'))
+		if (zf.isBlank($this.val())) {
+			zf.$filtre.find('a.current').removeClass('current')
+		} else if (!zf.$filtre.find('a.current').length>0){
+			zf.$filtre.find('a.100').addClass('current')
+		}
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
 
 			// $this.blur();
