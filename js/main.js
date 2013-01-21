@@ -29,7 +29,6 @@ window.cancelAnimationFrame = function(id) {
 
 var zf = zf || {};
 
-
 zf.launchScrollEvent = function() {
 //	zf.rAFLaunchAnim = requestAnimationFrame(zf.launchScrollEvent);
 //	FB.Canvas.getPageInfo( function(info) {
@@ -131,26 +130,7 @@ zf.editProject = function($this) {
 };
 
 zf.cancelEditProject = function($this) {
-	// $article=$this.parents('article');
 	$this.parents('article').next().before(zf.$oldArticle).end().remove();
-	// $this.parents('article').html(zf.$oldArticle.html()).removeClass('edition').addClass('read');
-	/*
-
-	$article.removeClass('edition').addClass('read');
-	// change display 
-	$this.parent().hide();
-	$this.parent().siblings('.manage-read').show();
-	// disable fields
-	$article.find("form input").attr("disabled", "disabled");
-	$article.find("form textarea").attr("disabled", "disabled");
-	// change profiles 
-	$article.find('.more .add-line').hide();
-	$article.find('.block_read').show();
-	$article.find('.block_edition').hide();
-	// show profiles found
-	$article.find('.profileFound').show();
-
-	*/
 };
 
 
@@ -353,23 +333,6 @@ zf.switchNotif = function($this) {
 		left: position,
 	}, 300, 'easeInOutQuint');
 }
-
-/*
-(function($) { 
-    // jQuery function to set a maximum length or characters for a page element it can handle mutiple elements
-        $.fn.createExcerpts = function(elems,length,more_txt) {
-        $.each($(elems), function() { 
-            var item_html = $(this).html(); //
-            item_html = item_html.replace(/<\/?[^>]+>/gi, ''); //replace html tags
-            item_html = jQuery.trim(item_html);  //trim whitespace
-            $(this).html(item_html.substring(0,length)+more_txt);  //update the html on page
-        });
-        return this; //allow jQuery chaining 
-    }
-})(jQuery);
-
-/example call
-$().createExcerpts('.blogpost',280,'...'); */
 
 zf.addSubscribe = function($this){
 	$.ajax({
@@ -1037,6 +1000,53 @@ zf.initSeeProject = function() {
 	
 };
 
+zf.FBShare = function() {
+	FB.ui(
+		{
+			method: 'feed',
+			name: 'Test',
+			link: 'http://developers.facebook.com/docs/reference/dialogs/',
+			picture: 'http://fbrell.com/f8.jpg',
+			caption: 'Reference Documentation',
+			description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+		},
+		function(response) {
+			if (response && response.post_id) {
+				alert('Post was published.');
+			} else {
+				alert('Post was not published.');
+			}
+		}
+	);
+};
+
+zf.FBSend = function() {
+	FB.ui({
+		method: 'send',
+		name: 'clapps',
+		description: 'test',
+		to: '100005028189455',
+		link: 'http://clapps.fr',
+	});
+};
+
+zf.initFb = function() {
+
+	// share fb 
+	zf.$page.find('.share_link').click(function(event) {
+		event.preventDefault();
+		zf.FBShare($(this));
+	})
+	
+	// Postuler 
+	zf.$page.find('.apply_button').click(function(event) {
+		event.preventDefault();
+		console.log('postuler');
+		zf.FBSend($(this));
+	})
+	
+};
+
 zf.initAddProject = function() {
 
 	zf.$newProject = $('#newProject');
@@ -1132,8 +1142,11 @@ zf.initAddProject = function() {
 					data: $this.serialize(),
 					success: function(resp) {
 						if (resp.success) {
-							zf.getOneProject(resp.id);
-							$('#successAddProject').fadeIn();
+							zf.getOneProject(resp.id,function($thiz) {
+								$thiz.css('opacity',1);
+								$('#successAddProject').fadeIn();
+								$('#successAddProject').after($thiz);
+							});
 							$.fancybox.close();
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
@@ -1315,6 +1328,7 @@ zf.init = function(){
 	zf.initEditProject();
 	zf.customFields(zf.$page);
 	zf.autocomplete(zf.$page);
+	zf.initFb();
 	
 	// Blank links
 	$('a[rel=external]').click(function(){
@@ -1331,7 +1345,7 @@ zf.init = function(){
 	
 	// show tuto
 	zf.$page.find("#infoButton a").click(function(event) {
-	//	zf.$page.find("#tuto").show().css({'top': '58px'});
+		zf.$page.find("#tuto").show().css({'top': '58px'});
 	});
 	
 	// close select & autocompletion

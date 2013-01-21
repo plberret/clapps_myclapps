@@ -287,7 +287,7 @@
 													<div class="desc"><p><span><?php echo $profile['name']; ?> : </span><?php echo $profile['person']; ?></p></div>
 													<div class="apply">
 														<?php if (!isAdmin($project,$user_fb)): ?>
-															<a href="#">Postuler</a>
+															<a href="#" class="apply_button">Postuler</a>
 														<?php else: ?>
 															<a href="#" class="profile_found" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" >J'ai trouvé</a>
 														<?php endif; ?>
