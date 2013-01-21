@@ -1,3 +1,8 @@
+if(typeof String.prototype.trim !== 'function') {
+  String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g, ''); 
+  }
+}
 
 // requestAnim shim layer by Paul Irish
 var lastTime = 0;
@@ -267,18 +272,23 @@ zf.autocomplete = function($this) {
 
 
 		if (!zf.autocompletionHover) {
-			var $thisField = $(this);
-			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
-			$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
-			if ($this.find('.autocompletion li').length > 0) {
-				//console.log($thisField.siblings('.id_place')[0])
-				//console.log($this.find('.autocompletion li.current a').data("id"))
-				if (!$this.find('.autocompletion li').hasClass('current')) {
-					$(this).val($this.find('.autocompletion li:first-child a').text())
-					$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
-					$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
+			if ($(this).parents('#col3').length> 0) { // if filter
+				var $thisField = $(this);
+				$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
+				$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
+				if ($this.find('.autocompletion li').length > 0) {
+					console.log($thisField.siblings('.id_place')[0])
+					console.log($this.find('.autocompletion li.current a').data("id"))
+					if (!$this.find('.autocompletion li').hasClass('current')) {
+						$(this).val($this.find('.autocompletion li:first-child a').text())
+						$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
+						$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
+					};
 				};
-			};
+			}else{ // if addAnnonce
+				
+			}
+			
 		};
 
 		$('.autocompletion').remove();

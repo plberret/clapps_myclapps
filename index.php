@@ -21,11 +21,14 @@
 	elseif ($userFilter && !$_GET['user_fb']): // user got default filter but not in his projects
 		$getProjects=getProjectsByFilters($page,$userFilterArray);
 		$nbProject = getProjectsByFilters($page,$userFilterArray,true);
+	elseif ($_GET['favorite']):
+		$getProjects=getProjects($page,$_GET['user_fb'],true);
+		$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
 	else:
 		$getProjects=getProjects($page,$_GET['user_fb']);
 		$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
 	endif;
-	$nbProject = intval($nbProject[0]['count'])
+	$nbProject = intval($nbProject[0]['count']);
 ?>
 
 <!doctype html>
