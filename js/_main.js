@@ -37,6 +37,11 @@ zf.launchScrollEvent = function() {
 //	}); 
 };
 
+function nl2br (str, is_xhtml) {   
+var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
+return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+}
+
 zf.isBlank = function(str) {
 	return (!str || /^\s*$/.test(str));
 };
@@ -213,6 +218,7 @@ zf.deleteProject = function($this,callback) {
 
 zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
+		event.preventDefault();
 		var $this=$(this);
 		console.log(zf.$filtre.find('a.current'))
 		if (zf.isBlank($this.val())) {
@@ -235,7 +241,7 @@ zf.autocomplete = function($this) {
 	}).on('keydown', '.field .autocomplete', function(event){
 		switch (event.keyCode) {
 			case 38:
-				return false;
+				event.preventDefault();
 				zf.jsonListUp($(this));
 			break;
 			case 40: zf.jsonListDown($(this)); break;
@@ -261,7 +267,6 @@ zf.autocomplete = function($this) {
 		$thisField = $this.siblings('.autocomplete')
 		$thisField.val(zf.oldAutocomplete);
 		zf.autocompletionHover = false;
-		return false;
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
 
@@ -358,7 +363,7 @@ zf.addSubscribe = function($this){
 
 zf.seeMore = function($this) {
 	var $txta = $this.parents('form').find('textarea');
-	var txt = $txta.text();
+	var txt = nl2br($txta.text());
 	if($this.hasClass('see-less')){
 		$this.parent().siblings('.preview').find('.desc p').addClass('elips').dotdotdot();
 		console.log($this.parent().siblings('.preview').find('.desc p'), 'eifhezufh');
@@ -443,10 +448,12 @@ zf.seeAll = function($_this,event) {
 };
 
 zf.seeMine = function($_this,event) {
+	//resize of canvas
 	zf.currentAnim = event
 	var url = $_this.attr('href');
 	zf.$projectsList.fadeOut(300,function() {
 		$(this).children().remove().end().show();
+		FB.Canvas.setSize({ width: 810, height: 700 });
 		var $newProject = $('<div/>');
 		$newProject.load(url+' #page',function(resp) {
 			var $this=$(this);
@@ -751,8 +758,8 @@ zf.filter = function(){
 	$filter = zf.$page.find('#block_filters');
 	advancedFilter = zf.$page.find('#filter_advanced');
 	$filter.find('input').click(function(event) {
-		oldValue = $(this).val();
-		return false;
+		event.preventDefault();
+		oldValue = $(this).val()
 	}).focusout(function(event){
 		if (oldValue != $(this).val()) {
 			$filter.trigger('submit');
@@ -772,6 +779,7 @@ zf.filter = function(){
 
 	$filter.find('#refresh_button').click(function(event) {
 		// init filter
+		event.preventDefault();
 		$filter.find('input[type=text]').val('');
 		var defaultDate = $filter.find('#selector_date ul li').eq(0)
 		$filter.find('#date_filter_selected').text(defaultDate.text());
@@ -785,10 +793,10 @@ zf.filter = function(){
 
 		zf.$page.find('#block_current_filter p.none').removeClass('hide').siblings('p').addClass('hide');
 		zf.seeFiltered($(this).attr('href'),event);
-		return false;
 	})
 
 	zf.$page.find('#searchButton, .open_filtre').click(function(event){
+		event.preventDefault();
 		if(zf.filterOpen==true){
 			$height= "-135";
 			$pdtop = "180px"
@@ -810,10 +818,11 @@ zf.filter = function(){
 				//alert('oui'); 
 			});
 		};
-		return false;
+		//return false;
 	}); 
 	
 	advancedFilter.find('.nav a').click(function(event){
+		event.preventDefault();
 		// hide help info 
 		$filter.find('.help_info').hide();
 		// animation
@@ -824,10 +833,11 @@ zf.filter = function(){
 			// Animation complete.
 			//alert('oui'); 
 		});
-		return false;
+		// return false;
 	});
 	
 	advancedFilter.find('a.close').click(function(event){
+		event.preventDefault();
 		// hide help info 
 		$filter.find('.help_info').show();
 		// animation
@@ -842,6 +852,7 @@ zf.filter = function(){
 	});
 	
 	advancedFilter.find('a.valid_button.load').click(function(event){
+		event.preventDefault();
 		var $this=$(this);
 		$.ajax({
 			url: 'requests/getFilter.php',
@@ -864,10 +875,11 @@ zf.filter = function(){
 				})
 			}
 		});
-		return false;
+
 	});
 
 	advancedFilter.find('a.valid_button.delete').click(function(event){
+		event.preventDefault();
 		var $this=$(this);
 		$.ajax({
 			url: 'requests/addFilter.php',
@@ -885,11 +897,11 @@ zf.filter = function(){
 				})
 			}
 		});
-		return false;
 	});
 
 	advancedFilter.find('input.valid_button').click(function(event){ // a fix pour enregistrer le filtre
 		event.stopPropagation();
+		event.preventDefault();
 		var $this=$(this).parents('form');
 		// ajax add filter
 		$.ajax({
@@ -909,7 +921,6 @@ zf.filter = function(){
 				})
 			}
 		});
-		return false;
 	});
 	
 };
@@ -979,23 +990,23 @@ zf.initSeeProject = function() {
 	
 	// add to favorite
 	zf.$page.on('click','.favorite_link',function(event) {
+		event.preventDefault();
 		zf.addFavorite($(this));
-		return false;
 	});
 	
 	// remove from favorite
 	zf.$page.on('click','.unfavorite_link',function(event) {
+		event.preventDefault();
 		zf.deleteFavorite($(this));
-		return false;
 	});
 	
 	// see more/less of project
 	zf.$projectsList.on('click','.see-button',function(event) {
+		event.preventDefault();
 		$this=$(this);
 		if(!$this.hasClass('hide')){
 			zf.seeMore($this);
 		}
-		return false;
 	});
 	
 	// custom size of fields 
@@ -1010,28 +1021,41 @@ zf.initSeeProject = function() {
 	
 };
 
-zf.FBShare = function() {
+zf.FBShare = function(title, desc, project) {
 	FB.ui(
 		{
 			method: 'feed',
-			name: 'Test',
-			link: 'http://developers.facebook.com/docs/reference/dialogs/',
+			name: title,
+			link: project,
 			picture: 'http://fbrell.com/f8.jpg',
-			caption: 'Reference Documentation',
-			description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+			description: desc
 		}
 	);
 };
 
-zf.FBSend = function() {
-	FB.ui({
-		method: 'send',
-		name: '[Candidature] - Nom du projet', // remplacer par le nom du projet
-		to: '100005085961869', // remplacer par id du createur du projet
-		link: 'http://clapps.fr', // lien de l'annonce
-	});
+zf.FBExemple = function(title, desc, project) {
+/*	FB.api(
+		'/me/[YOUR_APP_NAMESPACE]:cook',
+		'post',
+		{ recipe: 'http://fbwerks.com:8000/zhen/cookie.html' },
+		function(response) {
+			if (!response || response.error) {
+				alert('Error occured');
+			} else {
+				alert('Cook was successful! Action ID: ' + response.id);
+			}
+		}); */
 };
 
+
+zf.FBSend = function(title, recipient, project) {
+	FB.ui({
+		method: 'send',
+		name: '[Candidature] - '+title,
+		to: recipient, 
+		link: project, 
+	});
+};
 
 zf.FBNotifications= function() {
 	//console.log('yes');
@@ -1041,15 +1065,15 @@ zf.initFb = function() {
 
 	// share fb 
 	zf.$page.find('.share_link').click(function(event) {
-		zf.FBShare($(this));
-		return false;
+		event.preventDefault();
+		zf.FBShare("mon titre", "ma desc", "http://clapps.fr");
 	})
 	
 	// Postuler 
 	zf.$page.find('.apply_button').click(function(event) {
+		event.preventDefault();
 		console.log('postuler');
-		zf.FBSend($(this));
-		return false;
+		zf.FBSend("mon titre", 100005028189455, "http://clapps.fr");
 	})
 	
 };
@@ -1060,7 +1084,7 @@ zf.initAddProject = function() {
 
 	zf.$newProject.on('keypress','input',function(event) {
 		if(event.keyCode == 13){
-			return false;
+			event.preventDefault();
 		}
 	})
 
@@ -1072,34 +1096,35 @@ zf.initAddProject = function() {
 	
 	// UP NUMBER CHAR LEFT FOR TITLE
 	zf.$newProject.on('keyup','#title',function(event) {
+		event.preventDefault();
 		var $this = $(this);
 		var charLength = $this.val().length;
 		var $lengthLeft = $this.siblings('em').find('span');
 		var lengthLeft = $this.siblings('em').find('span').data('length');
 		$lengthLeft.html(lengthLeft - charLength);
-		return false;
 	});
 
 	// UP NUMBER VALUES FOR POST
 	zf.$newProject.on('click','.profiles ul li .number_control',function(event) {
+		event.preventDefault();
 		zf.numberControlProfile($(this));
-		return false;
 	});
 	
 	// ADD POST
 	zf.$newProject.on('click','.profiles #add-post',function(event) {
+		event.preventDefault();
 		zf.addLineProfile($(this));
-		return false;
 	});
 	
 	// DELETE POST
 	zf.$newProject.on('click','.profiles .delete',function(event) {
+		event.preventDefault();
 		zf.deleteLineProfile($(this));
-		return false;
 	});
 	
 	// SEND PROJECT
 	zf.$newProject.on('submit', function(event) {		
+		event.preventDefault();
 		var $this=$(this);
 		$this.find('#add-project').attr('disabled','disabled')
 		$('.required').removeClass('empty');
@@ -1174,7 +1199,6 @@ zf.initAddProject = function() {
 			$('.message.error').fadeIn().find('p span').html('Veuillez remplir tous les champs.');
 			$this.find('#add-project').removeAttr('disabled')
 		}
-		return false;
 	})
 };
 
@@ -1182,37 +1206,38 @@ zf.initEditProject = function() {
 		
 	// change display to edit project
 	zf.$page.on('click','.editProject',function(event) {
+		event.preventDefault();
 		zf.editProject($(this));
 		// date picker 
-		return false;
 	});
 	
 	// valid update of project
 	zf.$page.on('submit','.project form',function(event) {
+		event.preventDefault();
 		zf.updateProject($(this));
-		return false;
 	});
 	
 	// cancel display of editing project
 	zf.$page.on('click','.cancelEditProject',function(event) {
+		event.preventDefault();
 		zf.cancelEditProject($(this));
-		return false;
 	});
 	
 	// button delete project
 	zf.$page.on('click','.block_delete_project .button_delete_project',function(event) {
+		event.preventDefault();
 		$(this).siblings('.confirm').fadeIn(150);
-		return false;
 	});
 	
 	// button cancel delete project
 	zf.$page.on('click','.block_delete_project .cancel_delete_project',function(event) {
+		event.preventDefault();
 		$(this).parents('.confirm').fadeOut(150);
-		return false;
 	});
 	
 	// button valid delete project
 	zf.$page.on('click','.block_delete_project .valid_delete_project',function(event) {
+		event.preventDefault();
 		var $this=$(this);
 		zf.deleteProject($(this), function(){
 			// lancer la fancybox
@@ -1229,43 +1254,42 @@ zf.initEditProject = function() {
 			FB.Canvas.scrollTo(0,0);
 		});
 		$(this).parents('.confirm').fadeOut(150);
-		return false;
 	});
 	
 	// number control
 	zf.$projectsList.on('click','.profiles .quantity .number_control',function(event) {
+		event.preventDefault();
 		zf.numberControlProfile($(this));
-		return false;
 	});
 	
 	// add profile line
 	zf.$projectsList.on('click','.profiles .line_control .add-post',function(event) {
+		event.preventDefault();
 		zf.addLineProfile($(this));
-		return false;
 	});
 	
 	// delete profile line 
 	zf.$projectsList.on('click','.profiles .line_control .delete',function(event) {
+		event.preventDefault();
 		zf.deleteLineProfile($(this));
-		return false;
 	});
 	
 	// button delete existing line
 	zf.$projectsList.on('click','.profiles .edit .deleteButton a',function(event) {
+		event.preventDefault();
 		$(this).siblings('.confirm').fadeIn(150);
-		return false;
 	});
 	
 	//  cancel delete existing line
 	zf.$projectsList.on('click','.profiles .edit .cancel_delete_profile',function(event) {
+		event.preventDefault();
 		$(this).parents('.confirm').fadeOut(150);
-		return false;
 	});
 	//  confirm delete existing line
 	zf.$projectsList.on('click','.profiles .edit .confirm_delete_profile',function(event) {
+		event.preventDefault();
 		$(this).parents('.confirm').fadeOut(150);
 		zf.deleteProfile($(this));
-		return false;
 	});
 	
 };
@@ -1287,6 +1311,7 @@ zf.initDeleteProject = function() {
 	});
 
 	zf.$customFields.on('submit', 'form',function(event) {
+		event.preventDefault();
 		$.ajax({
 				url: 'requests/deleteProjectWhy.php',
 				type: 'post',
@@ -1298,8 +1323,7 @@ zf.initDeleteProject = function() {
 						$.fancybox.close();
 					},200);
 				}
-		});
-		return false;
+			});
 	})
 };
 
@@ -1370,7 +1394,7 @@ zf.init = function(){
 	
 	// close select & autocompletion
 	$(window).click(function(event) {
-		// return false;
+		// event.preventDefault();
 		if (event.target.localName != 'span' && event.target.className!='button') {
 			$('#col2 .field .selector ul').hide()
 		};
@@ -1378,6 +1402,7 @@ zf.init = function(){
 	
 	// extendProject
 	zf.$projectsList.find('.extendProject').on('click',function(event) {
+		event.preventDefault();
 		var $this=$(this);
 		$.ajax({
 			url: 'requests/activateProject.php',
@@ -1387,11 +1412,11 @@ zf.init = function(){
 				// console.log(resp);
 			}
 		});
-		return false;
 	});
 
 	// profileFound
 	zf.$page.on('click','.profile_found',function(event) {
+		event.preventDefault();
 		var $this=$(this);
 		$.ajax({
 			url: 'requests/profileFound.php',
@@ -1411,7 +1436,6 @@ zf.init = function(){
 				$this.parent().addClass('applyFound').html('Candidat trouvé');
 			}
 		});
-		return false;
 	});
 
 	// date picker 
@@ -1424,14 +1448,14 @@ zf.init = function(){
 	
 	// init switch
 	zf.$page.find( ".switch" ).each(function(){
+		event.preventDefault();
 		zf.initNotif($(this));
-		return false;
 	})
 	
 	// change switch position
 	zf.$page.find( ".switch" ).click(function(event) {
+		event.preventDefault();
 		zf.switchNotif($(this));
-		return false;
 	})
 	
 	// show help filter
@@ -1444,19 +1468,15 @@ zf.init = function(){
 	    zf.$page.find("#block_filters .help_info li").hide();
 	});
 	
-	zf.$page.find(".addProject a").click(function(event) {
-		$.fancybox.open($this,{
-			afterShow: zf.initAddProject,
-			closeClick  : false,
-			helpers   : { 
-				overlay : {closeClick: false}
-			},
-			topRatio : 0
-		})
-		return false;
-	})
-	
-	$(".addProject a").fancybox({});
+	// fancybox add project
+	zf.$page.find(".addProject a").fancybox({
+		afterShow: zf.initAddProject,
+		closeClick  : false,
+		helpers   : { 
+			overlay : {closeClick: false},
+		},
+		topRatio : 0
+	});
 	
 	// init page tab of filter
 	zf.$filtre.find('.nav a').click(function(event) {
@@ -1471,43 +1491,43 @@ zf.init = function(){
 	// filter project
 	zf.$filtre.on('submit', function(event){
 		$thisField = $(this).find('.autocomplete.place')
+		event.preventDefault();
 		zf.getFilteredProjects($(this),event);
-		return false;
 	});
 	
 	// filter project
 	zf.$page.on('submit', '#addSubscribe', function(event) {
+		event.preventDefault();
 		zf.addSubscribe($(this));
-		return false;
 	});
 	
 	// update projects list by distance
 	zf.$filtre.find('#distances li a').click(function(event) {
+		event.preventDefault();
 		zf.updateFilter($(this));
-		return false;
 	})
 	
 	// see mine projects
 	zf.$page.on('click','#see-mine',function(event) { // a protéger avec un .queue() (spamclick)
+		event.preventDefault();
 		var $this=$(this);
 		$this.attr('id','see-all').html('Voir toutes les annonces');
 		zf.seeMine($this,event);
-		return false;
 	});
 	
 	// see all projects
 	zf.$page.on('click','#see-all',function(event) {
+		event.preventDefault();
 		var $this=$(this);
 		//$this.attr('id','see-mine');
 		zf.seeAll($this,event);
-		return false;
 	});
 	
 	// More projects
 	zf.projectCurrentPage = parseInt(zf.$projectsList.find('.btn-more-projects a').data('nav'),10) || 0;
 	zf.$projectsList.on('click','.btn-more-projects a',function(event) {
+		event.preventDefault();
 		zf.getMoreProjects($(this),event);
-		return false;
 	});
 	
 	// init geocoder google map 

@@ -2,6 +2,8 @@
 	require_once 'initFb.php';
 	require_once 'settings.php';
 	require_once 'connect.php';
+	require_once 'api/mailchimp/MCAPI.class.php';
+	require_once 'api/mailchimp/config.inc.php';
 
 	function getValideDate($date,$loop){
 		$tsstart = DateTime::createFromFormat('Y-m-j',$date);
@@ -824,27 +826,29 @@
 	}
 	
 	function addListSubscribe($user){
-		global $baseDD;
 		
-		require_once '../api/mailchimp/MCAPI.class.php';
-		require_once '../api/mailchimp/config.inc.php';
-
+		global $baseDD, $apikey, $listId, $merge_vars ;
+		
 		$api = new MCAPI($apikey);
-	//	$retval = $api->listSubscribe( $listId, $email, $merge_vars, $email_type='html', $double_optin=false, $update_existing=false, $replace_interests=true, $send_welcome=true );
+		$retval = $api->listSubscribe( $listId, $user['email'], $merge_vars, $email_type='html', $double_optin=false, $update_existing=false, $replace_interests=true, $send_welcome=true );
 
 		if($api->errorCode){
 			switch ($api->errorCode) {
 				case 214:
-					echo json_encode(array(error => "Cet email est déjà enregistré dans notre base." ));
+					// email deja en base 
+					$getUser = $api->listMemberInfo( $listId, $user['email']);
+					if ($api->errorCode){
+						echo json_encode(array(error => "Une erreur est survenue, veuillez réessayer. Merci de nous contacter si le problème persiste." ));
+					}else{
+						echo json_encode(array(result => $getUser['data']));
+					}
 					break;
 				default:
 					echo json_encode(array(error => "Une erreur est survenue, veuillez réessayer. Merci de nous contacter si le problème persiste." ));
 			}
 		}else{
-			echo json_encode(array( success => $user['email'] ));
+			echo json_encode(array( success => true ));
 		}
-		// tester si l'utilisateur existe, add ou update
-		// si on update, recuperer ces infos 
 	}
 	
 	function addCity($city){

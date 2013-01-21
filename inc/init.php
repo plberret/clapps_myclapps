@@ -4,6 +4,7 @@ require_once 'settings.php';
 require_once 'api/fbsdk/facebook.php';
 require_once './inc/functions.php';
 
+
 $facebook = new Facebook(array(
 	'appId' => APP_ID,
 	'secret' => APP_SECRET,
@@ -11,6 +12,10 @@ $facebook = new Facebook(array(
 
 // Get User ID
 $auth_url = "https://www.facebook.com/dialog/oauth?client_id=" .APP_ID. "&scope=publish_actions,manage_notifications&redirect_uri=" . urlencode("https://www.facebook.com/pages/null/" .APP_PAGE_ID. "/?sk=app_".APP_ID);
+
+if($_GET['n']=='app'){
+	echo("<script> top.location.href='" . $auth_url . "'</script>"); 
+}
 
 $signed_request = $_REQUEST["signed_request"];
 
@@ -29,31 +34,39 @@ if(empty($data["user_id"])){
 	}
 }
 /*
-$app_token_request = "https://graph.facebook.com/oauth/access_token?"
-        . "client_id=" . APP_ID
-        . "&client_secret=" . APP_SECRET 
-        . "&grant_type=client_credentials";
+$notification_message = 'à postuler à l un de vos proje ';
+$notification_app_link = '?n=app'; // The link the notification will go through to, this will be specific to your in Facebook App
+$user = $facebook->getUser();
+if ($user) {
+	/*
+	* Facebook user retrieved
+	* $user : Holds the Facebook Users unique ID - Required for posting a notification to them
+	* */ /*
+	try {
+		// Try send this user a notification
+		$fb_response = $facebook->api('/' . $user . '/notifications', 'POST',
+		array(
+			'access_token' => $facebook->getAppId() . '|' . $facebook->getApiSecret(), // access_token is a combination of the AppID & AppSecret combined
+			'href' => $notification_app_link, // Link within your Facebook App to be displayed when a user click on the notification
+			'template' => $notification_message, // Message to be displayed within the notification
+		));
+		if (!$fb_response['success']) {
+			// Notification failed to send
+			echo '<p><strong>Failed to send notification</strong></p>'."\n";
+			echo '<p><pre>' . print_r($fb_response, true) . '</pre></p>'."\n";
+		} else {
+			// Success!
+			echo '<p>Your notification was sent successfully</p>'."\n";
+		}
 
-$response = file_get_contents($app_token_request);
-
-$params = null;
-parse_str($response, $params);
-echo("This app's access token is: " . $params['access_token']);
-
-try {
-	$facebook->api('/me/notifications','POST', array(
-		'access_token' => $params['access_token'],
-		'template' => 'Hello World!',
-		'href' => 'www.my.clapps.fr'
-	));
-	echo 'pulbié';
-} catch(FacebookApiException $e) {
-	$result = $e->getResult();
-	?><pre><?php
-	print_r($result);
-	?></pre><?php
+	} catch (FacebookApiException $e) {
+		// Notification failed to send
+		echo '<p><pre>' . print_r($e, true) . '</pre></p>';
+		$user = NULL;
+	}
+} else {
+	// No Facebook user fetched, show FB login button - Requires Facebook JavaScript SDK (Below)
+	echo '<fb:login-button></fb:login-button>'."\n";
 }
-//$notif =$facebook->api('/me/notifications');
 */
-
 ?>
