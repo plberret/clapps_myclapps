@@ -218,7 +218,7 @@ zf.autocomplete = function($this) {
 		var $this=$(this);
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
 
-			$this.blur();
+			// $this.blur();
 
 		} else if (zf.isOkKey(event)) {
 			if ($this.hasClass('job')) {
@@ -261,20 +261,20 @@ zf.autocomplete = function($this) {
 		// MFMFMF
 
 
-		// if (!zf.autocompletionHover) {
-		// 	var $thisField = $(this);
-		// 	$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
-		// 	$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
-		// 	if ($this.find('.autocompletion li').length > 0) {
-		// 		// console.log($thisField.siblings('.id_place')[0])
-		// 		// console.log($this.find('.autocompletion li.current a').data("id"))
-		// 		if (!$this.find('.autocompletion li').hasClass('current')) {
-		// 			$(this).val($this.find('.autocompletion li:first-child a').text())
-		// 			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
-		// 			$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
-		// 		};
-		// 	};
-		// };
+		if (!zf.autocompletionHover) {
+			var $thisField = $(this);
+			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
+			$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
+			if ($this.find('.autocompletion li').length > 0) {
+				console.log($thisField.siblings('.id_place')[0])
+				console.log($this.find('.autocompletion li.current a').data("id"))
+				if (!$this.find('.autocompletion li').hasClass('current')) {
+					$(this).val($this.find('.autocompletion li:first-child a').text())
+					$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
+					$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
+				};
+			};
+		};
 
 		$('.autocompletion').remove();
 		zf.autocompletionHover = false;
@@ -1441,6 +1441,7 @@ zf.init = function(){
 	
 	// filter project
 	zf.$filtre.on('submit', function(event){
+		$thisField = $(this).find('.autocomplete.place')
 		event.preventDefault();
 		zf.getFilteredProjects($(this),event);
 	});

@@ -110,9 +110,14 @@
 		$user = getIdFromFb();
 		$R1=$baseDD->prepare('UPDATE mc_users SET filter = :filter WHERE id_creator = :id_user');
 		$R1->bindParam(':filter',$data);
+		$R1->bindParam(':id_user',$user['id_user']);
 		if ($R1->execute()) {
 			echo json_encode(array(success => true ));
 		}
+
+		$R1=$baseDD->prepare('INSERT INTO filter_regist (id_user,filter) VALUES (:id_user, :data)');
+		$R1->bindParam(':filter',$data);
+		$R1->bindParam(':id_user',$user['id_user']);
 	}
 
 	function updateProject($data){
