@@ -480,7 +480,7 @@ zf.getMoreProjects = function($this,event) {
 			var $this=$(this);
 			setTimeout(function() {
 				if (event == zf.currentAnim) {
-					zf.$projectsList.last().before($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
+					zf.$projectsList.children().last().before($this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo'));
 					$this.find(".preview .desc p").dotdotdot();
 				}
 				else {

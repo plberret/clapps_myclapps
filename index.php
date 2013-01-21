@@ -406,9 +406,9 @@
 			<?php endif; ?>
 			
 			<?php $nbProject = intval($nbProject[0]['count'])?>
-			<?php var_dump($nbProject) ?>
-			<?php var_dump(POST_PER_PAGE) ?>
-			<?php if ($nbProject>POST_PER_PAGE && !$_GET['id_project']): ?>
+			<!-- <?php var_dump($nbProject) ?> -->
+			<!-- <?php var_dump(POST_PER_PAGE) ?> -->
+			<?php if ($nbProject%POST_PER_PAGE>0 && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
 					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>
