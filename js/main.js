@@ -1373,7 +1373,6 @@ zf.init = function(){
 	// profileFound
 	zf.$page.on('click','.profile_found',function(event) {
 		event.preventDefault();
-		console.log('kkk')
 		var $this=$(this);
 		$.ajax({
 			url: 'requests/profileFound.php',
@@ -1381,10 +1380,16 @@ zf.init = function(){
 			data: {id_project:$this.data('id'),id_profile:$this.data('idprofile')},
 			success: function(resp) {
 				// console.log(resp);
-				$this.parent().siblings('.icon').find('span').fadeOut();
+				var $icon = $this.parent().siblings('.icon')
+				if($icon.hasClass('iconTechnician')){
+					var t = parseInt($this.parents('article').find('.technicians').find('span').text());
+					var icon = parseInt($icon.find('span').text())
+					$this.parents('article').find('.technicians').find('span').text(t-icon)
+				}
+
+				$icon.find('span').fadeOut();
 				$this.parents('li.profile').addClass('profileFound');
 				$this.parent().addClass('applyFound').html('Candidat trouvé');
-
 			}
 		});
 	});

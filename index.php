@@ -130,7 +130,7 @@
 								<span class="number">50 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#" class="current 100">
+							<li><a href="#" class="100">
 								<span class="number">100 </span>
 								<span class="unite">KM</span>
 							</a></li>
