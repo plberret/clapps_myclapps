@@ -214,7 +214,7 @@ header, footer, section, article, nav {
 
 html, body {
 	width: 100%;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 

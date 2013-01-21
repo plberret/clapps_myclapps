@@ -402,7 +402,6 @@
 		}
 
 		if ($filters['id_place']) {
-			echo "vtff";
 			$filters['place_'.$filters['type_place']] = $filters['id_place'];
 			if ($filter['type_place']=='villes') {
 				$sql .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes)) < :maxdist)";
@@ -435,6 +434,19 @@
 		// 	$sql .= ' AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 		// 	$array = array(':user_fb' => $user_fb);
 		// }
+
+		$q = $baseDD->prepare($sql);
+		$q->setFetchMode(PDO::FETCH_ASSOC);
+		$q->execute($array);
+		return $q->fetchColumn();
+	}
+
+	function getNbProjetUser($favorite = false){
+		
+		global $baseDD; // OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
+		$user = getIdFromFb();
+		$sql = 'SELECT count(*) AS nb FROM `mc_project` WHERE current_state != 0 AND id_creator = :id_user';
+		$array = array(':id_user' => $user['id_user']);
 
 		$q = $baseDD->prepare($sql);
 		$q->setFetchMode(PDO::FETCH_ASSOC);

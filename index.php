@@ -25,6 +25,7 @@
 		$getProjects=getProjects($page,$_GET['user_fb']);
 		$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
 	endif;
+	$nbProject = intval($nbProject[0]['count'])
 ?>
 
 <!doctype html>
@@ -60,7 +61,7 @@
 							<?php else: ?>
 								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine">
 									<span class="text">Mes annonces</span>
-									<span class="number"><?php echo getNbProject($user_fb) ?></span>
+									<span class="number"><?php echo getNbProjetUser() ?></span>
 								</a>
 							<?php endif; ?>
 						</li>
@@ -415,8 +416,6 @@
 				</div>
 				
 			<?php endif; ?>
-			
-			<?php $nbProject = intval($nbProject[0]['count'])?>
 			<!-- <?php var_dump($nbProject) ?> -->
 			<!-- <?php var_dump(POST_PER_PAGE) ?> -->
 			<?php if ($nbProject%POST_PER_PAGE>0 && !$_GET['id_project']): ?>
