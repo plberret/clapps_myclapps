@@ -26,7 +26,7 @@
 	</div>
 	
 	<div class="profiles">
-		<h3>Ajouter un(des) poste(s)</h3>
+		<h3>Ajouter un (des) poste(s)</h3>
 		<ul>
 			<li class="clearfix field">
 				<input type="text" placeholder="Métier recherché" class="job required autocomplete plp" name="name[]" />
