@@ -576,7 +576,7 @@
 				$filters['place_'.$filters['type_place']] = $filters['id_place'];
 			}
 	 	if ($count) {
-	 		$sql = "SELECT count(DISTINCT pj.id_project)";
+	 		$sql = "SELECT count(DISTINCT pj.id_project) AS count";
 	 	} else {
 			$sql = "SELECT pj.id_project, pj.loop, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator";
 			if ($filters['place_villes']) {
@@ -611,8 +611,9 @@
 			} else {
 				$sql .= " ORDER BY `loop` DESC, pj.id_project DESC";
 			}
-			$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		}
+			$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
+		// }
 		
 // var_dump($filters);
 // var_dump($count);
@@ -620,7 +621,7 @@
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 
-// echo "$sql";
+
 // var_dump($array);
 		if($R1->execute($array)){
 			$projects = $R1->fetchAll();
@@ -628,6 +629,7 @@
 		
 
 		// if ($count) {
+			// echo "$sql";
 			// foreach ($project[0] as $key => $value) {
 				// $project = $value->$key;
 			// }
