@@ -969,6 +969,42 @@ section #successAddProject {
 	margin-bottom: 20px;
 }
 
+section .submenu_seemine {
+	display: none;
+}
+
+section .submenu_seemine li {
+	float: left;
+	padding: 0 11px 0 32px;
+	height: 38px;
+	line-height: 38px;
+}
+
+section .no_result {
+	text-align: center;
+	color: #FFF;
+	margin-bottom: 32px;
+}
+
+section .no_result h2 {
+	font-weight: bold;
+	font-size: 14px;
+	color: #dbdbdb;
+	line-height: 17px;
+}
+
+section .no_result p {
+	margin-bottom: 15px;
+	color: #dbdbdb;
+	font-size: 14px;
+	line-height: 15px;
+}
+
+section .no_result a {
+	font-size: 14px;
+	color: #d19904;
+}
+
 .btn-more-projects {
 	margin: 0 auto;
 	background: #121212;

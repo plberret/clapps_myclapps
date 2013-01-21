@@ -11,6 +11,20 @@
 	$userFilterArray = array();
 	parse_str($userFilter, $values);
 
+	// get projects
+	if (isset($_GET['id_project'])) : // one project
+		$getProjects=getProject($_GET['id_project']);
+		$nbProject = getProject($_GET['id_project'],true);
+	elseif ($_GET['filter']): // filtre on
+		$getProjects=getProjectsByFilters($page,$_GET);
+		$nbProject = getProjectsByFilters($page,$_GET,true);
+	elseif ($userFilter && !$_GET['user_fb']): // user got default filter but not in his projects
+		$getProjects=getProjectsByFilters($page,$userFilterArray);
+		$nbProject = getProjectsByFilters($page,$userFilterArray,true);
+	else:
+		$getProjects=getProjects($page,$_GET['user_fb']);
+		$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
+	endif;
 ?>
 
 <!doctype html>
@@ -192,20 +206,14 @@
 			<div id="successAddProject" class="message success">
 				<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
 			</div>
-			<?php
-				if (isset($_GET['id_project'])) : // one project
-					$getProjects=getProject($_GET['id_project']);
-					$nbProject = getProject($_GET['id_project'],true);
-				elseif ($_GET['filter']): // filtre on
-					$getProjects=getProjectsByFilters($page,$_GET);
-					$nbProject = getProjectsByFilters($page,$_GET,true);
-				elseif ($userFilter && !$_GET['user_fb']): // user got default filter but not in his projects
-					$getProjects=getProjectsByFilters($page,$userFilterArray);
-					$nbProject = getProjectsByFilters($page,$userFilterArray,true);
-				else:
-					$getProjects=getProjects($page,$_GET['user_fb']);
-					$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
-				endif;
+			<ul class="submenu_seemine clearfix">
+				<li><a href="#">Mes annonces</a></li>
+				<li><a href="#">Annonces en favoris</a></li>
+			</ul>
+			
+			<?php if($getProjects) : ?>
+				
+				<?php
 				foreach ($getProjects as $project): 
 					$valideDate = getValideDate($project['create_date'],$project['loop']); // check if project was revalidate, (don't use create_date but update_date)
 				?>
@@ -234,7 +242,7 @@
 										</div>
 									</div>
 								</div>
-							
+
 								<div class="share clearfix">
 									<a href="#" class="share_link">Partager l'annonce</a>
 									<?php if (!isAdmin($project)): ?>
@@ -251,7 +259,7 @@
 									<p class="elips"><?php echo nl2br($project['description']); ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
-		
+
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
 									<div class="date">
 										<p><?php echo dateUstoFr($project['date_filter']); ?></p>
@@ -386,6 +394,17 @@
 						</form>
 					</article>
 				<?php endforeach; ?>
+				
+			<?php else : ?>
+				
+				<div class="no_result project">
+					<h2>Aucun résultat pour cette recherche</h2>
+					<p>Merci de modifier vos filtres de recherches</p>
+					<a href="#" class="display_all_projects">Afficher toutes les annonces</a>
+				</div>
+				
+			<?php endif; ?>
+			
 			<?php $nbProject = intval($nbProject[0]['count'])?>
 			<?php var_dump($nbProject) ?>
 			<?php var_dump(POST_PER_PAGE) ?>
