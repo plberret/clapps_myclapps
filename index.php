@@ -33,6 +33,15 @@
 <head>
 	<meta charset="utf-8">
 	<title>My clapps</title>
+	<script type="text/javascript">
+	    document.createElement("header");
+	    document.createElement("footer");
+	    document.createElement("section");
+	    document.createElement("aside");
+	    document.createElement("nav");
+	    document.createElement("article");
+	    document.createElement("figure");
+     </script>
 	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
 	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title">
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -486,7 +495,7 @@
 	
 	<div id="fb-root"></div>
 	
-	<script src="js/libs/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/libs/jquery-1.8.1.min.js" type="text/javascript" charset="utf-8"></script>
 	<link rel="stylesheet" href="css/jquery-ui.css" />
 	<link rel="stylesheet" href="css/jquery.ui.theme.css" />
 	<script src="js/libs/jquery-ui.datepicker.js"></script>

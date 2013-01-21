@@ -175,7 +175,7 @@ zf.updateProject = function($form) {
 					$this.find('.more').show();
 					$this.find('.see-more').removeClass('see-more').addClass('see-less').html('<span>Voir</span> moins').css({'display':'block'});
 					$next = $form.parent().next();
-					console.log($form);
+					//console.log($form);
 					if ($next.length) {
 						$form.parent().remove()
 						$next.before($this);
@@ -214,7 +214,7 @@ zf.deleteProject = function($this,callback) {
 zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
 		var $this=$(this);
-		console.log(zf.$filtre.find('a.current'))
+		//console.log(zf.$filtre.find('a.current'))
 		if (zf.isBlank($this.val())) {
 			zf.$filtre.find('a.current').removeClass('current')
 		} else if (!zf.$filtre.find('a.current').length>0){
@@ -222,7 +222,7 @@ zf.autocomplete = function($this) {
 		}
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
 
-			$this.blur();
+			// $this.blur();
 
 		} else if (zf.isOkKey(event)) {
 			if ($this.hasClass('job')) {
@@ -266,20 +266,20 @@ zf.autocomplete = function($this) {
 		// MFMFMF
 
 
-		// if (!zf.autocompletionHover) {
-		// 	var $thisField = $(this);
-		// 	$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
-		// 	$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
-		// 	if ($this.find('.autocompletion li').length > 0) {
-		// 		console.log($thisField.siblings('.id_place')[0])
-		// 		console.log($this.find('.autocompletion li.current a').data("id"))
-		// 		if (!$this.find('.autocompletion li').hasClass('current')) {
-		// 			$(this).val($this.find('.autocompletion li:first-child a').text())
-		// 			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
-		// 			$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
-		// 		};
-		// 	};
-		// };
+		if (!zf.autocompletionHover) {
+			var $thisField = $(this);
+			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
+			$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
+			if ($this.find('.autocompletion li').length > 0) {
+				//console.log($thisField.siblings('.id_place')[0])
+				//console.log($this.find('.autocompletion li.current a').data("id"))
+				if (!$this.find('.autocompletion li').hasClass('current')) {
+					$(this).val($this.find('.autocompletion li:first-child a').text())
+					$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
+					$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
+				};
+			};
+		};
 
 		$('.autocompletion').remove();
 		zf.autocompletionHover = false;
@@ -351,7 +351,7 @@ zf.addSubscribe = function($this){
 				window.open("http://google.fr");
 			}
 		//	var user=resp.result[0].merges;
-		console.log(resp);
+		//console.log(resp);
 		}
 	});
 }
@@ -361,7 +361,7 @@ zf.seeMore = function($this) {
 	var txt = $txta.text();
 	if($this.hasClass('see-less')){
 		$this.parent().siblings('.preview').find('.desc p').addClass('elips').dotdotdot();
-		console.log($this.parent().siblings('.preview').find('.desc p'), 'eifhezufh');
+		//console.log($this.parent().siblings('.preview').find('.desc p'), 'eifhezufh');
 	}else{
 		$this.parent().siblings('.preview').find('.desc p').text(txt).removeClass('elips').trigger("destroy");
 	}
@@ -403,7 +403,7 @@ zf.seeFiltered = function(url,event){
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
 			setTimeout(function() {
 				if (zf.currentAnim == event) {
-					console.log('ok')
+					//console.log('ok')
 					zf.$projectsList.append($this.find('.btn-more-projects'));
 				}
 			},$projects.length*300)
@@ -548,13 +548,13 @@ zf.getFilteredProjects = function($this,event){
 		zf.$page.find('#block_current_filter p.none').addClass('hide').siblings('p').removeClass('hide');
 	}
 	if ($this.find('.'+zf.$page.find('#date_filter').val()).text()!='Indifférent') {
-		$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text())
+		$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text());
 	} else {
-		$currentFilter.find('.time').text('')
+		$currentFilter.find('.time').text('');
 	}
-	$currentFilter.find('.work').text(' '+$this.find('#profile').val())
-	$currentFilter.find('.location').text($this.find('#location').val())
-	$currentFilter.find('.distance').text($this.find('#distance').val()+'km')
+	$currentFilter.find('.work').text(' '+$this.find('#profile').val());
+	$currentFilter.find('.location').text($this.find('#location').val());
+	$currentFilter.find('.distance').text($this.find('#distance').val()+'km');
 	if ($this.find('#location').val().trim().length==0) {
 		$currentFilter.find('.opt').hide()
 	} else {
@@ -709,7 +709,7 @@ zf.jsonListUp = function($this) {
 	$ul = $('ul.autocompletion')
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
-		console.log($curr[0]);
+		//console.log($curr[0]);
 		if ($curr.length && $curr.removeClass('current') && $ul.children().length>1) { // if current exist, remove class and if there is more than 1 result.
 			$prev = $curr.prev() // define prev()
 			if ($prev.length) { // if prev() exist
@@ -955,7 +955,7 @@ zf.getPlacePosition = function(lieu, callback){
 						donnees["success"] = true;
 						donnees["id"]= rep['id'];
 						donnees["type"]="villes";
-						console.log("je passe en success")
+						//console.log("je passe en success")
 						callback(donnees);
 					},error: function(jqXHR, textStatus, errorThrown) {
 						callback('notFound');
@@ -1047,7 +1047,7 @@ zf.initFb = function() {
 	
 	// Postuler 
 	zf.$page.find('.apply_button').click(function(event) {
-		console.log('postuler');
+		//console.log('postuler');
 		zf.FBSend($(this));
 		return false;
 	})
@@ -1444,20 +1444,15 @@ zf.init = function(){
 	    zf.$page.find("#block_filters .help_info li").hide();
 	});
 	
-	zf.$page.find(".addProject a").click(function(event) {
-		$.fancybox.open($this,{
-			afterShow: zf.initAddProject,
-			closeClick  : false,
-			helpers   : { 
-				overlay : {closeClick: false}
-			},
-			topRatio : 0
-		})
-		return false;
-	})
-	
-	$(".addProject a").fancybox({});
-	
+	zf.$page.find(".addProject a").fancybox({
+		afterShow: zf.initAddProject,
+		closeClick  : false,
+		helpers   : { 
+			overlay : {closeClick: false},
+		},
+		topRatio : 0
+	});
+		
 	// init page tab of filter
 	zf.$filtre.find('.nav a').click(function(event) {
 		$this=$(this);
