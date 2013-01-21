@@ -1,3 +1,8 @@
+if(typeof String.prototype.trim !== 'function') {
+  String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g, ''); 
+  }
+}
 
 // requestAnim shim layer by Paul Irish
 var lastTime = 0;
@@ -214,7 +219,7 @@ zf.deleteProject = function($this,callback) {
 zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
 		var $this=$(this);
-		console.log(zf.$filtre.find('a.current'))
+		// console.log(zf.$filtre.find('a.current'))
 		if (zf.isBlank($this.val())) {
 			zf.$filtre.find('a.current').removeClass('current')
 		} else if (!zf.$filtre.find('a.current').length>0){
@@ -266,20 +271,25 @@ zf.autocomplete = function($this) {
 		// MFMFMF
 
 
-		// if (!zf.autocompletionHover) {
-		// 	var $thisField = $(this);
-		// 	$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
-		// 	$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
-		// 	if ($this.find('.autocompletion li').length > 0) {
-		// 		console.log($thisField.siblings('.id_place')[0])
-		// 		console.log($this.find('.autocompletion li.current a').data("id"))
-		// 		if (!$this.find('.autocompletion li').hasClass('current')) {
-		// 			$(this).val($this.find('.autocompletion li:first-child a').text())
-		// 			$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
-		// 			$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
-		// 		};
-		// 	};
-		// };
+		if (!zf.autocompletionHover) {
+			if ($(this).parents('#col3').length> 0) { // if filter
+				var $thisField = $(this);
+				$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
+				$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
+				if ($this.find('.autocompletion li').length > 0) {
+					console.log($thisField.siblings('.id_place')[0])
+					console.log($this.find('.autocompletion li.current a').data("id"))
+					if (!$this.find('.autocompletion li').hasClass('current')) {
+						$(this).val($this.find('.autocompletion li:first-child a').text())
+						$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li:first-child a').data("id"))
+						$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
+					};
+				};
+			} else { // if addAnnonce
+				
+			}
+			
+		};
 
 		$('.autocompletion').remove();
 		zf.autocompletionHover = false;
@@ -1445,6 +1455,7 @@ zf.init = function(){
 	});
 	
 	zf.$page.find(".addProject a").click(function(event) {
+		var $this=$(this);
 		$.fancybox.open($this,{
 			afterShow: zf.initAddProject,
 			closeClick  : false,

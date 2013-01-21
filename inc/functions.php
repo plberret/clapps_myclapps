@@ -417,31 +417,13 @@
 		$sql .= " GROUP BY pj.id_project";
 		$sql .= " ORDER BY `loop` DESC, id_project DESC";
 
-
-
-
-
-
-
-
-		// $sql = 'SELECT count(*) AS nb FROM `mc_project` WHERE current_state != 0';
-		
-		// if (!empty($data['user_fb'])) {
-		// 	$sql .= ' AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
-		// 	$array = array(':user_fb' => $user_fb);
-		// }
-		// if (!empty($data['user_fb'])) {
-		// 	$sql .= ' AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
-		// 	$array = array(':user_fb' => $user_fb);
-		// }
-
 		$q = $baseDD->prepare($sql);
 		$q->setFetchMode(PDO::FETCH_ASSOC);
 		$q->execute($array);
 		return $q->fetchColumn();
 	}
 
-	function getNbProjetUser($favorite = false){
+	function getNbProjetUser(){
 		
 		global $baseDD; // OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
 		$user = getIdFromFb();
@@ -471,14 +453,18 @@
 		return ceil($result[0]['nb']/POST_PER_PAGE);
 	 }
 
-	 function getProjects($page,$user_fb){
+	 function getProjects($page,$user_fb,$favorite = false){
 
 		global $baseDD;
 		$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		
 		if (!empty($user_fb)) {
-			$sql .= ' WHERE current_state != 0 AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb) OR id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb))';
-			$array = array(':user_fb' => $user_fb);
+			if ($favorite) {
+				$sql .= ' WHERE id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb AND current_state = 1))';
+			} else {
+				$sql .= ' WHERE current_state != 0 AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb)';
+				$array = array(':user_fb' => $user_fb);
+			}
 		} else {
 			$sql .= ' WHERE current_state = 1';
 		}
