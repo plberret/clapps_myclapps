@@ -212,6 +212,12 @@ header, footer, section, article, nav {
 
 /* -------------------------------- MISE EN PAGE -----------------------------------*/
 
+html, body {
+	width: 100%;
+	overflow: hidden;
+}
+
+
 body {
 	background: repeat url(../images/pattern-app.png)  #191919;
 	font-family: 'Droid Sans', sans-serif;
@@ -724,6 +730,22 @@ header #filter_advanced #tabs .tab .choice a {
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
 }
 
+header #filter_advanced #tabs .tab .message {
+	display: none;
+	margin: 12px 0 24px;
+	width: auto;
+	padding: 0;
+	height: 24px;
+}
+
+header #block_filters #filter_advanced #tabs .tab .message p.alert {
+	font-size: 13px;
+	color: #8fa515;
+	padding: 0;
+	text-align: center;
+}
+
+
 header #filter_advanced #tabs .tab .notifs p {
 	float: left;
 	color: #b3afa4;
@@ -970,14 +992,59 @@ section #successAddProject {
 }
 
 section .submenu_seemine {
-	display: none;
+/*	display: none; */
+	float: left;
+	margin: 0 0 28px 65px;
+	background: #181818;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #0c0c0c;
 }
 
 section .submenu_seemine li {
 	float: left;
+	height: 32px;
+	line-height: 33px;
+	-webkit-box-shadow: 0 0 1px #000, inset 0 0 4px 2px #212121;
+	-moz-box-shadow: 0 0 1px #000, inset 0 0 4px 2px #212121;
+	box-shadow: 0 0 1px #000, inset 0 0 4px 2px #212121;
+}
+
+section .submenu_seemine li.favorite_button {
+	border-left: 1px solid #0c0c0c;
+}
+
+section .submenu_seemine li.current {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	background: #101010;
+}
+
+section .submenu_seemine li a {
+	display: block;
 	padding: 0 11px 0 32px;
-	height: 38px;
-	line-height: 38px;
+	font-size: 13px;
+	color: #737373;
+	text-decoration: none;
+}
+
+section .submenu_seemine li.current a {
+	font-weight: bold;
+	color: #d19904;
+}
+
+section .submenu_seemine li:hover a {
+	color: #d19904;
+}
+
+section .submenu_seemine li.mine_button a {
+	background: no-repeat url(../images/icon_announce_mine_button.png) 10px 11px;
+}
+
+section .submenu_seemine li.favorite_button a {
+	background: no-repeat url(../images/icon_announce_favorite_button.png) 9px 9px;
 }
 
 section .no_result {
@@ -2396,24 +2463,15 @@ section article #block_see_button:hover a {
 	height: 100%;
 	position: absolute;
 	z-index: 100;
-	top: 0;
 	background: repeat url('../images/bg_tuto.png') #191919;
 }
 
-#tuto #light_header_tuto {
-	width: 810px;
-	height: 400px;
-	margin: 0 auto;
-	background: repeat-x url('../images/light_header_tuto.jpg');
+#tuto.intro {
+	top: 0;
 }
 
-#tuto #curtain_tuto {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 85px;
-	height: 637px;
-	background: no-repeat url('../images/curtain_tuto.png');
+#tuto.help {
+	top: 60px;
 }
 
 #tuto #content_tuto {
@@ -2421,12 +2479,43 @@ section article #block_see_button:hover a {
 	top: 0;
 }
 
-#tuto #content_tuto #block_logo_tuto {
+#tuto.intro #light_header_tuto {
+	width: 810px;
+	height: 400px;
+	margin: 0 auto;
+	background: repeat-x url('../images/light_header_tuto.jpg');
+}
+
+#tuto.intro #curtain_tuto {
+	position: absolute;
+	z-index: 500;
+	top: 0;
+	right: 0;
+	width: 55px;
+	height: 637px;
+	background: no-repeat url('../images/curtain_tuto.png');
+}
+
+#tuto.intro #shadow_curtain {
+	position: absolute;
+	z-index: 300;
+	top: 0;
+	right: 0;
+	width: 85px;
+	height: 637px;
+	background: no-repeat url('../images/shadow_curtain.png'); 
+}
+
+#tuto.intro #content_tuto #block_logo_tuto {
 	width: 810px;
 	padding: 39px 0 52px;
 }
 
-#tuto #content_tuto #block_logo_tuto p {
+#tuto.help #content_tuto #block_logo_tuto {
+	display: none;
+}
+
+#tuto.intro #content_tuto #block_logo_tuto p {
 	position: relative;
 	text-indent: -9999px;
 	width: 157px;
@@ -2435,7 +2524,7 @@ section article #block_see_button:hover a {
 	background: repeat-x url('../images/logo_tuto.png');
 }
 
-#tuto #content_tuto #block_logo_tuto p:before {
+#tuto.intro #content_tuto #block_logo_tuto p:before {
 	position: absolute;
 	top: 31px;
 	right: 151px;
@@ -2446,7 +2535,7 @@ section article #block_see_button:hover a {
 	border-bottom: 1px solid #212121;
 }
 
-#tuto #content_tuto #block_logo_tuto p:after {
+#tuto.intro #content_tuto #block_logo_tuto p:after {
 	position: absolute;
 	top: 31px;
 	left: 153px;
@@ -2457,17 +2546,21 @@ section article #block_see_button:hover a {
 	border-bottom: 1px solid #212121;
 }
 
-#tuto #content_tuto #block_button_tuto {
+#tuto.help #content_tuto #block_button_tuto {
+	display: none;
+}
+
+#tuto.intro #content_tuto #block_button_tuto {
 	width: 810px;
 	margin-bottom: 25px;
 }
 
-#tuto #content_tuto #block_button_tuto .desc {
+#tuto.intro #content_tuto #block_button_tuto .desc {
 	float: left;
 	margin-left: 50px;
 }
 
-#tuto #content_tuto #block_button_tuto .desc h2 {
+#tuto.intro #content_tuto #block_button_tuto .desc h2 {
 	font-size: 14px;
 	color: #eaad09;
 	font-weight: bold;
@@ -2476,14 +2569,16 @@ section article #block_see_button:hover a {
 	margin-bottom: 15px;
 }
 
-#tuto #content_tuto #block_button_tuto .desc p {
+#tuto.intro #content_tuto #block_button_tuto .desc p {
 	font-size: 13px;
 	color: #ffffff;
 	line-height: 16px;
 	width: 400px;
 }
 
-#tuto #content_tuto #block_button_tuto a {
+#tuto.intro #content_tuto #block_button_tuto a {
+	position: relative;
+	z-index: 400;
 	float: right;
 	display: block;
 	margin: 20px 36px 0 0;
@@ -2507,6 +2602,50 @@ section article #block_see_button:hover a {
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
 	background-image: -ms-linear-gradient(top, #f4b50b, #b80);
 	background-image: linear-gradient(to bottom, #f4b50b, #b80);
+}
+
+#tuto.intro #content_tuto #block_help_tuto {
+	display: none;
+}
+
+#tuto.help #content_tuto #block_help_tuto .desc {
+	float: left;
+	margin: 30px 0 27px 50px;
+}
+
+#tuto.help #content_tuto #block_help_tuto .desc h2 {
+	font-size: 14px;
+	color: #eaad09;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-shadow: 0 0 2px rgba(0,0,0,.78);
+	margin-bottom: 15px;
+}
+
+#tuto.help #content_tuto #block_help_tuto .desc p {
+	font-size: 13px;
+	color: #ffffff;
+	line-height: 16px;
+	width: 400px;
+}
+
+#tuto.help #content_tuto #block_help_tuto a {
+	float: right;
+	display: block;
+	margin: 48px 36px 0 0;
+	padding: 6px 13px;
+	line-height: 15px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #c3c3c3;
+	text-decoration: none;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #232323;
+	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
+	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #353535;
 }
 
 #tuto #content_tuto #block_display_tuto {
@@ -2550,7 +2689,7 @@ section article #block_see_button:hover a {
 	height: 288px;
 	margin: 15px;
 	overflow: hidden;
-	background: green;
+	background: black;
 }
 
 #tuto #content_tuto #block_display_tuto #display_bottom {
@@ -2630,8 +2769,4 @@ section article #block_see_button:hover a {
 
 #tuto #content_tuto #block_nav_tuto ul li.next a {
 	color: #353535;
-}
-
-#tuto {
-	display: none;
 }

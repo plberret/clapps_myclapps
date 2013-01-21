@@ -169,6 +169,9 @@
 								<input type="submit" value="Oui" class="valid_button" />
 								<a href="#" class="close">Annuler</a>
 							</div>
+							<div class="message">
+								<p class="alert">Votre filtre a bien été sauvegardé !</p>
+							</div>
 							<div class="notifs clearfix">
 								<p><span>Activation</span> des notifications Facebook</p>
 								<a href="javascript:void" class="switch">
@@ -184,12 +187,18 @@
 								<a href="#" class="valid_button load">Oui</a>
 								<a href="#" class="close">Annuler</a>
 							</div>
+							<div class="message">
+								<p class="alert">Votre filtre a bien été chargé !</p>
+							</div>
 						</div>
 						<div id="tab3" class="tab">
 							<p><strong>Êtes-vous sûr de vouloir supprimer votre filtre ?</strong></p>
 							<div class="choice clearfix">
 								<a href="#" class="valid_button delete">Oui</a>
 								<a href="#" class="close">Annuler</a>
+							</div>
+							<div class="message">
+								<p class="alert">Votre filtre a bien été supprimé !</p>
 							</div>
 						</div>
 					</div>
@@ -203,13 +212,15 @@
 		</header>
 	
 		<section id="projects"<?php if (!empty($userFilter)): ?> class="margedless"<?php endif; ?>>
-			<div id="successAddProject" class="message success">
+			<div id="successAddProject" class="message success" style="display:none">
 				<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
 			</div>
-			<ul class="submenu_seemine clearfix">
-				<li><a href="#">Mes annonces</a></li>
-				<li><a href="#">Annonces en favoris</a></li>
-			</ul>
+			<div class="clearfix" style="display:none">
+				<ul class="submenu_seemine">
+					<li class="mine_button current"><a href="#">Mes annonces</a></li>
+					<li class="favorite_button"><a href="#">Annonces en favoris</a></li>
+				</ul>
+			</div>
 			
 			<?php if($getProjects) : ?>
 				
@@ -416,7 +427,7 @@
 			
 		</section>
 		
-		<div id="tuto">
+		<div id="tuto" class="intro">
 			<div id="light_header_tuto"></div>
 			<div id="content_tuto">
 				<div id="block_logo_tuto">
@@ -429,13 +440,20 @@
 					</div>
 					<a href="#">J'accède à l'application</a>
 				</div>
+				<div id="block_help_tuto" class="clearfix">
+					<div class="desc">
+						<h2>Besoin d'aide ?</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Pellentesque rhoncus tortor non ...</p>
+					</div>
+					<a href="#">Fermer l'aide</a>
+				</div>
 				<div id="block_display_tuto">
 					<div class="title">
 						<h3>Myclapps en 4 étapes</h3>
 					</div>
 					<div class="display">
 						<div class="mask">
-							<img src="#" alt="Image tuto" />
+							<video width="681"  height="288" src="./assets/tuto_clapps.f4v" autoplay autobuffer></video>
 						</div>
 					</div>
 					<div id="display_bottom"></div>
@@ -462,6 +480,7 @@
 				</div>
 			</div>
 			<div id="curtain_tuto"></div>
+			<div id="shadow_curtain"></div>
 		</div><!-- fin tuto-->
 		
 	</div> <!-- fin page-->

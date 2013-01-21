@@ -844,12 +844,16 @@ zf.filter = function(){
 				$.each(filter, function(key, value) {
 					$filter.find('#'+key).val(value)
 				})
-				$filter.find('#selector_date .'+filter.date_filter).trigger('click')
-				$filter.find('#distances a.'+filter.distance).trigger('click')
-
-				$this.parents("#tab2").children().hide().end().append('<p class="alert">Votre filtre a bien été chargé !</p>').delay(1500).fadeOut(function(){
-					advancedFilter.find('a.close').trigger('click');
-					$this.parents("#tab2").children().show().end().find('.alert').remove()
+				$filter.find('#selector_date .'+filter.date_filter).trigger('click');
+				$filter.find('#distances a.'+filter.distance).trigger('click');
+				
+				$this.parents("#tab2").find('.choice').hide().siblings('.message').fadeIn(200, function(){
+					setTimeout(function(){
+						advancedFilter.find('a.close').trigger('click');
+						setTimeout(function(){
+							$this.parents("#tab2 .choice").show().siblings('.message').hide();
+						},500);
+					},1500);
 				})
 			}
 		});
@@ -865,9 +869,13 @@ zf.filter = function(){
 			data: {filter : ''},
 			success: function(resp) {
 				// console.log(resp);
-				$this.parents("#tab3").children().hide().end().append('<p class="alert">Votre filtre a bien été supprimé !</p>').delay(1500).fadeOut(function(){
-					advancedFilter.find('a.close').trigger('click');
-					$this.parents("#tab3").children().show().end().find('.alert').remove()
+				$this.parents("#tab3").find('.choice').hide().siblings('.message').fadeIn(200, function(){
+					setTimeout(function(){
+						advancedFilter.find('a.close').trigger('click');
+						setTimeout(function(){
+							$this.parents("#tab3 .choice").show().siblings('.message').hide();
+						},500);
+					},1500);
 				})
 			}
 		});
@@ -883,19 +891,14 @@ zf.filter = function(){
 			type: 'post',
 			data: {filter : $this.serialize()},
 			success: function(resp) {
-				// resp = JSON.parse(resp);
-				// console.log(resp);
-				$this.find("#tab1").children().hide().end().append('<p class="alert">Votre filtre a bien été sauvegardé !</p>').delay(1500).fadeOut(function(){
-					$this.find("#tab1").children().show().end().find('.alert').remove()
-
-					$filter.find('.help_info').show();
+				$this.find("#tab1").find('.choice').hide().siblings('.message').fadeIn(200, function(){
 					// animation
-					advancedFilter.stop().animate({
+					advancedFilter.stop().delay(1500).animate({
 						width: '50',
 					}, 600, 'easeInOutExpo', function() {
 						zf.advancedFilterOpen= false;
-						// Animation complete.
-						//alert('oui'); 
+						$filter.find('.help_info').show();
+						$this.find("#tab1 .choice").show().siblings('.message').hide();
 					});
 				})
 			}
@@ -1009,13 +1012,6 @@ zf.FBShare = function() {
 			picture: 'http://fbrell.com/f8.jpg',
 			caption: 'Reference Documentation',
 			description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-		},
-		function(response) {
-			if (response && response.post_id) {
-				alert('Post was published.');
-			} else {
-				alert('Post was not published.');
-			}
 		}
 	);
 };
@@ -1023,11 +1019,15 @@ zf.FBShare = function() {
 zf.FBSend = function() {
 	FB.ui({
 		method: 'send',
-		name: 'clapps',
-		description: 'test',
-		to: '100005028189455',
-		link: 'http://clapps.fr',
+		name: '[Candidature] - Nom du projet', // remplacer par le nom du projet
+		to: '100005085961869', // remplacer par id du createur du projet
+		link: 'http://clapps.fr', // lien de l'annonce
 	});
+};
+
+
+zf.FBNotifications= function() {
+	//console.log('yes');
 };
 
 zf.initFb = function() {
@@ -1306,6 +1306,7 @@ zf.init = function(){
 	zf.$projectsList = zf.$page.find('#projects');
 
 	// show content 
+	zf.$projectsList.hide();
 	zf.$page.fadeIn();
 
 	zf.$projectsList.find('.project').each(function(i) {
@@ -1336,16 +1337,28 @@ zf.init = function(){
 		return false;
 	});
 	
-	// hide tuto
+	// hide tuto first time
 	zf.$page.find("#block_button_tuto a").click(function(event) {
-		zf.$page.find("#tuto").hide();
-		zf.$page.find("header").show();
-		zf.$projectsList.show();
+		zf.$page.find("#tuto video").hide();
+		zf.$page.find("#tuto").fadeOut(800, function(){
+			zf.$page.find("#tuto").removeClass('intro').addClass('help');
+		});
+		zf.$projectsList.fadeIn(800);
+		// enable filter
+	});
+	
+	// hide tuto other time
+	zf.$page.find("#block_help_tuto a").click(function(event) {
+		zf.$page.find("#tuto video").hide();
+		zf.$page.find("#tuto").fadeOut(800);
+		zf.$projectsList.fadeIn(800);
+		// enable filter
 	});
 	
 	// show tuto
 	zf.$page.find("#infoButton a").click(function(event) {
-		zf.$page.find("#tuto").show().css({'top': '58px'});
+		zf.$page.find("#tuto").fadeIn(800);
+		// close en disable filter
 	});
 	
 	// close select & autocompletion

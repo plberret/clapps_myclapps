@@ -28,19 +28,30 @@ if(empty($data["user_id"])){
 		createUser($data);
 	}
 }
-
-//echo  $access_token; 
 /*
+$app_token_request = "https://graph.facebook.com/oauth/access_token?"
+        . "client_id=" . APP_ID
+        . "&client_secret=" . APP_SECRET 
+        . "&grant_type=client_credentials";
+
+$response = file_get_contents($app_token_request);
+
+$params = null;
+parse_str($response, $params);
+echo("This app's access token is: " . $params['access_token']);
+
 try {
-  $facebook->api('/me/notifications','POST',
-                   array( 
-                     'message' => 'Hello World!',
-                     'link' => 'www.example.com'
-                        )
-                );
+	$facebook->api('/me/notifications','POST', array(
+		'access_token' => $params['access_token'],
+		'template' => 'Hello World!',
+		'href' => 'www.my.clapps.fr'
+	));
+	echo 'pulbié';
 } catch(FacebookApiException $e) {
-  $result = $e->getResult();
-  error_log(json_encode($result));
+	$result = $e->getResult();
+	?><pre><?php
+	print_r($result);
+	?></pre><?php
 }
 //$notif =$facebook->api('/me/notifications');
 */
