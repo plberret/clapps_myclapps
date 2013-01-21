@@ -46,6 +46,37 @@ zf.isBlank = function(str) {
 	return (!str || /^\s*$/.test(str));
 };
 
+zf.fixPlaceholder = function() {
+	$('input[placeholder]').each(function(){  
+		var input = $(this);        
+		$(input).val(input.attr('placeholder'));
+		$(input).focus(function(){
+			if (input.val() == input.attr('placeholder')) {
+				input.val('');
+			}
+		});
+		$(input).blur(function(){
+			if (input.val() == '' || input.val() == input.attr('placeholder')) {
+				input.val(input.attr('placeholder'));
+			}
+		});
+	});
+	$('textarea[placeholder]').each(function(){  
+		var input = $(this);        
+		$(input).val(input.attr('placeholder'));
+		$(input).focus(function(){
+			if (input.val() == input.attr('placeholder')) {
+				input.val('');
+			}
+		});
+		$(input).blur(function(){
+			if (input.val() == '' || input.val() == input.attr('placeholder')) {
+				input.val(input.attr('placeholder'));
+			}
+		});
+	});
+};
+
 zf.getVarUrl = function(url,param) {
 	var params = {};
 	var get = url.slice(url.indexOf('?') + 1).split('&');
@@ -634,7 +665,7 @@ zf.jsonJobs = function($this){
 		$.getJSON('requests/jobsJson.php',{job:value.trim()},function(resp){
 		//	console.log(resp)
 			if (resp) {
-				var $ul = $('<ul/>',{id:'autocJobs', class:'autocompletion'});
+				var $ul = $('<ul/>',{id:'autocJobs', "class":'autocompletion'});
 				var $li;
 				var respL = resp.length;
 				for(i=0;i<6;i++){
@@ -667,8 +698,8 @@ zf.jsonCities = function($this){
 		$.getJSON('requests/citiesJson.php',{ville:value.trim(),restricted:restricted},function(resp){
 		//	console.log(resp)
 			if (resp) {
-				var $ul = $('<ul/>',{id:'autocCities', class:'autocompletion'});
-				var $li;
+				var $ul = $('<ul/>',{id:'autocCities', "class":'autocompletion'});
+				var $li; 
 				var respL = resp.length;
 				for(i=0;i<6;i++){
 					if (resp[i]) {
@@ -984,7 +1015,6 @@ zf.initSeeProject = function() {
 	
 	
 	zf.$page.find(".preview .desc p").dotdotdot();
-
 	// console.log(zf.$page.find('.preview .desc p'))
 	
 	// add to favorite
@@ -1346,6 +1376,7 @@ zf.init = function(){
 	zf.initEditProject();
 	zf.customFields(zf.$page);
 	zf.autocomplete(zf.$page);
+	zf.fixPlaceholder();
 	zf.initFb();
 	
 	// Blank links
