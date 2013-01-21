@@ -5,11 +5,12 @@
 	require_once './inc/functions.php';
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
-	// $userFilter = getUserFilter();
-	$userFilter = 'profile=Figurant&date_filter=week&location=&distance=100';
-	$userFilter = '';
-	$userFilterArray = array();
-	parse_str($userFilter, $values);
+	$userFilter = getUserFilter();
+	// var_dump($userFilter);
+	// $userFilter = 'profile=Figurant&date_filter=week&location=&distance=100';
+	// $userFilter = '';
+	// $userFilterArray = array();
+	parse_str($userFilter['filter'], $userFilterArray);
 
 	// get projects
 	if (isset($_GET['id_project'])) : // one project
@@ -18,13 +19,17 @@
 	elseif ($_GET['filter']): // filtre on
 		$getProjects=getProjectsByFilters($page,$_GET);
 		$nbProject = getProjectsByFilters($page,$_GET,true);
-	elseif ($userFilter && !$_GET['user_fb']): // user got default filter but not in his projects
+	elseif ($userFilter['filter'] && !$_GET['user_fb']): // user got default filter but not in his projects
 		$getProjects=getProjectsByFilters($page,$userFilterArray);
 		$nbProject = getProjectsByFilters($page,$userFilterArray,true);
+		var_dump($nbProject);
 	elseif ($_GET['favorite']):
+		$mine = true;
+		$fav = true;
 		$getProjects=getProjects($page,$_GET['user_fb'],true);
-		$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
+		$nbProject = getProjects($page,$_GET['user_fb'],true,true);
 	else:
+		$mine = true;
 		$getProjects=getProjects($page,$_GET['user_fb']);
 		$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
 	endif;
@@ -134,7 +139,7 @@
 								<span class="number">50 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#" class="100">
+							<li><a href="#" class="100 current">
 								<span class="number">100 </span>
 								<span class="unite">KM</span>
 							</a></li>
@@ -219,10 +224,10 @@
 			<div id="successAddProject" class="message success" style="display:none">
 				<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
 			</div>
-			<div class="clearfix" style="display:none">
+			<div class="clearfix<?php if (!$mine):?> hide<?php endif; ?>" id="my_project_choice">
 				<ul class="submenu_seemine">
-					<li class="mine_button current"><a href="#">Mes annonces</a></li>
-					<li class="favorite_button"><a href="#">Annonces en favoris</a></li>
+					<li class="mine_button<?php if (!$fav):?> current<?php endif; ?>"><a href="#">Mes annonces</a></li>
+					<li class="favorite_button<?php if ($fav):?> current<?php endif; ?>"><a href="#">Annonces en favoris</a></li>
 				</ul>
 			</div>
 			
@@ -247,12 +252,12 @@
 											<?php $activeActors=getActiveActors($project['id_project']); ?>
 											<?php $activeTechnicians=getActiveTechnicians($project['id_project']); ?>
 											<div class="actors profile">
-												<span><?php echo getOccurences($activeActors); ?></span>
-												<p>Il reste <?php echo getOccurences($activeActors); ?> poste(s) de comédien(nes) disponible(s)</p>
+												<span class="occurLeft"><?php echo getOccurences($activeActors); ?></span>
+												<p>Il reste <span><?php echo getOccurences($activeActors); ?></span> poste(s) de comédien(nes) disponible(s)</p>
 											</div> 
 											<div class="technicians profile">
-												<span><?php echo getOccurences($activeTechnicians); ?></span>
-												<p>Il reste <?php echo getOccurences($activeTechnicians); ?> poste(s) de technicien(nes) disponible(s)</p>
+												<span class="occurLeft"><?php echo getOccurences($activeTechnicians); ?></span>
+												<p>Il reste <span><?php echo getOccurences($activeTechnicians); ?></span> poste(s) de technicien(nes) disponible(s)</p>
 											</div>
 										</div>
 									</div>
@@ -419,9 +424,10 @@
 				</div>
 				
 			<?php endif; ?>
-			<!-- <?php var_dump($nbProject) ?> -->
-			<!-- <?php var_dump(POST_PER_PAGE) ?> -->
-			<?php if ($nbProject%POST_PER_PAGE>0 && !$_GET['id_project']): ?>
+			<?php var_dump($nbProject) ?>
+			<?php var_dump(POST_PER_PAGE) ?>
+			<?php var_dump($page) ?>
+			<?php if (ceil($nbProject/POST_PER_PAGE)>$page && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
 					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
 				</div>

@@ -106,20 +106,23 @@
 		return $url;
 	}
 
-	function changeFavoriteFilter($data){
+	function changeFavoriteFilter($filter){
 		global $baseDD;
 		
 		$user = getIdFromFb();
-		$R1=$baseDD->prepare('UPDATE mc_users SET filter = :filter WHERE id_creator = :id_user');
-		$R1->bindParam(':filter',$data);
+		$R1=$baseDD->prepare('UPDATE mc_users SET filter = :filter WHERE id_user = :id_user');
+		$R1->bindParam(':filter',$filter['filter']);
 		$R1->bindParam(':id_user',$user['id_user']);
 		if ($R1->execute()) {
-			echo json_encode(array(success => true ));
+			$R2=$baseDD->prepare('INSERT INTO filter_regist (id_user,filter) VALUES (:id_user, :filter)');
+			$R2->bindParam(':filter',$filter['filter']);
+			$R2->bindParam(':id_user',$user['id_user']);
+			if ($R2->execute()) {
+				echo json_encode(array(success => true ));
+			} else {
+				echo json_encode(array(success => false ));
+			}
 		}
-
-		$R1=$baseDD->prepare('INSERT INTO filter_regist (id_user,filter) VALUES (:id_user, :data)');
-		$R1->bindParam(':filter',$data);
-		$R1->bindParam(':id_user',$user['id_user']);
 	}
 
 	function updateProject($data){
@@ -296,19 +299,7 @@
 		}
 	}
 
-	function addFilter($filter){
-		global $baseDD;
-
-		$user = getIdFromFb();
-		$R1=$baseDD->prepare('UPDATE mc_users SET filter = :filter WHERE id_user = :id_user');
-		$R1->bindParam(':filter',$filter['filter']);
-		$R1->bindParam(':id_user',$user['id_user']);
-		if ($R1->execute()) {
-			echo json_encode(array('success' => true ));
-		}
-	}
-
-	function getFilter(){
+	function getUserFilter($json=false){
 		global $baseDD;
 
 		$user = getIdFromFb();
@@ -318,7 +309,11 @@
 		if ($R1->execute()) {
 			// echo json_encode(array('success' => true ));
 			$result = $R1->fetch();
-			echo json_encode($result);
+			if ($json) {
+				echo json_encode($result);
+			}else{
+				return $result;
+			}
 		}
 	}
 
@@ -453,24 +448,33 @@
 		return ceil($result[0]['nb']/POST_PER_PAGE);
 	 }
 
-	 function getProjects($page,$user_fb,$favorite = false){
+	 function getProjects($page,$user_fb,$favorite = false,$count=false){
 
 		global $baseDD;
-		$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+		if ($count) {
+	 		$sql = "SELECT count(DISTINCT id_project) AS count FROM mc_project";
+		} else {
+			$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+		}
 		
 		if (!empty($user_fb)) {
 			if ($favorite) {
-				$sql .= ' WHERE id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb AND current_state = 1))';
+				$sql .= ' WHERE id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb)) AND current_state = 1';
 			} else {
 				$sql .= ' WHERE current_state != 0 AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb)';
-				$array = array(':user_fb' => $user_fb);
 			}
-		} else {
+			$array = array(':user_fb' => $user_fb);	
+		} else if($user_fb)  {
 			$sql .= ' WHERE current_state = 1';
 		}
 
-		$sql .= " ORDER BY `loop` DESC, id_project DESC";
-		$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
+		if ($count) {
+		echo $sql;
+}
+		if (!$count) {
+			$sql .= " ORDER BY `loop` DESC, id_project DESC";
+			$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
+		}
 
 // echo $sql;
 		$R1=$baseDD->prepare($sql);
@@ -595,7 +599,7 @@
 			$array['profile'] = $filters['profile'];
 			// echo $filters['profile'];
 		}
-		if ($filters['place_villes']) {
+		if ($filters['place_villes'] || $filters['location']) {
 			$sql .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
 			$array['place_villes']=($filters['place_villes'])?$filters['place_villes']:0;
 			$array['maxdist']=$filters['distance'].'000';
@@ -616,9 +620,8 @@
 			} else {
 				$sql .= " ORDER BY `loop` DESC, pj.id_project DESC";
 			}
-		}
 			$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
-		// }
+		}
 		
 // var_dump($filters);
 // var_dump($count);

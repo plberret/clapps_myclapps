@@ -219,11 +219,10 @@ zf.deleteProject = function($this,callback) {
 zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
 		var $this=$(this);
-		// console.log(zf.$filtre.find('a.current'))
-		if (zf.isBlank($this.val())) {
-			zf.$filtre.find('a.current').removeClass('current')
-		} else if (!zf.$filtre.find('a.current').length>0){
-			zf.$filtre.find('a.100').addClass('current')
+		if (zf.isBlank($this.val()) && $this.attr('id')=="location") {
+			zf.$filtre.find('#distances').removeClass('active')
+		} else if($this.attr('id')=="location"){
+			zf.$filtre.find('#distances').addClass('active')
 		}
 		if (event.keyCode == 13 && !zf.isBlank($this.val())){
 
@@ -286,7 +285,7 @@ zf.autocomplete = function($this) {
 					};
 				};
 			} else { // if addAnnonce
-				
+
 			}
 			
 		};
@@ -393,7 +392,8 @@ zf.seeFiltered = function(url,event){
 	zf.currentAnim = event;
 	zf.$page.find('.btn-more-projects').remove()
 	zf.$projectsList.fadeOut(300,function() {
-		$(this).children().remove().end().show();
+		zf.$page.find('#my_project_choice').hide()
+		$(this).children('.project, .btn-more-projects').remove().end().show();
 		var $newProject = $('<div/>');
 		$newProject.load(url+' #page',function(resp) {
 			var $this=$(this);
@@ -413,7 +413,7 @@ zf.seeFiltered = function(url,event){
 			// zf.$projectsList.delay(($this.find('.project').length)*300).append($this.find('.btn-more-projects'));
 			setTimeout(function() {
 				if (zf.currentAnim == event) {
-					console.log('ok')
+					// console.log('ok')
 					zf.$projectsList.append($this.find('.btn-more-projects'));
 				}
 			},$projects.length*300)
@@ -424,7 +424,8 @@ zf.seeFiltered = function(url,event){
 zf.seeAll = function($_this,event) {
 	zf.currentAnim = event
 	zf.$projectsList.fadeOut(300,function() {
-		$(this).children().remove().end().show();
+	zf.$page.find('#my_project_choice').hide()
+		$(this).children('.project, .btn-more-projects').remove().end().show();
 		var $newProject = $('<div/>');
 		$newProject.load('index.php #page',function(resp) {
 			var $this=$(this);
@@ -456,9 +457,10 @@ zf.seeMine = function($_this,event) {
 	zf.currentAnim = event
 	var url = $_this.attr('href');
 	zf.$projectsList.fadeOut(300,function() {
-		$(this).children().remove().end().show();
+		$(this).children('.project, .btn-more-projects').remove().end().show();
 		var $newProject = $('<div/>');
 		$newProject.load(url+' #page',function(resp) {
+			zf.$page.find('#my_project_choice').fadeIn()
 			var $this=$(this);
 			// $_this.attr('id','see-mine').html($this.find('#see-mine').html());
 			$this.find('.project').each(function(i) {
@@ -532,6 +534,7 @@ zf.getOneProject = function(id,callback) {
 				callback($this);
 			} else {
 				setTimeout(function() {
+					// console.log(zf.$projectsList);
 					zf.$projectsList.find('.project').eq(0).before($this.css('opacity',1).hide().fadeIn());
 					$this.find(".preview .desc p").dotdotdot();
 				},1000);
@@ -780,9 +783,11 @@ zf.filter = function(){
 		};
 	}) */
 
-	$filter.find('#refresh_button').click(function(event) {
+	zf.$page.on('click','#refresh_button, .display_all_projects',function(event) {
 		// init filter
+		console.log('rrrr')
 		$filter.find('input[type=text]').val('');
+		$filter.find('#distances').removeClass('active');
 		var defaultDate = $filter.find('#selector_date ul li').eq(0)
 		$filter.find('#date_filter_selected').text(defaultDate.text());
 		$filter.find('#date_filter').val(defaultDate.attr('class'));
@@ -1158,11 +1163,13 @@ zf.initAddProject = function() {
 					data: $this.serialize(),
 					success: function(resp) {
 						if (resp.success) {
-							zf.getOneProject(resp.id,function($thiz) {
-								$thiz.css('opacity',1);
-								$('#successAddProject').fadeIn();
-								$('#successAddProject').after($thiz);
-							});
+							// zf.getOneProject(resp.id,function($thiz) {
+							// 	$thiz.css('opacity',1);
+							// 	$('#successAddProject').fadeIn();
+							// 	$('#successAddProject').after($thiz);
+							// });
+							zf.getOneProject(resp.id);
+							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
@@ -1411,9 +1418,13 @@ zf.init = function(){
 				// console.log(resp);
 				var $icon = $this.parent().siblings('.icon')
 				if($icon.hasClass('iconTechnician')){
-					var t = parseInt($this.parents('article').find('.technicians').find('span').text());
+					var t = parseInt($this.parents('article').find('.technicians').find('span').eq(0).text());
 					var icon = parseInt($icon.find('span').text())
 					$this.parents('article').find('.technicians').find('span').text(t-icon)
+				} else {
+					var t = parseInt($this.parents('article').find('.actors').find('span').eq(0).text());
+					var icon = parseInt($icon.find('span').text())
+					$this.parents('article').find('.actors').find('span').text(t-icon)
 				}
 
 				$icon.find('span').fadeOut();
