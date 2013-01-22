@@ -1191,7 +1191,8 @@ zf.initAddProject = function() {
 									setTimeout(function(){
 										$('#successAddProject').fadeOut();
 									},5000);
-									zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
+									zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
+									zf.fixPlaceholder(zf.$page);
 								} else {
 									$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
 									$this.find('#add-project').removeAttr('disabled');
@@ -1220,7 +1221,8 @@ zf.initAddProject = function() {
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
 							},5000);
-							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
+							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
+							zf.fixPlaceholder(zf.$page);
 						} else {
 							$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
 							$this.find('#add-project').removeAttr('disabled');
