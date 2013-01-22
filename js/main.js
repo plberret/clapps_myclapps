@@ -1052,26 +1052,12 @@ zf.initSeeProject = function() {
 	
 };
 
-zf.FBShare = function() {
-	FB.ui(
-		{
-			method: 'feed',
-			name: 'Test',
-			link: 'http://developers.facebook.com/docs/reference/dialogs/',
-			picture: 'http://fbrell.com/f8.jpg',
-			caption: 'Reference Documentation',
-			description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-		}
-	);
-};
-
-zf.FBSend = function() {
-	console.log('oui');
+zf.FBSend = function(project, recipient, url) {
 	FB.ui({
 		method: 'send',
-		name: '[Candidature] - Nom du projet', // remplacer par le nom du projet
-		to: '100005085961869', // remplacer par id du createur du projet
-		link: 'http://clapps.fr', // lien de l'annonce
+		name: '[Candidature] - '+project, // remplacer par le nom du projet
+		to: recipient, // remplacer par id du createur du projet
+		link: url, // lien de l'annonce
 	});
 };
 
@@ -1081,17 +1067,10 @@ zf.FBNotifications= function() {
 };
 
 zf.initFb = function() {
-
-	// share fb 
-	zf.$page.find('.share_link').click(function(event) {
-		zf.FBShare($(this));
-		return false;
-	})
 	
 	// Postuler 
 	zf.$page.find('.apply_button').click(function(event) {
-		////console.log('postuler');
-		zf.FBSend($(this));
+		zf.FBSend("project", 1343913706, "http://clapps.fr");
 		return false;
 	})
 	
