@@ -470,7 +470,7 @@
 
 		if ($count) {
 		echo $sql;
-}
+		}
 		if (!$count) {
 			$sql .= " ORDER BY `loop` DESC, id_project DESC";
 			$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;

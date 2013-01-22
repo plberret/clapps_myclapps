@@ -28,7 +28,7 @@
 			$mine = true;
 		}
 		$getProjects=getProjects($page,$_GET['user_fb']);
-		$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
+		$nbProject = getProjects($page,$_GET['user_fb'],false,true);
 	endif;
 	$nbProject = intval($nbProject[0]['count']);
 ?>
@@ -415,15 +415,12 @@
 						</form>
 					</article>
 				<?php endforeach; ?>
-				
 			<?php else : ?>
-				
 				<div class="no_result project">
 					<h2>Aucun résultat pour cette recherche</h2>
 					<p>Merci de modifier vos filtres de recherches</p>
 					<a href="#" class="display_all_projects">Afficher toutes les annonces</a>
 				</div>
-				
 			<?php endif; ?>
 			<?php if (ceil($nbProject/POST_PER_PAGE)>$page && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
