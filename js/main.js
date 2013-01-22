@@ -1463,8 +1463,11 @@ zf.init = function(){
 	
 	// show tuto
 	zf.$page.find("#infoButton a").click(function(event) {
-		zf.$page.find("#tuto").fadeIn(800);
-		// close en disable filter
+		$tuto=zf.$page.find("#tuto");
+		$tuto.find('#vid').hide();
+		$tuto.fadeIn(200, function(){
+			$tuto.find('#vid').show();
+		});
 	});
 	
 	// close select & autocompletion

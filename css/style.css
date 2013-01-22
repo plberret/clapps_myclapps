@@ -2700,7 +2700,8 @@ section article #block_see_button:hover a {
 #tuto #content_tuto #block_display_tuto {
 	position: relative;
 	width: 810px;
-	height: 395px;
+	height: 385px;
+	/* height: 395px; */
 }
 
 #tuto #content_tuto #block_display_tuto .title {
