@@ -788,8 +788,10 @@ zf.filter = function(){
 	oldValue = "";
 	if (zf.$filtre.hasClass('less')) {
 		zf.filterOpen= false;
+		zf.$page.find('#searchButton a').removeClass('open');
 	} else {
 		zf.filterOpen= true;
+		zf.$page.find('#searchButton a').addClass('open');
 	}
 	zf.advancedFilterOpen= false;
 	$filter = zf.$page.find('#block_filters');
@@ -846,8 +848,11 @@ zf.filter = function(){
 		$filter.removeClass('hide').stop(true,false).animate({
 			top: $height,
 		}, 1000, 'easeInOutExpo', function() {
-			// Animation complete.
-			//alert('oui'); 
+			if(zf.filterOpen==true){
+				zf.$page.find('#searchButton a').hide().addClass('open').fadeIn();
+			} else {
+				zf.$page.find('#searchButton a').hide().removeClass('open').fadeIn();
+			}
 		});
 		if ($(document).scrollTop()<=40) {
 			zf.$projectsList.stop(true,false).animate({paddingTop:$pdtop}, 1000, 'easeInOutExpo', function() {
