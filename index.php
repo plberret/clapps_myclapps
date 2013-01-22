@@ -65,7 +65,7 @@
 						</li>
 						<li class="myProject">
 							<?php if ($_GET['id_project']): ?>
-								<a href="#" id="see-all">Voir toutes les annonces</a>
+								<a href="javascript:void(0);" id="see-all">Voir toutes les annonces</a>
 							<?php else: ?>
 								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine">
 									<span class="text">Mes annonces</span>
@@ -129,23 +129,23 @@
 							<input type="hidden" name="type_place" class="type_place" id="type_place" />
 						</div>
 						<ul id="distances" class="clearfix">
-							<li><a href="#" class="50">
+							<li><a href="javascript:void(0);" class="50">
 								<span class="number">50 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#" class="100 current">
+							<li><a href="javascript:void(0);" class="100 current">
 								<span class="number">100 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#" class="200">
+							<li><a href="javascript:void(0);" class="200">
 								<span class="number">200 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#" class="500">
+							<li><a href="javascript:void(0);" class="500">
 								<span class="number">500 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="#" class="1000">
+							<li><a href="javascript:void(0);" class="1000">
 								<span class="number">1000 </span>
 								<span class="unite">KM</span>
 							</a></li>
@@ -170,7 +170,7 @@
 							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
 							<div class="choice clearfix">
 								<input type="submit" value="Oui" class="valid_button" />
-								<a href="#" class="close">Annuler</a>
+								<a href="javascript:void(0);" class="close">Annuler</a>
 							</div>
 							<div class="message">
 								<p class="alert">Votre filtre a bien été sauvegardé !</p>
@@ -187,8 +187,8 @@
 						<div id="tab2" class="tab">
 							<p><strong>Êtes-vous sûr de vouloir charger votre filtre ?</strong></p>
 							<div class="choice clearfix">
-								<a href="#" class="valid_button load">Oui</a>
-								<a href="#" class="close">Annuler</a>
+								<a href="javascript:void(0);" class="valid_button load">Oui</a>
+								<a href="javascript:void(0);" class="close">Annuler</a>
 							</div>
 							<div class="message">
 								<p class="alert">Votre filtre a bien été chargé !</p>
@@ -197,8 +197,8 @@
 						<div id="tab3" class="tab">
 							<p><strong>Êtes-vous sûr de vouloir supprimer votre filtre ?</strong></p>
 							<div class="choice clearfix">
-								<a href="#" class="valid_button delete">Oui</a>
-								<a href="#" class="close">Annuler</a>
+								<a href="javascript:void(0);" class="valid_button delete">Oui</a>
+								<a href="javascript:void(0);" class="close">Annuler</a>
 							</div>
 							<div class="message">
 								<p class="alert">Votre filtre a bien été supprimé !</p>
@@ -262,12 +262,12 @@
 								</div>
 
 								<div class="share clearfix">
-									<a href="#" class="share_link">Partager l'annonce</a>
+									<a href="javascript:void(0);" class="share_link">Partager l'annonce</a>
 									<?php if (!isAdmin($project)): ?>
 										<?php if (isFavorite($project,$user_fb)): ?>
-											<a href="#" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
+											<a href="javascript:void(0);" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
 										<?php else: ?>
-											<a href="#" data-id="<?php echo $project['id_project'] ?>" class="favorite_link">Ajouter aux favoris</a>
+											<a href="javascript:void(0);" data-id="<?php echo $project['id_project'] ?>" class="favorite_link">Ajouter aux favoris</a>
 										<?php endif ?>
 									<?php endif ?>
 								</div>
@@ -313,9 +313,9 @@
 													<div class="desc"><p><span><?php echo $profile['name']; ?> : </span><?php echo $profile['person']; ?></p></div>
 													<div class="apply">
 														<?php if (!isAdmin($project,$user_fb)): ?>
-															<a href="#" class="apply_button">Postuler</a>
+															<a href="javascript:void(0);" class="apply_button">Postuler</a>
 														<?php else: ?>
-															<a href="#" class="profile_found" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" >J'ai trouvé</a>
+															<a href="javascript:void(0);" class="profile_found" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" >J'ai trouvé</a>
 														<?php endif; ?>
 													</div>
 												</div>
@@ -327,19 +327,19 @@
 													<div class="add_desc add_field"><input type="text" class="plp" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
 													<div class="edit">
 														<div class="deleteButton">
-															<a href="#" class="button_delete_profile">Supprimer</a>
+															<a href="javascript:void(0);" class="button_delete_profile">Supprimer</a>
 															<div class="confirm">
 																<p>êtes-vous sûr de vouloir supprimer ?</p>
 																<div>
-																	<a href="#" class="confirm_delete_profile">Oui</a>
-																	<a href="#" class="cancel_delete_profile">Annuler</a>
+																	<a href="javascript:void(0);" class="confirm_delete_profile">Oui</a>
+																	<a href="javascript:void(0);" class="cancel_delete_profile">Annuler</a>
 																</div>
 															</div>
 														</div>
 														<div class="quantity">
-															<a href="#" class="less_quantity number_control">-</a>
+															<a href="javascript:void(0);" class="less_quantity number_control">-</a>
 															<input type="text" value="<?php echo $profile['occurence']; ?>" class="number" name="occurence[]"/>
-															<a href="#" class="more_quantity number_control">+</a>
+															<a href="javascript:void(0);" class="more_quantity number_control">+</a>
 														</div>
 													</div>
 												</div>
@@ -366,12 +366,12 @@
 											<input type="hidden" class="idjob" name="id_job[]" />
 											<div class="edit">
 												<div class="line_control">
-													<a href="#" class="add-post">+</a>
+													<a href="javascript:void(0);" class="add-post">+</a>
 												</div>
 												<div class="quantity">
-													<a href="#" class="less_quantity number_control">-</a>
+													<a href="javascript:void(0);" class="less_quantity number_control">-</a>
 													<input type="text" value="1" class="number" name="occurence[]"/>
-													<a href="#" class="more_quantity number_control">+</a>
+													<a href="javascript:void(0);" class="more_quantity number_control">+</a>
 												</div>
 											</div>
 										</li>
@@ -386,9 +386,9 @@
 												<span class="finish">Désactivée</span>
 											<?php endif ?>
 										</p>
-										<?php if ($valideDate<0): ?><a href="#" class="extendProject big_button" data-id="<?php echo $project['id_project'] ?>">Réactiver l'annonce</a><?php endif; ?>
-										<?php if (($valideDate>0)&&($valideDate<=DAY_UNTIL_REACTIVATE)): ?><a href="#" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
-										<a href="#" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
+										<?php if ($valideDate<0): ?><a href="javascript:void(0);" class="extendProject big_button" data-id="<?php echo $project['id_project'] ?>">Réactiver l'annonce</a><?php endif; ?>
+										<?php if (($valideDate>0)&&($valideDate<=DAY_UNTIL_REACTIVATE)): ?><a href="javascript:void(0);" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
+										<a href="javascript:void(0);" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 									</div>
 									<div class="manage manage-edition hide clearfix">
 										<div class="block_delete_project">
@@ -402,12 +402,12 @@
 											</div>
 										</div>
 										<input type="submit" value="Valider" />
-										<a href="#" class="cancelEditProject big_button">Annuler</a>
+										<a href="javascript:void(0);" class="cancelEditProject big_button">Annuler</a>
 									</div>
 								<?php endif ?>
 							</div><!-- fin more -->
 							<div id="block_see_button">
-								<a href="#" class="see-more see-button"><span>Voir</span> plus</a>
+								<a href="javascript:void(0);" class="see-more see-button"><span>Voir</span> plus</a>
 							</div>
 						</form>
 					</article>
@@ -423,7 +423,7 @@
 					<?php else: ?>
 							<h2>Aucun résultat pour cette recherche</h2>
 							<p>Merci de modifier vos filtres de recherches</p>
-							<a href="#" class="display_all_projects">Afficher toutes les annonces</a>
+							<a href="javascript:void(0);" class="display_all_projects">Afficher toutes les annonces</a>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
@@ -446,14 +446,14 @@
 						<h2>Trouver un tournage n’aura jamais été aussi simple !</h2>
 						<p>En attendant la sortie du site Mai 2013, <br/>Clapps vous présente son application Facebook</p>
 					</div>
-					<a href="#">J'accède à l'application</a>
+					<a href="javascript:void(0);">J'accède à l'application</a>
 				</div>
 				<div id="block_help_tuto" class="clearfix">
 					<div class="desc">
 						<h2>Besoin d'aide ?</h2>
 						<p>Pour toutes questions,<br/> n'hésitez pas à nous contacter via notre adresse contact@clapps.fr</p>
 					</div>
-					<a href="#">Fermer l'aide</a>
+					<a href="javascript:void(0);">Fermer l'aide</a>
 				</div>
 				<div id="block_display_tuto">
 					<div class="title">
@@ -471,19 +471,19 @@
 				</div>
 				<div id="block_nav_tuto">
 					<ul class="clearfix">
-						<li class="done current"><a class="search" href="#">
+						<li class="done current"><a class="search" href="javascript:void(0);">
 							<span></span>
 							<em>Rechercher/Filtrer</em>
 						</a></li>
-						<li class="done next"><a class="filters" href="#">
+						<li class="done next"><a class="filters" href="javascript:void(0);">
 							<span></span>
 							<em>Gestion des filtres</em>
 						</a></li>
-						<li class="done next"><a class="fav" href="#">
+						<li class="done next"><a class="fav" href="javascript:void(0);">
 							<span></span>
 							<em>Mise en favoris <br/>Partager une annonce</em>
 						</a></li>
-						<li class="done next"><a class="create" href="#">
+						<li class="done next"><a class="create" href="javascript:void(0);">
 							<span></span>
 							<em>Création d'une annonce <br/> Édition d'une annonce</em>
 						</a></li>
