@@ -423,10 +423,10 @@ zf.seeMore = function($this) {
 	var $txta = $this.parents('form').find('textarea');
 	var txt = $txta.text();
 	if($this.hasClass('see-less')){
-		$this.parent().siblings('.preview').find('.desc p').addClass('elips').dotdotdot();
+		$this.removeClass('see-less').parent().siblings('.preview').find('.desc p').addClass('elips').dotdotdot();
 		//console.log($this.parent().siblings('.preview').find('.desc p'), 'eifhezufh');
 	}else{
-		$this.parent().siblings('.preview').find('.desc p').text(txt).removeClass('elips').trigger("destroy");
+		$this.addClass('see-less').parent().siblings('.preview').find('.desc p').text(txt).removeClass('elips').trigger("destroy");
 	}
 	// console.log($this.parent().siblings('.preview').find('.desc p')[0])
 	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
