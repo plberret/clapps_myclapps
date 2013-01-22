@@ -38,20 +38,6 @@
 <head>
 	<meta charset="utf-8">
 	<title>My clapps</title>
-	<!-->
-	<script type="text/javascript">
-	    document.createElement("header");
-	    document.createElement("footer");
-	    document.createElement("section");
-	    document.createElement("aside");
-	    document.createElement("nav");
-	    document.createElement("article");
-	    document.createElement("figure");
-		document.createElement("video");
-     </script>
-<!--	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-	<script src="http://vjs.zencdn.net/c/video.js"></script>-->
-	
 	<!--[if IE]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -467,9 +453,8 @@
 					</div>
 					<div class="display">
 						<div class="mask">
-							<!-- width="681" height="288" -->
-							<video  id="vid" width="690" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin">
-								<source src="./assets/tuto_clapps.f4v" type='video/mp4; codecs="H.264"'>
+							<!-- width="681" height="288" autobuffer loop-->
+							<video  id="vid" width="690" autoplay src="./assets/tuto_clapps.f4v" >
 							</video>
 						</div>
 					</div>
@@ -505,6 +490,7 @@
 	<div id="fb-root"></div>
 	
 	<script src="js/libs/jquery-1.8.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/libs/flowplayer.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="css/jquery-ui.css" />
 	<link rel="stylesheet" href="css/jquery.ui.theme.css" />
 	<script src="js/libs/jquery-ui.datepicker.js"></script>
