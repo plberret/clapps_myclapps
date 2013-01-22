@@ -495,6 +495,7 @@ zf.seeAll = function($_this,event) {
 		var $newProject = $('<div/>');
 		$newProject.load('index.php?filter=false #page',function(resp) {
 			var $this=$(this);
+			console.log($_this);
 			$_this.attr('id','see-mine').html($this.find('#see-mine').html())
 			$this.find('.project').each(function(i) {
 				// console.log('i',i)
@@ -1665,7 +1666,6 @@ zf.init = function(){
 	// see all projects
 	zf.$page.on('click','#see-all',function(event) {
 		var $this=$(this);
-		$this.attr('id','see-mine');
 		zf.seeAll($this,event);
 		return false;
 	});

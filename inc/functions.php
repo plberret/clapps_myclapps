@@ -456,7 +456,7 @@
 			$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		}
 		
-		if (!$user_fb) {
+		if ($user_fb) {
 			$user = getIdFromFb();
 			if ($favorite) {
 				$sql .= ' WHERE id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = :id_user) AND current_state = 1';

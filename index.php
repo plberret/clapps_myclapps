@@ -230,7 +230,7 @@
 			<div class="clearfix<?php if (!$mine):?> hide<?php endif; ?>" id="my_project_choice">
 				<ul class="submenu_seemine">
 					<li class="mine_button<?php if (!$fav):?> current<?php endif; ?>"><a href="#" class="see-mine current">Mes annonces</a></li>
-					<li class="favorite_button<?php if ($fav):?> current<?php endif; ?>"><a href="?favorite=true" class="see-my">Annonces en favoris</a></li>
+					<li class="favorite_button<?php if ($fav):?> current<?php endif; ?>"><a href="?user_fb=true&favorite=true" class="see-my">Annonces en favoris</a></li>
 				</ul>
 			</div>
 			
