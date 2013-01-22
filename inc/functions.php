@@ -449,7 +449,6 @@
 	 }
 
 	 function getProjects($page,$user_fb,$favorite = false,$count=false){
-
 		global $baseDD;
 		if ($count) {
 	 		$sql = "SELECT count(DISTINCT id_project) AS count FROM mc_project";
@@ -457,26 +456,24 @@
 			$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		}
 		
-		if (!empty($user_fb)) {
+		if (!$user_fb) {
+			$user = getIdFromFb();
 			if ($favorite) {
-				$sql .= ' WHERE id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb)) AND current_state = 1';
+				$sql .= ' WHERE id_project IN (SELECT id_project FROM mc_favorite WHERE id_user = :id_user) AND current_state = 1';
 			} else {
-				$sql .= ' WHERE current_state != 0 AND id_creator = (SELECT id_user FROM mc_users WHERE user_fb = :user_fb)';
+				$sql .= ' WHERE current_state != 0 AND id_creator = :id_user';
 			}
-			$array = array(':user_fb' => $user_fb);	
-		} else if($user_fb)  {
+			$array = array(':id_user' => $user['id_user']);	
+		} else {
 			$sql .= ' WHERE current_state = 1';
 		}
 
-		if ($count) {
-		// echo $sql;
-		}
+		
 		if (!$count) {
 			$sql .= " ORDER BY `loop` DESC, id_project DESC";
 			$sql .= ' LIMIT '.(POST_PER_PAGE*($page-1)).','.POST_PER_PAGE;
 		}
 
-// echo $sql;
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 		if($R1->execute($array)){
@@ -595,7 +592,7 @@
 		$sql.=" FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
 
 		if ($filters['profile']) {
-			$sql .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE name = :profile) AND pf.current_state = 1";
+			$sql .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE association IN (SELECT association FROM mc_jobs WHERE name = :profile))";
 			$array['profile'] = $filters['profile'];
 			// echo $filters['profile'];
 		}
