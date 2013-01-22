@@ -247,7 +247,10 @@
 									<img src="https://graph.facebook.com/<?php echo $project['id_creator'] ?>/picture" alt="photo profil <?php echo $project['name_creator'] ?>" />
 									<div class="title_block">
 										<div class="title">
-											<h2><input type="text" disabled="disabled" name="title" value="<?php echo $project['title']; ?>" maxlength="60" ></h2>
+											<h2>
+												<span><?php echo $project['title']; ?></span>
+												<input type="text" class="hide" name="title" value="<?php echo $project['title']; ?>" maxlength="60" >
+											</h2>
 											<input type="hidden" name="id_project" value="<?php echo $project['id_project'] ?>">
 											<div>Postée par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
 										</div>
@@ -458,7 +461,10 @@
 					</div>
 					<div class="display">
 						<div class="mask">
-							<video id="vid" width="681"  height="288" src="./assets/tuto_clapps.f4v" autoplay autobuffer></video>
+							<video  id="vid" width="681" height="288" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin"
+							 data-setup="{}">
+								<source src="./assets/tuto_clapps.f4v" type='video/mp4'>
+							</video>
 						</div>
 					</div>
 					<div id="display_bottom"></div>

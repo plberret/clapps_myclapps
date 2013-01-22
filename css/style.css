@@ -1219,9 +1219,9 @@ section article.read .preview .block_top .title_block .title h2 {
 	line-height: 19px;
 }
 
-section article .preview .block_top .title_block .title input:disabled {
+section article .preview .block_top .title_block .title h2 span {
 	font-size: 14px;
-	color: #dddddd;
+	color: #ddd;
 	width: 460px;
 }
 
