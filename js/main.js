@@ -1072,7 +1072,7 @@ zf.FBSend = function(id_project, id_profile) {
 			FB.ui({
 				method: 'send',
 				name: '[Candidature] - '+project, // remplacer par le nom du projet
-				description: 'poste pourvu '+(profile)+' : '+profile_desc,
+				description: 'poste pourvu ('+profile)+') :<br/>'+profile_desc,
 				to: recipient, // remplacer par id du createur du projet
 				link: url, // lien de l'annonce
 			});
