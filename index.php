@@ -152,56 +152,58 @@
 						</ul>
 					</div>
 				</div>
-				<div id="filter_advanced" class="clearfix">
-					<ul class="nav">
-						<li class="save">
-							<a href="#tab1"><span>Sauvegarder les filtres</span></a>
-						</li>
-						<li class="load">
-							<a href="#tab2" ><span>Charger mes filtres</span></a>
-						</li>
-						<li class="delete">
-							<a href="#tab3" ><span>Supprimer mes filtres</span></a>
-						</li>
-					</ul>
-					<div id="tabs">
-						<div id="tab1" class="tab">
-							<p><strong>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</strong></p>
-							<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
-							<div class="choice clearfix">
-								<input type="submit" value="Oui" class="valid_button" />
-								<a href="#" class="close">Annuler</a>
+				<div id="ctn">
+					<div id="filter_advanced" class="clearfix">
+						<ul class="nav">
+							<li class="save">
+								<a href="#tab1"><span>Sauvegarder les filtres</span></a>
+							</li>
+							<li class="load">
+								<a href="#tab2" ><span>Charger mes filtres</span></a>
+							</li>
+							<li class="delete">
+								<a href="#tab3" ><span>Supprimer mes filtres</span></a>
+							</li>
+						</ul>
+						<div id="tabs">
+							<div id="tab1" class="tab">
+								<p><strong>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</strong></p>
+								<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
+								<div class="choice clearfix">
+									<input type="submit" value="Oui" class="valid_button" />
+									<a href="#" class="close">Annuler</a>
+								</div>
+								<div class="message">
+									<p class="alert">Votre filtre a bien été sauvegardé !</p>
+								</div>
+								<div class="notifs clearfix">
+									<p><span>Activation</span> des notifications Facebook</p>
+									<a href="javascript:void" class="switch">
+										<span class="on state <?php if(getNotifFilter()==1):?> current <?php endif; ?>">ON</span>
+										<span class="off state <?php  if(getNotifFilter()==0):?> current <?php endif; ?> ">OFF</span>
+										<span class="switch_button">Change</span>
+									</a>
+								</div>
 							</div>
-							<div class="message">
-								<p class="alert">Votre filtre a bien été sauvegardé !</p>
+							<div id="tab2" class="tab">
+								<p><strong>Êtes-vous sûr de vouloir charger votre filtre ?</strong></p>
+								<div class="choice clearfix">
+									<a href="#" class="valid_button load">Oui</a>
+									<a href="#" class="close">Annuler</a>
+								</div>
+								<div class="message">
+									<p class="alert">Votre filtre a bien été chargé !</p>
+								</div>
 							</div>
-							<div class="notifs clearfix">
-								<p><span>Activation</span> des notifications Facebook</p>
-								<a href="javascript:void" class="switch">
-									<span class="on state <?php if(getNotifFilter()==1):?> current <?php endif; ?>">ON</span>
-									<span class="off state <?php  if(getNotifFilter()==0):?> current <?php endif; ?> ">OFF</span>
-									<span class="switch_button">Change</span>
-								</a>
-							</div>
-						</div>
-						<div id="tab2" class="tab">
-							<p><strong>Êtes-vous sûr de vouloir charger votre filtre ?</strong></p>
-							<div class="choice clearfix">
-								<a href="#" class="valid_button load">Oui</a>
-								<a href="#" class="close">Annuler</a>
-							</div>
-							<div class="message">
-								<p class="alert">Votre filtre a bien été chargé !</p>
-							</div>
-						</div>
-						<div id="tab3" class="tab">
-							<p><strong>Êtes-vous sûr de vouloir supprimer votre filtre ?</strong></p>
-							<div class="choice clearfix">
-								<a href="#" class="valid_button delete">Oui</a>
-								<a href="#" class="close">Annuler</a>
-							</div>
-							<div class="message">
-								<p class="alert">Votre filtre a bien été supprimé !</p>
+							<div id="tab3" class="tab">
+								<p><strong>Êtes-vous sûr de vouloir supprimer votre filtre ?</strong></p>
+								<div class="choice clearfix">
+									<a href="#" class="valid_button delete">Oui</a>
+									<a href="#" class="close">Annuler</a>
+								</div>
+								<div class="message">
+									<p class="alert">Votre filtre a bien été supprimé !</p>
+								</div>
 							</div>
 						</div>
 					</div>
