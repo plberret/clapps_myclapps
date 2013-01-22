@@ -870,23 +870,5 @@
 			echo json_encode(array( success => true ));
 		}
 	}
-	
-	function addCity($city){
-		global $baseDD;
-		
-		$R1=$baseDD->prepare("INSERT INTO villes VALUES ('',(SELECT id FROM departements WHERE cp=:zip), :place, :zip, :lat, :lng, 1, 0)");
-		
-		$R1->bindParam(':place', $city['place']);
-		$R1->bindParam(':zip', $city['zip']);
-		$R1->bindParam(':lat', $city['latitude']);
-		$R1->bindParam(':lng', $city['longitude']);
-		
-		if ($R1->execute()) {
-			$id=$baseDD->lastInsertId('villes');
-			echo json_encode(array(id => $id ));
-		} else {
-			echo json_encode(array(success => false ));
-		}
-	}
 
 ?>

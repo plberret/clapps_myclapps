@@ -994,45 +994,6 @@ zf.customFields = function($conteneur){
 	
 };
 
-zf.getPlacePosition = function(lieu, callback){
-	/* Appel au service de geocodage avec l'adresse en paramètre */
-	zf.geocoder.geocode( { 'address': lieu}, function(results, status) {
-		/* Si l'adresse a pu être géolocalisée */
-		if (status == google.maps.GeocoderStatus.OK) {
-			var type = results[0].address_components[0].types[0];
-			if(type=="locality"){
-				var zipCode = results[0].address_components[1].short_name;
-				var lieu = results[0].address_components[0].long_name;
-				var lat = results[0].geometry.location.Ya;
-				var lng = results[0].geometry.location.Za;
-				$.ajax({
-					url: 'requests/addCity.php',
-					type: 'post',
-					data: {
-						place: lieu,
-						zip: zipCode,
-						latitude: lat,
-						longitude: lng
-					},success: function(rep) {
-						var donnees=new Array(); 
-						donnees["success"] = true;
-						donnees["id"]= rep['id'];
-						donnees["type"]="villes";
-						////console.log("je passe en success")
-						callback(donnees);
-					},error: function(jqXHR, textStatus, errorThrown) {
-						callback('notFound');
-					}
-				}); 
-			}
-		} else {
-			callback('notFound');
-		}
-		
-	});
-	
-};
-
 zf.initSeeProject = function() {
 	
 	
@@ -1170,41 +1131,28 @@ zf.initAddProject = function() {
 			// test if value of place is empty
 			$value = zf.$newProject.find('#block_place .id_place');
 			if($value.val().trim().length == 0){
-				zf.getPlacePosition($value.siblings('.location').val(), function(request){
-					if(request=='notFound'){
-						$('.message.error').fadeIn().find('p span').html('Cette destination est introuvable.');
-						$this.find('#add-project').removeAttr('disabled');
-						$value.siblings('.location').addClass('empty');
-						return false;
-					}
-					if(request['success'] == true){
-						$value.val(request['id']);
-						$value.siblings('.type_place').val(request['type']);
-						// requete ajax
-						$.ajax({
-							url: $this.attr('action'),
-							type: $this.attr('method'),
-							data: $this.serialize(),
-							success: function(resp) {
-								if (resp.success) {
-									zf.getOneProject(resp.id);
-									$('#successAddProject').fadeIn();
-									$.fancybox.close();
-									FB.Canvas.scrollTo(0,0);
-									setTimeout(function(){
-										$('#successAddProject').fadeOut();
-									},5000);
-									zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
-									zf.fixPlaceholder(zf.$page);
-								} else {
-									$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
-									$this.find('#add-project').removeAttr('disabled');
-								}
-							}
-						});
-						$('.message.error').fadeOut();
+				$.ajax({
+					url: $this.attr('action'),
+					type: $this.attr('method'),
+					data: $this.serialize(),
+					success: function(resp) {
+						if (resp.success) {
+							zf.getOneProject(resp.id);
+							$('#successAddProject').fadeIn();
+							$.fancybox.close();
+							FB.Canvas.scrollTo(0,0);
+							setTimeout(function(){
+								$('#successAddProject').fadeOut();
+							},5000);
+							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
+							zf.fixPlaceholder(zf.$page);
+						} else {
+							$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
+							$this.find('#add-project').removeAttr('disabled');
+						}
 					}
 				});
+				$('.message.error').fadeOut();
 			}else{
 				$.ajax({
 					url: $this.attr('action'),
@@ -1411,7 +1359,7 @@ zf.init = function(){
 		window.open($(this).attr('href'));
 		return false;
 	});
-	/*
+	
 	zf.$vid = zf.$page.find('#vid');
 	zf.$vid[0].addEventListener('loadedmetadata', function() {
   		this.currentTime = 0;
@@ -1446,7 +1394,7 @@ zf.init = function(){
 			zf.$page.find('#block_nav_tuto .create').parent().nextAll().removeClass('done').addClass('next')
 		};
 	}, false);
-*/
+
 
 	zf.$page.find('#block_nav_tuto .search').click(function(event) {
 		zf.$vid[0].currentTime = 0;
@@ -1659,7 +1607,6 @@ zf.init = function(){
 	});
 	
 	// init geocoder google map 
-	zf.geocoder = new google.maps.Geocoder();
 	
 	// init frame
 	zf.launchScrollEvent();
