@@ -22,7 +22,6 @@
 	elseif ($userFilter['filter'] && !$_GET['user_fb']): // user got default filter but not in his projects
 		$getProjects=getProjectsByFilters($page,$userFilterArray);
 		$nbProject = getProjectsByFilters($page,$userFilterArray,true);
-		var_dump($nbProject);
 	elseif ($_GET['favorite']):
 		$mine = true;
 		$fav = true;
