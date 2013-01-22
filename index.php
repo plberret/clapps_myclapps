@@ -458,7 +458,10 @@
 					</div>
 					<div class="display">
 						<div class="mask">
-							<video width="681"  height="288" src="./assets/tuto_clapps.f4v" autoplay autobuffer></video>
+							<video width="681"  height="288" autoplay autobuffer id="my_video_1" class="video-js vjs-default-skin" controls
+								preload="auto" data-setup="{}">
+								<source src="./assets/tuto_clapps.f4v" type='video/mp4'>
+							</video>
 						</div>
 					</div>
 					<div id="display_bottom"></div>
