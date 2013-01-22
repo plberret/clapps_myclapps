@@ -454,8 +454,9 @@
 					<div class="display">
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
-							<video  id="vid" width="690" autoplay src="./assets/tuto_clapps.f4v" >
-							</video>
+							<div class="flowplayer is-splash is-closeable">
+								<video id="vid" width="690" autoplay src="./assets/tuto_clapps.f4v" ></video>
+							</div>	
 						</div>
 					</div>
 					<div id="display_bottom"></div>
