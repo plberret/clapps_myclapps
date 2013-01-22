@@ -38,6 +38,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>My clapps</title>
+	<!-->
 	<script type="text/javascript">
 	    document.createElement("header");
 	    document.createElement("footer");
@@ -50,6 +51,10 @@
      </script>
 <!--	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
 	<script src="http://vjs.zencdn.net/c/video.js"></script>-->
+	
+	<!--[if IE]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
 	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title">
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
