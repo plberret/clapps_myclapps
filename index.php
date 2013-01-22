@@ -436,9 +436,6 @@
 				</div>
 				
 			<?php endif; ?>
-			<!-- <?php var_dump($nbProject) ?> -->
-			<!-- <?php var_dump(POST_PER_PAGE) ?> -->
-			<!-- <?php var_dump($page) ?> -->
 			<?php if (ceil($nbProject/POST_PER_PAGE)>$page && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
 					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>">Voir plus ...</a>
