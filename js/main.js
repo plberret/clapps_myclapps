@@ -1411,7 +1411,7 @@ zf.init = function(){
 		window.open($(this).attr('href'));
 		return false;
 	});
-	
+	/*
 	zf.$vid = zf.$page.find('#vid');
 	zf.$vid[0].addEventListener('loadedmetadata', function() {
   		this.currentTime = 0;
@@ -1446,7 +1446,7 @@ zf.init = function(){
 			zf.$page.find('#block_nav_tuto .create').parent().nextAll().removeClass('done').addClass('next')
 		};
 	}, false);
-
+*/
 
 	zf.$page.find('#block_nav_tuto .search').click(function(event) {
 		zf.$vid[0].currentTime = 0;
