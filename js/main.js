@@ -872,6 +872,9 @@ zf.filter = function(){
 	})
 
 	zf.$page.find('#searchButton, .open_filtre').click(function(event){
+		// init placeholder
+		zf.fixPlaceholder();
+		// condition open
 		if(zf.filterOpen==true){
 			$height= "-135";
 			$pdtop = "180px"
@@ -900,6 +903,8 @@ zf.filter = function(){
 	}); 
 	
 	advancedFilter.find('.nav a').click(function(event){
+		// init placeholder
+		zf.fixPlaceholder();
 		// hide help info 
 		$filter.find('.help_info').hide();
 		// animation
@@ -1141,6 +1146,7 @@ zf.initFb = function() {
 
 zf.initAddProject = function() {
 
+	zf.fixPlaceholder();
 	zf.$newProject = $('#newProject');
 
 	zf.$newProject.on('keypress','input',function(event) {
