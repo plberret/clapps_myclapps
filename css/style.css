@@ -404,6 +404,8 @@ header #block_filters.less {
 
 header #filter {
 	height: 147px;
+	z-index: 11;
+	position: relative;
 	background: repeat url('../images/pattern-bloc-filters.png');
 	border-bottom: 1px solid #1b1b1b;
 	padding: 26px 0 17px 0;
@@ -601,12 +603,19 @@ header #filter #col3 #distances li a span.unite{
 
 /* global */
 
+header #ctn {
+	overflow: hidden;
+	height: 191px;
+	width: 810px;
+	position: relative;
+	top: -191px;
+}
 header #filter_advanced {
 	position: absolute;
 	z-index: 30;
 	top: 0px;
-	right: 0px;
-	width: 50px;
+	right: -540px;
+	width: 590px;
 	height: 190px;
 	border-bottom: 1px solid #1b1b1b;
 	background: #0a0a0a;

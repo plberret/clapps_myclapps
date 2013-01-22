@@ -278,11 +278,9 @@
 					$R2->bindParam(':name',$data['name'][$dat]);
 					if($R2->execute()){
 						$IDJOB=$baseDD->lastInsertId('mc_jobs');
-						echo $IDJOB;
 					}
 				} else {
 					$IDJOB = $data['id_job'][$dat];
-					echo $IDJOB;
 				}
 				$R3=$baseDD->prepare("INSERT INTO `mc_profile` (id_project, person, occurence, id_job) VALUES ( :id, :person, :occurence, :id_job)");
 				$R3->bindParam(':id',$ID);
@@ -297,7 +295,7 @@
 			}
 		}
 		if ($ok){
-			var_dump($data);
+			goNotifFilter($ID);
 			echo json_encode(array('success' => true ,'id' => $ID));
 		} else {
 			echo json_encode(array('success' => false));
@@ -812,7 +810,16 @@
 
 		 return $technicians;
 
-	 }
+	}
+
+	function goNotifFilter($ID){
+		global $baseDD;
+		$user = getIdFromFb();
+
+		$sql = 'SELECT user_fb FROM: mc_users WHERE id_user != :curr_id_user';
+		$R1=$baseDD->prepare($sql);
+		$R1->bindParam(':curr_id_user',$user['id_user']);
+	}
 	
 	function getNotifFilter(){
 		global $baseDD;

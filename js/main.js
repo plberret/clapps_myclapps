@@ -878,11 +878,11 @@ zf.filter = function(){
 		$filter.find('.help_info').hide();
 		// animation
 		advancedFilter.stop().animate({
-			width: '590',
+			right: '0',
 		}, 600, 'easeInOutExpo', function() {
 			zf.advancedFilterOpen= true;
 			// Animation complete.
-			//alert('oui'); 
+			// alert('oui'); 
 		});
 		return false;
 	});
@@ -892,7 +892,7 @@ zf.filter = function(){
 		$filter.find('.help_info').show();
 		// animation
 		advancedFilter.stop().animate({
-			width: '50',
+			right: '-540',
 		}, 600, 'easeInOutExpo', function() {
 			zf.advancedFilterOpen= false;
 			// Animation complete.
