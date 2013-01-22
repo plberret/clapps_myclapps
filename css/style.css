@@ -79,6 +79,23 @@ header, footer, section, article, nav {
 	display:none;
 }
 
+/* couleur de selection */
+
+*::selection {
+	background: #ffba00;
+	color:#FFF;
+}
+
+*::-moz-selection {
+	background: #ffba00;
+	color:#FFF;
+}
+
+*::-webkit-selection {
+	background: #ffba00;
+	color:#FFF;
+}
+
 /* selector */
 
 .select {
@@ -1262,6 +1279,7 @@ section article .preview .block_top .title_block .available .profile p {
 	color: #ffffff;
 	font-size: 12px;
 	text-align: center;
+	font-weight: bold;
 	background: #040404;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
