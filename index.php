@@ -458,7 +458,7 @@
 					</div>
 					<div class="display">
 						<div class="mask">
-							<video  width="680" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin"
+							<video  width="681" height="288" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin"
 							 data-setup="{}">
 								<source src="./assets/tuto_clapps.f4v" type='video/mp4'>
 							</video>
