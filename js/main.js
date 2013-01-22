@@ -254,21 +254,30 @@ zf.deleteProject = function($this,callback) {
 zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
 		var $this=$(this);
-		if (zf.isBlank($this.val()) && $this.attr('id')=="location") {
-			zf.$filtre.find('#distances').removeClass('active')
-		} else if($this.attr('id')=="location"){
-			zf.$filtre.find('#distances').addClass('active')
-		}
-		if (event.keyCode == 13 && !zf.isBlank($this.val())){
-
-			// $this.blur();
-
-		} else if (zf.isOkKey(event)) {
-			if ($this.hasClass('job')) {
-				zf.jsonJobs($this);
-			}
-			else if($this.hasClass('location')){
-				zf.jsonCities($this);
+		if (zf.oldAutcVal != $this.val().trim()) {
+			zf.oldAutcVal = $this.val().trim();
+			if(!zf.interval){
+				zf.interval=true;
+				setTimeout(function() {
+					zf.interval=false;
+					if (zf.isBlank($this.val()) && $this.attr('id')=="location") {
+						zf.$filtre.find('#distances').removeClass('active')
+					} else if($this.attr('id')=="location"){
+						zf.$filtre.find('#distances').addClass('active')
+					}
+					if (event.keyCode == 13 && !zf.isBlank($this.val())){
+			
+						// $this.blur();
+			
+					} else if (zf.isOkKey(event)) {
+						if ($this.hasClass('job')) {
+							zf.jsonJobs($this);
+						}
+						else if($this.hasClass('location')){
+							zf.jsonCities($this);
+						}
+					};
+				},500)
 			}
 		};
 	}).on('keydown', '.field .autocomplete', function(event){

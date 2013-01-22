@@ -475,7 +475,8 @@
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
 							<div class="flowplayer">
-								<video id="vid" width="690" autoplay autobuffer loop src="./assets/tuto_clapps.f4v" ></video>
+								<!-- <video id="vid" width="690" autoplay autobuffer loop src="./assets/tuto_clapps.f4v" ></video> -->
+								<video id="vid" width="690" autoplay autobuffer loop src="" ></video>
 							</div>	
 						</div>
 					</div>
