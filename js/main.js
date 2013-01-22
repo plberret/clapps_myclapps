@@ -1052,13 +1052,33 @@ zf.initSeeProject = function() {
 	
 };
 
-zf.FBSend = function(project, recipient, url) {
-	FB.ui({
-		method: 'send',
-		name: '[Candidature] - '+project, // remplacer par le nom du projet
-		to: recipient, // remplacer par id du createur du projet
-		link: url, // lien de l'annonce
-	});
+zf.FBSend = function(id_project, id_profile) {
+	
+/*	$.ajax({
+		url: 'requests/getInfoProject.php',
+		type: 'post',
+		data: {
+			project : id_, project,
+			profile : id_profile
+		}, 
+		success: function(resp) {
+		*/	
+			var project = "project";
+			var profile = "Acteur";
+			var profile_desc = "Avec de l'experience";
+			var recipient = 1343913706;
+			var url = "http://clapps.fr";
+			
+			FB.ui({
+				method: 'send',
+				name: '[Candidature] - '+project, // remplacer par le nom du projet
+				description: 'poste pourvu '+(profile)+' : '+profile_desc,
+				to: recipient, // remplacer par id du createur du projet
+				link: url, // lien de l'annonce
+			});
+	/*	}
+	});*/
+	
 };
 
 
@@ -1070,7 +1090,8 @@ zf.initFb = function() {
 	
 	// Postuler 
 	zf.$page.find('.apply_button').click(function(event) {
-		zf.FBSend("project", 1343913706, "http://clapps.fr");
+		console.log($(this));
+		zf.FBSend(227, 596);
 		return false;
 	})
 	
