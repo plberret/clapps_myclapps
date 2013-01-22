@@ -721,7 +721,7 @@ header #filter_advanced #tabs .tab .choice .valid_button {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	background-color: #171717;
+	background-color: #f4b50b;
 	background-image: -webkit-linear-gradient(top, #f4b50b, #b80);
 	background-image: -moz-linear-gradient(top, #f4b50b, #b80);
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
@@ -1663,10 +1663,10 @@ section article.edition form .more .profiles .edit .line_control .delete {
 }
 
 section article.edition form .more .profiles .edit .line_control .add-post {
-	background: #0c0e11;
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
+	background: #709a0d;
 	background-image: -webkit-linear-gradient(top, #709a0d, #638000);
 	background-image: -moz-linear-gradient(top, #709a0d, #638000);
 	background-image: -o-linear-gradient(top, #709a0d, #638000);
@@ -1873,10 +1873,10 @@ section article .more .manage .cancelEditProject {
 	font-weight: bold;
 	color: #1a1919;
 	text-shadow: 0 1px #f0f0f0;
-	background-color: #0c0c0c;
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
+	background-color: #0c0c0c;
 	background-image: -webkit-linear-gradient(top, #c0c0c0, #ddd);
 	background-image: -moz-linear-gradient(top, #c0c0c0, #ddd);
 	background-image: -o-linear-gradient(top, #c0c0c0, #ddd);
@@ -1887,10 +1887,10 @@ section article .more .manage .cancelEditProject {
 section article .manage .editProject {
 	float: right;
 	margin-right: 11px;
-	background-color: #0c0c0c;
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
+	background-color: #0c0c0c;
 	background-image: -webkit-linear-gradient(top, #c0c0c0, #ddd);
 	background-image: -moz-linear-gradient(top, #c0c0c0, #ddd);
 	background-image: -o-linear-gradient(top, #c0c0c0, #ddd);
@@ -1913,10 +1913,10 @@ section article .more .manage .block_delete_project .button_delete_project {
 	color: #0c0c0c;
 	font-weight: bold;
 	text-shadow: 0 1px #d31b1b;
-	background-color: #c50606;
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.26), inset 0 1px #fe4f4f;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.26), inset 0 1px #fe4f4f;
 	box-shadow: 0 2px rgba(0,0,0,.26), inset 0 1px #fe4f4f;
+	background-color: #da2626;
 	background-image: -webkit-linear-gradient(top, #da2626, #701414);
 	background-image: -moz-linear-gradient(top, #da2626, #701414);
 	background-image: -o-linear-gradient(top, #da2626, #701414);
@@ -1986,10 +1986,10 @@ section article .more .manage input {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	border: 0;
-	background-color: #0c0c0c;
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
+	background-color: #f4b50b;
 	background-image: -webkit-linear-gradient(top, #f4b50b, #b80);
 	background-image: -moz-linear-gradient(top, #f4b50b, #b80);
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
@@ -2012,10 +2012,10 @@ section article #block_see_button {
 	-webkit-border-radius: 3px 3px 0 0;
 	-moz-border-radius: 3px 3px 0 0;
 	border-radius: 3px 3px 0 0;
-	background-color: #dfa200;
 	-webkit-box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
 	-moz-box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
 	box-shadow: 0 -2px 6px rgba(0,0,0,.16), inset 0 1px #585858;
+	background-color: #363636;
 	background-image: -webkit-linear-gradient(top, #363636, #1c1c1c);
 	background-image: -moz-linear-gradient(top, #363636, #1c1c1c);
 	background-image: -o-linear-gradient(top, #363636, #1c1c1c);
@@ -2334,6 +2334,7 @@ section article #block_see_button:hover a {
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #bcef72;
+	background-color: #709a0d;
 	background-image: -webkit-linear-gradient(top, #709a0d, #638000);
 	background-image: -moz-linear-gradient(top, #709a0d, #638000);
 	background-image: -o-linear-gradient(top, #709a0d, #638000);
@@ -2363,10 +2364,10 @@ section article #block_see_button:hover a {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	background: #dfa200;
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
+	background: #f4b50b;
 	background-image: -webkit-linear-gradient(top, #f4b50b, #b80);
 	background-image: -moz-linear-gradient(top, #f4b50b, #b80);
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
@@ -2614,13 +2615,13 @@ section article #block_see_button:hover a {
 	color: #010101;
 	text-shadow: 0 1px #e8af15;
 	text-decoration: none;
-	background: #dfa200;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
+	background: #f4b50b;
 	background-image: -webkit-linear-gradient(top, #f4b50b, #b80);
 	background-image: -moz-linear-gradient(top, #f4b50b, #b80);
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
