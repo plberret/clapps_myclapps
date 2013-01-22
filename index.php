@@ -139,8 +139,8 @@
 							<label for="location">Lieux</label>
 							<input type="text" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" />
 							<input type="hidden" name="distance" value="100" id="distance" />
-							<input type="hidden" name="id_place" class="id_place" />
-							<input type="hidden" name="type_place" class="type_place" />
+							<input type="hidden" name="id_place" class="id_place" id="id_place"/>
+							<input type="hidden" name="type_place" class="type_place" id="type_place" />
 						</div>
 						<ul id="distances" class="clearfix">
 							<li><a href="#" class="50">
