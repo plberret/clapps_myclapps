@@ -460,7 +460,7 @@
 						<div class="mask">
 							<video  autoplay autobuffer id="my_video_1" class="video-js vjs-default-skin"
 								preload="auto" data-setup="{}">
-								<source src="./assets/tuto_clapps.f4v" type='video/mp4'>
+								<source src="./assets/tuto_clapps.f4v" type='video/f4v'>
 							</video>
 						</div>
 					</div>
