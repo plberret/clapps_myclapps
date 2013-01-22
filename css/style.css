@@ -1221,7 +1221,7 @@ section article.read .preview .block_top .title_block .title h2 {
 
 section article .preview .block_top .title_block .title .disabled_field {
 	font-size: 14px;
-	color: black;
+	color: #ddd;
 	text-shadow: 0;
 	width: 460px;
 }
