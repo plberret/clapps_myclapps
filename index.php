@@ -469,7 +469,7 @@
 						<div class="mask">
 							<!-- width="681" height="288" -->
 							<video  id="vid" width="690" autoplay autobuffer loop >
-								<source src="./assets/tuto_clapps.f4v" type='video/x-flv; codecs="On2 VP6, Sorenson Spark, Screen video, Screen video 2, H.264"'>
+								<source src="./assets/tuto_clapps.f4v" type='video/mp4"'>
 							</video>
 						</div>
 					</div>
