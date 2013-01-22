@@ -462,8 +462,9 @@
 					<div class="display">
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
-							<video  id="vid" width="690" autoplay src="./assets/tuto_clapps.f4v" >
-							</video>
+							<div class="flowplayer">
+								<video id="vid" width="690" autoplay autobuffer loop src="./assets/tuto_clapps.f4v" ></video>
+							</div>	
 						</div>
 					</div>
 					<div id="display_bottom"></div>
@@ -498,7 +499,6 @@
 	<div id="fb-root"></div>
 	
 	<script src="js/libs/jquery-1.8.1.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/libs/flowplayer.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="css/jquery-ui.css" />
 	<link rel="stylesheet" href="css/jquery.ui.theme.css" />
 	<script src="js/libs/jquery-ui.datepicker.js"></script>
