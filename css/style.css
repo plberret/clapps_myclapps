@@ -980,14 +980,13 @@ header #block_current_filter #notif_email input[type=submit] {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	background-color: #fff;
 	line-height: 17px;
 	padding: 5px;
 	margin: 0;
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
-	background: #f4b50b;
+	background-color: #f4b50b;
 	background-image: -webkit-linear-gradient(top, #f4b50b, #b80);
 	background-image: -moz-linear-gradient(top, #f4b50b, #b80);
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
