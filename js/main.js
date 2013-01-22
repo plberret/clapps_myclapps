@@ -457,7 +457,7 @@ zf.seeAll = function($_this,event) {
 	zf.$page.find('#my_project_choice').hide()
 		$(this).children('.project, .btn-more-projects').remove().end().show();
 		var $newProject = $('<div/>');
-		$newProject.load('index.php #page',function(resp) {
+		$newProject.load('index.php?filter=false #page',function(resp) {
 			var $this=$(this);
 			$_this.attr('id','see-mine').html($this.find('#see-mine').html())
 			$this.find('.project').each(function(i) {
