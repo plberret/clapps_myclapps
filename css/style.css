@@ -1199,7 +1199,8 @@ section article .preview .block_top {
 	padding: 28px 10px 0 9px;
 }
 
-section article .preview .block_top img {
+section article .preview .block_top .bloc_img {
+	position: relative;
 	float: left;
 	width: 50px;
 	height: 50px;
@@ -1210,6 +1211,17 @@ section article .preview .block_top img {
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	margin-right: 15px;
+}
+
+section article .preview .block_top .bloc_img .reflection {
+	display: block;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	content:"";
+	width: 50px;
+	height: 50px;
+	background: no-repeat url(../images/reflection_img_project.png);
 }
 
 section article .preview .block_top .title_block {

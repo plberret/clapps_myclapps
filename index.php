@@ -245,7 +245,10 @@
 						<form action="">
 							<div class="preview">
 								<div class="block_top clearfix">
-									<img src="https://graph.facebook.com/<?php echo $project['id_creator'] ?>/picture" alt="photo profil <?php echo $project['name_creator'] ?>" />
+									<div class="bloc_img">
+										<img src="https://graph.facebook.com/<?php echo $project['id_creator'] ?>/picture" alt="photo profil <?php echo $project['name_creator'] ?>" />
+										<span class="reflection"></span>
+									</div>
 									<div class="title_block">
 										<div class="title">
 											<h2>
