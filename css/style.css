@@ -2704,15 +2704,19 @@ section article #block_see_button:hover a {
 	position: absolute;
 	top: 57px;
 	left: 52px;
+/*	width: 711px;
+	height: 318px;*/
 	width: 711px;
-	height: 318px;
+	height: 308px;
 	background: white;
 }
 
 #tuto #content_tuto #block_display_tuto .display .mask {
-	width: 681px;
+/*	width: 681px;
 	height: 288px;
-	margin: 15px;
+	margin: 15px; */
+	width: 681px;
+	height: 278px;
 	overflow: hidden;
 	background: black;
 }
