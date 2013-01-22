@@ -906,12 +906,14 @@ zf.filter = function(){
 		$.ajax({
 			url: 'requests/getFilter.php',
 			success: function(resp) {
-				zf.seeFiltered('?filter=true&'+resp.filter);
 				filter = zf.parseStr(resp.filter)
 				// //console.log(resp)
 				$.each(filter, function(key, value) {
-					$filter.find('#'+key).val(value)
+					$filter.find('#'+key).val(value.replace('+',' '))
 				})
+				if (!zf.isBlank($filter.find('#location').val())) {
+					$filter.find('#distances').addClass('active');
+				};
 				$filter.find('#selector_date .'+filter.date_filter).trigger('click');
 				$filter.find('#distances a.'+filter.distance).trigger('click');
 				
@@ -1629,6 +1631,7 @@ zf.init = function(){
 	// update projects list by distance
 	zf.$filtre.find('#distances li a').click(function(event) {
 		zf.updateFilter($(this));
+		zf.seeFiltered('?filter=true&'+$(this).parents('form').serialize());
 		return false;
 	})
 	
