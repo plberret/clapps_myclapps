@@ -47,7 +47,7 @@ zf.isBlank = function(str) {
 };
 
 zf.fixPlaceholder = function() {
-	$('input[placeholder]').each(function(){  
+/*	$('input[placeholder]').each(function(){  
 		var input = $(this);        
 		$(input).val(input.attr('placeholder'));
 		$(input).focus(function(){
@@ -74,7 +74,7 @@ zf.fixPlaceholder = function() {
 				input.val(input.attr('placeholder'));
 			}
 		});
-	});
+	});*/
 };
 
 zf.getVarUrl = function(url,param) {
