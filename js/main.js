@@ -68,37 +68,10 @@ zf.isBlank = function(str) {
 	return (!str || /^\s*$/.test(str));
 };
 
-zf.fixPlaceholder = function() {
+zf.fixPlaceholder = function($conteneur) {
 	
-	$('input, textarea').placeholder();
-/*	$('input[placeholder]').each(function(){  
-		var input = $(this);        
-		$(input).val(input.attr('placeholder'));
-		$(input).focus(function(){
-			if (input.val() == input.attr('placeholder')) {
-				input.val('');
-			}
-		});
-		$(input).blur(function(){
-			if (input.val() == '' || input.val() == input.attr('placeholder')) {
-				input.val(input.attr('placeholder'));
-			}
-		});
-	});
-	$('textarea[placeholder]').each(function(){  
-		var input = $(this);        
-		$(input).val(input.attr('placeholder'));
-		$(input).focus(function(){
-			if (input.val() == input.attr('placeholder')) {
-				input.val('');
-			}
-		});
-		$(input).blur(function(){
-			if (input.val() == '' || input.val() == input.attr('placeholder')) {
-				input.val(input.attr('placeholder'));
-			}
-		});
-	});*/
+	//zf.$page.find('input, textarea').placeholder();
+	$conteneur.find('input, textarea').placeholder();
 };
 
 zf.getVarUrl = function(url,param) {
@@ -495,7 +468,6 @@ zf.seeAll = function($_this,event) {
 		var $newProject = $('<div/>');
 		$newProject.load('index.php?filter=false #page',function(resp) {
 			var $this=$(this);
-			console.log($_this);
 			$_this.attr('id','see-mine').html($this.find('#see-mine').html())
 			$this.find('.project').each(function(i) {
 				// //console.log('i',i)
@@ -873,6 +845,7 @@ zf.filter = function(){
 	})
 
 	zf.$page.find('#searchButton, .open_filtre').click(function(event){
+		// condition open
 		if(zf.filterOpen==true){
 			$height= "-135";
 			$pdtop = "180px"
@@ -1144,6 +1117,7 @@ zf.initFb = function() {
 zf.initAddProject = function() {
 
 	zf.$newProject = $('#newProject');
+	zf.fixPlaceholder(zf.$newProject);
 
 	zf.$newProject.on('keypress','input',function(event) {
 		if(event.keyCode == 13){
@@ -1218,7 +1192,8 @@ zf.initAddProject = function() {
 									setTimeout(function(){
 										$('#successAddProject').fadeOut();
 									},5000);
-									zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
+									zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
+									zf.fixPlaceholder(zf.$page);
 								} else {
 									$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
 									$this.find('#add-project').removeAttr('disabled');
@@ -1247,7 +1222,8 @@ zf.initAddProject = function() {
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
 							},5000);
-							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1)
+							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
+							zf.fixPlaceholder(zf.$page);
 						} else {
 							$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
 							$this.find('#add-project').removeAttr('disabled');
@@ -1425,7 +1401,7 @@ zf.init = function(){
 	zf.initEditProject();
 	zf.customFields(zf.$page);
 	zf.autocomplete(zf.$page);
-	zf.fixPlaceholder();
+	zf.fixPlaceholder(zf.$page);
 	zf.initFb();
 	
 	// Blank links
@@ -1667,6 +1643,7 @@ zf.init = function(){
 	// see all projects
 	zf.$page.on('click','#see-all',function(event) {
 		var $this=$(this);
+		$this.attr('id','see-mine');
 		zf.seeAll($this,event);
 		return false;
 	});

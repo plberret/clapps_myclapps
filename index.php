@@ -38,6 +38,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>My clapps</title>
+	<!-->
 	<script type="text/javascript">
 	    document.createElement("header");
 	    document.createElement("footer");
@@ -46,9 +47,14 @@
 	    document.createElement("nav");
 	    document.createElement("article");
 	    document.createElement("figure");
+		document.createElement("video");
      </script>
-	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-	<script src="http://vjs.zencdn.net/c/video.js"></script>
+<!--	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+	<script src="http://vjs.zencdn.net/c/video.js"></script>-->
+	
+	<!--[if IE]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
 	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title">
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -461,9 +467,9 @@
 					</div>
 					<div class="display">
 						<div class="mask">
-							<video  id="vid" width="681" height="288" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin"
-							 data-setup="{}">
-								<source src="./assets/tuto_clapps.f4v" type='video/mp4'>
+							<!-- width="681" height="288" -->
+							<video  id="vid" width="690" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin">
+								<source src="./assets/tuto_clapps.f4v" type='video/mp4; codecs="H.264"'>
 							</video>
 						</div>
 					</div>
