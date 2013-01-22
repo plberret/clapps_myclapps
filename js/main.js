@@ -420,11 +420,14 @@ zf.seeMore = function($this) {
 	});
 }
 
-zf.seeFiltered = function(url,event){
+zf.seeFiltered = function(url,event,fav){
 	zf.currentAnim = event;
 	zf.$page.find('.btn-more-projects').remove()
-	zf.$projectsList.fadeOut(300,function() {
-		zf.$page.find('#my_project_choice').hide()
+	// zf.$projectsList.find('.project').fadeOut(300).end().fadeIn(300,function() {
+	zf.$projectsList.find('.project').fadeOut(300).end().fadeIn(300,function() {
+		if (!fav) {
+			zf.$page.find('#my_project_choice').hide()
+		};
 		$(this).children('.project, .btn-more-projects').remove().end().show();
 		var $newProject = $('<div/>');
 		$newProject.load(url+' #page',function(resp) {
@@ -487,7 +490,8 @@ zf.seeAll = function($_this,event) {
 zf.seeMine = function($_this,event) {
 	zf.currentAnim = event
 	var url = $_this.attr('href');
-	zf.$projectsList.fadeOut(300,function() {
+	// zf.$projectsList.fadeOut(300,function() {
+	zf.$projectsList.find('.project').fadeOut(300).end().fadeIn(300,function() {
 		$(this).children('.project, .btn-more-projects').remove().end().show();
 		var $newProject = $('<div/>');
 		$newProject.load(url+' #page',function(resp) {
@@ -814,7 +818,7 @@ zf.filter = function(){
 		};
 	}) */
 
-	zf.$page.on('click','#refresh_button, .display_all_projects, #see-all',function(event) {
+	zf.$page.on('click','#refresh_button, .display_all_projects',function(event) {
 		// init filter
 		$filter.find('input[type=text]').val('');
 		$filter.find('#distances').removeClass('active');
@@ -1526,6 +1530,24 @@ zf.init = function(){
 		zf.addSubscribe($(this));
 		return false;
 	});
+
+	zf.$page.on('click', '.see-mine', function(event) {
+		var $this=$(this);
+		if (!$this.parent().hasClass('current')) {
+			zf.seeMine($this,event)
+			$this.parent().addClass('current').siblings().removeClass('current');
+		};
+		return false;
+	});
+
+	zf.$page.on('click', '.see-my', function(event) {
+		var $this=$(this);
+		if (!$this.parent().hasClass('current')) {
+			zf.seeFiltered($this.attr('href'),event,true)
+			$this.parent().addClass('current').siblings().removeClass('current');
+		};
+		return false;
+	});
 	
 	// update projects list by distance
 	zf.$filtre.find('#distances li a').click(function(event) {
@@ -1544,8 +1566,8 @@ zf.init = function(){
 	// see all projects
 	zf.$page.on('click','#see-all',function(event) {
 		var $this=$(this);
-		//$this.attr('id','see-mine');
-//		zf.seeAll($this,event);
+		$this.attr('id','see-mine');
+		zf.seeAll($this,event);
 		return false;
 	});
 	

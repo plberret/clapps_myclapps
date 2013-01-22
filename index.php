@@ -15,7 +15,7 @@
 	elseif ($_GET['filter']): // filtre on
 		$getProjects=getProjectsByFilters($page,$_GET);
 		$nbProject = getProjectsByFilters($page,$_GET,true);
-	elseif ($userFilter['filter'] && !$_GET['user_fb']): // user got default filter but not in his projects
+	elseif ($userFilter['filter'] && !$_GET['user_fb'] && !$_GET['favorite']): // user got default filter but not in his projects
 		$getProjects=getProjectsByFilters($page,$userFilterArray);
 		$nbProject = getProjectsByFilters($page,$userFilterArray,true);
 	elseif ($_GET['favorite']):
@@ -227,8 +227,8 @@
 			</div>
 			<div class="clearfix<?php if (!$mine):?> hide<?php endif; ?>" id="my_project_choice">
 				<ul class="submenu_seemine">
-					<li class="mine_button<?php if (!$fav):?> current<?php endif; ?>"><a href="#">Mes annonces</a></li>
-					<li class="favorite_button<?php if ($fav):?> current<?php endif; ?>"><a href="#">Annonces en favoris</a></li>
+					<li class="mine_button<?php if (!$fav):?> current<?php endif; ?>"><a href="#" class="see-mine current">Mes annonces</a></li>
+					<li class="favorite_button<?php if ($fav):?> current<?php endif; ?>"><a href="?favorite=true" class="see-my">Annonces en favoris</a></li>
 				</ul>
 			</div>
 			
