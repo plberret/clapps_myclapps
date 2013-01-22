@@ -169,6 +169,9 @@ zf.editProject = function($this) {
 	$this.parent().siblings('.manage-edition').removeClass('hide');
 	// enable fields
 	$article.find("form input").removeAttr("disabled");
+	// display title
+	$article.find('.preview h2 span').addClass('hide');
+	$article.find('.preview h2 input').removeClass('hide');
 	// display description
 	$article.find('.preview .desc p').addClass('hide');
 	$article.find('.preview .desc textarea').removeClass('hide').autosize();
@@ -201,6 +204,9 @@ zf.editProjectPartTwo = function($this) {
 	$this.find('.manage-read').removeClass('hide');
 	// enable fields
 	$article.find("form input").attr("disabled","disabled");
+	// display title
+	$article.find('.preview h2 span').removeClass('hide');
+	$article.find('.preview h2 input').addClass('hide');
 	// display description
 	$article.find('.preview .desc p').removeClass('hide').text($article.find('.preview .desc textarea').val());
 	$article.find('.preview .desc textarea').addClass('hide');
