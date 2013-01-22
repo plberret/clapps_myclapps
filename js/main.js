@@ -70,35 +70,7 @@ zf.isBlank = function(str) {
 
 zf.fixPlaceholder = function($conteneur) {
 	
-	$conteneur.find('input, textarea').placeholder();
-/*	$('input[placeholder]').each(function(){  
-		var input = $(this);        
-		$(input).val(input.attr('placeholder'));
-		$(input).focus(function(){
-			if (input.val() == input.attr('placeholder')) {
-				input.val('');
-			}
-		});
-		$(input).blur(function(){
-			if (input.val() == '' || input.val() == input.attr('placeholder')) {
-				input.val(input.attr('placeholder'));
-			}
-		});
-	});
-	$('textarea[placeholder]').each(function(){  
-		var input = $(this);        
-		$(input).val(input.attr('placeholder'));
-		$(input).focus(function(){
-			if (input.val() == input.attr('placeholder')) {
-				input.val('');
-			}
-		});
-		$(input).blur(function(){
-			if (input.val() == '' || input.val() == input.attr('placeholder')) {
-				input.val(input.attr('placeholder'));
-			}
-		});
-	});*/
+	zf.$page.find('input, textarea').placeholder();
 };
 
 zf.getVarUrl = function(url,param) {
