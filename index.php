@@ -468,9 +468,8 @@
 					<div class="display">
 						<div class="mask">
 							<!-- width="681" height="288" -->
-							<video  id="vid" width="690" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin"
-							 src="./assets/tuto_clapps.f4v">
-							
+							<video  id="vid" width="690" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin">
+								<source src="./assets/tuto_clapps.f4v" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 							</video>
 						</div>
 					</div>
