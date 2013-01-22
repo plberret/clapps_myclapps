@@ -1066,6 +1066,7 @@ zf.FBShare = function() {
 };
 
 zf.FBSend = function() {
+	console.log('oui');
 	FB.ui({
 		method: 'send',
 		name: '[Candidature] - Nom du projet', // remplacer par le nom du projet
