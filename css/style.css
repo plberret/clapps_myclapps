@@ -2713,8 +2713,8 @@ section article #block_see_button:hover a {
 
 #tuto #content_tuto #block_display_tuto .display .mask {
 /*	width: 681px;
-	height: 288px;
-	margin: 15px; */
+	height: 288px;*/
+	margin: 15px; 
 	width: 681px;
 	height: 278px;
 	overflow: hidden;
