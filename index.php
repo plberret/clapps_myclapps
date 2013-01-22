@@ -46,6 +46,7 @@
 	    document.createElement("nav");
 	    document.createElement("article");
 	    document.createElement("figure");
+		document.createElement("video");
      </script>
 	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
 	<script src="http://vjs.zencdn.net/c/video.js"></script>
