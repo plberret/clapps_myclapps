@@ -452,14 +452,14 @@
 				<div id="block_button_tuto" class="clearfix">
 					<div class="desc">
 						<h2>Trouver un tournage n’aura jamais été aussi simple !</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Pellentesque rhoncus tortor non ...</p>
+						<p>En attendant la sortie de la plateforme qui arrivera en mai 2013.<br/> Voici de quoi vous permettre de vous aider pour le bien être de vos tournages !</p>
 					</div>
 					<a href="#">J'accède à l'application</a>
 				</div>
 				<div id="block_help_tuto" class="clearfix">
 					<div class="desc">
 						<h2>Besoin d'aide ?</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Pellentesque rhoncus tortor non ...</p>
+						<p>En attendant la sortie de la plateforme qui arrivera en mai 2013.<br/> Voici de quoi vous permettre de vous aider pour le bien être de vos tournages !</p>
 					</div>
 					<a href="#">Fermer l'aide</a>
 				</div>
