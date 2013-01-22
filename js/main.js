@@ -813,9 +813,8 @@ zf.filter = function(){
 		};
 	}) */
 
-	zf.$page.on('click','#refresh_button, .display_all_projects',function(event) {
+	zf.$page.on('click','#refresh_button, .display_all_projects, #see-all',function(event) {
 		// init filter
-		console.log('rrrr')
 		$filter.find('input[type=text]').val('');
 		$filter.find('#distances').removeClass('active');
 		var defaultDate = $filter.find('#selector_date ul li').eq(0)
@@ -1545,7 +1544,7 @@ zf.init = function(){
 	zf.$page.on('click','#see-all',function(event) {
 		var $this=$(this);
 		//$this.attr('id','see-mine');
-		zf.seeAll($this,event);
+//		zf.seeAll($this,event);
 		return false;
 	});
 	
