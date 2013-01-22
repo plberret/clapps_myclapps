@@ -1165,7 +1165,10 @@ zf.initAddProject = function() {
 							// 	$('#successAddProject').fadeIn();
 							// 	$('#successAddProject').after($thiz);
 							// });
-							zf.getOneProject(resp.id);
+
+							$('.no_result').hide();
+							zf.getOneProject(resp.id);		
+							$('#successAddProject').fadeIn();
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							FB.Canvas.scrollTo(0,0);
@@ -1594,7 +1597,6 @@ zf.init = function(){
 	// see all projects
 	zf.$page.on('click','#see-all',function(event) {
 		var $this=$(this);
-		$this.attr('id','see-mine');
 		zf.seeAll($this,event);
 		return false;
 	});

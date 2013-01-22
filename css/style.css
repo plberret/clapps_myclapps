@@ -1223,6 +1223,8 @@ section article .preview .block_top .title_block .title h2 span {
 	font-size: 14px;
 	color: #ddd;
 	width: 460px;
+	word-wrap: break-word;
+	display: block;
 }
 
 section article .preview .block_top .title_block .title div {
