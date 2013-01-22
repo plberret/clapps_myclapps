@@ -1219,7 +1219,7 @@ section article.read .preview .block_top .title_block .title h2 {
 	line-height: 19px;
 }
 
-section article .preview .block_top .title_block .title input:disabled {
+section article .preview .block_top .title_block .title .disabled_field {
 	font-size: 14px;
 	color: black;
 	text-shadow: 0;
