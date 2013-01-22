@@ -278,9 +278,11 @@
 					$R2->bindParam(':name',$data['name'][$dat]);
 					if($R2->execute()){
 						$IDJOB=$baseDD->lastInsertId('mc_jobs');
+						echo $IDJOB;
 					}
 				} else {
 					$IDJOB = $data['id_job'][$dat];
+					echo $IDJOB;
 				}
 				$R3=$baseDD->prepare("INSERT INTO `mc_profile` (id_project, person, occurence, id_job) VALUES ( :id, :person, :occurence, :id_job)");
 				$R3->bindParam(':id',$ID);
@@ -289,10 +291,13 @@
 				$R3->bindParam(':id_job',$IDJOB);
 				if($R3->execute()){
 					$ok = true;
+				} else {
+					$ok = false;
 				}
 			}
 		}
 		if ($ok){
+			var_dump($data);
 			echo json_encode(array('success' => true ,'id' => $ID));
 		} else {
 			echo json_encode(array('success' => false));

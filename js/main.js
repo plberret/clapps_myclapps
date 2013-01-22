@@ -644,7 +644,7 @@ zf.numberControlProfile = function($this){
 zf.addLineProfile = function($this){
 	$projet=$this.parents('form');
 	// if (zf.$newProject.find('.profiles p:last .entitled').val()!='') { // if last post isn't empty
-		var newPost = $projet.find('.profiles ul li:last').clone().find('.plp').val('').siblings('.number').val('1').end().end();
+		var newPost = $projet.find('.profiles ul li:last').clone().find('input').val('').end().find('.number').val('1').end();
 		$this.attr('id','').removeClass('add-post').addClass('delete').html('-');
 		$projet.find('.profiles ul').append(newPost);
 	// };
