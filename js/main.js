@@ -69,6 +69,8 @@ zf.isBlank = function(str) {
 };
 
 zf.fixPlaceholder = function() {
+	
+	$('input, textarea').placeholder();
 /*	$('input[placeholder]').each(function(){  
 		var input = $(this);        
 		$(input).val(input.attr('placeholder'));
