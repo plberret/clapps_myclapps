@@ -514,6 +514,16 @@ zf.seeMine = function($_this,event) {
 			// $_this.attr('id','see-mine').html($this.find('#see-mine').html());
 			$this.find('.project').each(function(i) {
 				var $this=$(this);
+				if ($this.hasClass('fancybox')) {
+					$this.fancybox({
+						afterShow: zf.initAddProject,
+						closeClick  : false,
+						helpers   : { 
+							overlay : {closeClick: false},
+						},
+						topRatio : 0
+					});
+				};
 				setTimeout(function() {
 					if (zf.currentAnim == event) {
 					// zf.$projectsList.append($this.hide().fadeIn(500));
@@ -1177,7 +1187,6 @@ zf.initAddProject = function() {
 
 							$('.no_result').hide();
 							zf.getOneProject(resp.id);		
-							$('#successAddProject').fadeIn();
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							FB.Canvas.scrollTo(0,0);

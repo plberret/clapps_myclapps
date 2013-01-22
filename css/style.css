@@ -607,8 +607,9 @@ header #ctn {
 	overflow: hidden;
 	height: 191px;
 	width: 810px;
-	position: relative;
+	position: absolute;
 	top: -191px;
+	top: 0px;
 }
 header #filter_advanced {
 	position: absolute;
