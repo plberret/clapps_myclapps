@@ -221,7 +221,7 @@
 			</div>
 			<div class="clearfix<?php if (!$mine):?> hide<?php endif; ?>" id="my_project_choice">
 				<ul class="submenu_seemine">
-					<li class="mine_button<?php if (!$fav):?> current<?php endif; ?>"><a href="#" class="see-mine current">Mes annonces</a></li>
+					<li class="mine_button<?php if (!$fav):?> current<?php endif; ?>"><a href="?user_fb=true" class="see-mine current">Mes annonces</a></li>
 					<li class="favorite_button<?php if ($fav):?> current<?php endif; ?>"><a href="?user_fb=true&favorite=true" class="see-my">Annonces en favoris</a></li>
 				</ul>
 			</div>
@@ -414,9 +414,17 @@
 				<?php endforeach; ?>
 			<?php else : ?>
 				<div class="no_result project">
-					<h2>Aucun résultat pour cette recherche</h2>
-					<p>Merci de modifier vos filtres de recherches</p>
-					<a href="#" class="display_all_projects">Afficher toutes les annonces</a>
+					<?php if ($fav): ?>
+						<h2>Vous n'avez pas d'annonces actuellement valides en favoris</h2>
+					<?php elseif($mine): ?>
+						<h2>Vous n'avez pas encore posté de projet</h2>
+						<br/>
+						<a class="fancybox.ajax" href="poppin/addProject.php">Ajouter une annonce</a>
+					<?php else: ?>
+							<h2>Aucun résultat pour cette recherche</h2>
+							<p>Merci de modifier vos filtres de recherches</p>
+							<a href="#" class="display_all_projects">Afficher toutes les annonces</a>
+					<?php endif; ?>
 				</div>
 			<?php endif; ?>
 			<?php if (ceil($nbProject/POST_PER_PAGE)>$page && !$_GET['id_project']): ?>
