@@ -592,7 +592,7 @@
 		$sql.=" FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
 
 		if ($filters['profile']) {
-			$sql .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE name = :profile) AND pf.current_state = 1";
+			$sql .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE association IN (SELECT association FROM mc_jobs WHERE name = :profile))";
 			$array['profile'] = $filters['profile'];
 			// echo $filters['profile'];
 		}
