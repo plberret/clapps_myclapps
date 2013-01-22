@@ -70,7 +70,8 @@ zf.isBlank = function(str) {
 
 zf.fixPlaceholder = function($conteneur) {
 	
-	zf.$page.find('input, textarea').placeholder();
+	//zf.$page.find('input, textarea').placeholder();
+	$conteneur.find('input, textarea').placeholder();
 };
 
 zf.getVarUrl = function(url,param) {
