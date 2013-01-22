@@ -933,6 +933,7 @@ zf.filter = function(){
 		$.ajax({
 			url: 'requests/getFilter.php',
 			success: function(resp) {
+				zf.seeFiltered('?filter=true&'+resp.filter);
 				filter = zf.parseStr(resp.filter)
 				// //console.log(resp)
 				$.each(filter, function(key, value) {

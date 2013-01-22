@@ -609,6 +609,28 @@
 			$sql .=" AND pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions))";
 			$array['place_regions']=($filters['place_regions'])?$filters['place_regions']:0;
 		}
+		if ($filters['date_filter']) {
+			switch ($filters['date_filter']) {
+				case 'now':
+					$array['date_filter']=3;
+					break;
+				case 'week':
+					$array['date_filter']=7;
+					break;
+				case 'month':
+					$array['date_filter']=30;
+					break;
+				case 'trimestre':
+					$array['date_filter']=60;
+					break;
+				
+				default:
+					break;
+			}
+			if ($array['date_filter']) {
+				$sql .= " AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) <= :date_filter AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) >= 0";
+			}
+		}
 
 		if (!$count) {
 			$sql .= " GROUP BY pj.id_project";
