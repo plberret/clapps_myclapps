@@ -461,7 +461,7 @@
 					</div>
 					<div class="display">
 						<div class="mask">
-							<video  width="681" height="288" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin"
+							<video  id="vid" width="681" height="288" autoplay autobuffer loop id="my_video_1" class="video-js vjs-default-skin"
 							 data-setup="{}">
 								<source src="./assets/tuto_clapps.f4v" type='video/mp4'>
 							</video>
@@ -471,19 +471,19 @@
 				</div>
 				<div id="block_nav_tuto">
 					<ul class="clearfix">
-						<li class="done"><a href="#">
+						<li class="done current"><a class="search" href="#">
 							<span></span>
 							<em>Rechercher/Filtrer</em>
 						</a></li>
-						<li class="done"><a href="#">
+						<li class="done next"><a class="filters" href="#">
 							<span></span>
 							<em>Gestion des filtres</em>
 						</a></li>
-						<li class="current"><a href="#">
+						<li class="done next"><a class="fav" href="#">
 							<span></span>
 							<em>Mise en favoris <br/>Partager une annonce</em>
 						</a></li>
-						<li class="next"><a href="#">
+						<li class="done next"><a class="create" href="#">
 							<span></span>
 							<em>Création d'une annonce <br/> Édition d'une annonce</em>
 						</a></li>

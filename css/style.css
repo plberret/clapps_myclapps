@@ -2770,13 +2770,14 @@ section article #block_see_button:hover a {
 	font-size: 13px;
 	text-align: center;
 	padding: 5px 0;
+	color: #353535;
 }
 
 #tuto #content_tuto #block_nav_tuto ul li.done a {
 	color: #808080;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li.current a:before {
+#tuto #content_tuto div#block_nav_tuto ul li.current a:before {
 	position: absolute;
 	top: -7px;
 	left: 68px;
@@ -2786,7 +2787,7 @@ section article #block_see_button:hover a {
 	border-bottom: 7px solid #0a0a0a;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li.current a {
+#tuto #content_tuto div#block_nav_tuto ul li.current a {
 	background: #0a0a0a;
 	color: #d5d5d5;
 	position: relative;

@@ -1430,6 +1430,68 @@ zf.init = function(){
 		return false;
 	});
 	
+	zf.$vid = zf.$page.find('#vid');
+	zf.$vid[0].addEventListener('loadedmetadata', function() {
+  		this.currentTime = 0;
+  		// console.log('kk')
+	}, false);
+
+
+
+	zf.$vid[0].addEventListener('timeupdate', function() {
+		// console.log(this.currentTime)
+		if (this.currentTime>0) {
+			zf.$page.find('#block_nav_tuto .current').removeClass('current')
+			zf.$page.find('#block_nav_tuto .search').parent().addClass('current')
+			zf.$page.find('#block_nav_tuto .search').parent().nextAll().removeClass('done').addClass('next')
+		};
+		if (this.currentTime>6) {
+			zf.$page.find('#block_nav_tuto .current').removeClass('current')
+			zf.$page.find('#block_nav_tuto .filters').parent().addClass('current')
+			zf.$page.find('#block_nav_tuto .filters').parent().prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .filters').parent().nextAll().removeClass('done').addClass('next')
+		};
+		if (this.currentTime>13) {
+			zf.$page.find('#block_nav_tuto .current').removeClass('current')
+			zf.$page.find('#block_nav_tuto .fav').parent().addClass('current')
+			zf.$page.find('#block_nav_tuto .fav').parent().prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .fav').parent().nextAll().removeClass('done').addClass('next')
+		};
+		if (this.currentTime>17) {
+			zf.$page.find('#block_nav_tuto .current').removeClass('current')
+			zf.$page.find('#block_nav_tuto .create').parent().addClass('current')
+			zf.$page.find('#block_nav_tuto .create').parent().prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .create').parent().nextAll().removeClass('done').addClass('next')
+		};
+	}, false);
+
+
+	zf.$page.find('#block_nav_tuto .search').click(function(event) {
+		zf.$vid[0].currentTime = 0;
+		// $(this).parent().addClass('current')
+		// $(this).parent().nextAll().removeClass('done')
+		return false;
+	})
+	zf.$page.find('#block_nav_tuto .filters').click(function(event) {
+		zf.$vid[0].currentTime = 6;
+		// $(this).parent().addClass('current')
+		// $(this).parent().prevAll().removeClass('next')
+		// console.log($(this).parent().prevAll())
+		return false;
+	})
+	zf.$page.find('#block_nav_tuto .fav').click(function(event) {
+		zf.$vid[0].currentTime = 13;
+		// $(this).parent().addClass('current')
+		// $(this).parent().prevAll().removeClass('next')
+		return false;
+	})
+	zf.$page.find('#block_nav_tuto .create').click(function(event) {
+		zf.$vid[0].currentTime = 17;
+		// $(this).parent().addClass('current')
+		// $(this).parent().prevAll().removeClass('next')
+		return false;
+	})
+
 	// hide tuto first time
 	zf.$page.find("#block_button_tuto a").click(function(event) {
 		zf.$page.find("#tuto video").hide();
