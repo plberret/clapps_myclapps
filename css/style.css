@@ -1350,9 +1350,9 @@ section article .preview .desc textarea {
 }
 
 section article .preview .bloc_see_more {
-	height: 29px;
-	padding-top: 11px;
-	border-top: 1px solid #2a2a2a;
+	height: 27px;
+	padding-top: 13px;
+	background: repeat-x url(../images/border_bottom_title_block.jpg) 0 top;
 	margin: 0 16px;
 }
 
@@ -1371,7 +1371,7 @@ section article .preview .bloc_see_more .project_id {
 }
 
 section article .preview .bloc_see_more .date {
-	margin-right: 20px;
+	margin-right: 15px;
 	background: no-repeat url(../images/icon_date_project.png);
 	padding-left: 22px;
 }
