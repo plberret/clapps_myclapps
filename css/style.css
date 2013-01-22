@@ -991,10 +991,6 @@ section #successAddProject {
 	margin-bottom: 20px;
 }
 
-section #my_project_choice {
-	display: none;
-}
-
 section .submenu_seemine {
 /*	display: none; */
 	float: left;

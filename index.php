@@ -29,7 +29,9 @@
 		$getProjects=getProjects($page,$_GET['user_fb'],true);
 		$nbProject = getProjects($page,$_GET['user_fb'],true,true);
 	else:
-		$mine = true;
+		if ($_GET['user_fb']){
+			$mine = true;
+		}
 		$getProjects=getProjects($page,$_GET['user_fb']);
 		$nbProject = getProjectsByFilters($page,$_GET['user_fb'],true);
 	endif;
@@ -230,6 +232,7 @@
 		</header>
 	
 		<section id="projects"<?php if (!empty($userFilter)): ?> class="margedless"<?php endif; ?>>
+			
 			<div id="successAddProject" class="message success" style="display:none">
 				<p><span>Votre annonce est publiée.</span> Elle sera visible durant 15 jours,<br/> vous pourrez la réactiver pour <span>7 jours supplémentaires</span> à <span>2 jours</span> de sa fin de validité.</p>
 			</div>
