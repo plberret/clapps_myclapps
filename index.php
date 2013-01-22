@@ -6,10 +6,6 @@
 	$page=$_GET['page'];
 	if(!isset($page)){$page=1;}
 	$userFilter = getUserFilter();
-	// var_dump($userFilter);
-	// $userFilter = 'profile=Figurant&date_filter=week&location=&distance=100';
-	// $userFilter = '';
-	// $userFilterArray = array();
 	parse_str($userFilter['filter'], $userFilterArray);
 
 	// get projects
@@ -88,14 +84,8 @@
 			</div>
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
-					<?php if (!empty($userFilter)): ?>
-						<p>Vous recherchez un poste<span class="work"> d'un ingénieur du son</span><span class="time"> dès que possible</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
-						<p class="hide none">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
-					<?php else: ?>
-						<p class="hide">Vous recherchez un poste<span class="work"> d'un ingénieur du son</span><span class="time"> dès que possible</span><span class="opt"> dans la commune de <span class="location">Paris</span> et <span class="distance">100km</span> aux alentours</span>.</p>
-						<p class="none">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
-					<?php endif ?>
-					
+					<p<?php if (empty($userFilter['filter'])): ?> class="hide" <?php endif; ?>>Vous recherchez un poste<span class="work"> <?php echo $userFilterArray['profile'] ?></span><span class="time"> dès que possible</span><span class="opt"> dans la commune de <span class="location"><?php echo $userFilterArray['location'] ?></span> et <span class="distance"><?php echo $userFilterArray['distance'] ?>km</span> aux alentours</span>.</p>
+					<p class="none<?php if (!empty($userFilter['filter'])): ?> hide<?php endif; ?>">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
 				</div>
 				<div id="notif_email">
 					<p>Être tenu au courant des nouveautés de Clapps</p>
