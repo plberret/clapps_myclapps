@@ -1221,7 +1221,6 @@ section article.read .preview .block_top .title_block .title h2 {
 
 section article .preview .block_top .title_block .title input:disabled {
 	font-size: 14px;
-	color: #dddddd;
 	color: black;
 	text-shadow: 0;
 	width: 460px;
