@@ -460,7 +460,9 @@ zf.seeFiltered = function(url,event,fav){
 		var $newProject = $('<div/>');
 		$newProject.load(url+' #page',function(resp) {
 			var $this=$(this);
-			zf.$page.find('#see-all').attr('id','see-mine').html($this.find('#see-mine').html());
+			if (!fav) {
+				zf.$page.find('#see-all').attr('id','see-mine').html($this.find('#see-mine').html());
+			};
 			$projects = $this.find('.project');
 			$projects.each(function(i) {
 				var $this=$(this);
