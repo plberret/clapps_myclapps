@@ -364,6 +364,8 @@ header #bar_top nav ul li.myProject #see-mine .number {
 header #bar_top .bar_top_button {
 	float: right;
 	border-left: 1px solid #282828;
+	width: 50px;
+	height: 58px;
 }
 
 header #bar_top .bar_top_button a {
@@ -375,6 +377,10 @@ header #bar_top .bar_top_button a {
 
 header #bar_top #searchButton a {
 	background: no-repeat url(../images/icon_search_button.png) 17px 23px;
+}
+
+header #bar_top #searchButton a.open {
+	background: no-repeat url(../images/arrow_close_filtrer.png) 19px 28px;
 }
 
 header #bar_top #infoButton a {
@@ -981,6 +987,7 @@ header #block_current_filter #notif_email input[type=submit] {
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #efcd72;
+	background: #f4b50b;
 	background-image: -webkit-linear-gradient(top, #f4b50b, #b80);
 	background-image: -moz-linear-gradient(top, #f4b50b, #b80);
 	background-image: -o-linear-gradient(top, #f4b50b, #b80);
