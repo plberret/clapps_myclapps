@@ -816,9 +816,17 @@
 		global $baseDD;
 		$user = getIdFromFb();
 
-		$sql = 'SELECT user_fb FROM: mc_users WHERE id_user != :curr_id_user';
+		$sql = 'SELECT filter, user_fb FROM mc_users WHERE id_user != :curr_id_user AND notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
+		// $sql = 'SELECT user_fb FROM mc_users WHERE id_user != :curr_id_user AND filter';
 		$R1=$baseDD->prepare($sql);
 		$R1->bindParam(':curr_id_user',$user['id_user']);
+		$R1->setFetchMode(PDO::FETCH_ASSOC);
+		if ($R1->execute()) {
+			$filter=$R1->fetchAll();
+			foreach ($filter as $key => $value) {
+				// code...
+			}
+		}
 	}
 	
 	function getNotifFilter(){
