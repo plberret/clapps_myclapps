@@ -34,6 +34,28 @@ window.cancelAnimationFrame = function(id) {
 
 var zf = zf || {};
 
+zf.parseStr = function(s) {
+  var rv = {}, decode = window.decodeURIComponent || window.unescape;
+  (s == null ? location.search : s).replace(/^[?#]/, "").replace(
+    /([^=&]*?)((?:\[\])?)(?:=([^&]*))?(?=&|$)/g,
+    function ($, n, arr, v) {
+      if (n == "")
+        return;
+      n = decode(n);
+      v = decode(v);
+      if (arr) {
+        if (typeof rv[n] == "object")
+          rv[n].push(v);
+        else
+          rv[n] = [v];
+      } else {
+        rv[n] = v;
+      }
+    });
+  return rv;
+}
+
+
 zf.launchScrollEvent = function() {
 //	zf.rAFLaunchAnim = requestAnimationFrame(zf.launchScrollEvent);
 //	FB.Canvas.getPageInfo( function(info) {
@@ -900,8 +922,8 @@ zf.filter = function(){
 		$.ajax({
 			url: 'requests/getFilter.php',
 			success: function(resp) {
-				// console.log(resp); // CI GIT UN TABLEAU DONT LES VALEURS DOIVENT ETRE MISE SUR LE FILTRE
-				var filter = zf.getVarUrl(resp.filter);
+				filter = zf.parseStr(resp.filter)
+				// console.log(resp)
 				$.each(filter, function(key, value) {
 					$filter.find('#'+key).val(value)
 				})
