@@ -126,7 +126,7 @@
 	}
 
 	function updateProject($data){
-
+		// var_dump($data);
 		global $baseDD;
 		
 		// print_r($data);
@@ -469,7 +469,7 @@
 		}
 
 		if ($count) {
-		echo $sql;
+		// echo $sql;
 		}
 		if (!$count) {
 			$sql .= " ORDER BY `loop` DESC, id_project DESC";

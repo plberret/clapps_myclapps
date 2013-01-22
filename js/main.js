@@ -161,6 +161,7 @@ zf.editProject = function($this) {
 	$article.find('.more .add-line').removeClass('hide');
 	// hide profiles found
 	$article.find('.profileFound').addClass('hide');
+	$article.find('.profileFound').remove();
 	// disable button see-button
 	$article.find('#block_see_button').fadeOut(250);
 };
