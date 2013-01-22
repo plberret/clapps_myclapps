@@ -1876,7 +1876,7 @@ section article .more .manage .cancelEditProject {
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
-	background-color: #0c0c0c;
+	background-color: #c0c0c0;
 	background-image: -webkit-linear-gradient(top, #c0c0c0, #ddd);
 	background-image: -moz-linear-gradient(top, #c0c0c0, #ddd);
 	background-image: -o-linear-gradient(top, #c0c0c0, #ddd);
@@ -1890,7 +1890,7 @@ section article .manage .editProject {
 	-webkit-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
 	-moz-box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
 	box-shadow: 0 2px rgba(0,0,0,.27), inset 0 1px #fff;
-	background-color: #0c0c0c;
+	background-color: #c0c0c0;
 	background-image: -webkit-linear-gradient(top, #c0c0c0, #ddd);
 	background-image: -moz-linear-gradient(top, #c0c0c0, #ddd);
 	background-image: -o-linear-gradient(top, #c0c0c0, #ddd);
