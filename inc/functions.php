@@ -834,7 +834,10 @@
 				}
 
 				$sql2 = "SELECT pj.id_project FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.id_project = :id_project AND pj.current_state = 1";
-					$array['id_project'] = $ID;
+				if ($filters['place_villes']) {
+					$sql .= ", (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) AS distance";
+				}
+				$array['id_project'] = $ID;
 				if ($userFilter['profile']) {
 					$sql2 .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE association IN (SELECT association FROM mc_jobs WHERE name = :profile))";
 					$array['profile'] = $userFilter['profile'];
@@ -846,11 +849,11 @@
 					$array['maxdist']=$userFilter['distance'].'000';
 				}
 				if ($userFilter['place_departements']) {
-					$sql2 .=" AND pj.place_departements = :place_departements OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement = :place_departements)";
+					$sql2 .=" AND (pj.place_departements = :place_departements OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement = :place_departements))";
 					$array['place_departements']=($userFilter['place_departements'])?$userFilter['place_departements']:0;
 				}
 				if ($userFilter['place_regions']) {
-					$sql2 .=" AND pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions))";
+					$sql2 .=" AND (pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions)))";
 					$array['place_regions']=($userFilter['place_regions'])?$userFilter['place_regions']:0;
 				}
 				if ($userFilter['date_filter']) {
@@ -873,14 +876,19 @@
 					}
 					if ($array['date_filter']) {
 						$sql2 .= " AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) <= :date_filter AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) >= 0";
-						$array['date_filter'] = $userFilter['date_filter'];
+						// $array['date_filter'] = $userFilter['date_filter'];
 					}
 				}
 				$R2=$baseDD->prepare($sql2);
+				// echo $sql2;
+				// var_dump($array);
 				$R2->bindParam(':curr_id_user',$user['id_user']);
 				$R2->setFetchMode(PDO::FETCH_ASSOC);
 				if ($R2->execute($array)) {
-					array_push($users,$filter['user_fb']);
+					$result = $R2->fetchAll();
+					if ($result) {
+						array_push($users,$filter['user_fb']);
+					}
 				}
 			}
 			// var_dump($users);

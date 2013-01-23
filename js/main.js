@@ -280,14 +280,14 @@ zf.autocomplete = function($this) {
 							zf.jsonCities($this);
 						}
 					};
-				},500)
+				},300)
 			}
 		};
 	}).on('keydown', '.field .autocomplete', function(event){
 		switch (event.keyCode) {
 			case 38:
-				return false;
 				zf.jsonListUp($(this));
+				return false;
 			break;
 			case 40: zf.jsonListDown($(this)); break;
 		}
@@ -315,10 +315,9 @@ zf.autocomplete = function($this) {
 		return false;
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
-
-
 		if (!zf.autocompletionHover) {
-			if ($(this).parents('#col3').length> 0) { // if filter
+			// if ($(this).parents('#col3').length> 0) { // if filter
+				// console.log('rrr')
 				var $thisField = $(this);
 				$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
 				$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
@@ -331,9 +330,9 @@ zf.autocomplete = function($this) {
 						$thisField.siblings('.type_place').val($this.find('.autocompletion li:first-child a').data("type"))
 					};
 				};
-			}else{ // if addAnnonce
+			// }else{ // if addAnnonce
 
-			}
+			// }
 			
 		};
 
@@ -613,7 +612,7 @@ zf.getFilteredProjects = function($this,event){
 			// //console.log($this.serialize());
 	// 	}
 	// });
-	zf.seeFiltered('index.php?filter=true&'+$this.serialize(),event)
+	zf.seeFiltered('index.php?filter=true&'+$this.serialize(),event,true)
 
 	// actualise current_filter block
 	$currentFilter = zf.$page.find('#block_current_filter');
@@ -781,6 +780,7 @@ zf.jsonListDown = function($this) {
 };
 
 zf.jsonListUp = function($this) {
+	// console.log('k')
 	$ul = $('ul.autocompletion')
 	if ($ul.length) { // if ul contains li
 		$curr = $ul.find('.current') // define current
