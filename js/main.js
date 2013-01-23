@@ -226,7 +226,7 @@ zf.updateProject = function($form) {
 						$form.parent().after($this)
 						$form.parent().remove()
 					}
-					$this.css('opacity',1)
+					$this.css('opacity',1);
 					$this.find('.preview .desc p').removeClass('elips').dotdotdot();
 				})
 			} else {
@@ -1077,13 +1077,16 @@ zf.FBSend = function(id_project, id_profile) {
 	
 };
 
+// title, description, titre, url , custom 
+
 zf.FBCreate = function() {
-	FB.api('/me/myclapps:create', 'post',
+//	$('meta[property=og:type]').attr('content', 'test' );
+/*	FB.api('/me/myclapps:create', 'post',
 		{announce: "http://www.my.clapps.fr"},
 		function(response) {
 			console.log(response, 'create');
 		}
-	);
+	); */
 };
 
 zf.FBFind = function() {
@@ -1096,12 +1099,13 @@ zf.FBFind = function() {
 };
 
 zf.FBShare = function() {
-	FB.api('/me/myclapps:share', 'post',
+//	$('meta[property=og:type]').attr('content', 'test' );
+/*	FB.api('/me/myclapps:share', 'post',
 		{announce: "http://www.my.clapps.fr"},
 		function(response) {
 			console.log(response, 'share');
 		}
-	);	
+	);	*/
 };
 
 zf.FBApplyTo = function() {
@@ -1132,6 +1136,11 @@ zf.initFb = function() {
 	})
 	
 };
+
+function nl2br (str, is_xhtml) {   
+	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+}
 
 zf.initAddProject = function() {
 
@@ -1388,7 +1397,7 @@ zf.init = function(){
 	zf.$projectsList = zf.$page.find('#projects');
 
 	// show content 
-	zf.$projectsList.hide();
+//	zf.$projectsList.hide();
 	zf.$page.fadeIn();
 
 	zf.$projectsList.find('.project').each(function(i) {
@@ -1425,8 +1434,6 @@ zf.init = function(){
   		this.currentTime = 0;
   		// //console.log('kk')
 	}, false);
-
-
 
 	zf.$vid[0].addEventListener('timeupdate', function() {
 		// //console.log(this.currentTime)
