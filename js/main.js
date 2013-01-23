@@ -257,39 +257,49 @@ zf.deleteProject = function($this,callback) {
 zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
 		var $this=$(this);
-		if (zf.oldAutcVal != $this.val().trim()) {
-			zf.oldAutcVal = $this.val().trim();
-			if(!zf.interval){
-				zf.interval=true;
-				setTimeout(function() {
-					zf.interval=false;
-					if (zf.isBlank($this.val()) && $this.attr('id')=="location") {
-						zf.$filtre.find('#distances').removeClass('active')
-					} else if($this.attr('id')=="location"){
-						zf.$filtre.find('#distances').addClass('active')
-					}
-					if (event.keyCode == 13 && !zf.isBlank($this.val())){
-			
-						// $this.blur();
-			
-					} else if (zf.isOkKey(event)) {
-						if ($this.hasClass('job')) {
-							zf.jsonJobs($this);
+		if (zf.isOkKey(event)) {
+			zf.moveList=false;
+			if (zf.oldAutcVal != $this.val().trim()) {
+				zf.oldAutcVal = $this.val().trim();
+				if(!zf.interval){
+					zf.interval=true;
+					setTimeout(function() {
+						console.log(zf.test);
+						zf.interval=false;
+						if (zf.moveList) {
+							return false;
 						}
-						else if($this.hasClass('location')){
-							zf.jsonCities($this);
+						if (zf.isBlank($this.val()) && $this.attr('id')=="location") {
+							zf.$filtre.find('#distances').removeClass('active')
+						} else if($this.attr('id')=="location"){
+							zf.$filtre.find('#distances').addClass('active')
 						}
-					};
-				},300)
+						if (event.keyCode == 13 && !zf.isBlank($this.val())){
+							// $this.blur();
+						} else {
+							if ($this.hasClass('job')) {
+								zf.jsonJobs($this);
+							}
+							else if($this.hasClass('location')){
+								zf.jsonCities($this);
+							}
+						};
+					},300)
+				}
+			};
+		} else {
+			switch (event.keyCode) {
+				case 38:
+					zf.jsonListUp($(this));
+					zf.moveList=true;
+					return false;
+				break;
+				case 40:
+					zf.jsonListDown($(this));
+					zf.moveList=true;
+					console.log(zf.test);
+				break;
 			}
-		};
-	}).on('keydown', '.field .autocomplete', function(event){
-		switch (event.keyCode) {
-			case 38:
-				zf.jsonListUp($(this));
-				return false;
-			break;
-			case 40: zf.jsonListDown($(this)); break;
 		}
 	}).on('mouseleave', 'ul.autocompletion li a', function(event){
 		$(this).parent().removeClass('current');
