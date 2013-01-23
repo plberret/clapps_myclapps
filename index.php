@@ -435,7 +435,7 @@
 					<?php else: ?>
 							<h2>Aucun résultat pour cette recherche</h2>
 							<p>Merci de modifier vos filtres de recherches</p>
-							<a href="javascript:void(0);" class="display_all_projects">Afficher toutes les annonces</a>
+							<a href="?filter=false" class="display_all_projects">Afficher toutes les annonces</a>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>

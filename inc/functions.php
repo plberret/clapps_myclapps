@@ -599,7 +599,7 @@
 			$array['profile'] = $filters['profile'];
 			// echo $filters['profile'];
 		}
-		if ($filters['place_villes']) {
+		if ($filters['place_villes'] || $filters['location']) { // fix 
 			$sql .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
 			$array['place_villes']=($filters['place_villes'])?$filters['place_villes']:0;
 			$array['maxdist']=$filters['distance'].'000';
@@ -664,7 +664,7 @@
 			// foreach ($project[0] as $key => $value) {
 				// $project = $value->$key;
 			// }
-		// }
+		}
 		 
 		return $projects;
 	 }

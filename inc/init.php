@@ -25,7 +25,7 @@ $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
 
 if(empty($data["user_id"])){
 	if(empty($user_fb)) {
-		echo("<script> top.location.href='" . $auth_url . "'</script>"); 
+		// echo("<script> top.location.href='" . $auth_url . "'</script>"); 
 	}
 }else{
 	if(!getIdFromFb()){
