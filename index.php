@@ -260,7 +260,7 @@
 										<div class="title">
 											<h2>
 												<span><?php echo $project['title']; ?></span>
-												<input type="text" autocomplete="off" class="hide" name="title" value="<?php echo $project['title']; ?>" maxlength="60" >
+												<input type="text" autocomplete="off" class="hide required" name="title" value="<?php echo $project['title']; ?>" maxlength="60" >
 											</h2>
 											<input type="hidden" name="id_project" value="<?php echo $project['id_project'] ?>">
 											<div>Postée par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
@@ -292,7 +292,7 @@
 								</div>
 								<div class="desc">
 									<h3>Détails de l'annonce :</h3>
-									<textarea name="desc" class="hide" id='normal'><?php echo $project['description']; ?></textarea>
+									<textarea name="desc" class="hide required" id='normal'><?php echo $project['description']; ?></textarea>
 									<p class="elips"><?php echo nl2br($project['description']); ?></p>
 								</div>
 								<div class="bloc_see_more clearfix">
@@ -340,10 +340,10 @@
 												</div>
 												<div class="block_edition hide">
 													<div class="add_job add_field field">
-														<input type="text" autocomplete="off" class="job autocomplete plp" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>" name="name[]" />
+														<input type="text" autocomplete="off" class="required job autocomplete plp" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>" name="name[]" />
 														<input type="hidden" class="idjob" name="id_job[]" value="<?php echo $profile['id_job']; ?>" />
 													</div>
-													<div class="add_desc add_field"><input type="text" autocomplete="off" class="plp" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
+													<div class="add_desc add_field"><input type="text" autocomplete="off" class="plp required" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
 													<div class="edit">
 														<div class="deleteButton">
 															<a href="javascript:void(0);" class="button_delete_profile">Supprimer</a>
@@ -357,7 +357,7 @@
 														</div>
 														<div class="quantity">
 															<a href="javascript:void(0);" class="less_quantity number_control">-</a>
-															<input type="text" autocomplete="off" value="<?php echo $profile['occurence']; ?>" class="number" name="occurence[]"/>
+															<input type="text" autocomplete="off" value="<?php echo $profile['occurence']; ?>" class="required number" name="occurence[]"/>
 															<a href="javascript:void(0);" class="more_quantity number_control">+</a>
 														</div>
 													</div>
@@ -407,7 +407,6 @@
 										</p>
 										<?php if ($valideDate<0): ?><a href="javascript:void(0);" class="extendProject big_button" data-id="<?php echo $project['id_project'] ?>">Réactiver l'annonce</a><?php endif; ?>
 										<?php if (($valideDate>0)&&($valideDate<=DAY_UNTIL_REACTIVATE)): ?><a href="javascript:void(0);" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
-										<div class='message erreur'></div>
 										<a href="javascript:void(0);" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 									</div>
 									<div class="manage manage-edition hide clearfix">
@@ -423,6 +422,7 @@
 										</div>
 										<input type="submit" value="Valider" />
 										<a href="javascript:void(0);" class="cancelEditProject big_button">Annuler</a>
+										<div class='message erreur'></div>
 									</div>
 								<?php endif ?>
 							</div><!-- fin more -->

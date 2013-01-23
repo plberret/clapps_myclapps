@@ -1268,7 +1268,16 @@ zf.initEditProject = function() {
 	
 	// valid update of project
 	zf.$page.on('submit','.project form',function(event) {
-		zf.updateProject($(this));
+		var $this=$(this);
+		$this.find('.message').hide();
+		if (zf.addAnonceFormOk($this)) {
+			console.log('in')
+			zf.updateProject($this);
+		} else {
+			console.log('els')
+			$this.find('.required[value=]').addClass('empty');
+			$this.find('.message').text('Veuillez remplir tous les champs requis.').show()
+		}
 		return false;
 	});
 	

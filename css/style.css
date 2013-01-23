@@ -1603,6 +1603,13 @@ section article .profiles ul li .apply a {
 	display: none;
 }
 
+section article .empty{
+	border: 1px solid red !important;
+}
+section article .preview .block_top .title_block .title h2 span.hide{
+	display: none;
+}
+
 /*section article form .more .profiles li .block_edition {
 	display: none;
 }*/
