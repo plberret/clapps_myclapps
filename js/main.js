@@ -1079,7 +1079,7 @@ zf.FBSend = function(id_project, id_profile) {
 
 zf.FBCreate = function() {
 	FB.api('/me/myclapps:create', 'post',
-		{announce: "http://samples.ogp.me/146557538832303"},
+		{announce: "http://www.my.clapps.fr"},
 		function(response) {
 			console.log(response, 'create');
 		}
@@ -1088,7 +1088,7 @@ zf.FBCreate = function() {
 
 zf.FBFind = function() {
 	FB.api('/me/myclapps:found', 'post',
-		{person: "http://samples.ogp.me/146558208832236"},
+		{person: "http://www.my.clapps.fr"},
 		function(response){
 			console.log(response, 'find');
 		}
@@ -1097,7 +1097,7 @@ zf.FBFind = function() {
 
 zf.FBShare = function() {
 	FB.api('/me/myclapps:share', 'post',
-		{announce: "http://samples.ogp.me/146557538832303"},
+		{announce: "http://www.my.clapps.fr"},
 		function(response) {
 			console.log(response, 'share');
 		}
@@ -1106,7 +1106,7 @@ zf.FBShare = function() {
 
 zf.FBApplyTo = function() {
 	FB.api('/me/myclapps:applied_to', 'post',
-		{announce: "http://samples.ogp.me/146557538832303"},
+		{announce: "http://www.my.clapps.fr"},
 		function(response) {
 			console.log(response, 'apply');
 		}
