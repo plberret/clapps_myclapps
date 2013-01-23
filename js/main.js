@@ -1077,33 +1077,55 @@ zf.FBSend = function(id_project, id_profile) {
 	
 };
 
-zf.FBShare = function() {
+zf.FBCreate = function() {
+	FB.api('/me/myclapps:create', 'post',
+		{announce: "http://samples.ogp.me/146557538832303"},
+		function(response) {
+			console.log(response, 'create');
+		}
+	);
+};
 
+zf.FBFind = function() {
+	FB.api('/me/myclapps:found', 'post',
+		{person: "http://samples.ogp.me/146558208832236"},
+		function(response){
+			console.log(response, 'find');
+		}
+	);
+};
+
+zf.FBShare = function() {
 	FB.api('/me/myclapps:share', 'post',
 		{announce: "http://samples.ogp.me/146557538832303"},
 		function(response) {
 			console.log(response, 'share');
 		}
-	);
-	
+	);	
 };
 
-zf.FBNotifications= function() {
-	////console.log('yes');
+zf.FBApplyTo = function() {
+	FB.api('/me/myclapps:applied_to', 'post',
+		{announce: "http://samples.ogp.me/146557538832303"},
+		function(response) {
+			console.log(response, 'apply');
+		}
+	);
 };
 
 zf.initFb = function() {
 	
-	// Postuler 
+	// Postuler pour une annonce
 	zf.$page.find('.apply_button').click(function(event) {
 		$this=$(this);
 		var id_project= $this.attr('data-id');
 		var id_profile= $this.attr('data-idprofile');
 		zf.FBSend(id_project, id_profile);
+		zf.FBApplyTo();
 		return false;
 	});
 	
-	// open graph : share
+	// partager
 	zf.$page.find('.share_link').click(function(event) {
 		zf.FBShare();
 		return false;
@@ -1174,6 +1196,7 @@ zf.initAddProject = function() {
 							zf.getOneProject(resp.id);
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
+							zf.FBCreate();
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
@@ -1204,6 +1227,7 @@ zf.initAddProject = function() {
 							zf.getOneProject(resp.id);		
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
+							zf.FBCreate();
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
@@ -1515,7 +1539,7 @@ zf.init = function(){
 			type: 'post',
 			data: {id_project:$this.data('id'),id_profile:$this.data('idprofile')},
 			success: function(resp) {
-				// //console.log(resp);
+				zf.FBFind();
 				var $icon = $this.parent().siblings('.icon')
 				if($icon.hasClass('iconTechnician')){
 					var t = parseInt($this.parents('article').find('.technicians').find('span').eq(0).text());
