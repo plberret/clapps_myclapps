@@ -1078,6 +1078,17 @@ zf.FBSend = function(id_project, id_profile) {
 	
 };
 
+zf.FBShare = function() {
+
+	FB.api('/me/myclapps:share', 'post',
+		{announce: "http://samples.ogp.me/146557538832303"},
+		function(response) {
+			console.log(response, 'share');
+		}
+	);
+	
+};
+
 zf.FBNotifications= function() {
 	////console.log('yes');
 };
@@ -1090,6 +1101,12 @@ zf.initFb = function() {
 		var id_project= $this.attr('data-id');
 		var id_profile= $this.attr('data-idprofile');
 		zf.FBSend(id_project, id_profile);
+		return false;
+	});
+	
+	// open graph : share
+	zf.$page.find('.share_link').click(function(event) {
+		zf.FBShare();
 		return false;
 	})
 	
