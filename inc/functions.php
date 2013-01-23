@@ -295,7 +295,9 @@
 		}
 		if ($ok){
 			$users = getNotifUserFilter($ID);
-			sendNotif('@['.$user_fb.'] vient de poster une annonce correspondant à vos critères',$users,$ID);
+			if ($users) {
+				sendNotif('@['.$user_fb.'] vient de poster une annonce correspondant à vos critères',$users,$ID);
+			}
 			echo json_encode(array('success' => true ,'id' => $ID));
 		} else {
 			echo json_encode(array('success' => false));
@@ -1039,7 +1041,7 @@
 				}
 			} else {
 				// No Facebook user fetched, show FB login button - Requires Facebook JavaScript SDK (Below)
-				echo '<fb:login-button></fb:login-button>'."\n";
+				// echo '<fb:login-button></fb:login-button>'."\n";
 			}
 		}
 	}
