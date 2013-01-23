@@ -295,7 +295,7 @@
 		}
 		if ($ok){
 			$users = getNotifUserFilter($ID);
-			sendNotif('@['.$user_fb.'] vient de poster une annonce correspondant à vos critères',$users);
+			sendNotif('@['.$user_fb.'] vient de poster une annonce correspondant à vos critères',$users,$id);
 			echo json_encode(array('success' => true ,'id' => $ID));
 		} else {
 			echo json_encode(array('success' => false));
@@ -885,7 +885,9 @@
 			}
 			// var_dump($users);
 		return $users;
-		} else {}
+		} else {
+			
+		}
 	}
 	
 	function getNotifFilter(){
@@ -964,13 +966,16 @@
 		}
 	}
 
-	function sendNotif($message,$users = false){
+	function sendNotif($message,$users = false,$id = false){
 		$notification_message = $message;
 		$notification_app_link = '?n=app'; // The link the notification will go through to, this will be specific to your in Facebook App
+		if ($id) {
+			$notification_app_link.='&app_data='.$id;
+		}
 		// $user = $facebook->getUser();
 		global $facebook;
 		if ($users) {
-			var_dump($users);
+			// var_dump($users);
 			foreach ($users as $user) {
 				try {
 					// Try send this user a notification

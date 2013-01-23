@@ -401,6 +401,7 @@
 										</p>
 										<?php if ($valideDate<0): ?><a href="javascript:void(0);" class="extendProject big_button" data-id="<?php echo $project['id_project'] ?>">Réactiver l'annonce</a><?php endif; ?>
 										<?php if (($valideDate>0)&&($valideDate<=DAY_UNTIL_REACTIVATE)): ?><a href="javascript:void(0);" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
+										<div class='message erreur'></div>
 										<a href="javascript:void(0);" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>"><span>Editer</span> l'annonce</a>
 									</div>
 									<div class="manage manage-edition hide clearfix">
@@ -476,7 +477,8 @@
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
 							<div class="flowplayer">
-								<video id="vid" width="690" autoplay autobuffer loop src="./assets/tuto_clapps.f4v" ></video>
+								<video id="vid" width="690" autoplay autobuffer loop src="" ></video>
+								<!-- <video id="vid" width="690" autoplay autobuffer loop src="./assets/tuto_clapps.f4v" ></video> -->
 							</div>	
 						</div>
 					</div>

@@ -136,7 +136,7 @@ zf.deleteFavorite = function($this) {
 
 zf.editProject = function($this) {
 	$article=$this.parents('article');
-	$article.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', minDate: 0});
+	// $article.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', minDate: 0});
 	zf.$oldArticle = $article.clone(true,true);
 	$article.removeClass('read').addClass('edition');
 	// change display 
@@ -164,13 +164,16 @@ zf.editProject = function($this) {
 	$article.find('.profileFound').remove();
 	// disable button see-button
 	$article.find('#block_see_button').fadeOut(250);
+
+	//datepicker
+	$article.find( ".datepicker" ).datepicker({ altField: $article.find( ".datepicker" ).siblings('.date_filter'),	dateFormat: 'dd MM yy', minDate: 0 ,altFormat : 'yy-mm-dd'});
 };
 
 zf.cancelEditProject = function($this) {
 	$this.parents('article').next().before(zf.$oldArticle).end().remove();
 };
 
-
+/*
 zf.editProjectPartTwo = function($this) {
 	$article=$this.parents('article');
 	$article.removeClass('edition').addClass('read');
@@ -198,7 +201,7 @@ zf.editProjectPartTwo = function($this) {
 	$article.find('.profileFound').removeClass('hide');
 	// enable button see-more
 	$article.find('#block_see_button').fadeIn(250);
-};
+};*/
 
 zf.updateProject = function($form) {
 	$.ajax({
@@ -1429,26 +1432,26 @@ zf.init = function(){
 	}, false);
 
 
-	zf.$page.find('#block_nav_tuto .search').click(function(event) {
+	zf.$page.find('#block_nav_tuto .search').on('click',function(event) {
 		zf.$vid[0].currentTime = 0;
 		// $(this).parent().addClass('current')
 		// $(this).parent().nextAll().removeClass('done')
 		return false;
 	})
-	zf.$page.find('#block_nav_tuto .filters').click(function(event) {
+	zf.$page.find('#block_nav_tuto .filters').on('click',function(event) {
 		zf.$vid[0].currentTime = 6;
 		// $(this).parent().addClass('current')
 		// $(this).parent().prevAll().removeClass('next')
 		// //console.log($(this).parent().prevAll())
 		return false;
 	})
-	zf.$page.find('#block_nav_tuto .fav').click(function(event) {
+	zf.$page.find('#block_nav_tuto .fav').on('click',function(event) {
 		zf.$vid[0].currentTime = 13;
 		// $(this).parent().addClass('current')
 		// $(this).parent().prevAll().removeClass('next')
 		return false;
 	})
-	zf.$page.find('#block_nav_tuto .create').click(function(event) {
+	zf.$page.find('#block_nav_tuto .create').on('click',function(event) {
 		zf.$vid[0].currentTime = 17;
 		// $(this).parent().addClass('current')
 		// $(this).parent().prevAll().removeClass('next')

@@ -13,24 +13,30 @@ $facebook = new Facebook(array(
 // Get User ID
 $auth_url = "https://www.facebook.com/dialog/oauth?client_id=" .APP_ID. "&scope=publish_actions,manage_notifications&redirect_uri=" . urlencode("https://www.facebook.com/pages/null/" .APP_PAGE_ID. "/?sk=app_".APP_ID);
 
+$signed_request = $_REQUEST["signed_request"];
+list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+$data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+if ($data['app_data']) {
+	$auth_url .=  urlencode("&app_data=".$data['app_data']);
+}
+// var_dump($data['app_data']);
+
 if($_GET['n']=='app'){
 	echo("<script> top.location.href='" . $auth_url . "'</script>"); 
 }
 
-$signed_request = $_REQUEST["signed_request"];
-
-list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
-
-$data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
-
 if(empty($data["user_id"])){
 	if(empty($user_fb)) {
-		// echo("<script> top.location.href='" . $auth_url . "'</script>"); 
+		echo("<script> top.location.href='" . $auth_url . "'</script>"); 
 	}
 }else{
 	if(!getIdFromFb()){
 		$data =$facebook->api('/me');
 		createUser($data);
+	}
+	if($data['app_data']){
+		echo("<script> window.location.href='?id_project=".$data['app_data']."'</script>");
 	}
 }
 /*
