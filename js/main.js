@@ -418,7 +418,7 @@ zf.seeMore = function($this) {
 		$this.removeClass('see-less').parent().siblings('.preview').find('.desc p').addClass('elips').dotdotdot();
 		////console.log($this.parent().siblings('.preview').find('.desc p'), 'eifhezufh');
 	}else{
-		$this.addClass('see-less').parent().siblings('.preview').find('.desc p').text(txt).removeClass('elips').trigger("destroy");
+		$this.addClass('see-less').parent().siblings('.preview').find('.desc p').removeClass('elips').trigger("destroy");
 	}
 	// //console.log($this.parent().siblings('.preview').find('.desc p')[0])
 	$this.parent().siblings('.more').stop(true,true).slideToggle(function() {
