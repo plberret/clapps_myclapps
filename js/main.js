@@ -1052,45 +1052,40 @@ zf.initSeeProject = function() {
 	
 };
 
-zf.FBShare = function() {
-	FB.ui(
-		{
-			method: 'feed',
-			name: 'Test',
-			link: 'http://developers.facebook.com/docs/reference/dialogs/',
-			picture: 'http://fbrell.com/f8.jpg',
-			caption: 'Reference Documentation',
-			description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+zf.FBSend = function(id_project, id_profile) {
+	
+	$.ajax({
+		url: 'requests/getInfoProject.php',
+		type: 'post',
+		data: {
+			project : id_project,
+			profile : id_profile
+		}, 
+		success: function(resp) {
+			FB.ui({
+				method: 'send',
+				name: '[Candidature] - '+resp.project, 
+				description: 'poste pourvu ('+resp.profile_job+') : '+resp.profile_desc,
+				to: resp.recipient, 
+				link: "http://www.facebook.com/Clapps.Network/app_112197008935023?id_project="+id_project,
+			});
 		}
-	);
-};
-
-zf.FBSend = function() {
-	FB.ui({
-		method: 'send',
-		name: '[Candidature] - Nom du projet', // remplacer par le nom du projet
-		to: '100005085961869', // remplacer par id du createur du projet
-		link: 'http://clapps.fr', // lien de l'annonce
 	});
+	
 };
-
 
 zf.FBNotifications= function() {
 	////console.log('yes');
 };
 
 zf.initFb = function() {
-
-	// share fb 
-	zf.$page.find('.share_link').click(function(event) {
-		zf.FBShare($(this));
-		return false;
-	})
 	
 	// Postuler 
 	zf.$page.find('.apply_button').click(function(event) {
-		////console.log('postuler');
-		zf.FBSend($(this));
+		$this=$(this);
+		var id_project= $this.attr('data-id');
+		var id_profile= $this.attr('data-idprofile');
+		zf.FBSend(id_project, id_profile);
 		return false;
 	})
 	
@@ -1463,8 +1458,11 @@ zf.init = function(){
 	
 	// show tuto
 	zf.$page.find("#infoButton a").click(function(event) {
-		zf.$page.find("#tuto").fadeIn(800);
-		// close en disable filter
+		$tuto=zf.$page.find("#tuto");
+		$tuto.find('#vid').hide();
+		$tuto.fadeIn(200, function(){
+			$tuto.find('#vid').show();
+		});
 	});
 	
 	// close select & autocompletion
