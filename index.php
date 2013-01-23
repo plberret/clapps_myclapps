@@ -35,8 +35,13 @@
 
 <!doctype html>
 <html lang="fr">
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# myclapps: http://ogp.me/ns/fb/myclapps#">
 	<meta charset="utf-8">
+	<meta property="fb:app_id" content="112197008935023" />
+	<meta property="og:type"   content="myclapps:announce" /> 
+	<meta property="og:url"    content="http://www.my.clapps.fr" /> 
+	<meta property="og:title"  content="exemple annonce" />
+	<meta property="og:image" content="http://backup.clapps.fr/img/logo_clapps.png" />
 	<title>My clapps</title>
 	<!--[if IE]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
