@@ -181,7 +181,8 @@
 									<a href="javascript:void(0);" class="close">Annuler</a>
 								</div>
 								<div class="message">
-									<p class="alert">Votre filtre a bien été sauvegardé !</p>
+									<p class="alert success">Votre filtre a bien été sauvegardé !</p>
+									<p class="alert error">Une erreur est survenue, veuillez réessayer !</p>
 								</div>
 								<div class="notifs clearfix">
 									<p><span>Activation</span> des notifications Facebook</p>
@@ -199,7 +200,9 @@
 									<a href="javascript:void(0);" class="close">Annuler</a>
 								</div>
 								<div class="message">
-									<p class="alert">Votre filtre a bien été chargé !</p>
+									<p class="alert success">Votre filtre a bien été chargé !</p>
+									<p class="alert empty">Vous n'avez de filtre enregistré !</p>
+									<p class="alert error">Une erreur est survenue, veuillez réessayer !</p>
 								</div>
 							</div>
 							<div id="tab3" class="tab">
@@ -215,7 +218,9 @@
 										<a href="#" class="close">Annuler</a>
 									</div>
 									<div class="message">
-										<p class="alert">Votre filtre a bien été supprimé !</p>
+										<p class="alert success">Votre filtre a bien été supprimé !</p>
+										<p class="alert empty">Vous n'avez de filtre enregistré !</p>
+										<p class="alert error">Une erreur est survenue, veuillez réessayer !</p>
 									</div>
 								</div>
 							</div>
