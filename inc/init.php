@@ -17,8 +17,8 @@ $signed_request = $_REQUEST["signed_request"];
 list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
 $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
 
-if ($data['app_data']) {
-	$auth_url .=  urlencode("&app_data=".$data['app_data']);
+if ($_GET['app_data']) {
+	$auth_url .=  urlencode("&app_data=".$_GET['app_data']);
 }
 // var_dump($data['app_data']);
 

@@ -295,7 +295,7 @@
 		}
 		if ($ok){
 			$users = getNotifUserFilter($ID);
-			sendNotif('@['.$user_fb.'] vient de poster une annonce correspondant à vos critères',$users,$id);
+			sendNotif('@['.$user_fb.'] vient de poster une annonce correspondant à vos critères',$users,$ID);
 			echo json_encode(array('success' => true ,'id' => $ID));
 		} else {
 			echo json_encode(array('success' => false));
@@ -886,7 +886,7 @@
 			// var_dump($users);
 		return $users;
 		} else {
-			
+
 		}
 	}
 	
