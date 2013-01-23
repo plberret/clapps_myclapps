@@ -231,8 +231,7 @@
 
 	function addProject($data){
 		 
-		global $baseDD;
-		
+		global $baseDD, $user_fb;
 		// print_r($data);
 		$user = getIdFromFb();
 		// date tournage
@@ -295,7 +294,8 @@
 			}
 		}
 		if ($ok){
-			goNotifFilter($ID);
+			$users = getNotifUserFilter($ID);
+			sendNotif('@['.$user_fb.'] vient de poster une annonce correspondant à vos critères',$users);
 			echo json_encode(array('success' => true ,'id' => $ID));
 		} else {
 			echo json_encode(array('success' => false));
@@ -582,8 +582,8 @@
 	 function getProjectsByFilters($page,$filters,$count = false){
 	 	global $baseDD;
 	 	if ($filters['id_place']) {
-				$filters['place_'.$filters['type_place']] = $filters['id_place'];
-			}
+			$filters['place_'.$filters['type_place']] = $filters['id_place'];
+		}
 	 	if ($count) {
 	 		$sql = "SELECT count(DISTINCT pj.id_project) AS count";
 	 	} else {
@@ -812,21 +812,79 @@
 
 	}
 
-	function goNotifFilter($ID){
+	function getNotifUserFilter($ID){
 		global $baseDD;
 		$user = getIdFromFb();
 
 		$sql = 'SELECT filter, user_fb FROM mc_users WHERE id_user != :curr_id_user AND notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
 		// $sql = 'SELECT user_fb FROM mc_users WHERE id_user != :curr_id_user AND filter';
+		$users = array();
 		$R1=$baseDD->prepare($sql);
-		$R1->bindParam(':curr_id_user',$user['id_user']);
+		// $R1->bindParam(':curr_id_user',$user['id_user']);
+		$R1->bindParam(':curr_id_user',$ID);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 		if ($R1->execute()) {
-			$filter=$R1->fetchAll();
-			foreach ($filter as $key => $value) {
-				// code...
+			$filters=$R1->fetchAll();
+			foreach ($filters as $key => $filter) {
+				parse_str($filter['filter'],$userFilter);
+
+				if ($userFilter['id_place']) {
+					$userFilter['place_'.$userFilter['type_place']] = $userFilter['id_place'];
+				}
+
+				$sql2 = "SELECT pj.id_project FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.id_project = :id_project AND pj.current_state = 1";
+					$array['id_project'] = $ID;
+				if ($userFilter['profile']) {
+					$sql2 .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE association IN (SELECT association FROM mc_jobs WHERE name = :profile))";
+					$array['profile'] = $userFilter['profile'];
+					// echo $userFilter['profile'];
+				}
+				if ($userFilter['place_villes'] || $userFilter['location']) {
+					$sql2 .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
+					$array['place_villes']=($userFilter['place_villes'])?$userFilter['place_villes']:0;
+					$array['maxdist']=$userFilter['distance'].'000';
+				}
+				if ($userFilter['place_departements']) {
+					$sql2 .=" AND pj.place_departements = :place_departements OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement = :place_departements)";
+					$array['place_departements']=($userFilter['place_departements'])?$userFilter['place_departements']:0;
+				}
+				if ($userFilter['place_regions']) {
+					$sql2 .=" AND pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions))";
+					$array['place_regions']=($userFilter['place_regions'])?$userFilter['place_regions']:0;
+				}
+				if ($userFilter['date_filter']) {
+					switch ($userFilter['date_filter']) {
+						case 'now':
+							$array['date_filter']=3;
+							break;
+						case 'week':
+							$array['date_filter']=7;
+							break;
+						case 'month':
+							$array['date_filter']=30;
+							break;
+						case 'trimestre':
+							$array['date_filter']=60;
+							break;
+						
+						default:
+							break;
+					}
+					if ($array['date_filter']) {
+						$sql2 .= " AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) <= :date_filter AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) >= 0";
+						$array['date_filter'] = $userFilter['date_filter'];
+					}
+				}
+				$R2=$baseDD->prepare($sql2);
+				$R2->bindParam(':curr_id_user',$user['id_user']);
+				$R2->setFetchMode(PDO::FETCH_ASSOC);
+				if ($R2->execute($array)) {
+					array_push($users,$filter['user_fb']);
+				}
 			}
-		}
+			// var_dump($users);
+		return $users;
+		} else {}
 	}
 	
 	function getNotifFilter(){
@@ -891,4 +949,71 @@
 		}
 	}
 
+	function sendNotif($message,$users = false){
+		$notification_message = $message;
+		$notification_app_link = '?n=app'; // The link the notification will go through to, this will be specific to your in Facebook App
+		// $user = $facebook->getUser();
+		global $facebook;
+		if ($users) {
+			var_dump($users);
+			foreach ($users as $user) {
+				try {
+					// Try send this user a notification
+					$fb_response = $facebook->api('/' . $user . '/notifications', 'POST',
+					array(
+						'access_token' => $facebook->getAppId() . '|' . $facebook->getApiSecret(), // access_token is a combination of the AppID & AppSecret combined
+						'href' => $notification_app_link, // Link within your Facebook App to be displayed when a user click on the notification
+						'template' => $notification_message, // Message to be displayed within the notification
+					));
+					if (!$fb_response['success']) {
+						// Notification failed to send
+						// echo '<p><strong>Failed to send notification</strong></p>'."\n";
+						// echo '<p><pre>' . print_r($fb_response, true) . '</pre></p>'."\n";
+					} else {
+						// Success!
+						// echo '<p>Your notification was sent successfully</p>'."\n";
+					}
+			
+				} catch (FacebookApiException $e) {
+					// Notification failed to send
+					// echo '<p><pre>' . print_r($e, true) . '</pre></p>';
+					// $user = NULL;
+				}
+			}
+		} else {
+			global $fb_user;
+			if ($fb_user) {
+				/*
+				* Facebook user retrieved
+				* $fb_user : Holds the Facebook Users unique ID - Required for posting a notification to them
+				* */ 
+				try {
+					// Try send this user a notification
+					$fb_response = $facebook->api('/' . $fb_user . '/notifications', 'POST',
+					array(
+						'access_token' => $facebook->getAppId() . '|' . $facebook->getApiSecret(), // access_token is a combination of the AppID & AppSecret combined
+						'href' => $notification_app_link, // Link within your Facebook App to be displayed when a user click on the notification
+						'template' => $notification_message, // Message to be displayed within the notification
+					));
+					if (!$fb_response['success']) {
+						// Notification failed to send
+						echo '<p><strong>Failed to send notification</strong></p>'."\n";
+						echo '<p><pre>' . print_r($fb_response, true) . '</pre></p>'."\n";
+					} else {
+						// Success!
+						echo '<p>Your notification was sent successfully</p>'."\n";
+					}
+			
+				} catch (FacebookApiException $e) {
+					// Notification failed to send
+					echo '<p><pre>' . print_r($e, true) . '</pre></p>';
+					// $fb_user = NULL;
+				}
+			} else {
+				// No Facebook user fetched, show FB login button - Requires Facebook JavaScript SDK (Below)
+				echo '<fb:login-button></fb:login-button>'."\n";
+			}
+		}
+	}
+		
 ?>
