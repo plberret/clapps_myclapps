@@ -1190,10 +1190,10 @@ zf.initAddProject = function() {
 					data: $this.serialize(),
 					success: function(resp) {
 						if (resp.success) {
-							zf.FBCreate();
 							zf.getOneProject(resp.id);
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
+							zf.FBCreate();
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
@@ -1224,6 +1224,7 @@ zf.initAddProject = function() {
 							zf.getOneProject(resp.id);		
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
+							zf.FBCreate();
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
