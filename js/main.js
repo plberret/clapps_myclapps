@@ -1250,6 +1250,13 @@ zf.initAddProject = function() {
 
 zf.initEditProject = function() {
 		
+	zf.$page.on('keypress','input',function(event) {
+		if(event.keyCode == 13){
+			$(this).trigger('focusout');
+			return false;
+		}
+	})
+
 	// change display to edit project
 	zf.$page.on('click','.editProject',function(event) {
 		zf.editProject($(this));
@@ -1261,6 +1268,7 @@ zf.initEditProject = function() {
 	zf.$page.on('submit','.project form',function(event) {
 		var $this=$(this);
 		$this.find('.message').hide();
+		$this.find('.empty').removeClass('empty');
 		if (zf.addAnonceFormOk($this)) {
 			console.log('in')
 			zf.updateProject($this);
