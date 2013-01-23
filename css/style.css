@@ -1249,6 +1249,10 @@ section article .preview .block_top .title_block .title h2 span {
 	display: block;
 }
 
+section article .preview .block_top .title_block .title h2 span.hide {
+	display: none;
+}
+
 section article .preview .block_top .title_block .title div {
 	color: #888888;
 	line-height: 15px;
