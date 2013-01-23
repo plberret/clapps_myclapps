@@ -1122,18 +1122,6 @@ zf.initFb = function() {
 		return false;
 	});
 	
-	// Creer une annonce
-	zf.$page.find('.share_link').click(function(event) {
-		zf.FBCreate();
-		return false;
-	})
-	
-	// trouver un profil pour une annonce
-	zf.$page.find('.share_link').click(function(event) {
-		zf.FBFind();
-		return false;
-	})
-	
 	// partager
 	zf.$page.find('.share_link').click(function(event) {
 		zf.FBShare();
@@ -1202,6 +1190,7 @@ zf.initAddProject = function() {
 					data: $this.serialize(),
 					success: function(resp) {
 						if (resp.success) {
+							zf.FBCreate();
 							zf.getOneProject(resp.id);
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
@@ -1546,7 +1535,7 @@ zf.init = function(){
 			type: 'post',
 			data: {id_project:$this.data('id'),id_profile:$this.data('idprofile')},
 			success: function(resp) {
-				// //console.log(resp);
+				zf.FBFind();
 				var $icon = $this.parent().siblings('.icon')
 				if($icon.hasClass('iconTechnician')){
 					var t = parseInt($this.parents('article').find('.technicians').find('span').eq(0).text());
