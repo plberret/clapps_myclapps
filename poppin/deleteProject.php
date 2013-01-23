@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="field precise">
-			<input type="text" name="desc" placeholder="Précisez" />
+			<input autocomplete="off" type="text" name="desc" placeholder="Précisez" />
 		</div>
 		<div class="text">
 			<textarea name="remarque" placeholder="Vous avez des remarques ? N’hésitez pas ..." ></textarea>

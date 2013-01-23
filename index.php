@@ -85,7 +85,7 @@
 				<div id="notif_email">
 					<p>Être tenu au courant des nouveautés de Clapps</p>
 					<form action="requests/addListSubscribe.php" id="addSubscribe" class="clearfix">
-						<input type="text" name="email" placeholder="votreadresse@email.com" />
+						<input type="text" autocomplete="off" name="email" placeholder="votreadresse@email.com" />
 						<input type="submit" value="Je reste informé" />
 					</form>
 				</div>
@@ -101,7 +101,7 @@
 					<div id="col2" class="col">
 						<div class="field">
 							<label for="profile">Métier</label>
-							<input type="text" name="profile" id="profile" class="job autocomplete" placeholder="Entrez le métier recherché ..." />
+							<input type="text" autocomplete="off" name="profile" id="profile" class="job autocomplete" placeholder="Entrez le métier recherché ..." />
 						</div>
 						<div class="field select">
 							<label for="selector_date">Date</label>
@@ -124,7 +124,7 @@
 					<div id="col3" class="col">
 						<div class="field">
 							<label for="location">Lieux</label>
-							<input type="text" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" />
+							<input type="text" autocomplete="off" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" />
 							<input type="hidden" name="distance" value="100" id="distance" />
 							<input type="hidden" name="id_place" class="id_place" id="id_place"/>
 							<input type="hidden" name="type_place" class="type_place" id="type_place" />
@@ -254,7 +254,7 @@
 										<div class="title">
 											<h2>
 												<span><?php echo $project['title']; ?></span>
-												<input type="text" class="hide" name="title" value="<?php echo $project['title']; ?>" maxlength="60" >
+												<input type="text" autocomplete="off" class="hide" name="title" value="<?php echo $project['title']; ?>" maxlength="60" >
 											</h2>
 											<input type="hidden" name="id_project" value="<?php echo $project['id_project'] ?>">
 											<div>Postée par <span><?php echo $project['name_creator']; ?></span> le <?php echo dateFormat('j.m.y',$project['create_date']); ?></div>
@@ -294,12 +294,12 @@
 									<div class="project_id">#<?php echo $project['id_project']; ?></div>
 									<div class="date">
 										<p><?php echo dateUstoFr($project['date_filter']); ?></p>
-										<input type="text" disabled="disabled" class="datepicker hide" value="<?php echo dateUstoFr($project['date_filter']); ?>">
+										<input type="text" autocomplete="off" disabled="disabled" class="datepicker hide" value="<?php echo dateUstoFr($project['date_filter']); ?>">
 										<input type="hidden" name="date_filter" class="date_filter">
 									</div>
 									<div class="place field">
 										<p><?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)</p>
-										<input type="text" disabled="disabled" id="location" name="location" class="location autocomplete hide" autocomplete="off" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)">
+										<input type="text" autocomplete="off" disabled="disabled" id="location" name="location" class="location autocomplete hide" autocomplete="off" value="<?php echo $project['place']; ?> (<?php echo $project['zip_code']; ?>)">
 										<input type="hidden" name="id_place" class="id_place" />
 										<input type="hidden" name="type_place" class="type_place" />
 									</div>
@@ -334,10 +334,10 @@
 												</div>
 												<div class="block_edition hide">
 													<div class="add_job add_field field">
-														<input type="text" class="job autocomplete plp" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>" name="name[]" />
+														<input type="text" autocomplete="off" class="job autocomplete plp" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>" name="name[]" />
 														<input type="hidden" class="idjob" name="id_job[]" value="<?php echo $profile['id_job']; ?>" />
 													</div>
-													<div class="add_desc add_field"><input type="text" class="plp" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
+													<div class="add_desc add_field"><input type="text" autocomplete="off" class="plp" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
 													<div class="edit">
 														<div class="deleteButton">
 															<a href="javascript:void(0);" class="button_delete_profile">Supprimer</a>
@@ -351,7 +351,7 @@
 														</div>
 														<div class="quantity">
 															<a href="javascript:void(0);" class="less_quantity number_control">-</a>
-															<input type="text" value="<?php echo $profile['occurence']; ?>" class="number" name="occurence[]"/>
+															<input type="text" autocomplete="off" value="<?php echo $profile['occurence']; ?>" class="number" name="occurence[]"/>
 															<a href="javascript:void(0);" class="more_quantity number_control">+</a>
 														</div>
 													</div>
@@ -374,8 +374,8 @@
 											</li>
 										<?php } ?>
 										<li class="add-line hide profile clearfix">
-											<div class="add_job add_field field"><input type="text" class="job autocomplete plp" placeholder="Métier recherché" name="name[]" /></div>
-											<div class="add_desc add_field"><input type="text" class="plp" placeholder="Description du poste recherché" name="profile[]"/></div>
+											<div class="add_job add_field field"><input type="text" autocomplete="off" class="job autocomplete plp" placeholder="Métier recherché" name="name[]" /></div>
+											<div class="add_desc add_field"><input type="text" autocomplete="off" class="plp" placeholder="Description du poste recherché" name="profile[]"/></div>
 											<input type="hidden" class="idjob" name="id_job[]" />
 											<div class="edit">
 												<div class="line_control">
@@ -383,7 +383,7 @@
 												</div>
 												<div class="quantity">
 													<a href="javascript:void(0);" class="less_quantity number_control">-</a>
-													<input type="text" value="1" class="number" name="occurence[]"/>
+													<input type="text" autocomplete="off" value="1" class="number" name="occurence[]"/>
 													<a href="javascript:void(0);" class="more_quantity number_control">+</a>
 												</div>
 											</div>
