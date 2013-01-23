@@ -86,7 +86,7 @@
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
 					<p<?php if (empty($userFilter['filter'])): ?> class="hide" <?php endif; ?>>Vous recherchez un poste<span class="work"> <?php echo $userFilterArray['profile'] ?></span><span class="time"> dès que possible</span><span class="opt<?php if (empty($userFilterArray['location'])): ?> hide<?php endif; ?>"> dans la commune de <span class="location"><?php echo $userFilterArray['location'] ?></span> et <span class="distance"><?php echo $userFilterArray['distance'] ?>km</span> aux alentours</span>.</p>
-					<p class="none<?php if (!empty($userFilter['filter'])): ?> hide<?php endif; ?>">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification et/ou par mail toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
+					<p class="none<?php if (!empty($userFilter['filter'])): ?> hide<?php endif; ?>">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
 				</div>
 				<div id="notif_email">
 					<p>Être tenu au courant des nouveautés de Clapps</p>

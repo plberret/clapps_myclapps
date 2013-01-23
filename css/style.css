@@ -923,7 +923,7 @@ header #block_current_filter #current_filter {
 	width: 384px;
 	height: 28px;
 	border-right: 1px solid #0a0a0a;
-	padding: 28px 18px 28px 68px;
+	padding: 24px 18px 28px 68px;
 }
 header #block_current_filter.none #current_filter {
 	float: left;
