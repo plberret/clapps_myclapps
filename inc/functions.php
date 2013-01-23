@@ -664,7 +664,7 @@
 			// foreach ($project[0] as $key => $value) {
 				// $project = $value->$key;
 			// }
-		}
+		// }
 		 
 		return $projects;
 	 }
