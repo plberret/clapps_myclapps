@@ -599,17 +599,17 @@
 			$array['profile'] = $filters['profile'];
 			// echo $filters['profile'];
 		}
-		if ($filters['place_villes'] || $filters['location']) {
+		if ($filters['place_villes']) {
 			$sql .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
 			$array['place_villes']=($filters['place_villes'])?$filters['place_villes']:0;
 			$array['maxdist']=$filters['distance'].'000';
 		}
 		if ($filters['place_departements']) {
-			$sql .=" AND pj.place_departements = :place_departements OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement = :place_departements)";
+			$sql .=" AND (pj.place_departements = :place_departements OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement = :place_departements))";
 			$array['place_departements']=($filters['place_departements'])?$filters['place_departements']:0;
 		}
 		if ($filters['place_regions']) {
-			$sql .=" AND pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions))";
+			$sql .=" AND (pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions)))";
 			$array['place_regions']=($filters['place_regions'])?$filters['place_regions']:0;
 		}
 		if ($filters['date_filter']) {
@@ -658,8 +658,9 @@
 		}
 		
 
-		// if ($count) {
+		// if (!$count) {
 			// echo "$sql";
+			// var_dump($array);
 			// foreach ($project[0] as $key => $value) {
 				// $project = $value->$key;
 			// }

@@ -514,8 +514,8 @@ zf.seeMine = function($_this,event) {
 			// $_this.attr('id','see-mine').html($this.find('#see-mine').html());
 			$this.find('.project').each(function(i) {
 				var $this=$(this);
-				if ($this.hasClass('fancybox')) {
-					$this.fancybox({
+				if ($this.find('.fancybox').length>0) {
+					$this.find('.fancybox').fancybox({
 						afterShow: zf.initAddProject,
 						closeClick  : false,
 						helpers   : { 
