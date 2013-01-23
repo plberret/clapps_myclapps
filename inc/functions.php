@@ -890,5 +890,19 @@
 			echo json_encode(array( success => true ));
 		}
 	}
+	
+	function getInfoProject($project, $profile){
+		global $baseDD;
+		$R1=$baseDD->prepare('SELECT pj.title, u.user_fb, j.name, pf.person FROM mc_project AS pj, mc_users AS u, mc_jobs AS j, mc_profile AS pf WHERE pj.id_creator=u.id_user AND pj.id_project=pf.id_project AND pf.id_job=j.id_job AND pj.id_project = :id_project AND pf.id_profile= :id_profile');
+		$R1->bindParam(':id_project',$project);
+		$R1->bindParam(':id_profile',$profile);
+		
+		if ($R1->execute()) {
+			$result=$R1->fetch();
+			echo json_encode(array("project" => $result['title'], "recipient" => $result['user_fb'], "profile_job" => $result['name'], "profile_desc" => $result['person']));
+		} else {
+			echo json_encode(array(success => false ));
+		}
+	}
 
 ?>

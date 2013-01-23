@@ -1054,33 +1054,25 @@ zf.initSeeProject = function() {
 
 zf.FBSend = function(id_project, id_profile) {
 	
-/*	$.ajax({
+	$.ajax({
 		url: 'requests/getInfoProject.php',
 		type: 'post',
 		data: {
-			project : id_, project,
+			project : id_project,
 			profile : id_profile
 		}, 
 		success: function(resp) {
-		*/	
-			var project = "project";
-			var profile = "Acteur";
-			var profile_desc = "Avec de l'experience";
-			var recipient = 1343913706;
-			var url = "http://clapps.fr";
-			
 			FB.ui({
 				method: 'send',
-				name: '[Candidature] - '+project, // remplacer par le nom du projet
-				description: 'poste pourvu ('+profile+') :<br/>'+profile_desc,
-				to: recipient, // remplacer par id du createur du projet
-				link: url, // lien de l'annonce
+				name: '[Candidature] - '+resp.project, 
+				description: 'poste pourvu ('+resp.profile_job+') : '+resp.profile_desc,
+				to: resp.recipient, 
+				link: "http://www.facebook.com/Clapps.Network/app_112197008935023?id_project="+id_project,
 			});
-	/*	}
-	});*/
+		}
+	});
 	
 };
-
 
 zf.FBNotifications= function() {
 	////console.log('yes');
@@ -1090,8 +1082,10 @@ zf.initFb = function() {
 	
 	// Postuler 
 	zf.$page.find('.apply_button').click(function(event) {
-		console.log($(this));
-		zf.FBSend(227, 596);
+		$this=$(this);
+		var id_project= $this.attr('data-id');
+		var id_profile= $this.attr('data-idprofile');
+		zf.FBSend(id_project, id_profile);
 		return false;
 	})
 	
