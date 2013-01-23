@@ -45,6 +45,7 @@
 	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title">
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
 	<div id="page" style="display:none;">
 		<header>

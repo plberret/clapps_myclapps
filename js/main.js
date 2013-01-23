@@ -1075,8 +1075,19 @@ zf.FBSend = function(id_project, id_profile) {
 };
 
 zf.FBShare = function() {
-	
-	console.log('share');
+	FB.api('/me/myclapps:share','post', function(response) {
+		if (!response || response.error) {
+			alert('Error occured');
+		} else {
+			alert('Cook was successful! Action ID: ' + response.id);
+		}
+	});
+	FB.api('/me/myclapps:share', 'post',
+		{announce: "http://samples.ogp.me/146557538832303"},
+		function(response) {
+			console.log('share');
+		}
+	);
 	
 };
 
