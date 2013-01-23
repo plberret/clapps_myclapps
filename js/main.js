@@ -837,16 +837,7 @@ zf.filter = function(){
 	}).end().find('#date_filter').change(function(){
 		$filter.trigger('submit');
 	})
-
-/*	$(document).bind('mousewheel',function(event){
-		if ($(document).scrollTop()<=128 && !zf.filterOpen && event.originalEvent.wheelDelta > 0) {
-			zf.$projectsList.css({paddingTop:"180px"});
-			$(document).scrollTop(0);
-		} else if ($(document).scrollTop()<=128 && zf.filterOpen && event.originalEvent.wheelDelta > 0) {
-			zf.$projectsList.animate({paddingTop:"300px"}); // ça passe crème
-		};
-	}) */
-
+	
 	zf.$page.on('click','#refresh_button, .display_all_projects',function(event) {
 		// init filter
 		$filter.find('input[type=text]').val('');

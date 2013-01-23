@@ -773,11 +773,18 @@ header #filter_advanced #tabs .tab .message {
 
 header #block_filters #filter_advanced #tabs .tab .message p.alert {
 	font-size: 13px;
-	color: #8fa515;
 	padding: 0;
 	text-align: center;
 }
 
+header #block_filters #filter_advanced #tabs .tab .message p.success {
+	color: #8fa515;
+}
+
+header #block_filters #filter_advanced #tabs .tab .message p.error,
+header #block_filters #filter_advanced #tabs .tab .message p.empty {
+	color: #921b00;
+}
 
 header #filter_advanced #tabs .tab .notifs p {
 	float: left;
@@ -1247,6 +1254,10 @@ section article .preview .block_top .title_block .title h2 span {
 	width: 460px;
 	word-wrap: break-word;
 	display: block;
+}
+
+section article .preview .block_top .title_block .title h2 span.hide {
+	display: none;
 }
 
 section article .preview .block_top .title_block .title div {
