@@ -37,7 +37,7 @@
 <html lang="fr">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# myclapps: http://ogp.me/ns/fb/myclapps#">
 	<meta charset="utf-8">
-	<?php if (isset($_GET['app_data'])): ?>
+	<?php if ($_GET['id_project']): ?>
 		<meta property="fb:app_id" content="112197008935023" />
 		<meta property="og:type" content="myclapps:<?php echo $_GET['type']; ?>" /> 
 		<meta property="og:url" content="http://www.my.clapps.fr?type=<?php echo $_GET['type']; ?>" /> 
@@ -219,10 +219,17 @@
 									<a href="javascript:void(0);" class="valid_button delete">Oui</a>
 									<a href="javascript:void(0);" class="close">Annuler</a>
 								</div>
-								<div class="message">
-									<p class="alert success">Votre filtre a bien été supprimé !</p>
-									<p class="alert empty">Vous n'avez pas de filtre enregistré !</p>
-									<p class="alert error">Une erreur est survenue, veuillez réessayer !</p>
+								<div id="tab3" class="tab">
+									<p><strong>Êtes-vous sûr de vouloir supprimer votre filtre ?</strong></p>
+									<div class="choice clearfix">
+										<a href="#" class="valid_button delete">Oui</a>
+										<a href="#" class="close">Annuler</a>
+									</div>
+									<div class="message">
+										<p class="alert success">Votre filtre a bien été supprimé !</p>
+										<p class="alert empty">Vous n'avez pas de filtre enregistré !</p>
+										<p class="alert error">Une erreur est survenue, veuillez réessayer !</p>
+									</div>
 								</div>
 							</div>
 						</div>
