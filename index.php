@@ -201,7 +201,7 @@
 								</div>
 								<div class="message">
 									<p class="alert success">Votre filtre a bien été chargé !</p>
-									<p class="alert empty">Vous n'avez de filtre enregistré !</p>
+									<p class="alert empty">Vous n'avez pas de filtre enregistré !</p>
 									<p class="alert error">Une erreur est survenue, veuillez réessayer !</p>
 								</div>
 							</div>
@@ -219,7 +219,7 @@
 									</div>
 									<div class="message">
 										<p class="alert success">Votre filtre a bien été supprimé !</p>
-										<p class="alert empty">Vous n'avez de filtre enregistré !</p>
+										<p class="alert empty">Vous n'avez pas de filtre enregistré !</p>
 										<p class="alert error">Une erreur est survenue, veuillez réessayer !</p>
 									</div>
 								</div>
