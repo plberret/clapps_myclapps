@@ -694,13 +694,6 @@ zf.deleteLineProfile = function($this){
 	//}
 }
 
-zf.deleteProfile = function($this){
-	$profile=$this.parents('li');
-	$profile.fadeOut(300, function(){
-		$profile.remove();
-	});
-}
-
 zf.jsonJobs = function($this){
 	var value = $this.val();
 	if(!zf.isBlank(value) && value.length>2){
@@ -1217,7 +1210,8 @@ zf.initAddProject = function() {
 					data: $this.serialize(),
 					success: function(resp) {
 						if (resp.success) {
-							zf.getOneProject(resp.id);
+							// zf.getOneProject(resp.id);
+							zf.seeFiltered('',event)
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							zf.FBCreate();
@@ -1248,7 +1242,8 @@ zf.initAddProject = function() {
 							// });
 
 							$('.no_result').hide();
-							zf.getOneProject(resp.id);		
+							// zf.getOneProject(resp.id);
+							zf.seeFiltered('',event)	
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							zf.FBCreate();
@@ -1379,7 +1374,7 @@ zf.initEditProject = function() {
 	//  confirm delete existing line
 	zf.$projectsList.on('click','.profiles .edit .confirm_delete_profile',function(event) {
 		$(this).parents('.confirm').fadeOut(150);
-		zf.deleteProfile($(this));
+		zf.deleteLineProfile($(this));
 		return false;
 	});
 	
