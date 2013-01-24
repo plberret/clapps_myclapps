@@ -41,8 +41,8 @@
 		<meta property="fb:app_id" content="112197008935023" />
 		<meta property="og:type" content="myclapps:<?php echo $_GET['type']; ?>" /> 
 		<meta property="og:url" content="http://www.my.clapps.fr?type=<?php echo $_GET['type']; ?>" /> 
-		<meta property="og:title" content="<?php echo $getProjects['title']; ?>" />
-		<meta property="og:description" content="<?php echo $getProjects['description']; ?>" />
+		<meta property="og:title" content="<?php echo $getProjects[0]['title']; ?>" />
+		<meta property="og:description" content="<?php echo $getProjects[0]['description']; ?>" />
 		<meta property="og:image" content="http://backup.clapps.fr/img/logo_clapps.png" />
 	<?php else: ?>
 		<meta property="fb:app_id" content="112197008935023" />
@@ -60,7 +60,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 
-<body><pre><?php print_r($getProjects); ?></pre>
+<body>
 	<div id="page" style="display:none;" class="display_tuto">
 		<header>
 			<div id="bar_top" class="clearfix">
