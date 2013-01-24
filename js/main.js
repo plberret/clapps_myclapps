@@ -1107,12 +1107,13 @@ zf.FBCreate = function(id_project) {
 };
 
 zf.FBFind = function(id_project) {
+	/*
 	FB.api('/me/myclapps:found', 'post',
 		{person: "http://www.facebook.com/Clapps.Network/app_112197008935023?type=person&app_data="+id_project},
 		function(response){
 			console.log(response, 'find');
 		}
-	);
+	);*/
 };
 
 zf.FBShare = function(id_project) {
