@@ -938,6 +938,7 @@ zf.filter = function(){
 					$this.parents("#tab2").find('.choice').hide().siblings('.message').find('.success').fadeIn(200, function(){
 						setTimeout(function(){
 							advancedFilter.find('a.close').trigger('click');
+							zf.advancedFilterOpen= false;
 							setTimeout(function(){
 								$this.parents("#tab2 .choice").show().siblings('.message').find('.success').hide();
 							},500);
@@ -947,6 +948,7 @@ zf.filter = function(){
 					$this.parents("#tab2").find('.choice').hide().siblings('.message').find('.empty').fadeIn(200, function(){
 						setTimeout(function(){
 							advancedFilter.find('a.close').trigger('click');
+							zf.advancedFilterOpen= false;
 							setTimeout(function(){
 								$this.parents("#tab2 .choice").show().siblings('.message').find('.empty').hide();
 							},500);
@@ -958,6 +960,7 @@ zf.filter = function(){
 				$this.parents("#tab2").find('.choice').hide().siblings('.message').find('.error').fadeIn(200, function(){
 					setTimeout(function(){
 						advancedFilter.find('a.close').trigger('click');
+						zf.advancedFilterOpen= false;
 						setTimeout(function(){
 							$this.parents("#tab2 .choice").show().siblings('.message').find('.error').hide();
 						},500);
@@ -1000,13 +1003,8 @@ zf.filter = function(){
 			success: function(resp) {
 				$this.find("#tab1").find('.choice').hide().siblings('.message').find('.success').fadeIn(200, function(){
 					// animation
-					advancedFilter.stop().delay(1500).animate({
-						width: '50',
-					}, 600, 'easeInOutExpo', function() {
-						zf.advancedFilterOpen= false;
-						$filter.find('.help_info').show();
-						$this.find("#tab1 .choice").show().siblings('.message').find('.success').hide();
-					});
+					advancedFilter.find('a.close').trigger('click');
+					
 				})
 			}
 		});
