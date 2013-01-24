@@ -60,7 +60,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 
-<body>
+<body><pre><?php print_r($getProjects); ?></pre>
 	<div id="page" style="display:none;" class="display_tuto">
 		<header>
 			<div id="bar_top" class="clearfix">
