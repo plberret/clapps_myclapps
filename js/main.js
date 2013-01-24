@@ -932,9 +932,9 @@ zf.filter = function(){
 					if (!zf.isBlank($filter.find('#location').val())) {
 						$filter.find('#distances').addClass('active');
 					};
-					$filter.find('#selector_date .'+filter.date_filter).trigger('click');
+					// $filter.find('#selector_date .'+filter.date_filter).trigger('click');
 	
-					$filter.find('#distances.active a.'+filter.distance).trigger('click');
+					// $filter.find('#distances.active a.'+filter.distance).trigger('click');
 					
 					$this.parents("#tab2").find('.choice').hide().siblings('.message').find('.success').fadeIn(200, function(){
 						setTimeout(function(){
@@ -944,7 +944,8 @@ zf.filter = function(){
 								$this.parents("#tab2 .choice").show().siblings('.message').find('.success').hide();
 							},500);
 						},1500);
-					})
+					});
+					$filter.trigger('submit');
 				} else {
 					$this.parents("#tab2").find('.choice').hide().siblings('.message').find('.empty').fadeIn(200, function(){
 						setTimeout(function(){
@@ -979,12 +980,11 @@ zf.filter = function(){
 			type: 'post',
 			data: {filter : ''},
 			success: function(resp) {
-				console.log(resp);
-				$this.parents("#tab3").find('.choice').hide().siblings('.message').fadeIn(200, function(){
+				$this.parents("#tab3").find('.choice').hide().siblings('.message').find('.success').fadeIn(200, function(){
 					setTimeout(function(){
 						advancedFilter.find('a.close').trigger('click');
 						setTimeout(function(){
-							$this.parents("#tab3 .choice").show().siblings('.message').hide();
+							$this.parents("#tab3 .choice").show().siblings('.message').find('.success').hide();
 						},500);
 					},1500);
 				})
@@ -1005,6 +1005,9 @@ zf.filter = function(){
 				$this.find("#tab1").find('.choice').hide().siblings('.message').find('.success').fadeIn(200, function(){
 					// animation
 					advancedFilter.find('a.close').trigger('click');
+					setTimeout(function(){
+						$this.find("#tab1 .choice").show().siblings('.message').find('.success').hide();
+					},500);
 					
 				})
 			}
@@ -1155,9 +1158,11 @@ zf.initAddProject = function() {
 	zf.$newProject = $('#newProject');
 	zf.fixPlaceholder(zf.$newProject);
 
-	zf.$newProject.on('keypress','input',function(event) {
+	zf.$newProject.on('keydown','input',function(event) {
 		if(event.keyCode == 13){
-			$(this).trigger('focusout');
+			event.stopPropagation();
+			// $(this).trigger('focusout');
+			$(this).blur();
 			return false;
 		}
 	})
@@ -1197,7 +1202,7 @@ zf.initAddProject = function() {
 	});
 	
 	// SEND PROJECT
-	zf.$newProject.on('submit', function(event) {		
+	zf.$newProject.on('submit', function(event) {	
 		var $this=$(this);
 		$this.find('#add-project').attr('disabled','disabled')
 		$('.required').removeClass('empty');
@@ -1275,7 +1280,8 @@ zf.initEditProject = function() {
 		
 	zf.$page.on('keypress','.project input',function(event) {
 		if(event.keyCode == 13){
-			$(this).trigger('focusout');
+			// $(this).trigger('focusout');
+			$(this).blur();
 			return false;
 		}
 	})
