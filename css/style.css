@@ -2718,7 +2718,12 @@ section article #block_see_button:hover a {
 	width: 400px;
 }
 
-#tuto.help #content_tuto #block_help_tuto a {
+#tuto.help #content_tuto #block_help_tuto .desc p a {
+	color: ##e3a708;
+	text-decoration: underline;
+}
+
+#tuto.help #content_tuto #block_help_tuto a.close_tuto {
 	float: right;
 	display: block;
 	margin: 48px 36px 0 0;

@@ -478,7 +478,7 @@
 						<h2>Besoin d'aide ?</h2>
 						<p>Pour toutes questions,<br/> n'hésitez pas à nous contacter via notre adresse <a href="mailto:contact@clapps.fr">contact@clapps.fr</a></p>
 					</div>
-					<a href="javascript:void(0);">Fermer l'aide</a>
+					<a href="javascript:void(0);" class="close_tuto">Fermer l'aide</a>
 				</div>
 				<div id="block_display_tuto">
 					<div class="title">

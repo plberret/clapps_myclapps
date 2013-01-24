@@ -1526,7 +1526,7 @@ zf.init = function(){
 	});
 	
 	// hide tuto other time
-	zf.$page.find("#block_help_tuto a").click(function(event) {
+	zf.$page.find("#block_help_tuto a.close_tuto").click(function(event) {
 		zf.$page.find("#tuto video").hide();
 		zf.$page.find("#tuto").fadeOut(800);
 		zf.$projectsList.fadeIn(800);
