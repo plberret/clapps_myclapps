@@ -531,7 +531,8 @@ zf.seeMine = function($_this,event) {
 						helpers   : { 
 							overlay : {closeClick: false},
 						},
-						topRatio : 0
+						topRatio : 0,
+						scrolling : 'auto'
 					});
 				};
 				setTimeout(function() {
@@ -1630,7 +1631,8 @@ zf.init = function(){
 		helpers   : { 
 			overlay : {closeClick: false},
 		},
-		topRatio : 0
+		topRatio : 0,
+		scrolling : 'auto'
 	});
 		
 	// init page tab of filter
