@@ -39,8 +39,8 @@
 	<meta charset="utf-8">
 	<?php if ($_GET['id_project']): ?>
 		<meta property="fb:app_id" content="112197008935023" />
-		<meta property="og:type" content="myclapps:<?php echo $_GET['type']; ?>" /> 
-		<meta property="og:url" content="http://www.my.clapps.fr?type=<?php echo $_GET['type']; ?>" /> 
+		<meta property="og:type" content="myclapps:announce" /> 
+		<meta property="og:url" content="http://www.my.clapps.fr?type=annouce" /> 
 		<meta property="og:title" content="<?php echo $getProjects[0]['title']; ?>" />
 		<meta property="og:description" content="<?php echo $getProjects[0]['description']; ?>" />
 		<meta property="og:image" content="http://backup.clapps.fr/img/logo_clapps.png" />
