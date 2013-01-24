@@ -826,8 +826,8 @@
 		// $sql = 'SELECT user_fb FROM mc_users WHERE id_user != :curr_id_user AND filter';
 		$users = array();
 		$R1=$baseDD->prepare($sql);
-		// $R1->bindParam(':curr_id_user',$user['id_user']);
-		$R1->bindParam(':curr_id_user',$ID);
+		$R1->bindParam(':curr_id_user',$user['id_user']);
+		// $R1->bindParam(':curr_id_user',$ID);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
 		if ($R1->execute()) {
 			$filters=$R1->fetchAll();
