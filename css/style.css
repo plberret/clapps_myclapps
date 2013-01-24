@@ -2805,16 +2805,18 @@ section article #block_see_button:hover a {
 	margin: 0 auto;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li {
+#tuto #content_tuto #block_nav_tuto ul a {
 	position: relative;
 	float: left;
 	background: no-repeat url('../images/step_before_nav_tuto.png') center 0;
 	padding-top: 41px;
 	width: 150px;
 	margin: 0 7px;
+	display: block;
+	text-decoration: none;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li:after {
+#tuto #content_tuto #block_nav_tuto ul a:after {
 	position: absolute;
 	top: 7px;
 	left: 100px;
@@ -2824,29 +2826,27 @@ section article #block_see_button:hover a {
 	height: 3px;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li:first-child,
-#tuto #content_tuto #block_nav_tuto ul li:last-child {
+#tuto #content_tuto #block_nav_tuto ul a:first-child,
+#tuto #content_tuto #block_nav_tuto ul a:last-child {
 	margin: 0;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li:last-child:after {
+#tuto #content_tuto #block_nav_tuto ul a:last-child:after {
 	display: none;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li a {
-	display: block;
-	text-decoration: none;
+#tuto #content_tuto #block_nav_tuto ul  a li {
 	font-size: 13px;
 	text-align: center;
 	padding: 5px 0;
 	color: #353535;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li.done a {
+#tuto #content_tuto #block_nav_tuto ul a.done li {
 	color: #808080;
 }
 
-#tuto #content_tuto div#block_nav_tuto ul li.current a:before {
+#tuto #content_tuto div#block_nav_tuto ul a.current li:before {
 	position: absolute;
 	top: -7px;
 	left: 68px;
@@ -2856,12 +2856,12 @@ section article #block_see_button:hover a {
 	border-bottom: 7px solid #0a0a0a;
 }
 
-#tuto #content_tuto div#block_nav_tuto ul li.current a {
+#tuto #content_tuto div#block_nav_tuto ul a.current li {
 	background: #0a0a0a;
 	color: #d5d5d5;
 	position: relative;
 }
 
-#tuto #content_tuto #block_nav_tuto ul li.next a {
+#tuto #content_tuto #block_nav_tuto ul a.next li {
 	color: #353535;
 }
