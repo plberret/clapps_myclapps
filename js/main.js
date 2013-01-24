@@ -1094,38 +1094,36 @@ zf.FBSend = function(id_project, id_profile) {
 
 // title, description, titre, url , custom 
 
-zf.FBCreate = function() {
-//	$('meta[property=og:type]').attr('content', 'test' );
+zf.FBCreate = function(id_project) {
 /*	FB.api('/me/myclapps:create', 'post',
-		{announce: "http://www.my.clapps.fr"},
+		{announce: "http://www.my.clapps.fr?type=announce&id_project="+id_project},
 		function(response) {
 			console.log(response, 'create');
 		}
-	); */
+	);*/
 };
 
-zf.FBFind = function() {
+zf.FBFind = function(id_project) {
 	FB.api('/me/myclapps:found', 'post',
-		{person: "http://www.my.clapps.fr"},
+		{person: "http://www.my.clapps.fr?type=person&id_project="+id_project},
 		function(response){
 			console.log(response, 'find');
 		}
 	);
 };
 
-zf.FBShare = function() {
-//	$('meta[property=og:type]').attr('content', 'test' );
-/*	FB.api('/me/myclapps:share', 'post',
-		{announce: "http://www.my.clapps.fr"},
+zf.FBShare = function(id_project) {
+	FB.api('/me/myclapps:share', 'post',
+		{announce: "http://www.my.clapps.fr?type=announce&id_project="+id_project},
 		function(response) {
 			console.log(response, 'share');
 		}
-	);	*/
+	);
 };
 
-zf.FBApplyTo = function() {
+zf.FBApplyTo = function(id_project) {
 	FB.api('/me/myclapps:applied_to', 'post',
-		{announce: "http://www.my.clapps.fr"},
+		{announce: "http://www.my.clapps.fr?type=announce&id_project="+id_project},
 		function(response) {
 			console.log(response, 'apply');
 		}
@@ -1140,13 +1138,13 @@ zf.initFb = function() {
 		var id_project= $this.attr('data-id');
 		var id_profile= $this.attr('data-idprofile');
 		zf.FBSend(id_project, id_profile);
-		zf.FBApplyTo();
+		zf.FBApplyTo(id_project);
 		return false;
 	});
 	
 	// partager
 	zf.$page.find('.share_link').click(function(event) {
-		zf.FBShare();
+		zf.FBShare($(this).attr('data-id'));
 		return false;
 	})
 	
@@ -1575,7 +1573,7 @@ zf.init = function(){
 			type: 'post',
 			data: {id_project:$this.data('id'),id_profile:$this.data('idprofile')},
 			success: function(resp) {
-				zf.FBFind();
+				zf.FBFind($this.data('id'));
 				var $icon = $this.parent().siblings('.icon')
 				if($icon.hasClass('iconTechnician')){
 					var t = parseInt($this.parents('article').find('.technicians').find('span').eq(0).text());

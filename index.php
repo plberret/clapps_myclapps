@@ -294,7 +294,7 @@
 								</div>
 
 								<div class="share clearfix">
-									<a href="javascript:void(0);" class="share_link">Partager l'annonce</a>
+									<a href="javascript:void(0);" class="share_link" data-id="<?php echo $project['id_project'] ?>">Partager l'annonce</a>
 									<?php if (!isAdmin($project)): ?>
 										<?php if (isFavorite($project,$user_fb)): ?>
 											<a href="javascript:void(0);" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
