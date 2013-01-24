@@ -1294,10 +1294,8 @@ zf.initEditProject = function() {
 		$this.find('.message').hide();
 		$this.find('.empty').removeClass('empty');
 		if (zf.addAnonceFormOk($this)) {
-			console.log('in')
 			zf.updateProject($this);
 		} else {
-			console.log('els')
 			$this.find('.required[value=]').addClass('empty');
 			$this.find('.message').text('Veuillez remplir tous les champs requis.').show()
 		}
