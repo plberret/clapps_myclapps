@@ -16,17 +16,20 @@ $auth_url = "https://www.facebook.com/dialog/oauth?client_id=" .APP_ID. "&scope=
 $signed_request = $_REQUEST["signed_request"];
 list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
 $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+// $data = $facebook->getSignedRequest();
 
-if ($_GET['app_data']) {
-	$auth_url .=  urlencode("&app_data=".$_GET['app_data']);
+if ($_GET['id_project']) {
+	$auth_url .=  urlencode("&app_data=".$_GET['id_project']);
 }
 
 if($_GET['n']=='app'){
 	echo("<script> top.location.href='" . $auth_url . "'</script>"); 
 }
 
-if(empty($data["user_id"])){
+// var_dump($data['user_id']);
+if(empty($data["user_id"]) && !$_GET['fix']){ // if no fix, reload the page inside and loose app_data
 	// if(empty($user_fb)) {
+	// echo $auth_url;
 		echo("<script> top.location.href='" . $auth_url . "'</script>"); 
 	// }
 }else{
@@ -35,7 +38,7 @@ if(empty($data["user_id"])){
 		createUser($data);
 	}
 	if($data['app_data']){
-		echo("<script> window.location.href='?id_project=".$data['app_data']."'</script>");
+		echo("<script> window.location.href='?fix=true&id_project=".$data['app_data']."'</script>");
 	}
 }
 
