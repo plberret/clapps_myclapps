@@ -1517,6 +1517,7 @@ zf.init = function(){
 	// hide tuto first time
 	zf.$page.find("#block_button_tuto a").click(function(event) {
 		zf.$page.find("#tuto video").hide();
+		zf.$page.removeClass('display_tuto');
 		zf.$page.find("#tuto").fadeOut(800, function(){
 			zf.$page.find("#tuto").removeClass('intro').addClass('help');
 		});
