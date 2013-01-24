@@ -1113,7 +1113,7 @@ zf.FBFind = function(id_project) {
 
 zf.FBShare = function(id_project) {
 	FB.api('/me/myclapps:share', 'post',
-		{announce: "http://www.facebook.com/Clapps.Network/app_112197008935023?app_data="+id_project},
+		{announce: "http://www.my.clapps.fr?id_project="+id_project},
 		function(response) {
 			console.log(response, 'share');
 		}
@@ -1122,7 +1122,7 @@ zf.FBShare = function(id_project) {
 
 zf.FBApplyTo = function(id_project) {
 	FB.api('/me/myclapps:applied_to', 'post',
-		{announce: "http://www.facebook.com/Clapps.Network/app_112197008935023?app_data="+id_project},
+		{announce: "http://www.my.clapps.fr?id_project="+id_project},
 		function(response) {
 			console.log(response, 'apply');
 		}
