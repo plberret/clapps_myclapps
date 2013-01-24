@@ -402,6 +402,7 @@
 									</ul>
 								</div><!-- fin profile -->
 								<?php if (isAdmin($project,$user_fb)): ?>
+									<div class='message erreur'></div>
 									<div class="manage manage-read clearfix">
 										<p>Validité de l'annonce :
 											<?php if ($valideDate>0): ?>
@@ -427,7 +428,6 @@
 										</div>
 										<input type="submit" value="Valider" />
 										<a href="javascript:void(0);" class="cancelEditProject big_button">Annuler</a>
-										<div class='message erreur'></div>
 									</div>
 								<?php endif ?>
 							</div><!-- fin more -->

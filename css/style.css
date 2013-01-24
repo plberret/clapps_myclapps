@@ -2039,6 +2039,14 @@ section article .more .manage input {
 	background-image: linear-gradient(to bottom, #f4b50b, #b80);
 }
 
+section article .more .message {
+	width: 565px;
+}
+
+section article .more .message.erreur {
+	border-top: 1px solid #b52200;
+	background: no-repeat url(../images/icon_fail.png) 10px center #921b00;
+}
 
 /* /////////////////// SEE MORE ///////////////// */
 
