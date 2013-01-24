@@ -2819,11 +2819,15 @@ section article #block_see_button:hover a {
 #tuto #content_tuto #block_nav_tuto ul a:after {
 	position: absolute;
 	top: 7px;
-	left: 100px;
+	left: 94px;
 	content: "";
 	background: #808080;
 	width: 121px;
 	height: 3px;
+}
+
+#tuto #content_tuto #block_nav_tuto ul a:nth-child(2):after {
+	width: 128px;
 }
 
 #tuto #content_tuto #block_nav_tuto ul a:first-child,
