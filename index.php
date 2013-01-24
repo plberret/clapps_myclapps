@@ -53,7 +53,7 @@
 </head>
 
 <body>
-	<div id="page" style="display:none;">
+	<div id="page" style="display:none;" class="display_tuto">
 		<header>
 			<div id="bar_top" class="clearfix">
 				<div id="logo">

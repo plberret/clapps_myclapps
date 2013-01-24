@@ -252,6 +252,12 @@ body {
 	line-height: 15px;
 }
 
+#page.display_tuto {
+	overflow: hidden;
+	height: 730px;
+}
+
+
 /* //////////// HEADER //////////// */
 
 header {
