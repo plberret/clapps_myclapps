@@ -258,13 +258,15 @@ zf.autocomplete = function($this) {
 	$this.on('keyup', '.field .autocomplete', function(event){
 		var $this=$(this);
 		if (zf.isOkKey(event)) {
-			zf.moveList=false;
+			if (event.keyCode == 13){
+				$(this).blur();
+				return false;
+			}
 			if (zf.oldAutcVal != $this.val().trim()) {
 				zf.oldAutcVal = $this.val().trim();
 				if(!zf.interval){
 					zf.interval=true;
 					setTimeout(function() {
-						console.log(zf.test);
 						zf.interval=false;
 						if (zf.moveList) {
 							return false;
@@ -274,19 +276,16 @@ zf.autocomplete = function($this) {
 						} else if($this.attr('id')=="location"){
 							zf.$filtre.find('#distances').addClass('active')
 						}
-						if (event.keyCode == 13 && !zf.isBlank($this.val())){
-							// $this.blur();
-						} else {
-							if ($this.hasClass('job')) {
-								zf.jsonJobs($this);
-							}
-							else if($this.hasClass('location')){
-								zf.jsonCities($this);
-							}
-						};
+						if ($this.hasClass('job')) {
+							zf.jsonJobs($this);
+						}
+						else if($this.hasClass('location')){
+							zf.jsonCities($this);
+						}
 					},300)
 				}
 			};
+			zf.moveList=false;
 		} else {
 			switch (event.keyCode) {
 				case 38:
@@ -297,7 +296,6 @@ zf.autocomplete = function($this) {
 				case 40:
 					zf.jsonListDown($(this));
 					zf.moveList=true;
-					console.log(zf.test);
 				break;
 			}
 		}
@@ -325,7 +323,7 @@ zf.autocomplete = function($this) {
 		return false;
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
-		if (!zf.autocompletionHover) {
+		if (!zf.autocompletionHover && $this.find('.autocompletion').length > 0) {
 			// if ($(this).parents('#col3').length> 0) { // if filter
 				// console.log('rrr')
 				var $thisField = $(this);
@@ -345,7 +343,7 @@ zf.autocomplete = function($this) {
 			// }
 			
 		};
-
+		$(this).parents('form').trigger('submit');
 		$('.autocompletion').remove();
 		zf.autocompletionHover = false;
 	});
@@ -840,10 +838,6 @@ zf.filter = function(){
 	$filter.find('input').click(function(event) {
 		oldValue = $(this).val();
 		return false;
-	}).focusout(function(event){
-		if (oldValue != $(this).val()) {
-			$filter.trigger('submit');
-		};
 	}).end().find('#date_filter').change(function(){
 		$filter.trigger('submit');
 	})
@@ -930,21 +924,42 @@ zf.filter = function(){
 			url: 'requests/getFilter.php',
 			success: function(resp) {
 				filter = zf.parseStr(resp.filter)
-				// //console.log(resp)
-				$.each(filter, function(key, value) {
-					$filter.find('#'+key).val(value.replace('+',' '))
-				})
-				if (!zf.isBlank($filter.find('#location').val())) {
-					$filter.find('#distances').addClass('active');
-				};
-				$filter.find('#selector_date .'+filter.date_filter).trigger('click');
-				$filter.find('#distances a.'+filter.distance).trigger('click');
-				
-				$this.parents("#tab2").find('.choice').hide().siblings('.message').fadeIn(200, function(){
+				if (filter.date_filter) {
+					$.each(filter, function(key, value) {
+						$filter.find('#'+key).val(value.replace('+',' '))
+					})
+					if (!zf.isBlank($filter.find('#location').val())) {
+						$filter.find('#distances').addClass('active');
+					};
+					$filter.find('#selector_date .'+filter.date_filter).trigger('click');
+	
+					$filter.find('#distances.active a.'+filter.distance).trigger('click');
+					
+					$this.parents("#tab2").find('.choice').hide().siblings('.message').find('.success').fadeIn(200, function(){
+						setTimeout(function(){
+							advancedFilter.find('a.close').trigger('click');
+							setTimeout(function(){
+								$this.parents("#tab2 .choice").show().siblings('.message').find('.success').hide();
+							},500);
+						},1500);
+					})
+				} else {
+					$this.parents("#tab2").find('.choice').hide().siblings('.message').find('.empty').fadeIn(200, function(){
+						setTimeout(function(){
+							advancedFilter.find('a.close').trigger('click');
+							setTimeout(function(){
+								$this.parents("#tab2 .choice").show().siblings('.message').find('.empty').hide();
+							},500);
+						},1500);
+					})
+				}
+			},
+			error: function(){
+				$this.parents("#tab2").find('.choice').hide().siblings('.message').find('.error').fadeIn(200, function(){
 					setTimeout(function(){
 						advancedFilter.find('a.close').trigger('click');
 						setTimeout(function(){
-							$this.parents("#tab2 .choice").show().siblings('.message').hide();
+							$this.parents("#tab2 .choice").show().siblings('.message').find('.error').hide();
 						},500);
 					},1500);
 				})
@@ -960,7 +975,7 @@ zf.filter = function(){
 			type: 'post',
 			data: {filter : ''},
 			success: function(resp) {
-				// //console.log(resp);
+				console.log(resp);
 				$this.parents("#tab3").find('.choice').hide().siblings('.message').fadeIn(200, function(){
 					setTimeout(function(){
 						advancedFilter.find('a.close').trigger('click');
@@ -983,14 +998,14 @@ zf.filter = function(){
 			type: 'post',
 			data: {filter : $this.serialize()},
 			success: function(resp) {
-				$this.find("#tab1").find('.choice').hide().siblings('.message').fadeIn(200, function(){
+				$this.find("#tab1").find('.choice').hide().siblings('.message').find('.success').fadeIn(200, function(){
 					// animation
 					advancedFilter.stop().delay(1500).animate({
 						width: '50',
 					}, 600, 'easeInOutExpo', function() {
 						zf.advancedFilterOpen= false;
 						$filter.find('.help_info').show();
-						$this.find("#tab1 .choice").show().siblings('.message').hide();
+						$this.find("#tab1 .choice").show().siblings('.message').find('.success').hide();
 					});
 				})
 			}
@@ -1145,6 +1160,7 @@ zf.initAddProject = function() {
 
 	zf.$newProject.on('keypress','input',function(event) {
 		if(event.keyCode == 13){
+			$(this).trigger('focusout');
 			return false;
 		}
 	})
@@ -1260,7 +1276,7 @@ zf.initAddProject = function() {
 
 zf.initEditProject = function() {
 		
-	zf.$page.on('keypress','input',function(event) {
+	zf.$page.on('keypress','.project input',function(event) {
 		if(event.keyCode == 13){
 			$(this).trigger('focusout');
 			return false;
@@ -1630,8 +1646,9 @@ zf.init = function(){
 	
 	// filter project
 	zf.$filtre.on('submit', function(event){
-		$thisField = $(this).find('.autocomplete.place')
-		zf.getFilteredProjects($(this),event);
+		var $this=$(this);
+		$thisField = $this.find('.autocomplete.place')
+		zf.getFilteredProjects($this,event);
 		return false;
 	});
 	
@@ -1661,8 +1678,10 @@ zf.init = function(){
 	
 	// update projects list by distance
 	zf.$filtre.find('#distances li a').click(function(event) {
-		zf.updateFilter($(this));
-		zf.seeFiltered('?filter=true&'+$(this).parents('form').serialize());
+		if ($filter.find('#distances').hasClass('active')) {
+			zf.updateFilter($(this));
+			zf.seeFiltered('?filter=true&'+$(this).parents('form').serialize());
+		};
 		return false;
 	})
 	

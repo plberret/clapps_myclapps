@@ -201,6 +201,10 @@ header, footer, section, article, nav {
 
 /* messages */
 
+#filter_advanced div.message p {
+	display: none;
+}
+
 .message {
 	display: none;
 	position: relative;
@@ -764,11 +768,15 @@ header #filter_advanced #tabs .tab .choice a {
 }
 
 header #filter_advanced #tabs .tab .message {
-	display: none;
+	display: block;
 	margin: 12px 0 24px;
 	width: auto;
 	padding: 0;
-	height: 24px;
+	/*height: 24px;*/
+}
+
+header #block_filters #filter_advanced #tabs .tab .message p {
+	height:24px;
 }
 
 header #block_filters #filter_advanced #tabs .tab .message p.alert {
