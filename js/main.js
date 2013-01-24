@@ -1487,7 +1487,6 @@ zf.init = function(){
 		};
 	}, false);
 
-
 	zf.$page.find('#block_nav_tuto .search').on('click',function(event) {
 		zf.$vid[0].currentTime = 0;
 		// $(this).parent().addClass('current')
@@ -1522,6 +1521,7 @@ zf.init = function(){
 			zf.$page.find("#tuto").removeClass('intro').addClass('help');
 		});
 		zf.$projectsList.fadeIn(800);
+		zf.$vid[0].pause();
 		// enable filter
 	});
 	
@@ -1530,6 +1530,7 @@ zf.init = function(){
 		zf.$page.find("#tuto video").hide();
 		zf.$page.find("#tuto").fadeOut(800);
 		zf.$projectsList.fadeIn(800);
+		zf.$vid[0].pause();
 		// enable filter
 	});
 	
@@ -1539,6 +1540,7 @@ zf.init = function(){
 		$tuto.find('#vid').hide();
 		$tuto.fadeIn(200, function(){
 			$tuto.find('#vid').show();
+			zf.$vid[0].play();
 		});
 	});
 	
