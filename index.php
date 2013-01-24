@@ -37,7 +37,7 @@
 <html lang="fr">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# myclapps: http://ogp.me/ns/fb/myclapps#">
 	<meta charset="utf-8">
-	<?php if (isset($_GET['id_project'])): ?>
+	<?php if (isset($_GET['app_data'])): ?>
 		<meta property="fb:app_id" content="112197008935023" />
 		<meta property="og:type" content="myclapps:<?php echo $_GET['type']; ?>" /> 
 		<meta property="og:url" content="http://www.my.clapps.fr?type=<?php echo $_GET['type']; ?>" /> 
@@ -287,7 +287,7 @@
 								</div>
 
 								<div class="share clearfix">
-									<a href="javascript:void(0);" class="share_link">Partager l'annonce</a>
+									<a href="javascript:void(0);" class="share_link" data-id="<?php echo $project['id_project'] ?>">Partager l'annonce</a>
 									<?php if (!isAdmin($project)): ?>
 										<?php if (isFavorite($project,$user_fb)): ?>
 											<a href="javascript:void(0);" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link">Retirer des favoris</a>
