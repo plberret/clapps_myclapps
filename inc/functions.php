@@ -230,7 +230,15 @@
 	}
 
 	function addProject($data){
-		 
+	//	if (empty($data['profile'])) {
+	//		echo json_encode(array('success' => false));
+	//		return false;
+	//	}
+
+		if (empty($data['id_place'])) {
+			echo json_encode(array('success' => false, 'error' => 'place'));
+			return false;
+		}
 		global $baseDD, $user_fb;
 		// print_r($data);
 		$user = getIdFromFb();

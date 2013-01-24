@@ -26,9 +26,9 @@ if($_GET['n']=='app'){
 }
 
 if(empty($data["user_id"])){
-	if(empty($user_fb)) {
+	// if(empty($user_fb)) {
 		echo("<script> top.location.href='" . $auth_url . "'</script>"); 
-	}
+	// }
 }else{
 	if(!getIdFromFb()){
 		$data =$facebook->api('/me');
