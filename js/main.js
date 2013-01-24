@@ -343,7 +343,7 @@ zf.autocomplete = function($this) {
 			// }
 			
 		};
-		if ($(this).parents('#block_filters')) {
+		if ($(this).parents('#block_filters').length>0) {
 			$(this).parents('form').trigger('submit');
 		}
 		$('.autocompletion').remove();
