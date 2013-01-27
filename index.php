@@ -102,6 +102,7 @@
 						<input type="text" autocomplete="off" name="email" placeholder="votreadresse@email.com" />
 						<input type="submit" value="Je reste informé" />
 					</form>
+					<div class="msg success"></div>
 				</div>
 			</div>
 			<form<?php if (!empty($userFilter)): ?> class="less"<?php endif; ?> id="block_filters" action="">
@@ -479,7 +480,7 @@
 						<h2>Trouver un tournage n’aura jamais été aussi simple !</h2>
 						<p>En attendant la sortie du site Mai 2013, <br/>Clapps vous présente son application Facebook</p>
 					</div>
-					<a href="javascript:void(0);">J'accède à l'application</a>
+					<a href="javascript:void(0);" class="close_tuto">J'accède à l'application</a>
 				</div>
 				<div id="block_help_tuto" class="clearfix">
 					<div class="desc">
@@ -496,7 +497,16 @@
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
 							<div class="flowplayer">
-								<video id="vid" width="690" autoplay autobuffer loop src="./assets/tuto_clapps.f4v" ></video>
+								<video id="vid" width="690" autoplay autobuffer loop >
+									<source src="./assets/tuto_clapps.f4v" type="video/mp4">
+									<object type="application/x-shockwave-flash" data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" width="640" height="360">
+											<param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
+											<param name="allowFullScreen" value="true">
+											<param name="wmode" value="transparent">
+											<param name="flashVars" value="config={'playlist':[{'url':'./assets/tuto_clapps.f4v','autoPlay':true}]}">
+											<span title="No video playback capabilities, please download the video below"></span>
+									</object>
+								</video>
 							</div>	
 						</div>
 					</div>

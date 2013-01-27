@@ -565,7 +565,7 @@ header #filter #col3 #distances li a {
 	text-decoration: none;
 	text-align: center;
 	display: block;
-	padding-top: 5px;
+	padding-top: 6px;
 }
 
 header #filter #col3 #distances.active li:hover a,
@@ -598,14 +598,13 @@ header #filter #col3 #distances li a span.number {
 	text-decoration: none;
 	color: #c0c0c0;
 	font-weight: bold;
-	font-style: 12px;
-	padding-top: 5px;
 }
 
 header #filter #col3 #distances li a span.unite{
 	color: #5d5d5d;
-	font-style: 10px;
+	font-size: 10px;
 	display: block;
+	line-height: 10px;
 }
 
 
@@ -973,6 +972,7 @@ header #block_current_filter #current_filter p span.open_filtre {
 }
 
 header #block_current_filter #notif_email {
+	position: relative;
 	float: right;
 	width: 321px;
 	height: 67px;
@@ -1024,6 +1024,34 @@ header #block_current_filter #notif_email input[type=submit] {
 	background-image: -ms-linear-gradient(top, #f4b50b, #b80);
 	background-image: linear-gradient(to bottom, #f4b50b, #b80);
 }
+
+header #block_current_filter #notif_email .msg {
+	display: none;
+	position: absolute;
+	bottom: 13px;
+	left: 0;
+	font-size: 12px;
+	font-weight: bold;
+	color: #e6f0d8;
+	line-height: 15px;
+	padding: 7px 0px 7px 12px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	margin: 0 17px;
+	width: 282px;
+}
+
+header #block_current_filter #notif_email .msg.success {
+	background-color: #65a612;
+	border: solid 1px #76bc1c;
+}
+
+header #block_current_filter #notif_email .msg.error {
+	background-color: #a61c12;
+	border: solid 1px #b72e25;
+}
+
 
 
 /* --------------------------- CONTENT ---------------------------- */
@@ -1207,9 +1235,10 @@ section article .preview {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	-moz-box-shadow: 0 0 6px 0 #121417;
-	-webkit-box-shadow: 0 0 6px 0 #121417;
-	box-shadow: 0 0 6px 0 #121417;
+	-webkit-box-shadow: 0 0 6px #000;
+	-moz-box-shadow: 0 0 6px #000;
+	box-shadow: 0 0 6px #000;
+	border: solid 1px #2c2c2c;
 }
 
 section article .preview .block_top {
@@ -1316,7 +1345,7 @@ section article .preview .block_top .title_block .available .profile span.occurL
 	background: #f3b91e;
 	width: 17px;
 	height: 17px;
-	line-height: 17px;
+	line-height: 19px;
 	text-align: center;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -1474,6 +1503,7 @@ section article.edition form .preview textarea {
 	position: relative;
 	top: -8px;
 	left: -10px;
+	max-height: 300px;
 }
 
 section article.edition form .preview .bloc_see_more input {
@@ -1491,13 +1521,13 @@ section article .more {
 	bottom: 2px;
 	z-index: 1;
 	background: repeat url(../images/pattern-annonce-deplie.png);
-	border: 1px solid #333333;
-	border-bottom-left-radius: 3px;
-	-moz-border-radius-bottomleft: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-	-moz-border-radius-bottomright: 3px;
-	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+	-webkit-box-shadow: 0 0 7px rgba(0,0,0,.95);
+	-moz-box-shadow: 0 0 7px rgba(0,0,0,.95);
+	box-shadow: 0 0 7px rgba(0,0,0,.95);
+	border: solid 1px #393939;
 }
 
 
@@ -1565,6 +1595,12 @@ section article .profiles ul li .desc {
 	width: 455px;
 	padding: 17px 0px 17px 20px;
 	display: table-cell;
+}
+
+section article .profiles ul li .desc p {
+	word-wrap: break-word;
+	overflow: hidden;
+	width: 455px;
 }
 
 section article .profiles ul li p span {
@@ -2144,6 +2180,7 @@ section article #block_see_button:hover a {
 	-webkit-box-shadow: inset 0 0 2px #000;
 	-moz-box-shadow: inset 0 0 2px #000;
 	box-shadow: inset 0 0 2px #000;
+	max-height: 300px;
 }
 
 .fancybox-overlay form#newProject .empty {
