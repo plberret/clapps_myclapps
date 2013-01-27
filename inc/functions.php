@@ -954,26 +954,24 @@
 		$merge_vars = array("COMING"=> "application fb");
 		$retval = $api->listSubscribe( $listId, $user['email'], $merge_vars, $email_type='html', $double_optin=false, $update_existing=false, $replace_interests=true, $send_welcome=true );
 		
-		echo json_encode(array(error => true ));
-/*
 		if($api->errorCode){
 			switch ($api->errorCode) {
 				case 214:
 					// email deja en base 
 					$getUser = $api->listMemberInfo( $listId, $user['email']);
 					if ($api->errorCode){
-						echo json_encode(array(error => "Une erreur est survenue, veuillez réessayer !" ));
+						echo json_encode(array(error => true));
 					}else{
 						echo json_encode(array(result => $getUser['data']));
 					}
 					break;
 				default:
-				//	echo json_encode(array(error => "Une erreur est survenue, veuillez réessayer !" ));
+					echo json_encode(array(error => true));
 			}
 		}else{
 			echo json_encode(array( success => true ));
 		}
-		*/
+		
 	}
 	
 	function getInfoProject($project, $profile){
