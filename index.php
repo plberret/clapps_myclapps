@@ -487,7 +487,7 @@
 				<div id="block_help_tuto" class="clearfix">
 					<div class="desc">
 						<h2>Besoin d'aide ?</h2>
-						<p>Pour toutes questions,<br/> n'hésitez pas à nous contacter via notre adresse <a href="mailto:contact@clapps.fr">contact@clapps.fr</a></p>
+						<p>Pour toutes questions et/ou pour toutes suggestions,<br/> n'hésitez pas à nous contacter via notre adresse <a href="mailto:contact@clapps.fr">contact@clapps.fr</a></p>
 					</div>
 					<a href="javascript:void(0);" class="close_tuto">Fermer l'aide</a>
 				</div>
