@@ -38,6 +38,15 @@ if(empty($data["user_id"]) && !$_GET['fix']){ // if no fix, reload the page insi
 		createUser($data);
 	}
 	if($data['app_data']){
+		switch (substr($data['app_data'],0,1)) {
+			case 'value':
+				# code...
+				break;
+			
+			default:
+				# code...
+				break;
+		}
 		echo("<script> window.location.href='?fix=true&id_project=".$data['app_data']."'</script>");
 	}
 }
