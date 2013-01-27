@@ -390,7 +390,7 @@ header #bar_top #searchButton a {
 }
 
 header #bar_top #searchButton a.open {
-	background: no-repeat url(../images/arrow_close_filtrer.png) 19px 28px;
+	background: no-repeat url(../images/arrow_close_filtrer.png) 18px 27px;
 }
 
 header #bar_top #infoButton a {
