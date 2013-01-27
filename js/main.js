@@ -1226,7 +1226,12 @@ zf.initAddProject = function() {
 							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
 							zf.fixPlaceholder(zf.$page);
 						} else {
-							$('.message.error').fadeIn().find('p span').html('Une erreur est survenue, veuillez réessayer');
+							console.log(resp)
+							var msg = 'Une erreur est survenue, veuillez réessayer'
+							if (resp.error == "place") {
+								$this.find('.location').addClass('empty')
+							};
+							$('.message.error').fadeIn().find('p span').html(msg);
 							$this.find('#add-project').removeAttr('disabled');
 						}
 					}
