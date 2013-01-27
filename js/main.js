@@ -541,6 +541,8 @@ zf.seeMine = function($_this,event) {
 		var $newProject = $('<div/>');
 		$newProject.load(url+' #page',function(resp) {
 			zf.$page.find('#my_project_choice').fadeIn()
+			zf.$page.find('#my_project_choice .favorite_button').removeClass('current')
+			zf.$page.find('#my_project_choice .mine_button').addClass('current')
 			var $this=$(this);
 			// $_this.attr('id','see-mine').html($this.find('#see-mine').html());
 			$this.find('.project').each(function(i) {

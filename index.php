@@ -394,9 +394,11 @@
 											</li>
 										<?php } ?>
 										<li class="add-line hide profile clearfix">
-											<div class="add_job add_field field"><input type="text" autocomplete="off" class="job autocomplete plp" placeholder="Métier recherché" name="name[]" /></div>
+											<div class="add_job add_field field">
+												<input type="text" autocomplete="off" class="job autocomplete plp" placeholder="Métier recherché" name="name[]" />
+												<input type="hidden" class="idjob" name="id_job[]" />
+											</div>
 											<div class="add_desc add_field"><input type="text" autocomplete="off" class="plp" placeholder="Description du poste recherché" name="profile[]"/></div>
-											<input type="hidden" class="idjob" name="id_job[]" />
 											<div class="edit">
 												<div class="line_control">
 													<a href="javascript:void(0);" class="add-post">+</a>
