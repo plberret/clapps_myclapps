@@ -405,18 +405,29 @@ zf.switchNotif = function($this) {
 }
 
 zf.addSubscribe = function($this){
+	
+	// tester si le champ n'est pas vide 
+	
 	$.ajax({
 		url: $this.attr('action'),
 		type: 'post',
 		data: $this.serialize(),
 		success: function(resp) { 
-			if(resp.success==true){
+			if(resp.error==true){
+			//	zf.$page.find('');
+			// Une erreur est survenue. Veuillez reessayer !
+			// Merci, vous avez été inscrit avec succès !
+			// Vous êtes déjà dans notre base de données !
+			// Votre email est incorrect !
+			}else if(resp.success==true){
 				window.open("http://clapps.fr");
 			}else{
 				window.open("http://google.fr");
 			}
 		//	var user=resp.result[0].merges;
 		////console.log(resp);
+		},error: function(resp) { 
+			
 		}
 	});
 }
@@ -482,7 +493,11 @@ zf.seeFiltered = function(url,event,fav){
 };
 
 zf.seeAll = function($_this,event) {
-	zf.currentAnim = event
+	// hide tuto if displaying
+	if (zf.$page.find('#tuto').css('display')!='none'){
+		zf.hideTuto();
+	}
+	zf.currentAnim = event;
 	zf.$projectsList.fadeOut(300,function() {
 	zf.$page.find('#my_project_choice').hide()
 		$(this).children('.project, .btn-more-projects').remove().end().show();
@@ -514,7 +529,11 @@ zf.seeAll = function($_this,event) {
 };
 
 zf.seeMine = function($_this,event) {
-	zf.currentAnim = event
+	// hide tuto if displaying
+	if (zf.$page.find('#tuto').css('display')!='none'){
+		zf.hideTuto();
+	}
+	zf.currentAnim = event;
 	var url = $_this.attr('href');
 	// zf.$projectsList.fadeOut(300,function() {
 	zf.$projectsList.find('.project').fadeOut(300).end().fadeIn(300,function() {
@@ -860,6 +879,11 @@ zf.filter = function(){
 	})
 
 	zf.$page.find('#searchButton, .open_filtre').click(function(event){
+		
+		// hide tuto if displaying
+		if (zf.$page.find('#tuto').css('display')!='none'){
+			zf.hideTuto();
+		}
 		// condition open
 		if(zf.filterOpen==true){
 			$height= "-135";
@@ -1113,13 +1137,14 @@ zf.FBFind = function(id_project) {
 	);*/
 };
 
-zf.FBShare = function(id_project) {
-	FB.api('/me/myclapps:share', 'post',
-		{announce: "http://www.my.clapps.fr?id_project="+id_project},
-		function(response) {
-			console.log(response, 'share');
-		}
-	);
+zf.FBShare = function($this) {
+	FB.ui({
+		method: 'feed',
+		name: '[Annonce] '+ $this.parents(".preview").find('h2 span').text(),
+		link: "http://www.my.clapps.fr?id_project="+$this.attr('data-id'),
+		picture: 'http://backup.clapps.fr/img/logo_clapps.png',
+		description: $this.parents(".preview").find('.desc p').text()
+	});
 };
 
 zf.FBApplyTo = function(id_project) {
@@ -1145,13 +1170,18 @@ zf.initFb = function() {
 	
 	// partager
 	zf.$page.find('.share_link').click(function(event) {
-		zf.FBShare($(this).attr('data-id'));
+		zf.FBShare($(this));
 		return false;
 	})
 	
 };
 
 zf.initAddProject = function() {
+	
+	// hide tuto if displaying
+	if (zf.$page.find('#tuto').css('display')!='none'){
+		zf.hideTuto();
+	}
 
 	zf.$newProject = $('#newProject');
 	zf.fixPlaceholder(zf.$newProject);
@@ -1422,48 +1452,18 @@ zf.initDeleteProject = function() {
 	})
 };
 
-zf.init = function(){
-	// init js
-	$('body').addClass('has-js');
-	
-	// variables
-	zf.$page = $('#page');
-	zf.$filtre = zf.$page.find('#block_filters');
-	zf.$projectsList = zf.$page.find('#projects');
-
-	// show content 
-//	zf.$projectsList.hide();
-	zf.$page.fadeIn();
-
-	zf.$projectsList.find('.project').each(function(i) {
-		var $this=$(this);
-		setTimeout(function() {
-			if (zf.currentAnim == event) {
-				if (i < 1) {
-					$this.css('opacity',1);
-				} else {
-					$this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo');
-				}
-				$this.find(".preview .desc p").dotdotdot();
-			}
-		},i*300);
+zf.hideTuto = function() {
+	zf.$page.find("#tuto video").hide();
+	zf.$page.removeClass('display_tuto');
+	zf.$page.find("#tuto").fadeOut(800, function(){
+		zf.$page.find("#tuto").removeClass('intro').addClass('help');
 	});
-	
-	// init elements
-	zf.filter();
-	zf.initSeeProject();
-	zf.initEditProject();
-	zf.customFields(zf.$page);
-	zf.autocomplete(zf.$page);
-	zf.fixPlaceholder(zf.$page);
-	zf.initFb();
-	
-	// Blank links
-	$('a[rel=external]').click(function(){
-		window.open($(this).attr('href'));
-		return false;
-	});
-	
+	zf.$projectsList.fadeIn(800);
+	zf.$vid[0].pause();
+	// enable filter
+};
+
+zf.initTuto = function() {
 	zf.$vid = zf.$page.find('#vid');
 	zf.$vid[0].addEventListener('loadedmetadata', function() {
   		this.currentTime = 0;
@@ -1522,26 +1522,11 @@ zf.init = function(){
 		// $(this).parent().prevAll().removeClass('next')
 		return false;
 	})
-
-	// hide tuto first time
-	zf.$page.find("#block_button_tuto a").click(function(event) {
-		zf.$page.find("#tuto video").hide();
-		zf.$page.removeClass('display_tuto');
-		zf.$page.find("#tuto").fadeOut(800, function(){
-			zf.$page.find("#tuto").removeClass('intro').addClass('help');
-		});
-		zf.$projectsList.fadeIn(800);
-		zf.$vid[0].pause();
-		// enable filter
-	});
 	
-	// hide tuto other time
-	zf.$page.find("#block_help_tuto a.close_tuto").click(function(event) {
-		zf.$page.find("#tuto video").hide();
-		zf.$page.find("#tuto").fadeOut(800);
-		zf.$projectsList.fadeIn(800);
-		zf.$vid[0].pause();
-		// enable filter
+	// hide tuto
+	zf.$page.find("#content_tuto a.close_tuto").click(function(event) {
+		zf.hideTuto();
+		return false; 
 	});
 	
 	// show tuto
@@ -1552,6 +1537,50 @@ zf.init = function(){
 			$tuto.find('#vid').show();
 			zf.$vid[0].play();
 		});
+		return false; 
+	});
+};
+
+zf.init = function(){
+	// init js
+	$('body').addClass('has-js');
+	
+	// variables
+	zf.$page = $('#page');
+	zf.$filtre = zf.$page.find('#block_filters');
+	zf.$projectsList = zf.$page.find('#projects');
+
+	// show content 
+	zf.$page.fadeIn();
+
+	zf.$projectsList.find('.project').each(function(i) {
+		var $this=$(this);
+		setTimeout(function() {
+			if (zf.currentAnim == event) {
+				if (i < 1) {
+					$this.css('opacity',1);
+				} else {
+					$this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo');
+				}
+				$this.find(".preview .desc p").dotdotdot();
+			}
+		},i*300);
+	});
+	
+	// init elements
+	zf.initTuto();
+	zf.filter();
+	zf.initSeeProject();
+	zf.initEditProject();
+	zf.customFields(zf.$page);
+	zf.autocomplete(zf.$page);
+	zf.fixPlaceholder(zf.$page);
+	zf.initFb();
+	
+	// Blank links
+	$('a[rel=external]').click(function(){
+		window.open($(this).attr('href'));
+		return false;
 	});
 	
 	// close select & autocompletion
