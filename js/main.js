@@ -276,7 +276,9 @@ zf.autocomplete = function($this) {
 						if (zf.isBlank($this.val()) && $this.attr('id')=="location") {
 							zf.$filtre.find('#distances').removeClass('active')
 						} else if($this.attr('id')=="location"){
-							zf.$filtre.find('#distances').addClass('active')
+							if ($this.siblings('#type_place').val()=="villes") {
+								zf.$filtre.find('#distances').addClass('active')
+							}
 						}
 						if ($this.hasClass('job')) {
 							zf.jsonJobs($this);
@@ -348,6 +350,12 @@ zf.autocomplete = function($this) {
 		if ($(this).parents('#block_filters').length>0) {
 			$(this).parents('form').trigger('submit');
 		}
+		if ($this.find('#type_place').val()=="villes") {
+			zf.$filtre.find('#distances').addClass('active')
+		} else {
+			zf.$filtre.find('#distances').removeClass('active')
+		}
+
 		$('.autocompletion').remove();
 		zf.autocompletionHover = false;
 	});
@@ -1266,7 +1274,7 @@ zf.initAddProject = function() {
 					success: function(resp) {
 						if (resp.success) {
 							// zf.getOneProject(resp.id);
-							zf.seeFiltered('',event)
+							zf.seeFiltered('?filter=false',event)
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							zf.FBCreate();
@@ -1303,7 +1311,7 @@ zf.initAddProject = function() {
 
 							$('.no_result').hide();
 							// zf.getOneProject(resp.id);
-							zf.seeFiltered('',event)	
+							zf.seeFiltered('?filter=false',event)	
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							zf.FBCreate();
@@ -1499,26 +1507,26 @@ zf.initTuto = function() {
 		// //console.log(this.currentTime)
 		if (this.currentTime>0) {
 			zf.$page.find('#block_nav_tuto .current').removeClass('current')
-			zf.$page.find('#block_nav_tuto .search').parent().addClass('current')
-			zf.$page.find('#block_nav_tuto .search').parent().nextAll().removeClass('done').addClass('next')
+			zf.$page.find('#block_nav_tuto .search').addClass('current')
+			zf.$page.find('#block_nav_tuto .search').nextAll().removeClass('done').addClass('next')
 		};
 		if (this.currentTime>6) {
 			zf.$page.find('#block_nav_tuto .current').removeClass('current')
-			zf.$page.find('#block_nav_tuto .filters').parent().addClass('current')
-			zf.$page.find('#block_nav_tuto .filters').parent().prevAll().removeClass('next').addClass('done')
-			zf.$page.find('#block_nav_tuto .filters').parent().nextAll().removeClass('done').addClass('next')
+			zf.$page.find('#block_nav_tuto .filters').addClass('current')
+			zf.$page.find('#block_nav_tuto .filters').prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .filters').nextAll().removeClass('done').addClass('next')
 		};
 		if (this.currentTime>13) {
 			zf.$page.find('#block_nav_tuto .current').removeClass('current')
-			zf.$page.find('#block_nav_tuto .fav').parent().addClass('current')
-			zf.$page.find('#block_nav_tuto .fav').parent().prevAll().removeClass('next').addClass('done')
-			zf.$page.find('#block_nav_tuto .fav').parent().nextAll().removeClass('done').addClass('next')
+			zf.$page.find('#block_nav_tuto .fav').addClass('current')
+			zf.$page.find('#block_nav_tuto .fav').prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .fav').nextAll().removeClass('done').addClass('next')
 		};
 		if (this.currentTime>17) {
 			zf.$page.find('#block_nav_tuto .current').removeClass('current')
-			zf.$page.find('#block_nav_tuto .create').parent().addClass('current')
-			zf.$page.find('#block_nav_tuto .create').parent().prevAll().removeClass('next').addClass('done')
-			zf.$page.find('#block_nav_tuto .create').parent().nextAll().removeClass('done').addClass('next')
+			zf.$page.find('#block_nav_tuto .create').addClass('current')
+			zf.$page.find('#block_nav_tuto .create').prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .create').nextAll().removeClass('done').addClass('next')
 		};
 	}, false);
 
