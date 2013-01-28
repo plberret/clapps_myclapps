@@ -1175,12 +1175,12 @@ zf.FBShare = function($this) {
 };
 
 zf.FBApplyTo = function(id_project) {
-	FB.api('/me/myclapps:applied_to', 'post',
+/*	FB.api('/me/myclapps:applied_to', 'post',
 		{announce: "http://www.my.clapps.fr?id_project="+id_project},
 		function(response) {
 			console.log(response, 'apply');
 		}
-	);
+	); */
 };
 
 zf.initFb = function() {

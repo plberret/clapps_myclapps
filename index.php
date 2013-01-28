@@ -59,6 +59,8 @@
 	<!--[if IE]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+	<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+	<script src="http://vjs.zencdn.net/c/video.js"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css">
 	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" title="no title">
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -496,7 +498,10 @@
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
 							<div >
-								<video id="vid" width="684" height="290" autoplay preload loop src="./assets/tuto_clapps.f4v">Vous ne possédez pas un navigateur adapté pour visionner le tutoriel !</video>
+								<video id="vid" width="684" height="290" class="video-js vjs-default-skin"  autoplay preload="auto" loop>
+									<source src="./assets/tuto_clapps.mp4" type='video/mp4'>
+									Vous ne possédez pas un navigateur adapté pour visionner le tutoriel !
+								</video>
 							</div>	
 						</div>
 					</div>
