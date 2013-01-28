@@ -496,9 +496,7 @@
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
 							<div >
-								<video id="vid" width="684" height="290" autoplay preload autobuffer loop src="./assets/tuto_clapps.f4v">
-								
-								</video>
+								<video id="vid" width="684" height="290" autoplay preload loop src="./assets/tuto_clapps.f4v">Vous ne possédez pas un navigateur adapté pour visionner le tutoriel !</video>
 							</div>	
 						</div>
 					</div>
