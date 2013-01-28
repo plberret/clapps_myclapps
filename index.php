@@ -495,10 +495,8 @@
 					<div class="display">
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
-							<div class="flowplayer">
-								<video id="vid" width="690" autoplay autobuffer loop src="./assets/tuto_clapps.f4v">
-									votre navigateur n'est pas compatible
-								</video>
+							<div >
+								<video id="vid" width="684" height="290" autoplay preload loop src="./assets/tuto_clapps.f4v">Vous ne possédez pas un navigateur adapté pour visionner le tutoriel !</video>
 							</div>	
 						</div>
 					</div>
