@@ -1,7 +1,7 @@
 <?php 
 define('HOST',"localhost");
 define('USER',"root");
-define('PASS',"root");
+define('PASS',"");
 define('BASE',appliMyClapps);
 define('POST_PER_PAGE',10);
 define('DAY_UNTIL_REACTIVATE',2);
