@@ -45,10 +45,10 @@
 			<meta property="og:type" content="myclapps:announce" /> 
 		<?php endif ?>
 		<meta property="og:url" content="http://www.my.clapps.fr?id_project=<?php echo $_GET['id_project']; ?>" /> 
-	<!--<meta property="og:title" content="<?php echo $getProjects[0]['title']; ?>" />
-		<meta property="og:description" content="<?php echo $getProjects[0]['description']; ?>" /> -->
-		<meta property="og:title" content="test title" />
-		<meta property="og:description" content="test desc" />
+		<meta property="og:title" content="<?php echo $getProjects[0]['title']; ?>" />
+		<meta property="og:description" content="<?php echo $getProjects[0]['description']; ?>" />
+	<!--	<meta property="og:title" content="test title" />
+		<meta property="og:description" content="test desc" />-->
 		<meta property="og:image" content="http://backup.clapps.fr/img/logo_clapps.png" />
 	<?php else: ?>
 		<meta property="og:title" content="My Clapps" />
