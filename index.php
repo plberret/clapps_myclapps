@@ -84,7 +84,7 @@
 						</li>
 						<li class="myProject">
 							<?php if ($_GET['id_project']): ?>
-								<a href="javascript:void(0);" id="see-all">Voir toutes les annonces</a>
+								<a href="#" id="see-all">Voir toutes les annonces</a>
 							<?php else: ?>
 								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine">
 									<span class="text">Mes annonces</span>
