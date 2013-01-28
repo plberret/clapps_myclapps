@@ -495,8 +495,8 @@
 					<div class="display">
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
-							<div class="flowplayer">
-								<video id="vid" width="684" height="290" autoplay autobuffer loop src="./assets/tuto_clapps.f4v">
+							<div >
+								<video id="vid" width="684" height="290" autoplay preload autobuffer loop src="./assets/tuto_clapps.f4v">
 								
 								</video>
 							</div>	
