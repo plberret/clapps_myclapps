@@ -1266,7 +1266,7 @@ zf.initAddProject = function() {
 					success: function(resp) {
 						if (resp.success) {
 							// zf.getOneProject(resp.id);
-							zf.seeFiltered('',event)
+							zf.seeFiltered('?filter=false',event)
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							zf.FBCreate();
@@ -1303,7 +1303,7 @@ zf.initAddProject = function() {
 
 							$('.no_result').hide();
 							// zf.getOneProject(resp.id);
-							zf.seeFiltered('',event)	
+							zf.seeFiltered('?filter=false',event)	
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
 							zf.FBCreate();

@@ -619,8 +619,7 @@
 		}
 
 		if ($filters['place_villes'] || $filters['location'] && !$filters['place_departements'] && !$filters['place_regions']) { // fix 
-
-			$sql .=" AND pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
+			$sql .=" AND pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
 			$array['place_villes']=($filters['place_villes'])?$filters['place_villes']:0;
 			$array['maxdist']=$filters['distance'].'000';
 		}
@@ -866,7 +865,7 @@
 					$array['place_departements']=($userFilter['place_departements'])?$userFilter['place_departements']:0;
 				}
 				if ($userFilter['place_regions']) {
-					$sql2 .=" AND pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
+					$sql2 .=" AND pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
 					$array['place_regions']=($userFilter['place_regions'])?$userFilter['place_regions']:0;
 				}
 				if ($userFilter['date_filter']) {
