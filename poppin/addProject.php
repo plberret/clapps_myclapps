@@ -60,7 +60,7 @@
 	</div>
 	
 	<div class="clearfix">
-		<input type="submit" id="add-project" value="Publier l'annonce" />
+		<input type="submit" id="add-project" value="Publier l'annonce" onClick="_gaq.push(['_trackEvent', 'Ajouter-Annonce' 'Click', 'publier']);" />
 	</div>
 	<div class="message error">
 		<p><span>Une erreur est survenue, veuillez réessayer</span></p>
