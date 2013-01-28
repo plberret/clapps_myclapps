@@ -2913,3 +2913,20 @@ section article #block_see_button:hover a {
 #tuto #content_tuto #block_nav_tuto ul a.next li {
 	color: #353535;
 }
+
+
+#tuto #content_tuto #block_nav_tuto ul a.search.current {
+	background: no-repeat url('../images/pin6sec.gif') center 0;
+}
+
+#tuto #content_tuto #block_nav_tuto ul a.filters.current {
+	background: no-repeat url('../images/pin7sec.gif') center 0;
+}
+
+#tuto #content_tuto #block_nav_tuto ul a.fav.current {
+	background: no-repeat url('../images/pin4sec.gif') center 0;
+}
+
+#tuto #content_tuto #block_nav_tuto ul a.create.current {
+	background: no-repeat url('../images/pin21sec.gif') center 0;
+}
