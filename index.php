@@ -49,11 +49,7 @@
 		<meta property="og:description" content="<?php echo $getProjects[0]['description']; ?>" />
 		<meta property="og:image" content="http://backup.clapps.fr/img/logo_clapps.png" />
 	<?php else: ?>
-		<meta property="fb:app_id" content="112197008935023" />
-		<meta property="og:url" content="http://www.my.clapps.fr" /> 
-		<meta property="og:title" content="My clapps" />
-		<meta property="og:description" content="L’application communautaire des professionnels du cinéma et de l'audiovisuel..." />
-		<meta property="og:image" content="http://backup.clapps.fr/img/logo_clapps.png" />
+		
 	<?php endif; ?>
 	<title>My clapps</title>
 	<!--[if IE]>
