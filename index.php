@@ -496,15 +496,8 @@
 						<div class="mask">
 							<!-- width="681" height="288" autobuffer loop-->
 							<div class="flowplayer">
-								<video id="vid" width="690" autoplay autobuffer loop >
-									<source src="./assets/tuto_clapps.f4v" type="video/mp4">
-									<object type="application/x-shockwave-flash" data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" width="640" height="360">
-											<param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
-											<param name="allowFullScreen" value="true">
-											<param name="wmode" value="transparent">
-											<param name="flashVars" value="config={'playlist':[{'url':'./assets/tuto_clapps.f4v','autoPlay':true}]}">
-											<span title="No video playback capabilities, please download the video below"></span>
-									</object>
+								<video id="vid" width="690" autoplay autobuffer loop src="./assets/tuto_clapps.f4v">
+									votre navigateur n'est pas compatible
 								</video>
 							</div>	
 						</div>
