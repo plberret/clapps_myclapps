@@ -44,7 +44,7 @@
 		<?php else: ?>
 			<meta property="og:type" content="myclapps:announce" /> 
 		<?php endif ?>
-		<meta property="og:url" content="http://www.my.clapps.fr" /> 
+		<meta property="og:url" content="http://www.my.clapps.fr?id_project=<?php $_GET['id_project']; ?>" /> 
 	<!--<meta property="og:title" content="<?php echo $getProjects[0]['title']; ?>" />
 		<meta property="og:description" content="<?php echo $getProjects[0]['description']; ?>" /> -->
 		<meta property="og:title" content="test title" />
