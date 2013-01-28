@@ -135,6 +135,8 @@ zf.deleteFavorite = function($this) {
 };
 
 zf.editProject = function($this) {
+	_gaq.push(['_trackPageview', '/edition']);
+	
 	$article=$this.parents('article');
 	// $article.find( ".datepicker" ).datepicker({ dateFormat: 'dd MM yy', minDate: 0});
 	zf.$oldArticle = $article.clone(true,true);
@@ -909,6 +911,7 @@ zf.filter = function(){
 			$height= "58";
 			$pdtop = "300px"
 			zf.filterOpen=true;
+			_gaq.push(['_trackPageview', '/filtre']);
 		}
 		$filter.removeClass('hide').stop(true,false).animate({
 			top: $height,
@@ -1194,6 +1197,8 @@ zf.initFb = function() {
 
 zf.initAddProject = function() {
 	
+	_gaq.push(['_trackPageview', '/ajout']);
+	
 	// hide tuto if displaying
 	if (zf.$page.find('#tuto').css('display')!='none'){
 		zf.hideTuto();
@@ -1328,6 +1333,7 @@ zf.initAddProject = function() {
 };
 
 zf.initEditProject = function() {
+	
 		
 	zf.$page.on('keypress','.project input',function(event) {
 		if(event.keyCode == 13){
@@ -1436,6 +1442,9 @@ zf.initEditProject = function() {
 };
 
 zf.initDeleteProject = function() {
+	
+	_gaq.push(['_trackPageview', '/suppression']);
+	
 	var $thisFancy=$(this);
 	// init selector
 	zf.customFields($('#blocDelete'));
@@ -1547,6 +1556,7 @@ zf.initTuto = function() {
 	
 	// show tuto
 	zf.$page.find("#infoButton a").click(function(event) {
+		_gaq.push(['_trackPageview', '/tuto']);
 		$tuto=zf.$page.find("#tuto");
 		$tuto.find('#vid').hide();
 		$tuto.fadeIn(200, function(){
