@@ -276,7 +276,9 @@ zf.autocomplete = function($this) {
 						if (zf.isBlank($this.val()) && $this.attr('id')=="location") {
 							zf.$filtre.find('#distances').removeClass('active')
 						} else if($this.attr('id')=="location"){
-							zf.$filtre.find('#distances').addClass('active')
+							if ($this.siblings('#type_place').val()=="villes") {
+								zf.$filtre.find('#distances').addClass('active')
+							}
 						}
 						if ($this.hasClass('job')) {
 							zf.jsonJobs($this);
@@ -348,6 +350,12 @@ zf.autocomplete = function($this) {
 		if ($(this).parents('#block_filters').length>0) {
 			$(this).parents('form').trigger('submit');
 		}
+		if ($this.find('#type_place').val()=="villes") {
+			zf.$filtre.find('#distances').addClass('active')
+		} else {
+			zf.$filtre.find('#distances').removeClass('active')
+		}
+
 		$('.autocompletion').remove();
 		zf.autocompletionHover = false;
 	});
