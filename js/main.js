@@ -1499,26 +1499,26 @@ zf.initTuto = function() {
 		// //console.log(this.currentTime)
 		if (this.currentTime>0) {
 			zf.$page.find('#block_nav_tuto .current').removeClass('current')
-			zf.$page.find('#block_nav_tuto .search').parent().addClass('current')
-			zf.$page.find('#block_nav_tuto .search').parent().nextAll().removeClass('done').addClass('next')
+			zf.$page.find('#block_nav_tuto .search').addClass('current')
+			zf.$page.find('#block_nav_tuto .search').nextAll().removeClass('done').addClass('next')
 		};
 		if (this.currentTime>6) {
 			zf.$page.find('#block_nav_tuto .current').removeClass('current')
-			zf.$page.find('#block_nav_tuto .filters').parent().addClass('current')
-			zf.$page.find('#block_nav_tuto .filters').parent().prevAll().removeClass('next').addClass('done')
-			zf.$page.find('#block_nav_tuto .filters').parent().nextAll().removeClass('done').addClass('next')
+			zf.$page.find('#block_nav_tuto .filters').addClass('current')
+			zf.$page.find('#block_nav_tuto .filters').prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .filters').nextAll().removeClass('done').addClass('next')
 		};
 		if (this.currentTime>13) {
 			zf.$page.find('#block_nav_tuto .current').removeClass('current')
-			zf.$page.find('#block_nav_tuto .fav').parent().addClass('current')
-			zf.$page.find('#block_nav_tuto .fav').parent().prevAll().removeClass('next').addClass('done')
-			zf.$page.find('#block_nav_tuto .fav').parent().nextAll().removeClass('done').addClass('next')
+			zf.$page.find('#block_nav_tuto .fav').addClass('current')
+			zf.$page.find('#block_nav_tuto .fav').prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .fav').nextAll().removeClass('done').addClass('next')
 		};
 		if (this.currentTime>17) {
 			zf.$page.find('#block_nav_tuto .current').removeClass('current')
-			zf.$page.find('#block_nav_tuto .create').parent().addClass('current')
-			zf.$page.find('#block_nav_tuto .create').parent().prevAll().removeClass('next').addClass('done')
-			zf.$page.find('#block_nav_tuto .create').parent().nextAll().removeClass('done').addClass('next')
+			zf.$page.find('#block_nav_tuto .create').addClass('current')
+			zf.$page.find('#block_nav_tuto .create').prevAll().removeClass('next').addClass('done')
+			zf.$page.find('#block_nav_tuto .create').nextAll().removeClass('done').addClass('next')
 		};
 	}, false);
 
