@@ -499,7 +499,9 @@
 							<!-- width="681" height="288" autobuffer loop-->
 							<div >
 								<video id="vid" width="684" height="290" class="video-js vjs-default-skin"  autoplay preload="auto" loop>
-									<source src="./assets/tuto_clapps.mp4" type='video/mp4'>
+									<source src="./assets/tuto_clapps.mp4" type="video/mp4">
+									<source src="./assets/tuto_clapps.ogv" type="video/ogg">
+									<source src="./assets/tuto_clapps.webm" type="video/webm">
 									Vous ne possédez pas un navigateur adapté pour visionner le tutoriel !
 								</video>
 							</div>	
