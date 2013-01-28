@@ -829,8 +829,8 @@
 		global $baseDD;
 		$user = getIdFromFb();
 
-		// $sql = 'SELECT filter, user_fb FROM mc_users WHERE id_user != :curr_id_user AND notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
-		$sql = 'SELECT filter, user_fb FROM mc_users WHERE notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
+		$sql = 'SELECT filter, user_fb FROM mc_users WHERE id_user != :curr_id_user AND notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
+		// $sql = 'SELECT filter, user_fb FROM mc_users WHERE notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
 		$users = array();
 		$R1=$baseDD->prepare($sql);
 		$R1->bindParam(':curr_id_user',$user['id_user']);
