@@ -72,21 +72,21 @@
 					<h1>My clapps</h1>
 				</div>
 				<div id="searchButton" class="bar_top_button">
-					<a href="javascript:void(0)" onClick="_gaq.push(['_trackEvent', 'home' 'Click', 'filtres-accès']);">Recherche</a>
+					<a href="javascript:void(0)" onClick="_gaq.push(['_trackEvent', 'home', 'Click', 'filtres-accès']);">Recherche</a>
 				</div>
 				<div id="infoButton" class="bar_top_button">
-					<a href="javascript:void(0)" onClick="_gaq.push(['_trackEvent', 'home' 'Click', 'Tuto']);">Tutoriel</a>
+					<a href="javascript:void(0)" onClick="_gaq.push(['_trackEvent', 'home', 'Click', 'Tuto']);">Tutoriel</a>
 				</div>
 				<nav>
 					<ul class="clearfix">
 						<li class="addProject">
-							<a class="fancybox.ajax" href="poppin/addProject.php" onClick="_gaq.push(['_trackEvent', 'home' 'Click', 'Ajouter une annonce']);" >Ajouter une annonce</a>
+							<a class="fancybox.ajax" href="poppin/addProject.php" onClick="_gaq.push(['_trackEvent', 'home', 'Click', 'Ajouter une annonce']);" >Ajouter une annonce</a>
 						</li>
 						<li class="myProject">
 							<?php if ($_GET['id_project']): ?>
 								<a href="#" id="see-all">Voir toutes les annonces</a>
 							<?php else: ?>
-								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine" onClick="_gaq.push(['_trackEvent', 'home' 'Click', 'Mes annonces']);">
+								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine" onClick="_gaq.push(['_trackEvent', 'home', 'Click', 'Mes annonces']);">
 									<span class="text">Mes annonces</span>
 									<span class="number"><?php echo getNbProjetUser() ?></span>
 								</a>
@@ -115,7 +115,7 @@
 						<h2>Filtrer la recherche</h2>
 						<p>Utiliser les différents filtres ci-contre
 						pour affiner votre recherche.</p>
-						<a href="?filter=false" id="refresh_button" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'reinitialiser']);">Réinitialiser la recherche</a>
+						<a href="?filter=false" id="refresh_button" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'reinitialiser']);">Réinitialiser la recherche</a>
 					</div>
 					<div id="col2" class="col">
 						<div class="field">
@@ -149,23 +149,23 @@
 							<input type="hidden" name="type_place" class="type_place" id="type_place" />
 						</div>
 						<ul id="distances" class="clearfix">
-							<li><a href="javascript:void(0);" class="50" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'distance-50']);" >
+							<li><a href="javascript:void(0);" class="50" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-50']);" >
 								<span class="number">50 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="javascript:void(0);" class="100 current" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'distance-100']);" >
+							<li><a href="javascript:void(0);" class="100 current" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-100']);" >
 								<span class="number">100 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="javascript:void(0);" class="200" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'distance-200']);" >
+							<li><a href="javascript:void(0);" class="200" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-200']);" >
 								<span class="number">200 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="javascript:void(0);" class="500" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'distance-500']);" >
+							<li><a href="javascript:void(0);" class="500" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-500']);" >
 								<span class="number">500 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="javascript:void(0);" class="1000" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'distance-1000']);" >
+							<li><a href="javascript:void(0);" class="1000" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-1000']);" >
 								<span class="number">1000 </span>
 								<span class="unite">KM</span>
 							</a></li>
@@ -176,13 +176,13 @@
 					<div id="filter_advanced" class="clearfix">
 						<ul class="nav">
 							<li class="save">
-								<a href="#tab1" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'sauvegarder']);"><span>Sauvegarder les filtres</span></a>
+								<a href="#tab1" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'sauvegarder']);"><span>Sauvegarder les filtres</span></a>
 							</li>
 							<li class="load">
-								<a href="#tab2" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'charger']);"><span>Charger mes filtres</span></a>
+								<a href="#tab2" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'charger']);"><span>Charger mes filtres</span></a>
 							</li>
 							<li class="delete">
-								<a href="#tab3" onClick="_gaq.push(['_trackEvent', 'Filtre' 'Click', 'supprimer']);"><span>Supprimer mes filtres</span></a>
+								<a href="#tab3" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'supprimer']);"><span>Supprimer mes filtres</span></a>
 							</li>
 						</ul>
 						<div id="tabs">
@@ -190,8 +190,8 @@
 								<p><strong>Êtes-vous sûr de vouloir sauvegarder cette recherche ?</strong></p>
 								<p>Si une sauvegarde antérieur existe, elle sera écrasée.</p>
 								<div class="choice clearfix">
-									<input type="submit" value="Oui" class="valid_button" onClick="_gaq.push(['_trackEvent', Filtre-sauvegarder 'Click', 'oui']);"/>
-									<a href="javascript:void(0);" class="close" onClick="_gaq.push(['_trackEvent', Filtre-sauvegarder 'Click', 'annuler']);">Annuler</a>
+									<input type="submit" value="Oui" class="valid_button" onClick="_gaq.push(['_trackEvent', 'Filtre-sauvegarder', 'Click', 'oui']);"/>
+									<a href="javascript:void(0);" class="close" onClick="_gaq.push(['_trackEvent', 'Filtre-sauvegarder', 'Click', 'annuler']);">Annuler</a>
 								</div>
 								<div class="message">
 									<p class="alert success">Votre filtre a bien été sauvegardé !</p>
@@ -209,8 +209,8 @@
 							<div id="tab2" class="tab">
 								<p><strong>Êtes-vous sûr de vouloir charger votre filtre ?</strong></p>
 								<div class="choice clearfix">
-									<a href="javascript:void(0);" class="valid_button load" onClick="_gaq.push(['_trackEvent', Filtre-charger 'Click', 'oui']);">Oui</a>
-									<a href="javascript:void(0);" class="close" onClick="_gaq.push(['_trackEvent', Filtre-charger 'Click', 'annuler']);">Annuler</a>
+									<a href="javascript:void(0);" class="valid_button load" onClick="_gaq.push(['_trackEvent', 'Filtre-charger', 'Click', 'oui']);">Oui</a>
+									<a href="javascript:void(0);" class="close" onClick="_gaq.push(['_trackEvent', 'Filtre-charger', 'Click', 'annuler']);">Annuler</a>
 								</div>
 								<div class="message">
 									<p class="alert success">Votre filtre a bien été chargé !</p>
@@ -221,8 +221,8 @@
 							<div id="tab3" class="tab">
 								<p><strong>Êtes-vous sûr de vouloir supprimer votre filtre ?</strong></p>
 								<div class="choice clearfix">
-									<a href="#" class="valid_button delete" onClick="_gaq.push(['_trackEvent', Filtre-supprimer 'Click', 'oui']);">Oui</a>
-									<a href="#" class="close" onClick="_gaq.push(['_trackEvent', Filtre-supprimer 'Click', 'annuler']);">Annuler</a>
+									<a href="#" class="valid_button delete" onClick="_gaq.push(['_trackEvent', 'Filtre-supprimer', 'Click', 'oui']);">Oui</a>
+									<a href="#" class="close" onClick="_gaq.push(['_trackEvent', 'Filtre-supprimer', 'Click', 'annuler']);">Annuler</a>
 								</div>
 								<div class="message">
 									<p class="alert success">Votre filtre a bien été supprimé !</p>
@@ -292,12 +292,12 @@
 								</div>
 
 								<div class="share clearfix">
-									<a href="javascript:void(0);" class="share_link" data-id="<?php echo $project['id_project'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project'] ?>' 'Click', 'partage']);">Partager l'annonce</a>
+									<a href="javascript:void(0);" class="share_link" data-id="<?php echo $project['id_project'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project'] ?>', 'Click', 'partage']);">Partager l'annonce</a>
 									<?php if (!isAdmin($project)): ?>
 										<?php if (isFavorite($project,$user_fb)): ?>
-											<a href="javascript:void(0);" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>' 'Click', 'supprimer-favoris']);">Retirer des favoris</a>
+											<a href="javascript:void(0);" data-id="<?php echo $project['id_project'] ?>" class="unfavorite_link" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'supprimer-favoris']);">Retirer des favoris</a>
 										<?php else: ?>
-											<a href="javascript:void(0);" data-id="<?php echo $project['id_project'] ?>" class="favorite_link" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>' 'Click', 'ajouter-favoris']);">Ajouter aux favoris</a>
+											<a href="javascript:void(0);" data-id="<?php echo $project['id_project'] ?>" class="favorite_link" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'ajouter-favoris']);">Ajouter aux favoris</a>
 										<?php endif ?>
 									<?php endif ?>
 								</div>
@@ -343,9 +343,9 @@
 													<div class="desc"><p><span><?php echo $profile['name']; ?> : </span><?php echo $profile['person']; ?></p></div>
 													<div class="apply">
 														<?php if (!isAdmin($project,$user_fb)): ?>
-															<a href="javascript:void(0);" class="apply_button" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>' 'Click', 'postuler']);">Postuler</a>
+															<a href="javascript:void(0);" class="apply_button" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'postuler']);">Postuler</a>
 														<?php else: ?>
-															<a href="javascript:void(0);" class="profile_found" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>' 'Click', 'jai-trouve']);">J'ai trouvé</a>
+															<a href="javascript:void(0);" class="profile_found" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'jai-trouve']);">J'ai trouvé</a>
 														<?php endif; ?>
 													</div>
 												</div>
@@ -357,7 +357,7 @@
 													<div class="add_desc add_field"><input type="text" autocomplete="off" class="plp required" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
 													<div class="edit">
 														<div class="deleteButton">
-															<a href="javascript:void(0);" class="button_delete_profile" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?> 'Click', 'suppression-poste']);">Supprimer</a>
+															<a href="javascript:void(0);" class="button_delete_profile" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?>', 'Click', 'suppression-poste']);">Supprimer</a>
 															<div class="confirm">
 																<p>êtes-vous sûr de vouloir supprimer ?</p>
 																<div>
@@ -421,11 +421,11 @@
 										</p>
 										<?php if ($valideDate<0): ?><a href="javascript:void(0);" class="extendProject big_button" data-id="<?php echo $project['id_project'] ?>">Réactiver l'annonce</a><?php endif; ?>
 										<?php if (($valideDate>0)&&($valideDate<=DAY_UNTIL_REACTIVATE)): ?><a href="javascript:void(0);" class="extendProject big_button">Prolonger l'annonce</a><?php endif; ?>
-										<a href="javascript:void(0);" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>' 'Click', 'éditer']);"><span>Editer</span> l'annonce</a>
+										<a href="javascript:void(0);" class='editProject big_button' data-id="<?php echo $project['id_project'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'éditer']);"><span>Editer</span> l'annonce</a>
 									</div>
 									<div class="manage manage-edition hide clearfix">
 										<div class="block_delete_project">
-											<a href="javascript:void(0)" class="button_delete_project big_button" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?> 'Click', 'supprimer']);">Supprimer l'annonce</a>
+											<a href="javascript:void(0)" class="button_delete_project big_button" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?>', 'Click', 'supprimer']);">Supprimer l'annonce</a>
 											<div class="confirm">
 												<p>êtes-vous sûr de vouloir supprimer ?</p>
 												<div>
@@ -434,13 +434,13 @@
 												</div>
 											</div>
 										</div>
-										<input type="submit" value="Valider" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?> 'Click', 'valider']);" />
-										<a href="javascript:void(0);" class="cancelEditProject big_button" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?> 'Click', 'annuler']);">Annuler</a>
+										<input type="submit" value="Valider" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?>', 'Click', 'valider']);" />
+										<a href="javascript:void(0);" class="cancelEditProject big_button" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?>', 'Click', 'annuler']);">Annuler</a>
 									</div>
 								<?php endif ?>
 							</div><!-- fin more -->
 							<div id="block_see_button">
-								<a href="javascript:void(0);" class="see-more see-button" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>' 'Click', 'voir-plus-moins']);"><span>Voir</span> plus</a>
+								<a href="javascript:void(0);" class="see-more see-button" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'voir-plus-moins']);"><span>Voir</span> plus</a>
 							</div>
 						</form>
 					</article>
@@ -462,7 +462,7 @@
 			<?php endif; ?>
 			<?php if (ceil($nbProject/POST_PER_PAGE)>$page && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>" onClick="_gaq.push(['_trackEvent', 'home' 'Click', 'voir plus']);">Voir plus ...</a>
+					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>" onClick="_gaq.push(['_trackEvent', 'home', 'Click', 'voir plus']);">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
 			
