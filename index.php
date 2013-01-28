@@ -520,19 +520,19 @@
 				</div>
 				<div id="block_nav_tuto">
 					<ul class="clearfix">
-						<a class="done current search" href="javascript:void(0);"><li  class="search">
+						<a class="done current search" href="javascript:void(0);"><li>
 							<span></span>
 							<em>Rechercher/Filtrer</em>
 						</li></a>
-						<a class="done next filters" href="javascript:void(0);"><li class="filters">
+						<a class="done next filters" href="javascript:void(0);"><li>
 							<span></span>
 							<em>Gestion des filtres</em>
 						</li></a>
-						<a class="done next fav" href="javascript:void(0);"><li class="fav">
+						<a class="done next fav" href="javascript:void(0);"><li>
 							<span></span>
 							<em>Mise en favoris <br/>Partager une annonce</em>
 						</li></a>
-						<a class="done next create" href="javascript:void(0);"><li class="create" >
+						<a class="done next create" href="javascript:void(0);"><li>
 							<span></span>
 							<em>Création d'une annonce <br/> Édition d'une annonce</em>
 						</li></a>
@@ -559,6 +559,9 @@
 	<script src="js/libs/jquery.placeholder.js" type="text/javascript"></script>
 	<script src="./js/main.js"></script>
 	<script class="maxPages" type="text/javascript"> zf.maxPages = <?php echo getMaxPages($_GET['user_fb']) ?></script>
+	<script type="text/javascript" charset="utf-8">
+		var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-36398282-2']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+	</script>
 	
 	<?php
 		echo '<script>
