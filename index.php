@@ -51,7 +51,10 @@
 		<meta property="og:description" content="test desc" />
 		<meta property="og:image" content="http://backup.clapps.fr/img/logo_clapps.png" />
 	<?php else: ?>
-		
+		<meta property="og:title" content="My Clapps" />
+		<meta property="og:description" content="L'application des professionnels du cinema" />
+		<meta property="og:url" content="http://www.my.clapps.fr" /> 
+		<meta property="og:image" content="http://backup.clapps.fr/img/logo_clapps.png" />
 	<?php endif; ?>
 	<title>My clapps</title>
 	<!--[if IE]>
