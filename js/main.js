@@ -1590,14 +1590,14 @@ zf.init = function(){
 	zf.$projectsList.find('.project').each(function(i) {
 		var $this=$(this);
 		setTimeout(function() {
-			if (zf.currentAnim == event) {
+		//	if (zf.currentAnim == event) {
 				if (i < 1) {
 					$this.css('opacity',1);
 				} else {
 					$this.css({position:'relative',opacity:0,left:'25px'}).animate({left:'0',opacity:1},500,'easeOutExpo');
 				}
 				$this.find(".preview .desc p").dotdotdot();
-			}
+		//	}
 		},i*300);
 	});
 	
