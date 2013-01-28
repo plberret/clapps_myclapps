@@ -670,7 +670,7 @@ zf.getFilteredProjects = function($this,event){
 			// //console.log($this.serialize());
 	// 	}
 	// });
-	zf.seeFiltered('index.php?filter=true&'+$this.serialize(),event,true)
+	zf.seeFiltered('index.php?filter=true&'+$this.serialize(),event)
 
 	// actualise current_filter block
 	$currentFilter = zf.$page.find('#block_current_filter');
@@ -1759,7 +1759,7 @@ zf.init = function(){
 	})
 	
 	// see mine projects
-	zf.$page.on('click','#see-mine',function(event) { // a protéger avec un .queue() (spamclick)
+	zf.$page.on('click','#see-mine',function(event) { 
 		var $this=$(this);
 		$this.attr('id','see-all').html('Voir toutes les annonces');
 		zf.seeMine($this,event);

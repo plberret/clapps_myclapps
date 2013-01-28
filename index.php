@@ -84,7 +84,7 @@
 						</li>
 						<li class="myProject">
 							<?php if ($_GET['id_project']): ?>
-								<a href="#" id="see-all">Voir toutes les annonces</a>
+								<a href="?user_fb=false" id="see-all">Voir toutes les annonces</a>
 							<?php else: ?>
 								<a href="?user_fb=<?php echo $user_fb ?>" id="see-mine" onClick="_gaq.push(['_trackEvent', 'home', 'Click', 'Mes annonces']);">
 									<span class="text">Mes annonces</span>
