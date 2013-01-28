@@ -120,7 +120,7 @@
 					<div id="col2" class="col">
 						<div class="field">
 							<label for="profile">Métier</label>
-							<input type="text" autocomplete="off" name="profile" id="profile" class="job autocomplete" placeholder="Entrez le métier recherché ..." onBlur="if (document.filtres.metier.value != '') pageTracker._trackPageview('/formfiltre/metier')" />
+							<input type="text" autocomplete="off" name="profile" id="profile" class="job autocomplete" placeholder="Entrez le métier recherché ..." onBlur="if (this.value != '') _gaq.push(['_trackEvent', 'Filtre', 'Blur', 'metier']);" />
 						</div>
 						<div class="field select">
 							<label for="selector_date">Date</label>
@@ -136,14 +136,14 @@
 									<li class="month">Ce mois-ci</li>
 									<li class="trimestre">Ce trimestre</li>
 								</ul>
-								<input type="hidden" name="date_filter" id="date_filter" value="all" onBlur="if (document.filtres.date.value != '') pageTracker._trackPageview('/formfiltre/date')">
+								<input type="hidden" name="date_filter" id="date_filter" value="all" onBlur="if (this.value != '') _gaq.push(['_trackEvent', 'Filtre', 'Blur', 'date']);">
 							</div>
 						</div>
 					</div>
 					<div id="col3" class="col">
 						<div class="field">
 							<label for="location">Lieux</label>
-							<input type="text" autocomplete="off" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" onBlur="if (document.filtres.lieu.value != '') pageTracker._trackPageview('/formfiltre/lieu')" />
+							<input type="text" autocomplete="off" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" onBlur="if (this.value != '') _gaq.push(['_trackEvent', 'Filtre', 'Blur', 'lieu']);" />
 							<input type="hidden" name="distance" value="100" id="distance" />
 							<input type="hidden" name="id_place" class="id_place" id="id_place"/>
 							<input type="hidden" name="type_place" class="type_place" id="type_place" />
