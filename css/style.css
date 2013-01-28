@@ -390,7 +390,7 @@ header #bar_top #searchButton a {
 }
 
 header #bar_top #searchButton a.open {
-	background: no-repeat url(../images/arrow_close_filtrer.png) 19px 28px;
+	background: no-repeat url(../images/arrow_close_filtrer.png) 18px 27px;
 }
 
 header #bar_top #infoButton a {
@@ -528,7 +528,7 @@ header #filter #col2 {
 /* col 3 */
 
 header #filter #col3 {
-	width: 301px;
+	width: 299px;
 	padding: 5px 0 5px 16px ;
 	border-left: 1px solid #151515;
 }
@@ -1350,6 +1350,8 @@ section article .preview .block_top .title_block .available .profile span.occurL
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+	font-size: 11px;
+	font-weight: bold;
 }
 
 section article .preview .block_top .title_block .available .profile p {
@@ -2587,7 +2589,7 @@ section article #block_see_button:hover a {
 #tuto {
 	width: 810px;
 	height: 100%;
-	position: absolute;
+	position: fixed;
 	z-index: 100;
 	background: repeat url('../images/bg_tuto.png') #191919;
 }

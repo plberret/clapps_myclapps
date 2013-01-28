@@ -406,31 +406,47 @@ zf.switchNotif = function($this) {
 
 zf.addSubscribe = function($this){
 	
-	// tester si le champ n'est pas vide 
+	var email = zf.$page.find('#block_current_filter #addSubscribe input[type=text]').val();
+	$bouton = zf.$page.find('#block_current_filter submit');
+	$message = zf.$page.find('#block_current_filter .msg');
 	
+	$message.removeClass('success').removeClass('error');
+	$bouton.attr('disabled', 'disabled');
+	
+	// check email available
+	if((email=="")||(!zf.isValidEmail(email))){
+		$message.html("Votre email n'est pas valide !").addClass('error').fadeIn().delay(3000).fadeOut();
+		return false; 
+	}
+
 	$.ajax({
 		url: $this.attr('action'),
 		type: 'post',
 		data: $this.serialize(),
 		success: function(resp) { 
 			if(resp.error==true){
-			//	zf.$page.find('');
-			// Une erreur est survenue. Veuillez reessayer !
-			// Merci, vous avez été inscrit avec succès !
-			// Vous êtes déjà dans notre base de données !
-			// Votre email est incorrect !
+				$message.html("Une erreur est survenue. Veuillez reessayer !").addClass('error').fadeIn().delay(3000).fadeOut();
 			}else if(resp.success==true){
-				window.open("http://clapps.fr");
+				// ajout d'une personne 
+				$message.html("Merci, vous avez été inscrit avec succès !").addClass('success').fadeIn().delay(3000).fadeOut();
+				window.open("http://clapps.fr?m=92038&e="+email);
 			}else{
-				window.open("http://google.fr");
+				// mise à jour d'une personne 
+				$message.html("Vous êtes déjà dans notre base de données !").addClass('success').fadeIn().delay(3000).fadeOut();
+				var user= resp.result;
+				window.open("http://clapps.fr?m=92039&e="+user[0].merges['EMAIL']+"&f="+user[0].merges['FIRSTNAME']+"&l="+user[0].merges['LASTNAME']+"&j="+user[0].merges['JOB']);
 			}
-		//	var user=resp.result[0].merges;
-		////console.log(resp);
 		},error: function(resp) { 
-			
+			$message.html("Une erreur est survenue. Veuillez reessayer !").addClass('error').fadeIn().delay(3000).fadeOut();
 		}
 	});
+	$bouton.removeAttr("disabled");
 }
+
+zf.isValidEmail = function(emailAddress) {
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    return pattern.test(emailAddress);
+};
 
 zf.seeMore = function($this) {
 	var $txta = $this.parents('form').find('textarea');
