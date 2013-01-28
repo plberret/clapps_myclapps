@@ -520,19 +520,19 @@
 				</div>
 				<div id="block_nav_tuto">
 					<ul class="clearfix">
-						<a class="done current" href="javascript:void(0);"><li  class="search">
+						<a class="done current search" href="javascript:void(0);"><li  class="search">
 							<span></span>
 							<em>Rechercher/Filtrer</em>
 						</li></a>
-						<a class="done next" href="javascript:void(0);"><li class="filters">
+						<a class="done next filters" href="javascript:void(0);"><li class="filters">
 							<span></span>
 							<em>Gestion des filtres</em>
 						</li></a>
-						<a class="done next" href="javascript:void(0);"><li class="fav">
+						<a class="done next fav" href="javascript:void(0);"><li class="fav">
 							<span></span>
 							<em>Mise en favoris <br/>Partager une annonce</em>
 						</li></a>
-						<a class="done next" href="javascript:void(0);"><li class="create" >
+						<a class="done next create" href="javascript:void(0);"><li class="create" >
 							<span></span>
 							<em>Création d'une annonce <br/> Édition d'une annonce</em>
 						</li></a>
