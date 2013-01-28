@@ -1522,26 +1522,26 @@ zf.initTuto = function() {
 		};
 	}, false);
 
-	zf.$page.find('#block_nav_tuto .search').on('click',function(event) {
+	zf.$page.find('#block_nav_tuto a.search').on('click',function(event) {
 		zf.$vid[0].currentTime = 0;
 		// $(this).parent().addClass('current')
 		// $(this).parent().nextAll().removeClass('done')
 		return false;
 	})
-	zf.$page.find('#block_nav_tuto .filters').on('click',function(event) {
+	zf.$page.find('#block_nav_tuto a.filters').on('click',function(event) {
 		zf.$vid[0].currentTime = 6;
 		// $(this).parent().addClass('current')
 		// $(this).parent().prevAll().removeClass('next')
 		// //console.log($(this).parent().prevAll())
 		return false;
 	})
-	zf.$page.find('#block_nav_tuto .fav').on('click',function(event) {
+	zf.$page.find('#block_nav_tuto a.fav').on('click',function(event) {
 		zf.$vid[0].currentTime = 13;
 		// $(this).parent().addClass('current')
 		// $(this).parent().prevAll().removeClass('next')
 		return false;
 	})
-	zf.$page.find('#block_nav_tuto .create').on('click',function(event) {
+	zf.$page.find('#block_nav_tuto a.create').on('click',function(event) {
 		zf.$vid[0].currentTime = 17;
 		// $(this).parent().addClass('current')
 		// $(this).parent().prevAll().removeClass('next')

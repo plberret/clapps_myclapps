@@ -830,8 +830,8 @@
 		global $baseDD;
 		$user = getIdFromFb();
 
-		$sql = 'SELECT filter, user_fb FROM mc_users WHERE id_user != :curr_id_user AND notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
-		// $sql = 'SELECT user_fb FROM mc_users WHERE id_user != :curr_id_user AND filter';
+		// $sql = 'SELECT filter, user_fb FROM mc_users WHERE id_user != :curr_id_user AND notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
+		$sql = 'SELECT filter, user_fb FROM mc_users WHERE notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
 		$users = array();
 		$R1=$baseDD->prepare($sql);
 		$R1->bindParam(':curr_id_user',$user['id_user']);
@@ -1039,16 +1039,16 @@
 					));
 					if (!$fb_response['success']) {
 						// Notification failed to send
-						echo '<p><strong>Failed to send notification</strong></p>'."\n";
-						echo '<p><pre>' . print_r($fb_response, true) . '</pre></p>'."\n";
+						// echo '<p><strong>Failed to send notification</strong></p>'."\n";
+						// echo '<p><pre>' . print_r($fb_response, true) . '</pre></p>'."\n";
 					} else {
 						// Success!
-						echo '<p>Your notification was sent successfully</p>'."\n";
+						// echo '<p>Your notification was sent successfully</p>'."\n";
 					}
 			
 				} catch (FacebookApiException $e) {
 					// Notification failed to send
-					echo '<p><pre>' . print_r($e, true) . '</pre></p>';
+					// echo '<p><pre>' . print_r($e, true) . '</pre></p>';
 					// $fb_user = NULL;
 				}
 			} else {
