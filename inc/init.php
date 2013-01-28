@@ -18,8 +18,8 @@ list($encoded_sig, $payload) = explode('.', $signed_request, 2);
 $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
 // $data = $facebook->getSignedRequest();
 
-if ($_GET['id_project']) {
-	$auth_url .=  urlencode("&app_data=".$_GET['id_project']);
+if ($_GET['id_project'] || $_GET['app_data']) {
+	$auth_url .=  urlencode("&app_data=".$_GET['id_project'].$_GET['app_data']); // si fb ne change rien il ne peut pas y avoir a la fois data["app_data"] et get['app_data'] donc c'est safe.
 }
 
 if($_GET['n']=='app'){
@@ -38,15 +38,6 @@ if(empty($data["user_id"]) && !$_GET['fix']){ // if no fix, reload the page insi
 		createUser($data);
 	}
 	if($data['app_data']){
-		switch (substr($data['app_data'],0,1)) {
-			case 'value':
-				# code...
-				break;
-			
-			default:
-				# code...
-				break;
-		}
 		echo("<script> window.location.href='?fix=true&id_project=".$data['app_data']."'</script>");
 	}
 }
