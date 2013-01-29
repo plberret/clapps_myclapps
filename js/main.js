@@ -1276,7 +1276,7 @@ zf.initAddProject = function() {
 							zf.seeFiltered('?filter=false',event)
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
-							zf.FBCreate();
+							zf.FBCreate(resp.id);
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
@@ -1284,7 +1284,6 @@ zf.initAddProject = function() {
 							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
 							zf.fixPlaceholder(zf.$page);
 						} else {
-							console.log(resp)
 							var msg = 'Une erreur est survenue, veuillez réessayer'
 							if (resp.error == "place") {
 								$this.find('.location').addClass('empty')
