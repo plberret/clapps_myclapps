@@ -1195,10 +1195,11 @@ zf.initFb = function() {
 	});
 	
 	// partager
-	zf.$page.find('.share_link').click(function(event) {
+	//zf.$page.find('.share_link').click(function(event) {
+	zf.$page.on('click','share_link',function(event){
 		zf.FBShare($(this));
 		return false;
-	})
+	});
 	
 };
 
