@@ -1185,7 +1185,8 @@ zf.FBApplyTo = function(id_project) {
 zf.initFb = function() {
 	
 	// Postuler pour une annonce
-	zf.$page.find('.apply_button').click(function(event) {
+	//zf.$page.find('.apply_button').click(function(event) {
+	zf.$page.on('click','.apply_button',function(event){
 		$this=$(this);
 		var id_project= $this.attr('data-id');
 		var id_profile= $this.attr('data-idprofile');
