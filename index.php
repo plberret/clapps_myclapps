@@ -39,7 +39,7 @@
 	<meta charset="utf-8">
 	<?php if ($_GET['id_project']||$_GET['app_data']): ?>
 		<meta property="fb:app_id" content="112197008935023" />
-		<?php if ($_GET['person']==true): ?>
+		<?php if ($_GET['person']=='true'): ?>
 			<meta property="og:type" content="myclapps:person" /> 
 		<?php else: ?>
 			<meta property="og:type" content="myclapps:announce" /> 
