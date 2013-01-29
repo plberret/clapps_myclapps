@@ -1313,7 +1313,7 @@ zf.initAddProject = function() {
 							zf.seeFiltered('?filter=false',event)	
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
-							zf.FBCreate();
+							zf.FBCreate(resp.id);
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
