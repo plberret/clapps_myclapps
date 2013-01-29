@@ -1276,6 +1276,7 @@ zf.initAddProject = function() {
 							zf.seeFiltered('?filter=false',event)
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
+							console.log(resp.id, "test"); 
 							zf.FBCreate(resp.id);
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
