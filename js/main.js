@@ -1146,29 +1146,28 @@ zf.FBSend = function(id_project, id_profile) {
 // title, description, titre, url , custom 
 
 zf.FBCreate = function(id_project) {
-/*	FB.api('/me/myclapps:create', 'post',
-		{announce: "http://www.facebook.com/Clapps.Network/app_112197008935023?app_data="+id_project},
+	FB.api('/me/myclapps:create', 'post',
+		{announce: "http://www.my.clapps.fr/project/"+id_project},
 		function(response) {
 			console.log(response, 'create');
 		}
-	);*/
+	);
 };
 
 zf.FBFind = function(id_project) {
-	/*
 	FB.api('/me/myclapps:found', 'post',
-		{person: "http://www.facebook.com/Clapps.Network/app_112197008935023?app_data="+id_project},
+		{person: "http://www.my.clapps.fr/person/project/"+id_project},
 		function(response){
 			console.log(response, 'find');
 		}
-	);*/
+	);
 };
 
 zf.FBShare = function($this) {
 	FB.ui({
 		method: 'feed',
 		name: '[Annonce] '+ $this.parents(".preview").find('h2 span').text(),
-		link: "http://www.my.clapps.fr?id_project="+$this.attr('data-id'),
+		link: "http://www.my.clapps.fr/project/"+$this.attr('data-id'),
 		picture: 'http://backup.clapps.fr/img/logo_clapps.png',
 		description: $this.parents(".preview").find('.desc p').text()
 	});
@@ -1176,7 +1175,7 @@ zf.FBShare = function($this) {
 
 zf.FBApplyTo = function(id_project) {
 	FB.api('/me/myclapps:applied_to', 'post',
-		{announce: "http://www.my.clapps.fr?id_project="+id_project},
+		{announce: "http://www.my.clapps.fr/project/"+id_project},
 		function(response) {
 			console.log(response, 'apply');
 		}
@@ -1186,7 +1185,8 @@ zf.FBApplyTo = function(id_project) {
 zf.initFb = function() {
 	
 	// Postuler pour une annonce
-	zf.$page.find('.apply_button').click(function(event) {
+	//zf.$page.find('.apply_button').click(function(event) {
+	zf.$page.on('click','.apply_button',function(event){
 		$this=$(this);
 		var id_project= $this.attr('data-id');
 		var id_profile= $this.attr('data-idprofile');
@@ -1196,10 +1196,11 @@ zf.initFb = function() {
 	});
 	
 	// partager
-	zf.$page.find('.share_link').click(function(event) {
+	//zf.$page.find('.share_link').click(function(event) {
+	zf.$page.on('click','.share_link',function(event){
 		zf.FBShare($(this));
 		return false;
-	})
+	});
 	
 };
 
@@ -1277,7 +1278,8 @@ zf.initAddProject = function() {
 							zf.seeFiltered('?filter=false',event)
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
-							zf.FBCreate();
+							console.log(resp.id, "test"); 
+							zf.FBCreate(resp.id);
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
@@ -1285,7 +1287,6 @@ zf.initAddProject = function() {
 							zf.$page.find('#see-mine .number').text(parseInt(zf.$page.find('#see-mine .number').text())+1);
 							zf.fixPlaceholder(zf.$page);
 						} else {
-							console.log(resp)
 							var msg = 'Une erreur est survenue, veuillez réessayer'
 							if (resp.error == "place") {
 								$this.find('.location').addClass('empty')
@@ -1314,7 +1315,7 @@ zf.initAddProject = function() {
 							zf.seeFiltered('?filter=false',event)	
 							$('#successAddProject').fadeIn();
 							$.fancybox.close();
-							zf.FBCreate();
+							zf.FBCreate(resp.id);
 							FB.Canvas.scrollTo(0,0);
 							setTimeout(function(){
 								$('#successAddProject').fadeOut();
