@@ -602,24 +602,25 @@
 				$sql .= ", (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) AS distance";
 			}
 	 	}
-		$sql.=" FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1";
+		$sql.=" FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1 AND (";
 
 		if ($filters['profile']) {
-			$sql .= " AND pf.id_job IN (SELECT id_job FROM mc_jobs WHERE association IN (SELECT association FROM mc_jobs WHERE name = :profile))";
+			$sql .= " pf.id_job IN (SELECT id_job FROM mc_jobs WHERE association IN (SELECT association FROM mc_jobs WHERE name = :profile))";
 			$array['profile'] = $filters['profile'];
 			// echo $filters['profile'];
 		}
 		if ($filters['place_departements']) {
-			$sql .=" AND (pj.place_departements = :place_departements OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement = :place_departements))";
+			$sql .=" (pj.place_departements = :place_departements OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement = :place_departements))";
 			$array['place_departements']=($filters['place_departements'])?$filters['place_departements']:0;
 		}
 		if ($filters['place_regions']) {
-			$sql .=" AND (pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions)))";
+			$sql .=" (pj.place_regions = :place_regions OR pj.place_departements IN (SELECT id FROM departements WHERE id_region = :place_regions) OR pj.place_villes IN (SELECT id FROM villes WHERE id_departement IN (SELECT id FROM departements WHERE id_region = :place_regions)))";
 			$array['place_regions']=($filters['place_regions'])?$filters['place_regions']:0;
 		}
 
 		if ($filters['place_villes'] || $filters['location'] && !$filters['place_departements'] && !$filters['place_regions']) { // fix 
-			$sql .=" AND pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
+			// $sql .=" AND (getDistance((SELECT lat FROM villes WHERE id = (SELECT id_cheflieu FROM departements WHERE id = :place_villes)),(SELECT lon FROM villes WHERE id = (SELECT id_cheflieu FROM departements WHERE id = :place_villes)),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist AND pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
+			$sql .=" pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
 			$array['place_villes']=($filters['place_villes'])?$filters['place_villes']:0;
 			$array['maxdist']=$filters['distance'].'000';
 		}
@@ -646,6 +647,7 @@
 				$sql .= " AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) <= :date_filter AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) >= 0";
 			}
 		}
+		$sql.=")";
 
 		if (!$count) {
 			$sql .= " GROUP BY pj.id_project";

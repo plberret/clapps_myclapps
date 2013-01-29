@@ -30,7 +30,7 @@ if($_GET['n']=='app'){
 if(empty($data["user_id"]) && !$_GET['fix']){ // if no fix, reload the page inside and loose app_data
 	// if(empty($user_fb)) {
 	// echo $auth_url;
-		echo("<script> top.location.href='" . $auth_url . "'</script>"); 
+		// echo("<script> top.location.href='" . $auth_url . "'</script>"); 
 	// }
 }else{
 	if(!getIdFromFb()){

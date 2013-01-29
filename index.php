@@ -37,7 +37,7 @@
 <html lang="fr">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# myclapps: http://ogp.me/ns/fb/myclapps#">
 	<meta charset="utf-8">
-	<?php if ($_GET['id_project']||$_GET['app_data']): ?>
+	<?php if ($_GET['id_project'] || $_GET['app_data']): ?>
 		<meta property="fb:app_id" content="112197008935023" />
 		<?php if ($_GET['person']==true): ?>
 			<meta property="og:type" content="myclapps:person" /> 
