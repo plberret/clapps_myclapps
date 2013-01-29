@@ -1147,7 +1147,7 @@ zf.FBSend = function(id_project, id_profile) {
 
 zf.FBCreate = function(id_project) {
 	FB.api('/me/myclapps:create', 'post',
-		{announce: "http://www.my.clapps.fr?/project/"+id_project},
+		{announce: "http://www.my.clapps.fr/project/"+id_project},
 		function(response) {
 			console.log(response, 'create');
 		}
@@ -1156,7 +1156,7 @@ zf.FBCreate = function(id_project) {
 
 zf.FBFind = function(id_project) {
 	FB.api('/me/myclapps:found', 'post',
-		{person: "http://www.my.clapps.fr?/project/"+id_project},
+		{person: "http://www.my.clapps.fr/project/"+id_project},
 		function(response){
 			console.log(response, 'find');
 		}
@@ -1167,7 +1167,7 @@ zf.FBShare = function($this) {
 	FB.ui({
 		method: 'feed',
 		name: '[Annonce] '+ $this.parents(".preview").find('h2 span').text(),
-		link: "http://www.my.clapps.fr?id_project="+$this.attr('data-id'),
+		link: "http://www.my.clapps.fr/project/"+$this.attr('data-id'),
 		picture: 'http://backup.clapps.fr/img/logo_clapps.png',
 		description: $this.parents(".preview").find('.desc p').text()
 	});
@@ -1175,7 +1175,7 @@ zf.FBShare = function($this) {
 
 zf.FBApplyTo = function(id_project) {
 	FB.api('/me/myclapps:applied_to', 'post',
-		{announce: "http://www.my.clapps.fr?/project/"+id_project},
+		{announce: "http://www.my.clapps.fr/project/"+id_project},
 		function(response) {
 			console.log(response, 'apply');
 		}
