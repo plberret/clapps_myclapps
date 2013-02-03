@@ -644,7 +644,7 @@
 					break;
 			}
 			if ($array['date_filter']) {
-				$sql .= " AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) <= :date_filter AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) >= 0";
+				$sql .= " AND (TO_DAYS(pj.date_filter) - TO_DAYS(NOW()) <= :date_filter AND TO_DAYS(NOW()) - TO_DAYS(pj.date_filter) <= 0)";
 			}
 		}
 
@@ -764,11 +764,22 @@
 		return $id;
 	}
 
+	
+	function updateUserLastCo(){
+		global $baseDD;
+
+		$user = getIdFromFb();
+
+		$R1=$baseDD->prepare('UPDATE `mc_users` SET last_co = NOW() WHERE id_user = :id_user');
+		$R1->bindParam(':id_user',$user['id_user']);
+		$R1->execute();
+	}
+
 	function createUser($data){
 		global $baseDD;
 
 		$name = $data['firstname'].' '.$data['lastname'];
-		$R1=$baseDD->prepare('INSERT INTO `mc_users` (user_fb, name) VALUES (:user_fb, :name)');
+		$R1=$baseDD->prepare('INSERT INTO `mc_users` (user_fb, name, last_co) VALUES (:user_fb, :name, NOW())');
 		$R1->bindParam(':user_fb',$data['id']);
 		$R1->bindParam(':name',$data['name']);
 

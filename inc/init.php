@@ -36,6 +36,8 @@ if(empty($data["user_id"]) && !$_GET['fix']){ // if no fix, reload the page insi
 	if(!getIdFromFb()){
 		$data =$facebook->api('/me');
 		createUser($data);
+	} else {
+		updateUserLastCo();
 	}
 	if($data['app_data']){
 		echo("<script> window.location.href='?fix=true&id_project=".$data['app_data']."'</script>");
