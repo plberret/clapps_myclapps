@@ -347,7 +347,7 @@ zf.autocomplete = function($this) {
 			// }
 			
 		};
-		if ($(this).parents('#block_filters').length>0) {
+		if ($(this).parents('#block_filters').length>0 && $(this).val().trim() !='') {
 			$(this).parents('form').trigger('submit');
 		}
 		if ($this.find('#type_place').val()=="villes") {
