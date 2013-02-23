@@ -1556,15 +1556,16 @@ zf.initTuto = function() {
 		// $(this).parent().prevAll().removeClass('next')
 		return false;
 	})
-	
+
 	// hide tuto
-	zf.$page.find("#content_tuto a.close_tuto").click(function(event) {
+	zf.$page.on('click','a.close_tuto',function(event) {
 		zf.hideTuto();
-		return false; 
+		$('#infoButton a').removeClass('close_tuto');
+		return false;
 	});
 	
 	// show tuto
-	zf.$page.find("#infoButton a").click(function(event) {
+	zf.$page.on('click','#infoButton a:not(.close_tuto)',function(event) {
 		_gaq.push(['_trackPageview', '/tuto']);
 		$tuto=zf.$page.find("#tuto");
 		$tuto.find('#vid').hide();
@@ -1572,6 +1573,7 @@ zf.initTuto = function() {
 			$tuto.find('#vid').show();
 			zf.$vid[0].play();
 		});
+		$(this).addClass('close_tuto');
 		return false; 
 	});
 };
