@@ -444,7 +444,16 @@ zf.addSubscribe = function($this){
 				// mise à jour d'une personne 
 				$message.html("Vous êtes déjà dans notre base de données !").addClass('success').fadeIn().delay(3000).fadeOut();
 				var user= resp.result;
-				window.open("http://clapps.fr?m=92039&e="+user[0].merges['EMAIL']+"&f="+user[0].merges['FIRSTNAME']+"&l="+user[0].merges['LASTNAME']+"&j="+user[0].merges['JOB']);
+				// window.open("http://clapps.fr?m=92039&e="+user[0].merges['EMAIL']+"&f="+user[0].merges['FIRSTNAME']+"&l="+user[0].merges['LASTNAME']+"&j="+user[0].merges['JOB']);
+				var a = $('<a>',{target: '_parent',href : "http://clapps.fr?m=92039&e="+user[0].merges['EMAIL']+"&f="+user[0].merges['FIRSTNAME']+"&l="+user[0].merges['LASTNAME']+"&j="+user[0].merges['JOB']})
+				// zf.$page.append(a);
+				// console.log(a[0])
+
+
+				var evt = document.createEvent("Events");
+    			evt.initEvent("click", true, true);
+
+				// a[0].dispatchEvent(evt);
 			}
 		},error: function(resp) { 
 			$message.html("Une erreur est survenue. Veuillez reessayer !").addClass('error').fadeIn().delay(3000).fadeOut();
