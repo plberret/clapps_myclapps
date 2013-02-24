@@ -37,9 +37,7 @@ if(empty($data["user_id"]) && !$_GET['fix']){ // if no fix, reload the page insi
 		$data =$facebook->api('/me');
 		createUser($data);
 	} else {
-		// if (condition) {
-			// updateUserNbCo();
-		// }
+		checkUserLastCo();
 		updateUserLastCo();
 	}
 	if($data['app_data']){

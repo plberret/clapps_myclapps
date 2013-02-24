@@ -327,10 +327,10 @@ zf.autocomplete = function($this) {
 		return false;
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
+		var $thisField = $(this);
 		if (!zf.autocompletionHover && $this.find('.autocompletion').length > 0) {
 			// if ($(this).parents('#col3').length> 0) { // if filter
-				// console.log('rrr')
-				var $thisField = $(this);
+				console.log('???')
 				$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
 				$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
 				if ($this.find('.autocompletion li').length > 0) {
@@ -346,11 +346,16 @@ zf.autocomplete = function($this) {
 
 			// }
 			
-		};
+		} else if ($thisField.val().trim().length == 0){
+			console.log('hahaha')
+			$thisField.siblings('.id_place, .idjob').val("");
+			$thisField.siblings('.type_place').val("");
+		}
+
 		if ($(this).parents('#block_filters').length>0 && $(this).val().trim() !='') {
 			$(this).parents('form').trigger('submit');
 		}
-		if ($this.find('#type_place').val()=="villes") {
+		if ($this.find('#type_place').val()=="villes" && $this.find('#location').val().trim().length>0) {
 			zf.$filtre.find('#distances').addClass('active')
 		} else {
 			zf.$filtre.find('#distances').removeClass('active')

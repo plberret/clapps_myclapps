@@ -31,6 +31,24 @@
 		$nbProject = getProjects($page,$_GET['user_fb'],false,true);
 	endif;
 	$nbProject = intval($nbProject[0]['count']);
+
+	switch ($userFilterArray['date_filter']) {
+		case 'week':
+			$userFilterArray['date_filter_decode']='Cette semaine';
+			break;
+		case 'all':
+			$userFilterArray['date_filter_decode']="Indifférent";
+			break;
+		case 'now':
+			$userFilterArray['date_filter_decode']='Dès que possible';
+			break;
+		case 'month':
+			$userFilterArray['date_filter_decode']='Ce mois-ci';
+			break;
+		case 'trimestre':
+			$userFilterArray['date_filter_decode']='Ce trimestre';
+			break;
+	}
 ?>
 
 <!doctype html>
@@ -98,7 +116,7 @@
 			</div>
 			<div id="block_current_filter" class="clearfix">
 				<div id="current_filter">
-					<p<?php if (empty($userFilter['filter'])): ?> class="hide" <?php endif; ?>>Vous recherchez un poste<span class="work"> <?php echo $userFilterArray['profile'] ?></span><span class="time"> dès que possible</span><span class="opt<?php if (empty($userFilterArray['location'])): ?> hide<?php endif; ?>"> dans la commune de <span class="location"><?php echo $userFilterArray['location'] ?></span> et <span class="distance"><?php echo $userFilterArray['distance'] ?>km</span> aux alentours</span>.</p>
+					<p<?php if (empty($userFilter['filter'])): ?> class="hide" <?php endif; ?>>Vous recherchez un poste<span class="work"> <?php echo $userFilterArray['profile'] ?></span><span class="time">  <?php echo $userFilterArray['date_filter_decode']?></span><span class="opt<?php if (empty($userFilterArray['location'])): ?> hide<?php endif; ?>"> dans la commune de <span class="location"><?php echo $userFilterArray['location'] ?></span> et <span class="distance"><?php echo $userFilterArray['distance'] ?>km</span> aux alentours</span>.</p>
 					<p class="none<?php if (!empty($userFilter['filter'])): ?> hide<?php endif; ?>">Plus de facilité dans vos recherches ?<br/>Filtrez / Sauvegardez / et recevez par notification toutes les annonces qui vous correspondent grâce à vos <span class="open_filtre">filtres</span> !</p>
 				</div>
 				<div id="notif_email">
@@ -121,13 +139,13 @@
 					<div id="col2" class="col">
 						<div class="field">
 							<label for="profile">Métier</label>
-							<input type="text" autocomplete="off" name="profile" id="profile" class="job autocomplete" placeholder="Entrez le métier recherché ..." onBlur="if (this.value != '') _gaq.push(['_trackEvent', 'Filtre', 'Blur', 'metier']);" />
+							<input type="text" autocomplete="off" name="profile" id="profile" class="job autocomplete" placeholder="Entrez le métier recherché ..." value='<?php echo $userFilterArray['profile'] ?>' onBlur="if (this.value != '') _gaq.push(['_trackEvent', 'Filtre', 'Blur', 'metier']);" />
 						</div>
 						<div class="field select">
 							<label for="selector_date">Date</label>
 							<div class="selector" id="selector_date">
 								<div>
-									<span class="value" id="date_filter_selected">Indifférent</span>
+									<span class="value" id="date_filter_selected"><?php echo $userFilterArray['date_filter_decode'] ?></span>
 									<span class="button">Modifier</span>
 								</div>
 								<ul>
@@ -144,29 +162,36 @@
 					<div id="col3" class="col">
 						<div class="field">
 							<label for="location">Lieux</label>
-							<input type="text" autocomplete="off" name="location" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" onBlur="if (this.value != '') _gaq.push(['_trackEvent', 'Filtre', 'Blur', 'lieu']);" />
-							<input type="hidden" name="distance" value="100" id="distance" />
-							<input type="hidden" name="id_place" class="id_place" id="id_place"/>
-							<input type="hidden" name="type_place" class="type_place" id="type_place" />
+							<input type="text" autocomplete="off" name="location" value="<?php echo $userFilterArray['location'] ?>" id="location" class="location autocomplete" data-restricted="true" autocomplete="off" placeholder="Ville, département ou code postal" onBlur="if (this.value != '') _gaq.push(['_trackEvent', 'Filtre', 'Blur', 'lieu']);" />
+							<?php 
+								if ($userFilterArray['distance']) {
+									$dist=$userFilterArray['distance'];
+								} else {
+									$dist = 100;
+								}
+							?>
+							<input type="hidden" name="distance" value="<?php echo $dist ?>" id="distance" />
+							<input type="hidden" name="id_place" value="<?php echo $userFilterArray['id_place'] ?>" class="id_place" id="id_place"/>
+							<input type="hidden" name="type_place" value="<?php echo $userFilterArray['type_place'] ?>" class="type_place" id="type_place" />
 						</div>
-						<ul id="distances" class="clearfix">
-							<li><a href="javascript:void(0);" class="50" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-50']);" >
+						<ul id="distances" class="clearfix<?php if($userFilterArray['distance']):?> active<?php endif; ?>">
+							<li><a href="javascript:void(0);" class="50<?php if($userFilterArray['distance'] == 50):?> current<?php endif; ?>" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-50']);" >
 								<span class="number">50 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="javascript:void(0);" class="100 current" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-100']);" >
+							<li><a href="javascript:void(0);" class="100<?php if($userFilterArray['distance'] == 100):?> current<?php endif; ?>" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-100']);" >
 								<span class="number">100 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="javascript:void(0);" class="200" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-200']);" >
+							<li><a href="javascript:void(0);" class="200<?php if($userFilterArray['distance'] == 200):?> current<?php endif; ?>" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-200']);" >
 								<span class="number">200 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="javascript:void(0);" class="500" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-500']);" >
+							<li><a href="javascript:void(0);" class="500<?php if($userFilterArray['distance'] == 500):?> current<?php endif; ?>" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-500']);" >
 								<span class="number">500 </span>
 								<span class="unite">KM</span>
 							</a></li>
-							<li><a href="javascript:void(0);" class="1000" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-1000']);" >
+							<li><a href="javascript:void(0);" class="1000<?php if($userFilterArray['distance'] == 1000):?> current<?php endif; ?>" onClick="_gaq.push(['_trackEvent', 'Filtre', 'Click', 'distance-1000']);" >
 								<span class="number">1000 </span>
 								<span class="unite">KM</span>
 							</a></li>
@@ -344,7 +369,11 @@
 													<div class="desc"><p><span><?php echo $profile['name']; ?> : </span><?php echo $profile['person']; ?></p></div>
 													<div class="apply">
 														<?php if (!isAdmin($project,$user_fb)): ?>
-															<a href="javascript:void(0);" class="apply_button" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'postuler']);">Postuler</a>
+															<?php if ($project['adresse_author']): ?>
+																<a href="mailto:<?php echo $project['adresse_author'] ?>?subject=Candidature pour le poste <?php echo $profile['name'];?>" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'mailto']);">Postuler</a>
+															<?php else: ?>
+																<a href="javascript:void(0);" class="apply_button" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'postuler']);">Postuler</a>
+															<?php endif ?>
 														<?php else: ?>
 															<a href="javascript:void(0);" class="profile_found" data-id="<?php echo $project['id_project'] ?>"  data-idprofile="<?php echo $profile['id_profile'] ?>" onClick="_gaq.push(['_trackEvent', 'Annonce-#<?php echo $project['id_project']; ?>', 'Click', 'jai-trouve']);">J'ai trouvé</a>
 														<?php endif; ?>

@@ -466,7 +466,7 @@
 		if ($count) {
 	 		$sql = "SELECT count(DISTINCT id_project) AS count FROM mc_project";
 		} else {
-			$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
+			$sql = "SELECT adresse_author, id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project`";
 		}
 		
 		if ($user_fb) {
@@ -498,7 +498,7 @@
 	 function getProject($id_project){
 
 		global $baseDD;
-		$sql = "SELECT id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project AND current_state = 1";
+		$sql = "SELECT adresse_author, id_project, `loop`, title, description, id_creator, create_date, date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = place_villes),IFNULL((SELECT nom FROM departements WHERE id = place_departements),(SELECT nom FROM regions WHERE id = place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = place_villes),(SELECT cp FROM departements WHERE id = place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = mc_project.id_creator) AS name_creator  FROM `mc_project` WHERE id_project=:id_project AND current_state = 1";
 		$array = array('id_project' => $id_project);
 		$R1=$baseDD->prepare($sql);
 		$R1->setFetchMode(PDO::FETCH_ASSOC);
@@ -597,7 +597,7 @@
 	 	if ($count) {
 	 		$sql = "SELECT count(DISTINCT pj.id_project) AS count";
 	 	} else {
-			$sql = "SELECT pj.id_project, pj.loop, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator";
+			$sql = "SELECT pj.adresse_author, pj.id_project, pj.loop, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator";
 			if ($filters['place_villes']) {
 				$sql .= ", (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) AS distance";
 			}
@@ -764,7 +764,33 @@
 		return $id;
 	}
 
+	function checkUserLastCo(){
+		global $baseDD;
+
+		$user = getIdFromFb();
+
+		$R1=$baseDD->prepare('SELECT last_co FROM `mc_users` WHERE id_user = :id_user');
+		$R1->bindParam(':id_user',$user['id_user']);
+		
+		if($R1->execute()){
+			$last_co=$R1->fetch();
+		}
 	
+		if(date('Y-m-j') > $last_co[0]){
+			updateUserNbCo();
+		}
+	}
+
+	function updateUserNbCo(){
+		global $baseDD;
+
+		$user = getIdFromFb();
+
+		$R1=$baseDD->prepare('UPDATE `mc_users` SET nb_co = nb_co + 1 WHERE id_user = :id_user');
+		$R1->bindParam(':id_user',$user['id_user']);
+		$R1->execute();
+	}	
+
 	function updateUserLastCo(){
 		global $baseDD;
 
