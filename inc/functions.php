@@ -22,8 +22,6 @@
 		global $baseDD;
 
 		$user = getIdFromFb();
-		var_dump($data);
-		var_dump($user);
 		$sql = 'SELECT create_date, `loop` FROM mc_project WHERE id_project = :id_project AND id_creator = :id_user';
 		$R1=$baseDD->prepare($sql);
 		$R1->bindParam(':id_project',$data['id']);
@@ -599,7 +597,7 @@
 	 	} else {
 			$sql = "SELECT pj.adresse_author, pj.id_project, pj.loop, pj.title, pj.description, pj.id_creator, pj.create_date, pj.date_filter, (SELECT IFNULL((SELECT nom FROM villes WHERE id = pj.place_villes),IFNULL((SELECT nom FROM departements WHERE id = pj.place_departements),(SELECT nom FROM regions WHERE id = pj.place_regions)))) AS place, (SELECT IFNULL((SELECT cp FROM villes WHERE id = pj.place_villes),(SELECT cp FROM departements WHERE id = pj.place_departements))) AS zip_code, (SELECT user_fb FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS id_creator, (SELECT name FROM mc_users WHERE mc_users.id_user = pj.id_creator) AS name_creator";
 			if ($filters['place_villes']) {
-				$sql .= ", (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) AS distance";
+				$sql .= ", (SELECT IFNULL((getDistance((SELECT lat FROM villes WHERE id = 31985),(SELECT lon FROM villes WHERE id = 31985),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))),(getDistance((SELECT lat FROM departements WHERE id = pj.place_departements),(SELECT lng FROM departements WHERE id =pj.place_departements),(SELECT lat FROM villes WHERE id = 31985),(SELECT lon FROM villes WHERE id = 31985))))) AS distance";
 			}
 	 	}
 		$sql.=" FROM mc_project AS pj, mc_profile AS pf WHERE pj.id_project = pf.id_project AND pj.current_state = 1 ";
@@ -619,8 +617,8 @@
 		}
 
 		if ($filters['place_villes'] || $filters['location'] && !$filters['place_departements'] && !$filters['place_regions']) { // fix 
-			// $sql .=" AND (getDistance((SELECT lat FROM villes WHERE id = (SELECT id_cheflieu FROM departements WHERE id = :place_villes)),(SELECT lon FROM villes WHERE id = (SELECT id_cheflieu FROM departements WHERE id = :place_villes)),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist AND pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
-			$sql .=" AND (pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist)";
+			$sql .=" AND (getDistance((SELECT lat FROM departements WHERE id = pj.place_departements),(SELECT lng FROM departements WHERE id =pj.place_departements),(SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes))) < :maxdist OR (pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist)";
+			// $sql .=" AND (pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist)";
 			$array['place_villes']=($filters['place_villes'])?$filters['place_villes']:0;
 			$array['maxdist']=$filters['distance'].'000';
 		}
@@ -867,7 +865,7 @@
 		global $baseDD;
 		$user = getIdFromFb();
 
-		$sql = 'SELECT filter, user_fb FROM mc_users WHERE id_user != :curr_id_user AND notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
+		$sql = 'SELECT filter, user_fb FROM mc_users WHERE id_user = :curr_id_user AND notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
 		// $sql = 'SELECT filter, user_fb FROM mc_users WHERE notif_filter = 1 AND NULLIF(filter, "") IS NOT NULL';
 		$users = array();
 		$R1=$baseDD->prepare($sql);
@@ -894,7 +892,8 @@
 					// echo $userFilter['profile'];
 				}
 				if ($userFilter['place_villes'] || $userFilter['location']) {
-					$sql2 .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
+					$sql2 .=" AND (getDistance((SELECT lat FROM departements WHERE id = pj.place_departements),(SELECT lng FROM departements WHERE id =pj.place_departements),(SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes))) < :maxdist OR (pj.place_regions = (SELECT id_region FROM departements WHERE id = (SELECT id_departement FROM villes WHERE id = :place_villes)) OR pj.place_departements = (SELECT id_departement FROM villes WHERE id = :place_villes) OR (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist)";
+					// $sql2 .=" AND (getDistance((SELECT lat FROM villes WHERE id = :place_villes),(SELECT lon FROM villes WHERE id = :place_villes),(SELECT lat FROM villes WHERE id = pj.place_villes),(SELECT lon FROM villes WHERE id = pj.place_villes))) < :maxdist";
 					$array['place_villes']=($userFilter['place_villes'])?$userFilter['place_villes']:0;
 					$array['maxdist']=$userFilter['distance'].'000';
 				}
