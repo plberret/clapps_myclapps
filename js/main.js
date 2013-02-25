@@ -694,12 +694,13 @@ zf.getFilteredProjects = function($this,event){
 		zf.$page.find('#block_current_filter p.none').addClass('hide').siblings('p').removeClass('hide');
 	}
 	if ($this.find('.'+zf.$page.find('#date_filter').val()).text()!='Indifférent') {
-		$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text());
+		$currentFilter.find('.time').text(' '+$this.find('.'+zf.$page.find('#date_filter').val()).text());
 	} else {
 		$currentFilter.find('.time').text('');
 	}
 	$currentFilter.find('.work').text(' '+$this.find('#profile').val());
 	$currentFilter.find('.location').text($this.find('#location').val());
+	console.log('ee',$this.find('#distance'))
 	$currentFilter.find('.distance').text($this.find('#distance').val()+'km');
 	if ($this.find('#location').val().trim().length==0) {
 		$currentFilter.find('.opt').hide()
@@ -1768,9 +1769,11 @@ zf.init = function(){
 	
 	// update projects list by distance
 	zf.$filtre.find('#distances li a').click(function(event) {
+		var $this=$(this);
 		if ($filter.find('#distances').hasClass('active')) {
-			zf.updateFilter($(this));
-			zf.seeFiltered('?filter=true&'+$(this).parents('form').serialize());
+			zf.updateFilter($this);
+			// zf.seeFiltered('?filter=true&'+$(this).parents('form').serialize());
+			zf.getFilteredProjects($this.parents('form'),event);
 		};
 		return false;
 	})
