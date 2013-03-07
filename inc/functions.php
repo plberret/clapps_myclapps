@@ -276,8 +276,8 @@
 		if($R1->execute()){
 			$ID=$baseDD->lastInsertId('mc_project');
 		}
-		foreach ($data['profile'] as $dat => $key) {
-			if (!empty($data['profile'][$dat])) {
+		foreach ($data['name'] as $dat => $key) {
+			if (!empty($data['name'][$dat])) {
 				if (empty($data['id_job'][$dat])) {
 					$R2=$baseDD->prepare("INSERT INTO `mc_jobs` (name, domain) VALUES ( :name, 3)");
 					$R2->bindParam(':name',$data['name'][$dat]);
