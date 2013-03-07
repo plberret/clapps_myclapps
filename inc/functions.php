@@ -190,9 +190,9 @@
 			$R1b=$baseDD->prepare("DELETE FROM mc_profile WHERE id_project = :id_project AND current_state = 1");
 			$R1b->bindParam(':id_project',$data['id_project']);
 			$R1b->execute();
-			if (!empty($data['profile'][0])) {
-				foreach ($data['profile'] as $dat => $key) {
-					if (!empty($data['profile'][$dat])) {
+			if (!empty($data['name'][0])) {
+				foreach ($data['name'] as $dat => $key) {
+					if (!empty($data['name'][$dat])) {
 						if (empty($data['id_job'][$dat])) {
 							$R2=$baseDD->prepare("INSERT INTO `mc_jobs` (name, domain) VALUES ( :name, 3)");
 							$R2->bindParam(':name',$data['name'][$dat]);
