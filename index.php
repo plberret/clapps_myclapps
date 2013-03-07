@@ -384,7 +384,7 @@
 														<input type="text" autocomplete="off" class="required job autocomplete plp" placeholder="Métier recherché"  value="<?php echo $profile['name']; ?>" name="name[]" />
 														<input type="hidden" class="idjob" name="id_job[]" value="<?php echo $profile['id_job']; ?>" />
 													</div>
-													<div class="add_desc add_field"><input type="text" autocomplete="off" class="plp required" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
+													<div class="add_desc add_field"><input type="text" autocomplete="off" class="" placeholder="Description du poste recherché" name="profile[]" value="<?php echo $profile['person']; ?>" /></div>
 													<div class="edit">
 														<div class="deleteButton">
 															<a href="javascript:void(0);" class="button_delete_profile" onClick="_gaq.push(['_trackEvent', 'Annonce-edition-#<?php echo $project['id_project']; ?>', 'Click', 'suppression-poste']);">Supprimer</a>
