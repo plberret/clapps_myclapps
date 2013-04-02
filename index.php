@@ -1,5 +1,5 @@
 <?php 
-	require_once './inc/init.php';
+	// require_once './inc/init.php';
 	//require_once './inc/initFb.php';
 	require_once './inc/settings.php';
 	require_once './inc/functions.php';
@@ -7,6 +7,8 @@
 	if(!isset($page)){$page=1;}
 	$userFilter = getUserFilter();
 	parse_str($userFilter['filter'], $userFilterArray);
+	$urlMoreProject = http_build_query($_GET, '=');
+	$urlMoreProject = preg_replace("#page=[0-9]*&#","",$urlMoreProject);
 
 	// get projects
 	if (isset($_GET['id_project'])) : // one project
@@ -492,7 +494,7 @@
 			<?php endif; ?>
 			<?php if (ceil($nbProject/POST_PER_PAGE)>$page && !$_GET['id_project']): ?>
 				<div class="btn-more-projects">
-					<a href="?page=<?php echo $page+1; ?>&<?php echo http_build_query($_GET, '=') ?>" data-nav="<?php echo $page ?>" onClick="_gaq.push(['_trackEvent', 'home', 'Click', 'voir plus']);">Voir plus ...</a>
+					<a href="?page=<?php echo $page+1; ?>&<?php echo $urlMoreProject ?>" data-nav="<?php echo $page ?>" onClick="_gaq.push(['_trackEvent', 'home', 'Click', 'voir plus']);">Voir plus ...</a>
 				</div>
 			<?php endif; ?>
 			
