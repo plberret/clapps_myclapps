@@ -31,7 +31,7 @@
 			<li class="clearfix field">
 				<input type="text" autocomplete="off" placeholder="Métier recherché" class="job required autocomplete plp" name="name[]" />
 				<input type="hidden" name="id_job[]" class="idjob" />
-				<input type="text" autocomplete="off" name="profile[]" class="required entitled plp" placeholder="Intitulé du poste recherché" />
+				<input type="text" autocomplete="off" name="profile[]" class="entitled" placeholder="Intitulé du poste recherché" />
 				<div class="quantity">
 					<a href="#" class="less_quantity number_control">-</a>
 					<input type="text" autocomplete="off" value="1" class="number" name="occurence[]"/>

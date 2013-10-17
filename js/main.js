@@ -327,10 +327,10 @@ zf.autocomplete = function($this) {
 		return false;
 	}).on('focusout', '.field .autocomplete', function(){
 		// MFMFMF
+		var $thisField = $(this);
 		if (!zf.autocompletionHover && $this.find('.autocompletion').length > 0) {
 			// if ($(this).parents('#col3').length> 0) { // if filter
-				// console.log('rrr')
-				var $thisField = $(this);
+				console.log('???')
 				$thisField.siblings('.id_place, .idjob').val($this.find('.autocompletion li.current a').data("id"))
 				$thisField.siblings('.type_place').val($this.find('.autocompletion li.current a').data("type"))
 				if ($this.find('.autocompletion li').length > 0) {
@@ -346,11 +346,16 @@ zf.autocomplete = function($this) {
 
 			// }
 			
-		};
+		} else if ($thisField.val().trim().length == 0){
+			console.log('hahaha')
+			$thisField.siblings('.id_place, .idjob').val("");
+			$thisField.siblings('.type_place').val("");
+		}
+
 		if ($(this).parents('#block_filters').length>0 && $(this).val().trim() !='') {
 			$(this).parents('form').trigger('submit');
 		}
-		if ($this.find('#type_place').val()=="villes") {
+		if ($this.find('#type_place').val()=="villes" && $this.find('#location').val().trim().length>0) {
 			zf.$filtre.find('#distances').addClass('active')
 		} else {
 			zf.$filtre.find('#distances').removeClass('active')
@@ -444,7 +449,16 @@ zf.addSubscribe = function($this){
 				// mise à jour d'une personne 
 				$message.html("Vous êtes déjà dans notre base de données !").addClass('success').fadeIn().delay(3000).fadeOut();
 				var user= resp.result;
-				window.open("http://clapps.fr?m=92039&e="+user[0].merges['EMAIL']+"&f="+user[0].merges['FIRSTNAME']+"&l="+user[0].merges['LASTNAME']+"&j="+user[0].merges['JOB']);
+				// window.open("http://clapps.fr?m=92039&e="+user[0].merges['EMAIL']+"&f="+user[0].merges['FIRSTNAME']+"&l="+user[0].merges['LASTNAME']+"&j="+user[0].merges['JOB']);
+				var a = $('<a>',{target: '_parent',href : "http://clapps.fr?m=92039&e="+user[0].merges['EMAIL']+"&f="+user[0].merges['FIRSTNAME']+"&l="+user[0].merges['LASTNAME']+"&j="+user[0].merges['JOB']})
+				// zf.$page.append(a);
+				// console.log(a[0])
+
+
+				var evt = document.createEvent("Events");
+    			evt.initEvent("click", true, true);
+
+				// a[0].dispatchEvent(evt);
 			}
 		},error: function(resp) { 
 			$message.html("Une erreur est survenue. Veuillez reessayer !").addClass('error').fadeIn().delay(3000).fadeOut();
@@ -680,12 +694,13 @@ zf.getFilteredProjects = function($this,event){
 		zf.$page.find('#block_current_filter p.none').addClass('hide').siblings('p').removeClass('hide');
 	}
 	if ($this.find('.'+zf.$page.find('#date_filter').val()).text()!='Indifférent') {
-		$currentFilter.find('.time').text($this.find('.'+zf.$page.find('#date_filter').val()).text());
+		$currentFilter.find('.time').text(' '+$this.find('.'+zf.$page.find('#date_filter').val()).text());
 	} else {
 		$currentFilter.find('.time').text('');
 	}
 	$currentFilter.find('.work').text(' '+$this.find('#profile').val());
 	$currentFilter.find('.location').text($this.find('#location').val());
+	console.log('ee',$this.find('#distance'))
 	$currentFilter.find('.distance').text($this.find('#distance').val()+'km');
 	if ($this.find('#location').val().trim().length==0) {
 		$currentFilter.find('.opt').hide()
@@ -1556,15 +1571,16 @@ zf.initTuto = function() {
 		// $(this).parent().prevAll().removeClass('next')
 		return false;
 	})
-	
+
 	// hide tuto
-	zf.$page.find("#content_tuto a.close_tuto").click(function(event) {
+	zf.$page.on('click','a.close_tuto',function(event) {
 		zf.hideTuto();
-		return false; 
+		$('#infoButton a').removeClass('close_tuto');
+		return false;
 	});
 	
 	// show tuto
-	zf.$page.find("#infoButton a").click(function(event) {
+	zf.$page.on('click','#infoButton a:not(.close_tuto)',function(event) {
 		_gaq.push(['_trackPageview', '/tuto']);
 		$tuto=zf.$page.find("#tuto");
 		$tuto.find('#vid').hide();
@@ -1572,6 +1588,7 @@ zf.initTuto = function() {
 			$tuto.find('#vid').show();
 			zf.$vid[0].play();
 		});
+		$(this).addClass('close_tuto');
 		return false; 
 	});
 };
@@ -1752,9 +1769,11 @@ zf.init = function(){
 	
 	// update projects list by distance
 	zf.$filtre.find('#distances li a').click(function(event) {
+		var $this=$(this);
 		if ($filter.find('#distances').hasClass('active')) {
-			zf.updateFilter($(this));
-			zf.seeFiltered('?filter=true&'+$(this).parents('form').serialize());
+			zf.updateFilter($this);
+			// zf.seeFiltered('?filter=true&'+$(this).parents('form').serialize());
+			zf.getFilteredProjects($this.parents('form'),event);
 		};
 		return false;
 	})
